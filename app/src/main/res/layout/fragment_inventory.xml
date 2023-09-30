@@ -1,0 +1,330 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.inventory.InventoryFragment">
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:padding="5dp">
+
+        <TextView
+            android:id="@+id/labelNotes"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:labelFor="@+id/editNotes"
+            android:text="@string/notes"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            android:textStyle="bold" />
+
+        <com.jlahougue.dndcharactersheet.ui.elements.LinedEditText
+            android:id="@+id/editNotes"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@android:color/transparent"
+            android:fadeScrollbars="false"
+            android:scrollbarStyle="outsideInset"
+            android:fadingEdge="vertical"
+            android:gravity="top"
+            android:inputType="text|textCapSentences|textMultiLine"
+            android:padding="5dp"
+            android:scrollbars="vertical" />
+    </LinearLayout>
+
+    <View
+        android:id="@+id/divider2"
+        android:layout_width="2dp"
+        android:layout_height="match_parent"
+        android:background="?android:attr/listDivider" />
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:padding="5dp">
+
+        <TextView
+            android:id="@+id/labelQuests"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:text="@string/quests"
+            android:labelFor="@+id/editQuests"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            android:textStyle="bold" />
+
+        <com.jlahougue.dndcharactersheet.ui.elements.LinedEditText
+            android:id="@+id/editQuests"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@android:color/transparent"
+            android:fadeScrollbars="false"
+            android:fadingEdge="vertical"
+            android:gravity="top"
+            android:inputType="text|textCapSentences|textMultiLine"
+            android:padding="5dp"
+            android:scrollbarStyle="outsideInset"
+            android:scrollbars="vertical" />
+    </LinearLayout>
+
+    <View
+        android:id="@+id/divider3"
+        android:layout_width="2dp"
+        android:layout_height="match_parent"
+        android:background="?android:attr/listDivider" />
+
+    <LinearLayout
+        android:layout_width="450dp"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="5dp">
+
+            <TextView
+                android:id="@+id/labelMainCurrencies"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:text="@string/main_currencies"
+                android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                android:textStyle="bold" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:baselineAligned="false"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <EditText
+                        android:id="@+id/editPlatinumPieces"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="5dp"
+                        android:background="@drawable/background_rounded_corners"
+                        android:ems="2"
+                        android:importantForAutofill="no"
+                        android:inputType="number"
+                        android:padding="3dp"
+                        android:selectAllOnFocus="true"
+                        android:textAlignment="center" />
+
+                    <TextView
+                        android:id="@+id/labelPlatinumPieces"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="5dp"
+                        android:labelFor="@+id/editPlatinumPieces"
+                        android:text="@string/platinium_pieces"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                        android:textColor="@color/platinum" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <EditText
+                        android:id="@+id/editGoldPieces"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="5dp"
+                        android:background="@drawable/background_rounded_corners"
+                        android:ems="2"
+                        android:importantForAutofill="no"
+                        android:inputType="number"
+                        android:padding="3dp"
+                        android:selectAllOnFocus="true"
+                        android:textAlignment="center" />
+
+                    <TextView
+                        android:id="@+id/labelGoldPieces"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="5dp"
+                        android:labelFor="@+id/editGoldPieces"
+                        android:text="@string/gold_pieces"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                        android:textColor="@color/gold" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <EditText
+                        android:id="@+id/editElectrumPieces"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="5dp"
+                        android:background="@drawable/background_rounded_corners"
+                        android:ems="2"
+                        android:importantForAutofill="no"
+                        android:inputType="number"
+                        android:padding="3dp"
+                        android:selectAllOnFocus="true"
+                        android:textAlignment="center" />
+
+                    <TextView
+                        android:id="@+id/labelElectrumPieces"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="5dp"
+                        android:labelFor="@+id/editElectrumPieces"
+                        android:text="@string/elecrtrum_pieces"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                        android:textColor="@color/electrum" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <EditText
+                        android:id="@+id/editSilverPieces"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="5dp"
+                        android:background="@drawable/background_rounded_corners"
+                        android:ems="2"
+                        android:importantForAutofill="no"
+                        android:inputType="number"
+                        android:padding="3dp"
+                        android:selectAllOnFocus="true"
+                        android:textAlignment="center" />
+
+                    <TextView
+                        android:id="@+id/labelSilverPieces"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="5dp"
+                        android:labelFor="@+id/editSilverPieces"
+                        android:text="@string/silver_pieces"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                        android:textColor="@color/silver" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <EditText
+                        android:id="@+id/editCopperPieces"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="5dp"
+                        android:background="@drawable/background_rounded_corners"
+                        android:ems="2"
+                        android:importantForAutofill="no"
+                        android:inputType="number"
+                        android:padding="3dp"
+                        android:selectAllOnFocus="true"
+                        android:textAlignment="center" />
+
+                    <TextView
+                        android:id="@+id/labelCopperPieces"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="5dp"
+                        android:labelFor="@+id/editCopperPieces"
+                        android:text="@string/copper_pieces"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                        android:textColor="@color/copper" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/labelOtherCurrencies"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
+                android:text="@string/other_currencies"
+                android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                android:textStyle="bold" />
+
+            <com.jlahougue.dndcharactersheet.ui.elements.LinedEditText
+                android:id="@+id/editOtherCurrencies"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@android:color/transparent"
+                android:fadeScrollbars="false"
+                android:fadingEdge="vertical"
+                android:gravity="top"
+                android:inputType="text|textCapSentences|textMultiLine"
+                android:labelFor="@id/labelOtherCurrencies"
+                android:lines="6"
+                android:padding="5dp"
+                android:scrollbarStyle="outsideInset"
+                android:scrollbars="vertical" />
+
+        </LinearLayout>
+
+        <View
+            android:id="@+id/divider5"
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:background="?android:attr/listDivider" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:padding="5dp">
+
+            <TextView
+                android:id="@+id/labelEquipment"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:labelFor="@id/editEquipment"
+                android:text="@string/equipment"
+                android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                android:textStyle="bold" />
+
+            <com.jlahougue.dndcharactersheet.ui.elements.LinedEditText
+                android:id="@+id/editEquipment"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@android:color/transparent"
+                android:fadeScrollbars="false"
+                android:fadingEdge="vertical"
+                android:gravity="top"
+                android:inputType="text|textCapSentences|textMultiLine"
+                android:padding="5dp"
+                android:scrollbarStyle="outsideInset"
+                android:scrollbars="vertical" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+</LinearLayout>

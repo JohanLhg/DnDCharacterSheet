@@ -1,0 +1,73 @@
+<resources>
+    <string name="app_name">D&amp;D Character Sheet</string>
+    <string name="title_profile">Profile</string>
+    <string name="title_stats">Stats</string>
+    <string name="title_inventory">Inventory</string>
+
+    <!-- General -->
+    <string name="cancel">Cancel</string>
+    <string name="save">Save</string>
+    <string name="back">Back</string>
+    <string name="edit">Edit</string>
+    <string name="delete">Delete</string>
+    <string name="add">Add</string>
+    <string name="hint_search">Search…</string>
+
+    <!-- Profile -->
+    <string name="profile_name">Name</string>
+    <string name="profile_gender">Gender</string>
+    <string name="profile_race">Race</string>
+    <string name="profile_age">Age</string>
+    <string name="profile_class">Class</string>
+    <string name="profile_height">Height</string>
+    <string name="profile_level">Level</string>
+    <string name="profile_weight">Weight</string>
+
+    <string name="profile_personality_traits">Personality Traits</string>
+    <string name="profile_ideals">Ideals</string>
+    <string name="profile_bonds">Bonds</string>
+    <string name="profile_flaws">Flaws</string>
+    <string name="profile_biography">Biography</string>
+
+    <!-- Stats -->
+    <array name="health_dice">
+        <item>d4</item>
+        <item>d6</item>
+        <item>d8</item>
+        <item>d10</item>
+        <item>d12</item>
+    </array>
+    <string name="strength">Strength</string>
+    <string name="dexterity">Dexterity</string>
+    <string name="constitution">Constitution</string>
+    <string name="intelligence">Intelligence</string>
+    <string name="wisdom">Wisdom</string>
+    <string name="charisma">Charisma</string>
+    <string name="skills">Skills</string>
+    <string name="saving_throws">Saving Throws</string>
+    <string name="proficiency_bonus">Proficiency Bonus</string>
+    <string name="armor_class">Armor Class</string>
+    <string name="initiative">Initiative</string>
+    <string name="speed">Speed</string>
+    <string name="hit_points">Hit Points</string>
+    <string name="temporary_hit_points">Temporary Hit Points</string>
+    <string name="hit_dice">Hit Dice</string>
+    <string name="nbr_hit_dice">Nbr Hit Dice</string>
+    <string name="death_saves">Death Saves</string>
+    <string name="successes">Successes</string>
+    <string name="failures">Failures</string>
+    <string name="short_rest">Short Rest</string>
+    <string name="long_rest">Long Rest</string>
+
+    <!-- Inventory -->
+    <string name="notes">NOTES</string>
+    <string name="quests">QUESTS</string>
+    <string name="main_currencies">MAIN CURRENCIES</string>
+    <string name="platinium_pieces">PP</string>
+    <string name="gold_pieces">GP</string>
+    <string name="elecrtrum_pieces">EP</string>
+    <string name="silver_pieces">SP</string>
+    <string name="copper_pieces">CP</string>
+    <string name="other_currencies">OTHER CURRENCIES</string>
+    <string name="equipment">EQUIPMENT</string>
+</resources>
