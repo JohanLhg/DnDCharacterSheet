@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="400dp"
+    android:layout_height="match_parent"
+    android:background="@color/transparent_white"
+    android:orientation="vertical">
+
+    <ImageView
+        android:id="@+id/imageLogo"
+        android:layout_width="match_parent"
+        android:layout_height="160dp"
+        android:background="@color/white"
+        android:elevation="10dp"
+        android:padding="30dp"
+        android:scaleType="fitCenter"
+        app:srcCompat="@drawable/die"
+        android:importantForAccessibility="no" />
+
+    <TextView
+        android:id="@+id/titleLanguage"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:elevation="5dp"
+        android:padding="5dp"
+        android:text="@string/language"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:textStyle="bold" />
+
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/imageEN"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="30dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginEnd="15dp"
+            android:layout_marginBottom="15dp"
+            android:layout_weight="1"
+            android:adjustViewBounds="true"
+            android:elevation="5dp"
+            android:scaleType="fitCenter"
+            app:srcCompat="@drawable/flag_us"
+            android:contentDescription="@string/en" />
+
+        <ImageView
+            android:id="@+id/imageFR"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginEnd="30dp"
+            android:layout_marginBottom="15dp"
+            android:layout_weight="1"
+            android:adjustViewBounds="true"
+            android:elevation="5dp"
+            android:scaleType="fitCenter"
+            app:srcCompat="@drawable/flag_fr"
+            android:contentDescription="@string/fr" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/titleAccount"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:elevation="5dp"
+        android:padding="5dp"
+        android:text="@string/account"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:textStyle="bold" />
+
+    <Button
+        android:id="@+id/buttonChangeEmail"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:insetLeft="6dp"
+        android:insetRight="6dp"
+        android:text="@string/change_email"
+        app:icon="@drawable/email"
+        app:iconPadding="5dp"
+        app:iconSize="20dp" />
+
+    <Button
+        android:id="@+id/buttonChangePassword"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:insetLeft="6dp"
+        android:insetRight="6dp"
+        android:text="@string/change_password"
+        app:icon="@drawable/password"
+        app:iconPadding="5dp"
+        app:iconSize="20dp" />
+
+    <Button
+        android:id="@+id/buttonSignOut"
+        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:backgroundTint="@color/white"
+        android:elevation="2dp"
+        android:insetLeft="6dp"
+        android:insetRight="6dp"
+        android:text="@string/sign_out"
+        app:icon="@drawable/signout"
+        app:iconPadding="5dp"
+        app:iconSize="20dp"
+        app:strokeColor="@color/purple_500" />
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+
+    <Button
+        android:id="@+id/buttonSwitchCharacter"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:insetLeft="6dp"
+        android:insetRight="6dp"
+        android:text="@string/switch_character"
+        app:icon="@drawable/profile"
+        app:iconPadding="5dp"
+        app:iconSize="20dp" />
+
+</LinearLayout>

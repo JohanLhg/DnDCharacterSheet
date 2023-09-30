@@ -1,13 +1,36 @@
 package com.jlahougue.dndcharactersheet.ui.fragments.profile
 
-import androidx.lifecycle.LiveData
+import android.app.Application
+import android.content.Context
+import android.net.Uri
+import android.widget.ImageView
+import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
+import com.jlahougue.dndcharactersheet.dal.entities.Character
+import com.jlahougue.dndcharactersheet.dal.repositories.CharacterRepository
+import kotlin.concurrent.thread
 
-class ProfileViewModel : ViewModel() {
+class ProfileViewModel(application: Application) : AndroidViewModel(application) {
 
-    private val _text = MutableLiveData<String>().apply {
-        value = "This is home Fragment"
+    private val characterRepository = CharacterRepository(application)
+
+    val character: MutableLiveData<Character> = MutableLiveData(null)
+
+    var characterID = 0L
+        set(value) {
+            field = value
+            thread { character.postValue(characterRepository.get(value)) }
+        }
+
+    fun updateCharacter(character: Character) {
+        thread { characterRepository.update(character) }
     }
-    val text: LiveData<String> = _text
+
+    fun loadCharacterImage(context: Context, imageProfile: ImageView) {
+        thread { characterRepository.loadImage(characterID, context, imageProfile) }
+    }
+
+    fun updateProfileImage(uri: Uri) {
+        thread { characterRepository.uploadImage(characterID, uri) }
+    }
 }

@@ -33,10 +33,10 @@ class Character(
     var bonds: String = "",
     @ColumnInfo(name = CHARACTER_FLAWS)
     var flaws: String = "",
-    @ColumnInfo(name = CHARACTER_BIO_NAME)
-    var bioName: String = "",
-    @ColumnInfo(name = CHARACTER_BIOGRAPHY)
-    var biography: String = "",
+    @ColumnInfo(name = CHARACTER_BACKGROUND_TITLE)
+    var backgroundTitle: String = "",
+    @ColumnInfo(name = CHARACTER_BACKGROUND)
+    var background: String = "",
     @ColumnInfo(name = CHARACTER_IS_FAVORITE)
     var isFavorite: Boolean = false
 ) {
@@ -55,8 +55,8 @@ class Character(
         const val CHARACTER_IDEALS = "ideals"
         const val CHARACTER_BONDS = "bonds"
         const val CHARACTER_FLAWS = "flaws"
-        const val CHARACTER_BIO_NAME = "bio_name"
-        const val CHARACTER_BIOGRAPHY = "biography"
+        const val CHARACTER_BACKGROUND_TITLE = "background_title"
+        const val CHARACTER_BACKGROUND = "background"
         const val CHARACTER_IS_FAVORITE = "is_favorite"
     }
 
@@ -75,8 +75,8 @@ class Character(
             $ideals
             $bonds
             $flaws
-            $bioName
-            $biography
+            $backgroundTitle
+            $background
             $isFavorite
         """.trimIndent()
     }

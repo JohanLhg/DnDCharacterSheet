@@ -2,6 +2,7 @@ package com.jlahougue.dndcharactersheet.dal.repositories
 
 import android.app.Application
 import android.content.Context
+import android.net.Uri
 import android.widget.ImageView
 import com.jlahougue.dndcharactersheet.dal.entities.Character
 import com.jlahougue.dndcharactersheet.dal.firebase.dao.CharacterDao
@@ -43,7 +44,7 @@ class CharacterRepository(application: Application) {
     fun exists() = roomDao.exists()
 
     fun loadImage(characterID: Long, context: Context, view: ImageView) {
-        firebaseDao.loadCharacterImage(characterID, context, view)
+        firebaseDao.loadImage(characterID, context, view)
     }
 
     fun getFavoriteCharacter(callback: (Long?) -> Unit) {
@@ -56,4 +57,6 @@ class CharacterRepository(application: Application) {
         roomDao.updateFavorite(characterID, isFavorite)
         firebaseDao.updateFavorite(roomDao.getFavoriteMap())
     }
+
+    fun uploadImage(characterID: Long, uri: Uri) = firebaseDao.uploadImage(characterID, uri)
 }

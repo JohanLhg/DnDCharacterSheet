@@ -19,6 +19,9 @@ interface PreferencesDao {
     @Delete
     fun delete(preferences: Preferences)
 
+    @Query("UPDATE preferences SET language = :language WHERE id = 1")
+    fun setLanguage(language: String)
+
     @Query("SELECT language FROM preferences WHERE id = 1")
-    fun getLanguage(): String
+    fun getLanguage(): String?
 }

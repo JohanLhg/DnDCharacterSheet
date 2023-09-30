@@ -59,11 +59,9 @@ class FirebaseDatabase {
     }
 
     //region Image Functions
-    fun uploadImage(uri: Uri, characterID: Long) {
+    fun uploadImage(imageReference: StorageReference, uri: Uri) {
         //addTasksToQueue(UPLOAD_IMAGE)
-        val storageRef: StorageReference = storage.reference
-        val imageRef: StorageReference = storageRef.child("Images/Characters/$uid/$characterID.png")
-        imageRef.putFile(uri)
+        imageReference.putFile(uri)
             .addOnSuccessListener {
                 //finishTask(UPLOAD_IMAGE)
             }

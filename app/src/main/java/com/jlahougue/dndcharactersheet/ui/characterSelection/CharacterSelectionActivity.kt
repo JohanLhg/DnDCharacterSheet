@@ -8,11 +8,11 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.jlahougue.dndcharactersheet.R
 import com.jlahougue.dndcharactersheet.dal.entities.Character
-import com.jlahougue.dndcharactersheet.dal.entities.Character.Companion.CHARACTER_ID
 import com.jlahougue.dndcharactersheet.databinding.ActivityCharacterSelectionBinding
 import com.jlahougue.dndcharactersheet.ui.authentication.AuthActivity
 import com.jlahougue.dndcharactersheet.ui.characterSelection.CharacterSelectionViewModel.Companion.AUTO_LOAD
 import com.jlahougue.dndcharactersheet.ui.main.MainActivity
+import com.jlahougue.dndcharactersheet.ui.main.MainViewModel.Companion.CHARACTER_ID
 
 
 class CharacterSelectionActivity : AppCompatActivity(), CharacterAdapter.CharacterListener {

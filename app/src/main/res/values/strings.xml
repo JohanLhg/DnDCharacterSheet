@@ -49,6 +49,20 @@
     <string name="title_delete_character">Delete %s ?</string>
     <string name="text_delete_character">Are you sure you want to delete %s ?</string>
 
+    <!-- - - - - - - - - - - - Main  - - - - - - - - - - - -->
+    <!-- Settings -->
+    <string name="language">Language</string>
+    <string name="fr">French</string>
+    <string name="en">English</string>
+    <string name="account">Account</string>
+    <string name="change_email">Change email address</string>
+    <string name="change_password">Change password</string>
+    <string name="delete_account">Delete account</string>
+    <string name="delete_account_text">Are you sure you want to delete your account ?</string>
+    <string name="delete_account_success">Your account has been deleted.</string>
+    <string name="delete_account_failed">An error occurred while deleting your account.</string>
+    <string name="switch_character">Switch character</string>
+
     <!-- Profile -->
     <string name="profile_name">Name</string>
     <string name="profile_gender">Gender</string>
@@ -63,7 +77,7 @@
     <string name="profile_ideals">Ideals</string>
     <string name="profile_bonds">Bonds</string>
     <string name="profile_flaws">Flaws</string>
-    <string name="profile_biography">Biography</string>
+    <string name="profile_background">Background</string>
 
     <!-- Stats -->
     <array name="health_dice">
