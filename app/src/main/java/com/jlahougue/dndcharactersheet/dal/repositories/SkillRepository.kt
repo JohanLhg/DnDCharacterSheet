@@ -3,11 +3,11 @@ package com.jlahougue.dndcharactersheet.dal.repositories
 import android.app.Application
 import com.jlahougue.dndcharactersheet.dal.entities.Skill
 import com.jlahougue.dndcharactersheet.dal.firebase.dao.SkillDao
-import com.jlahougue.dndcharactersheet.dal.repositories.AbilityRepository.Companion.STRENGTH
+import com.jlahougue.dndcharactersheet.dal.repositories.AbilityRepository.Companion.CHARISMA
 import com.jlahougue.dndcharactersheet.dal.repositories.AbilityRepository.Companion.DEXTERITY
 import com.jlahougue.dndcharactersheet.dal.repositories.AbilityRepository.Companion.INTELLIGENCE
+import com.jlahougue.dndcharactersheet.dal.repositories.AbilityRepository.Companion.STRENGTH
 import com.jlahougue.dndcharactersheet.dal.repositories.AbilityRepository.Companion.WISDOM
-import com.jlahougue.dndcharactersheet.dal.repositories.AbilityRepository.Companion.CHARISMA
 import com.jlahougue.dndcharactersheet.dal.room.DnDDatabase
 
 class SkillRepository(application: Application) {
@@ -37,13 +37,17 @@ class SkillRepository(application: Application) {
 
     fun insert(skill: Skill) {
         roomDao.insert(skill)
-        firebaseDao.insert(skill)
+        firebaseDao.save(skill)
     }
+
+    fun saveToLocal(skill: Skill) = roomDao.insert(skill)
 
     fun update(skill: Skill) {
         roomDao.update(skill)
-        firebaseDao.update(skill)
+        firebaseDao.save(skill)
     }
+
+    fun getMap(characterID: Long) = roomDao.getMap(characterID)
 
     companion object {
         const val ACROBATICS = "ACROBATICS"

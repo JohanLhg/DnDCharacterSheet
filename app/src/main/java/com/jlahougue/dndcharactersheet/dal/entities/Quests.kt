@@ -14,8 +14,8 @@ class Quests(
 ) {
     companion object {
         const val TABLE_QUESTS = "quests"
-        const val QUESTS_CID = "quests_cid"
-        const val QUESTS_CONTENT = "quests_content"
+        const val QUESTS_CID = "cid"
+        const val QUESTS_CONTENT = "content"
     }
 
     override fun toString(): String {

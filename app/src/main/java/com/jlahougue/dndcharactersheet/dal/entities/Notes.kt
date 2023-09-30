@@ -14,8 +14,8 @@ class Notes(
 ) {
     companion object {
         const val TABLE_NOTES = "notes"
-        const val NOTES_CID = "notes_cid"
-        const val NOTES_CONTENT = "notes_content"
+        const val NOTES_CID = "cid"
+        const val NOTES_CONTENT = "content"
     }
 
     override fun toString(): String {

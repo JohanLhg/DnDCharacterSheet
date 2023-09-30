@@ -1,6 +1,8 @@
 package com.jlahougue.dndcharactersheet.dal.repositories
 
 import android.app.Application
+import android.content.Context
+import android.widget.ImageView
 import com.jlahougue.dndcharactersheet.dal.entities.Character
 import com.jlahougue.dndcharactersheet.dal.firebase.dao.CharacterDao
 import com.jlahougue.dndcharactersheet.dal.room.DnDDatabase
@@ -13,18 +15,45 @@ class CharacterRepository(application: Application) {
         insert(Character())
     }
 
-    fun insert(character: Character) {
-        roomDao.insert(character)
-        firebaseDao.insert(character)
+    fun insert(character: Character): Long {
+        val characterID = roomDao.insert(character)
+        character.id = characterID
+        firebaseDao.save(character)
+        return characterID
     }
+
+    fun saveToLocal(character: Character) = roomDao.insert(character)
 
     fun update(character: Character) {
         roomDao.update(character)
-        firebaseDao.update(character)
+        firebaseDao.save(character)
     }
 
-    fun delete(character: Character) {
-        roomDao.delete(character)
-        firebaseDao.delete(character)
+    fun delete(characterID: Long) {
+        roomDao.delete(characterID)
+        firebaseDao.delete(characterID)
+    }
+
+    fun get() = roomDao.get()
+
+    fun get(characterID: Long) = roomDao.get(characterID)
+
+    fun getIDs() = roomDao.getIDs()
+
+    fun exists() = roomDao.exists()
+
+    fun loadImage(characterID: Long, context: Context, view: ImageView) {
+        firebaseDao.loadCharacterImage(characterID, context, view)
+    }
+
+    fun getFavoriteCharacter(callback: (Long?) -> Unit) {
+        if (roomDao.hasFavorite())
+            callback(roomDao.getFavorite())
+        else callback(null)
+    }
+
+    fun updateFavoriteCharacter(characterID: Long, isFavorite: Boolean) {
+        roomDao.updateFavorite(characterID, isFavorite)
+        firebaseDao.updateFavorite(roomDao.getFavoriteMap())
     }
 }

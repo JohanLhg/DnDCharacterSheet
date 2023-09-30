@@ -7,19 +7,19 @@
 
     <fragment
         android:id="@+id/navigation_profile"
-        android:name="com.jlahougue.dndcharactersheet.ui.profile.ProfileFragment"
+        android:name="com.jlahougue.dndcharactersheet.ui.fragments.profile.ProfileFragment"
         android:label="@string/title_profile"
         tools:layout="@layout/fragment_profile" />
 
     <fragment
         android:id="@+id/navigation_stats"
-        android:name="com.jlahougue.dndcharactersheet.ui.stats.StatsFragment"
+        android:name="com.jlahougue.dndcharactersheet.ui.fragments.stats.StatsFragment"
         android:label="@string/title_stats"
         tools:layout="@layout/fragment_stats" />
 
     <fragment
         android:id="@+id/navigation_inventory"
-        android:name="com.jlahougue.dndcharactersheet.ui.inventory.InventoryFragment"
+        android:name="com.jlahougue.dndcharactersheet.ui.fragments.inventory.InventoryFragment"
         android:label="@string/title_inventory"
         tools:layout="@layout/fragment_inventory" />
 </navigation>

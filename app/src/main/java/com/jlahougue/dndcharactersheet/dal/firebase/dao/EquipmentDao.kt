@@ -6,15 +6,7 @@ import com.jlahougue.dndcharactersheet.dal.firebase.FirebaseDatabase
 class EquipmentDao {
     private val firebaseDatabase = FirebaseDatabase.getInstance()
 
-    fun insert(equipment: Equipment) {
-        // TODO
-    }
-
-    fun update(equipment: Equipment) {
-        // TODO
-    }
-
-    fun delete(equipment: Equipment) {
-        // TODO
+    fun save(equipment: Equipment) {
+        firebaseDatabase.updateCharacterSheet(equipment.cid, mapOf("equipment" to equipment.content))
     }
 }

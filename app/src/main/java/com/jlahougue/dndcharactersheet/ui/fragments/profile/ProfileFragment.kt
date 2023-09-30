@@ -1,4 +1,4 @@
-package com.jlahougue.dndcharactersheet.ui.profile
+package com.jlahougue.dndcharactersheet.ui.fragments.profile
 
 import android.os.Bundle
 import android.view.LayoutInflater

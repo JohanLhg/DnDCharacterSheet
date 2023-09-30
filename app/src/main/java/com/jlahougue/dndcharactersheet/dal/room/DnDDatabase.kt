@@ -16,23 +16,23 @@ import com.jlahougue.dndcharactersheet.dal.entities.Preferences
 import com.jlahougue.dndcharactersheet.dal.entities.Preferences.Companion.TABLE_PREFERENCES
 import com.jlahougue.dndcharactersheet.dal.entities.Quests
 import com.jlahougue.dndcharactersheet.dal.entities.Skill
-import com.jlahougue.dndcharactersheet.dal.entities.Stat
-import com.jlahougue.dndcharactersheet.dal.firebase.dao.MoneyDao
+import com.jlahougue.dndcharactersheet.dal.entities.Stats
 import com.jlahougue.dndcharactersheet.dal.room.dao.AbilityDao
 import com.jlahougue.dndcharactersheet.dal.room.dao.CharacterDao
 import com.jlahougue.dndcharactersheet.dal.room.dao.DeathSavesDao
 import com.jlahougue.dndcharactersheet.dal.room.dao.EquipmentDao
 import com.jlahougue.dndcharactersheet.dal.room.dao.HealthDao
+import com.jlahougue.dndcharactersheet.dal.room.dao.MoneyDao
 import com.jlahougue.dndcharactersheet.dal.room.dao.NotesDao
 import com.jlahougue.dndcharactersheet.dal.room.dao.PreferencesDao
 import com.jlahougue.dndcharactersheet.dal.room.dao.QuestsDao
 import com.jlahougue.dndcharactersheet.dal.room.dao.SkillDao
-import com.jlahougue.dndcharactersheet.dal.room.dao.StatDao
+import com.jlahougue.dndcharactersheet.dal.room.dao.StatsDao
 
 @Database(
     entities = [Ability::class, Character::class, DeathSaves::class, Equipment::class, Health::class,
-        Money::class, Notes::class, Preferences::class, Quests::class, Skill::class, Stat::class],
-    version = 1
+        Money::class, Notes::class, Preferences::class, Quests::class, Skill::class, Stats::class],
+    version = 2
 )
 abstract class DnDDatabase : RoomDatabase() {
     companion object {
@@ -108,6 +108,6 @@ abstract class DnDDatabase : RoomDatabase() {
     abstract fun preferencesDao(): PreferencesDao
     abstract fun questsDao(): QuestsDao
     abstract fun skillDao(): SkillDao
-    abstract fun statDao(): StatDao
+    abstract fun statDao(): StatsDao
     //endregion
 }

@@ -15,16 +15,15 @@ class EquipmentRepository(application: Application) {
 
     fun insert(equipment: Equipment) {
         roomDao.insert(equipment)
-        firebaseDao.insert(equipment)
+        firebaseDao.save(equipment)
     }
+
+    fun saveToLocal(equipment: Equipment) = roomDao.insert(equipment)
 
     fun update(equipment: Equipment) {
         roomDao.update(equipment)
-        firebaseDao.update(equipment)
+        firebaseDao.save(equipment)
     }
 
-    fun delete(equipment: Equipment) {
-        roomDao.delete(equipment)
-        firebaseDao.delete(equipment)
-    }
+    fun get(characterID: Long) = roomDao.get(characterID)
 }

@@ -15,16 +15,15 @@ class QuestsRepository(application: Application) {
 
     fun insert(quests: Quests) {
         roomDao.insert(quests)
-        firebaseDao.insert(quests)
+        firebaseDao.save(quests)
     }
+
+    fun saveToLocal(quests: Quests) = roomDao.insert(quests)
 
     fun update(quests: Quests) {
         roomDao.update(quests)
-        firebaseDao.update(quests)
+        firebaseDao.save(quests)
     }
 
-    fun delete(quests: Quests) {
-        roomDao.delete(quests)
-        firebaseDao.delete(quests)
-    }
+    fun get(characterID: Long) = roomDao.get(characterID)
 }

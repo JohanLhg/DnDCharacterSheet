@@ -15,16 +15,15 @@ class MoneyRepository(application: Application) {
 
     fun insert(money: Money) {
         roomDao.insert(money)
-        firebaseDao.insert(money)
+        firebaseDao.save(money)
     }
+
+    fun saveToLocal(money: Money) = roomDao.insert(money)
 
     fun update(money: Money) {
         roomDao.update(money)
-        firebaseDao.update(money)
+        firebaseDao.save(money)
     }
 
-    fun delete(money: Money) {
-        roomDao.delete(money)
-        firebaseDao.delete(money)
-    }
+    fun get(characterID: Long) = roomDao.get(characterID)
 }

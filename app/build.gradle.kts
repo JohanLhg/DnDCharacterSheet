@@ -1,6 +1,8 @@
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
+    id("com.google.devtools.ksp")
+    id("com.google.gms.google-services")
 }
 
 android {
@@ -48,7 +50,12 @@ dependencies {
     implementation("com.firebaseui:firebase-ui-storage:8.0.2")
     implementation("com.google.firebase:firebase-storage-ktx:20.2.1")
 
-    implementation("androidx.room:room-runtime:2.5.2")
+    val roomVersion = "2.5.2"
+    implementation("androidx.room:room-runtime:$roomVersion")
+    ksp("androidx.room:room-compiler:$roomVersion")
+
+    implementation("com.github.bumptech.glide:glide:4.13.2")
+    ksp("com.github.bumptech.glide:compiler:4.13.2")
 
     implementation("androidx.legacy:legacy-support-v4:1.0.0")
     implementation("androidx.core:core-ktx:1.12.0")

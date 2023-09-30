@@ -8,7 +8,7 @@
     android:paddingStart="10dp"
     android:paddingTop="10dp"
     android:paddingEnd="10dp"
-    tools:context=".ui.profile.ProfileFragment">
+    tools:context=".ui.fragments.profile.ProfileFragment">
 
     <LinearLayout
         android:layout_width="match_parent"

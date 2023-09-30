@@ -20,18 +20,19 @@ class AbilityRepository(application: Application) {
 
     fun insert(ability: Ability) {
         roomDao.insert(ability)
-        firebaseDao.insert(ability)
+        firebaseDao.save(ability)
     }
+
+    fun saveToLocal(ability: Ability) = roomDao.insert(ability)
 
     fun update(ability: Ability) {
         roomDao.update(ability)
-        firebaseDao.update(ability)
+        firebaseDao.save(ability)
     }
 
-    fun delete(ability: Ability) {
-        roomDao.delete(ability)
-        firebaseDao.delete(ability)
-    }
+    fun get(characterID: Long) = roomDao.get(characterID)
+
+    fun getMap(characterID: Long) = roomDao.getMap(characterID)
 
     companion object {
         const val STRENGTH = "STR"

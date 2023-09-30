@@ -6,15 +6,7 @@ import com.jlahougue.dndcharactersheet.dal.firebase.FirebaseDatabase
 class DeathSavesDao {
     private val firebaseDatabase = FirebaseDatabase.getInstance()
 
-    fun insert(deathSaves: DeathSaves) {
-        // TODO
-    }
-
-    fun update(deathSaves: DeathSaves) {
-        // TODO
-    }
-
-    fun delete(deathSaves: DeathSaves) {
-        // TODO
+    fun save(deathSaves: DeathSaves) {
+        firebaseDatabase.updateCharacterSheet(deathSaves.cid, mapOf("deathSaves" to deathSaves))
     }
 }

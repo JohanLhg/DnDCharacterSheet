@@ -15,16 +15,15 @@ class HealthRepository(application: Application) {
 
     fun insert(health: Health) {
         roomDao.insert(health)
-        firebaseDao.insert(health)
+        firebaseDao.save(health)
     }
+
+    fun saveToLocal(health: Health) = roomDao.insert(health)
 
     fun update(health: Health) {
         roomDao.update(health)
-        firebaseDao.update(health)
+        firebaseDao.save(health)
     }
 
-    fun delete(health: Health) {
-        roomDao.delete(health)
-        firebaseDao.delete(health)
-    }
+    fun get(characterID: Long) = roomDao.get(characterID)
 }

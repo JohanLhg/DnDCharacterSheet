@@ -1,4 +1,4 @@
-package com.jlahougue.dndcharactersheet.ui.inventory
+package com.jlahougue.dndcharactersheet.ui.fragments.stats
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -6,11 +6,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import com.jlahougue.dndcharactersheet.databinding.FragmentInventoryBinding
+import com.jlahougue.dndcharactersheet.databinding.FragmentStatsBinding
 
-class InventoryFragment : Fragment() {
+class StatsFragment : Fragment() {
 
-    private var _binding: FragmentInventoryBinding? = null
+    private var _binding: FragmentStatsBinding? = null
 
     // This property is only valid between onCreateView and
     // onDestroyView.
@@ -21,10 +21,10 @@ class InventoryFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val inventoryViewModel =
-            ViewModelProvider(this).get(InventoryViewModel::class.java)
+        val statsViewModel =
+            ViewModelProvider(this).get(StatsViewModel::class.java)
 
-        _binding = FragmentInventoryBinding.inflate(inflater, container, false)
+        _binding = FragmentStatsBinding.inflate(inflater, container, false)
 
         return binding.root
     }

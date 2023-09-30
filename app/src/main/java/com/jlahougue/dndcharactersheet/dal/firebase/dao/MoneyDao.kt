@@ -6,15 +6,7 @@ import com.jlahougue.dndcharactersheet.dal.firebase.FirebaseDatabase
 class MoneyDao {
     private val firebaseDatabase = FirebaseDatabase.getInstance()
 
-    fun insert(money: Money) {
-        // TODO
-    }
-
-    fun update(money: Money) {
-        // TODO
-    }
-
-    fun delete(money: Money) {
-        // TODO
+    fun save(money: Money) {
+        firebaseDatabase.updateCharacterSheet(money.cid, mapOf("money" to money))
     }
 }

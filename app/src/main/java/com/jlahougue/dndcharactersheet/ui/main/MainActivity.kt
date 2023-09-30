@@ -1,11 +1,12 @@
-package com.jlahougue.dndcharactersheet
+package com.jlahougue.dndcharactersheet.ui.main
 
 import android.os.Bundle
-import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupWithNavController
+import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.jlahougue.dndcharactersheet.R
 import com.jlahougue.dndcharactersheet.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {

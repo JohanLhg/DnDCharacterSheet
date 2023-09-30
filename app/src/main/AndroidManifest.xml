@@ -13,15 +13,20 @@
         android:theme="@style/Theme.DDCharacterSheet"
         tools:targetApi="31">
         <activity
-            android:name=".MainActivity"
-            android:exported="true"
-            android:label="@string/app_name">
+            android:name=".ui.authentication.AuthActivity"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".ui.characterSelection.CharacterSelectionActivity"
+            android:exported="true" />
+        <activity
+            android:name=".ui.main.MainActivity"
+            android:exported="true" />
     </application>
 
 </manifest>

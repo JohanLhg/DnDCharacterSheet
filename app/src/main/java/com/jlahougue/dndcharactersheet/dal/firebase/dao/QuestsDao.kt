@@ -6,15 +6,7 @@ import com.jlahougue.dndcharactersheet.dal.firebase.FirebaseDatabase
 class QuestsDao {
     private val firebaseDatabase = FirebaseDatabase.getInstance()
 
-    fun insert(quests: Quests) {
-        // TODO
-    }
-
-    fun update(quests: Quests) {
-        // TODO
-    }
-
-    fun delete(quests: Quests) {
-        // TODO
+    fun save(quests: Quests) {
+        firebaseDatabase.updateCharacterSheet(quests.cid, mapOf("quests" to quests.content))
     }
 }

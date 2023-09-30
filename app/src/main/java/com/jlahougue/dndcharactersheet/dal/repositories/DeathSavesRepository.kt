@@ -15,16 +15,15 @@ class DeathSavesRepository(application: Application) {
 
     fun insert(deathSaves: DeathSaves) {
         roomDao.insert(deathSaves)
-        firebaseDao.insert(deathSaves)
+        firebaseDao.save(deathSaves)
     }
+
+    fun saveToLocal(deathSaves: DeathSaves) = roomDao.insert(deathSaves)
 
     fun update(deathSaves: DeathSaves) {
         roomDao.update(deathSaves)
-        firebaseDao.update(deathSaves)
+        firebaseDao.save(deathSaves)
     }
 
-    fun delete(deathSaves: DeathSaves) {
-        roomDao.delete(deathSaves)
-        firebaseDao.delete(deathSaves)
-    }
+    fun get(characterID: Long) = roomDao.get(characterID)
 }

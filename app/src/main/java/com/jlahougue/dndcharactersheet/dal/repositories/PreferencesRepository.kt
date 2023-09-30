@@ -12,4 +12,13 @@ class PreferencesRepository(application: Application) {
     fun insert(preferences: Preferences) = roomDao.insert(preferences)
 
     fun update(preferences: Preferences) = roomDao.update(preferences)
+
+    fun getLanguage(callback: (String) -> Unit) {
+        val language = roomDao.getLanguage()
+        if (language == null) {
+            create()
+            callback(roomDao.getLanguage()!!)
+        } else
+            callback(language)
+    }
 }

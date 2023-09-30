@@ -14,7 +14,7 @@ class Preferences(
 ) {
     companion object {
         const val TABLE_PREFERENCES = "preferences"
-        const val PREFERENCES_ID = "preferences_id"
-        const val PREFERENCES_LANGUAGE = "preferences_language"
+        const val PREFERENCES_ID = "id"
+        const val PREFERENCES_LANGUAGE = "language"
     }
 }

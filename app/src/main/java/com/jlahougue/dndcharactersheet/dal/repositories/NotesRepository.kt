@@ -15,16 +15,15 @@ class NotesRepository(application: Application) {
 
     fun insert(notes: Notes) {
         roomDao.insert(notes)
-        firebaseDao.insert(notes)
+        firebaseDao.save(notes)
     }
+
+    fun saveToLocal(notes: Notes) = roomDao.insert(notes)
 
     fun update(notes: Notes) {
         roomDao.update(notes)
-        firebaseDao.update(notes)
+        firebaseDao.save(notes)
     }
 
-    fun delete(notes: Notes) {
-        roomDao.delete(notes)
-        firebaseDao.delete(notes)
-    }
+    fun get(characterID: Long) = roomDao.get(characterID)
 }

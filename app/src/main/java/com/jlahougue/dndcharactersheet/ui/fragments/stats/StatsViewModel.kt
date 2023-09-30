@@ -1,4 +1,4 @@
-package com.jlahougue.dndcharactersheet.ui.stats
+package com.jlahougue.dndcharactersheet.ui.fragments.stats
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
