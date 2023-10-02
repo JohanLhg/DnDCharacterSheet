@@ -32,7 +32,7 @@ import com.jlahougue.dndcharactersheet.dal.room.dao.StatsDao
 @Database(
     entities = [Ability::class, Character::class, DeathSaves::class, Equipment::class, Health::class,
         Money::class, Notes::class, Preferences::class, Quests::class, Skill::class, Stats::class],
-    version = 3
+    version = 4
 )
 abstract class DnDDatabase : RoomDatabase() {
     companion object {

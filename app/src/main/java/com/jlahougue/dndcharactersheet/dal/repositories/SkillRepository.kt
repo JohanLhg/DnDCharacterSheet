@@ -49,6 +49,8 @@ class SkillRepository(application: Application) {
 
     fun getMap(characterID: Long) = roomDao.getMap(characterID)
 
+    fun get(characterID: Long) = roomDao.get(characterID)
+
     companion object {
         const val ACROBATICS = "ACROBATICS"
         const val ANIMAL_HANDLING = "ANIMAL_HANDLING"

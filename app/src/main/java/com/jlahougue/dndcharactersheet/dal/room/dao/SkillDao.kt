@@ -21,6 +21,9 @@ interface SkillDao {
     @Delete
     fun delete(skill: Skill)
 
+    @Query("SELECT * FROM skill WHERE cid = :characterID")
+    fun get(characterID: Long): List<Skill>
+
     @MapInfo(keyColumn = SKILL_NAME)
     @Query("SELECT * FROM skill WHERE cid = :characterID")
     fun getMap(characterID: Long): Map<String, Skill>

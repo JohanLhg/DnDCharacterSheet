@@ -1,0 +1,521 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="wrap_content"
+    android:layout_height="match_parent"
+    android:gravity="center_horizontal"
+    android:orientation="vertical">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/layoutCurrentHealth"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp">
+
+        <FrameLayout
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginTop="12dp"
+            android:background="@drawable/frame_rounded_corners"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/labelCurrentHealth"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:paddingStart="15dp"
+            android:paddingEnd="15dp"
+            android:text="@string/hit_points"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:layout_marginEnd="5dp"
+            android:layout_marginBottom="10dp"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/labelCurrentHealth">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_marginStart="5dp"
+                android:orientation="vertical"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <ImageButton
+                    android:id="@+id/buttonCurrentHealthPlus"
+                    android:layout_width="wrap_content"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:adjustViewBounds="true"
+                    android:backgroundTint="@color/green"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/plus"
+                    app:tint="@color/white" />
+
+                <ImageButton
+                    android:id="@+id/buttonCurrentHealthMinus"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:adjustViewBounds="true"
+                    android:backgroundTint="@color/red"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/minus"
+                    app:tint="@color/white" />
+            </LinearLayout>
+
+            <ImageView
+                android:id="@+id/imageSlash"
+                android:layout_width="wrap_content"
+                android:layout_height="80dp"
+                android:adjustViewBounds="true"
+                android:scaleType="fitCenter"
+                android:src="@drawable/slash"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <EditText
+                android:id="@+id/editCurrent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="60dp"
+                android:background="@drawable/background_rounded_corners"
+                android:gravity="center_horizontal"
+                android:inputType="number"
+                android:maxLength="4"
+                android:minWidth="30dp"
+                android:paddingStart="5dp"
+                android:paddingEnd="5dp"
+                android:selectAllOnFocus="true"
+                android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                android:textSize="28sp"
+                app:layout_constraintEnd_toEndOf="@+id/imageSlash"
+                app:layout_constraintTop_toTopOf="@+id/imageSlash" />
+
+            <EditText
+                android:id="@+id/editMax"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="60dp"
+                android:layout_marginBottom="5dp"
+                android:background="@drawable/background_rounded_corners"
+                android:gravity="center_horizontal"
+                android:inputType="number"
+                android:maxLength="4"
+                android:minWidth="30dp"
+                android:paddingStart="5dp"
+                android:paddingEnd="5dp"
+                android:selectAllOnFocus="true"
+                android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                android:textSize="28sp"
+                app:layout_constraintBottom_toBottomOf="@+id/imageSlash"
+                app:layout_constraintStart_toStartOf="@+id/imageSlash" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_marginEnd="5dp"
+                android:orientation="vertical"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <ImageButton
+                    android:id="@+id/buttonMaxHealthPlus"
+                    android:layout_width="wrap_content"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:adjustViewBounds="true"
+                    android:backgroundTint="@color/green"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/plus"
+                    app:tint="@color/white" />
+
+                <ImageButton
+                    android:id="@+id/ButtonMaxHealthMinus"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:adjustViewBounds="true"
+                    android:backgroundTint="@color/red"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/minus"
+                    app:tint="@color/white" />
+            </LinearLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/layoutTemporaryHealth"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp">
+
+        <FrameLayout
+            android:id="@+id/frameLayout"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginTop="12dp"
+            android:background="@drawable/frame_rounded_corners"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/labelTemporaryHealth"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:paddingStart="15dp"
+            android:paddingEnd="15dp"
+            android:text="@string/temporary_hit_points"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="0dp"
+            android:layout_height="80dp"
+            android:layout_marginStart="5dp"
+            android:layout_marginEnd="5dp"
+            android:layout_marginBottom="10dp"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/labelTemporaryHealth">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_marginStart="5dp"
+                android:orientation="vertical"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <ImageButton
+                    android:id="@+id/buttonTemporaryHealthPlus"
+                    android:layout_width="wrap_content"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:adjustViewBounds="true"
+                    android:backgroundTint="@color/green"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/plus"
+                    app:tint="@color/white" />
+
+                <ImageButton
+                    android:id="@+id/buttonTemporaryHealthMinus"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:adjustViewBounds="true"
+                    android:backgroundTint="@color/red"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/minus"
+                    app:tint="@color/white" />
+            </LinearLayout>
+
+            <EditText
+                android:id="@+id/editTemporaryHealth"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:layout_marginEnd="5dp"
+                android:background="@drawable/background_rounded_corners"
+                android:inputType="number"
+                android:minWidth="30dp"
+                android:paddingStart="5dp"
+                android:paddingEnd="5dp"
+                android:selectAllOnFocus="true"
+                android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                android:textSize="28sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                android:id="@+id/imageView4"
+                android:layout_width="45dp"
+                android:layout_height="wrap_content"
+                android:adjustViewBounds="true"
+                android:padding="10dp"
+                android:scaleType="fitCenter"
+                android:src="@drawable/close"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:tint="@color/red" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/layoutHealthDice"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp">
+
+        <FrameLayout
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginTop="12dp"
+            android:background="@drawable/frame_rounded_corners"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/labelHealthDice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:paddingStart="15dp"
+            android:paddingEnd="15dp"
+            android:text="@string/hit_dice"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:layout_marginEnd="5dp"
+            android:layout_marginBottom="10dp"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/labelHealthDice">
+
+            <androidx.gridlayout.widget.GridLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:columnCount="2">
+
+                <TextView
+                    android:id="@+id/textView11"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:padding="5dp"
+                    android:text="@string/hit_dice"
+                    app:layout_columnWeight="3"
+                    app:layout_rowWeight="1" />
+
+                <Spinner
+                    android:id="@+id/spinner"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:entries="@array/health_dice"
+                    app:layout_columnWeight="2"
+                    app:layout_rowWeight="1" />
+
+                <TextView
+                    android:id="@+id/textView13"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:padding="5dp"
+                    android:text="@string/nbr_hit_dice"
+                    app:layout_columnWeight="3"
+                    app:layout_rowWeight="1" />
+
+                <TextView
+                    android:id="@+id/textView14"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:padding="5dp"
+                    android:text="7"
+                    app:layout_columnWeight="2"
+                    app:layout_rowWeight="1" />
+            </androidx.gridlayout.widget.GridLayout>
+        </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/layoutDeathSaves"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp">
+
+        <FrameLayout
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginTop="12dp"
+            android:background="@drawable/frame_rounded_corners"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/labelDeathSaves"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:paddingStart="15dp"
+            android:paddingEnd="15dp"
+            android:text="@string/death_saves"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:layout_marginEnd="5dp"
+            android:layout_marginBottom="10dp"
+            android:gravity="center"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/labelDeathSaves">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="fill|fill_vertical"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/textView86"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:padding="5dp"
+                    android:text="@string/successes" />
+
+                <TextView
+                    android:id="@+id/textView85"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:padding="5dp"
+                    android:text="@string/failures" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:orientation="horizontal">
+
+                    <CheckBox
+                        android:id="@+id/checkBox29"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:buttonTint="@color/green" />
+
+                    <CheckBox
+                        android:id="@+id/checkBox58"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:buttonTint="@color/green" />
+
+                    <CheckBox
+                        android:id="@+id/checkBox75"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:buttonTint="@color/green" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:orientation="horizontal">
+
+                    <CheckBox
+                        android:id="@+id/checkBox13"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:buttonTint="@color/red" />
+
+                    <CheckBox
+                        android:id="@+id/checkBox8"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:buttonTint="@color/red" />
+
+                    <CheckBox
+                        android:id="@+id/checkBox7"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:buttonTint="@color/red" />
+                </LinearLayout>
+
+            </LinearLayout>
+        </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <Button
+        android:id="@+id/buttonShortRest"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
+        android:layout_marginEnd="5dp"
+        android:backgroundTint="@color/green"
+        android:text="@string/short_rest"
+        app:icon="@drawable/restore"
+        app:iconPadding="5dp"
+        app:iconSize="20dp" />
+
+    <Button
+        android:id="@+id/buttonLongRest"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
+        android:layout_marginEnd="5dp"
+        android:backgroundTint="@color/green"
+        android:text="@string/long_rest"
+        app:icon="@drawable/sleep_b"
+        app:iconPadding="5dp"
+        app:iconSize="20dp" />
+
+</LinearLayout>

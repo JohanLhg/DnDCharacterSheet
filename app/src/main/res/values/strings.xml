@@ -11,7 +11,10 @@
     <string name="edit">Edit</string>
     <string name="delete">Delete</string>
     <string name="add">Add</string>
+    <string name="plus">+</string>
+    <string name="plus_value">+ %d</string>
     <string name="hint_search">Search…</string>
+    <string name="button_search">Search button</string>
 
     <!-- Auth -->
     <string name="label_email">Email :</string>
