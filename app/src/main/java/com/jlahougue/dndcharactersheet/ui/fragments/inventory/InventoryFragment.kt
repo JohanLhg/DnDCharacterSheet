@@ -8,6 +8,7 @@ import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.jlahougue.dndcharactersheet.databinding.FragmentInventoryBinding
+import com.jlahougue.dndcharactersheet.extensions.observeOnce
 import com.jlahougue.dndcharactersheet.ui.main.MainActivity
 
 class InventoryFragment : Fragment() {
@@ -36,33 +37,21 @@ class InventoryFragment : Fragment() {
             inventoryViewModel.characterID = it
         }
 
-        inventoryViewModel.notes.observe(viewLifecycleOwner) { notes ->
-            if (notes == null) return@observe
-
+        inventoryViewModel.notes.observeOnce(viewLifecycleOwner) { notes ->
             binding.editNotes.setText(notes)
-
             binding.editNotes.addTextChangedListener {
                 inventoryViewModel.updateNotes(it.toString())
             }
-
-            inventoryViewModel.notes.removeObservers(viewLifecycleOwner)
         }
 
-        inventoryViewModel.quests.observe(viewLifecycleOwner) { quests ->
-            if (quests == null) return@observe
-
+        inventoryViewModel.quests.observeOnce(viewLifecycleOwner) { quests ->
             binding.editQuests.setText(quests)
-
             binding.editQuests.addTextChangedListener {
                 inventoryViewModel.updateQuests(it.toString())
             }
-
-            inventoryViewModel.quests.removeObservers(viewLifecycleOwner)
         }
 
-        inventoryViewModel.money.observe(viewLifecycleOwner) {
-            if (it == null) return@observe
-
+        inventoryViewModel.money.observeOnce(viewLifecycleOwner) {
             binding.editCopperPieces.setText(it.copperPieces.toString())
             binding.editSilverPieces.setText(it.silverPieces.toString())
             binding.editElectrumPieces.setText(it.electrumPieces.toString())
@@ -76,20 +65,13 @@ class InventoryFragment : Fragment() {
             binding.editGoldPieces.addTextChangedListener { updateMoney() }
             binding.editPlatinumPieces.addTextChangedListener { updateMoney() }
             binding.editOtherCurrencies.addTextChangedListener { updateMoney() }
-
-            inventoryViewModel.money.removeObservers(viewLifecycleOwner)
         }
 
-        inventoryViewModel.equipment.observe(viewLifecycleOwner) { equipments ->
-            if (equipments == null) return@observe
-
+        inventoryViewModel.equipment.observeOnce(viewLifecycleOwner) { equipments ->
             binding.editEquipment.setText(equipments)
-
             binding.editEquipment.addTextChangedListener {
                 inventoryViewModel.updateEquipment(it.toString())
             }
-
-            inventoryViewModel.equipment.removeObservers(viewLifecycleOwner)
         }
 
         return binding.root

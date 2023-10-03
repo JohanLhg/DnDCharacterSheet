@@ -28,22 +28,27 @@ import com.jlahougue.dndcharactersheet.dal.room.dao.PreferencesDao
 import com.jlahougue.dndcharactersheet.dal.room.dao.QuestsDao
 import com.jlahougue.dndcharactersheet.dal.room.dao.SkillDao
 import com.jlahougue.dndcharactersheet.dal.room.dao.StatsDao
+import com.jlahougue.dndcharactersheet.dal.room.views.AbilityModifierView
+import com.jlahougue.dndcharactersheet.dal.room.views.ProficiencyView
+import com.jlahougue.dndcharactersheet.dal.room.views.SkillView
 
 @Database(
     entities = [Ability::class, Character::class, DeathSaves::class, Equipment::class, Health::class,
         Money::class, Notes::class, Preferences::class, Quests::class, Skill::class, Stats::class],
-    version = 4
+    views = [AbilityModifierView::class, ProficiencyView::class, SkillView::class],
+    version = 5
 )
 abstract class DnDDatabase : RoomDatabase() {
     companion object {
-        //Table name
+        //Database name
         private const val DATABASE_NAME = "dnd_database"
 
         /********* TABLES *********
+         * Preferences
          * Character
          * Ability
          * Skill
-         * Stat
+         * Stats
          * Health
          * Death Saves
          * Equipment
@@ -51,22 +56,13 @@ abstract class DnDDatabase : RoomDatabase() {
          * Notes
          * Preferences
          * Quests
-         * Skill
-         * Stat
          */
 
-        //region Constants
-        const val MELEE = "MELEE"
-        const val RANGED = "RANGED"
-        const val SPELL = "SPELL"
-
-        const val COPPER_PIECES = "CP"
-        const val SILVER_PIECES = "SP"
-        const val ELECTRUM_PIECES = "EP"
-        const val GOLD_PIECES = "GP"
-        const val PLATINUM_PIECES = "PP"
-        const val OTHER_CURRENCIES = "OTHER"
-        //endregion
+        /********* VIEWS *********
+         * AbilityModifierView
+         * ProficiencyView
+         * SkillView
+         */
 
         private var INSTANCE: DnDDatabase? = null
 

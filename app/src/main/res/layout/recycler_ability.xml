@@ -6,7 +6,7 @@
     android:padding="5dp">
 
     <ImageView
-        android:id="@+id/imageView"
+        android:id="@+id/backgroundAbility"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="5dp"
@@ -22,35 +22,33 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
-        android:id="@+id/imageView3"
+        android:id="@+id/backgroundAbilityLabel"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:scaleType="fitXY"
         android:src="@drawable/label_background"
-        app:layout_constraintBottom_toBottomOf="@+id/textView"
+        app:layout_constraintBottom_toBottomOf="@+id/textAbilityName"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/textView" />
+        app:layout_constraintTop_toTopOf="@+id/textAbilityName" />
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/textAbilityName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="center"
         android:padding="2dp"
-        android:text="Constitution"
         android:textAppearance="@style/TextAppearance.AppCompat.Small"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/imageView"
-        app:layout_constraintStart_toStartOf="@+id/imageView"
+        app:layout_constraintEnd_toEndOf="@+id/backgroundAbility"
+        app:layout_constraintStart_toStartOf="@+id/backgroundAbility"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.12" />
 
     <TextView
-        android:id="@+id/textView2"
+        android:id="@+id/textAbilityModifier"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="+ 3"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -58,12 +56,20 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/textView3"
+    <EditText
+        android:id="@+id/editAbilityValue"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="16"
+        android:background="@drawable/background_rounded_corners"
+        android:gravity="center_horizontal"
+        android:inputType="number"
+        android:maxLength="2"
+        android:minWidth="20dp"
+        android:paddingStart="5dp"
+        android:paddingEnd="5dp"
+        android:selectAllOnFocus="true"
         android:textAppearance="@style/TextAppearance.AppCompat.Small"
+        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

@@ -16,16 +16,14 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:padding="5dp"
-        android:text="+ 2"
         android:textAppearance="@style/TextAppearance.AppCompat.Small" />
 
     <TextView
-        android:id="@+id/textSkillLabel"
+        android:id="@+id/textSkillName"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:gravity="center"
         android:padding="5dp"
-        android:text="Accrobaties (Dex)"
         android:textAppearance="@style/TextAppearance.AppCompat.Small" />
 </LinearLayout>

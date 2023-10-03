@@ -11,6 +11,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
 import com.jlahougue.dndcharactersheet.R
 import com.jlahougue.dndcharactersheet.databinding.FragmentProfileBinding
+import com.jlahougue.dndcharactersheet.extensions.observeOnce
 import com.jlahougue.dndcharactersheet.ui.main.MainActivity
 
 class ProfileFragment : Fragment() {
@@ -64,9 +65,7 @@ class ProfileFragment : Fragment() {
             binding.editLevel.setText((level).toString())
         }
 
-        profileViewModel.character.observe(viewLifecycleOwner) {
-            if (it == null) return@observe
-
+        profileViewModel.character.observeOnce(viewLifecycleOwner) {
             binding.editName.setText(it.name)
             binding.editRace.setText(it.race)
             binding.editClass.setText(it.charClass)
@@ -83,8 +82,6 @@ class ProfileFragment : Fragment() {
 
             binding.editBackgroundTitle.setText(it.backgroundTitle)
             binding.editBackground.setText(it.background)
-
-            profileViewModel.character.removeObservers(viewLifecycleOwner)
 
             initializeListeners()
         }

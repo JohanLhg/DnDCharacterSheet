@@ -14,7 +14,7 @@ class ProfileViewModel(application: Application) : AndroidViewModel(application)
 
     private val characterRepository = CharacterRepository(application)
 
-    val character: MutableLiveData<Character> = MutableLiveData(null)
+    val character = MutableLiveData<Character>(null)
 
     var characterID = 0L
         set(value) {

@@ -21,7 +21,7 @@ interface AbilityDao {
     @Delete
     fun delete(ability: Ability)
 
-    @Query("SELECT * FROM ability WHERE cid = :characterID")
+    @Query("SELECT * FROM ability WHERE cid = :characterID ORDER BY name = 'STR' DESC, name = 'DEX' DESC, name = 'CON' DESC, name = 'INT' DESC, name = 'WIS' DESC, name = 'CHA' DESC")
     fun get(characterID: Long): List<Ability>
 
     @MapInfo(keyColumn = ABILITY_NAME)
