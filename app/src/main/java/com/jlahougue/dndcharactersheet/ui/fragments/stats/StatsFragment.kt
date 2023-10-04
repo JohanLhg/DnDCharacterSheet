@@ -7,12 +7,18 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.jlahougue.dndcharactersheet.dal.entities.Ability
 import com.jlahougue.dndcharactersheet.dal.repositories.AbilityRepository.Companion.DEXTERITY
+import com.jlahougue.dndcharactersheet.dal.room.views.AbilityModifierView
+import com.jlahougue.dndcharactersheet.dal.room.views.SkillView
 import com.jlahougue.dndcharactersheet.databinding.FragmentStatsBinding
 import com.jlahougue.dndcharactersheet.extensions.observeOnce
 import com.jlahougue.dndcharactersheet.ui.main.MainActivity
 
-class StatsFragment : Fragment() {
+class StatsFragment : Fragment(),
+    AbilityAdapter.OnAbilityChangedListener,
+    SkillAdapter.OnSkillChangedListener,
+    SavingThrowAdapter.OnAbilityChangedListener {
 
     private var _binding: FragmentStatsBinding? = null
 
@@ -33,19 +39,27 @@ class StatsFragment : Fragment() {
     ): View {
         _binding = FragmentStatsBinding.inflate(inflater, container, false)
 
-        val abilityAdapter = AbilityAdapter()
+        val abilityAdapter = AbilityAdapter(this)
         binding.recyclerAbilities.adapter = abilityAdapter
         binding.recyclerAbilities.layoutManager = LinearLayoutManager(requireContext())
 
-        val skillAdapter = SkillAdapter()
+        val skillAdapter = SkillAdapter(this)
         binding.recyclerSkills.adapter = skillAdapter
         binding.recyclerSkills.layoutManager = LinearLayoutManager(requireContext())
+
+        val savingThrowAdapter = SavingThrowAdapter(this)
+        binding.recyclerSavingThrows.adapter = savingThrowAdapter
+        binding.recyclerSavingThrows.layoutManager = LinearLayoutManager(requireContext())
 
         (activity as MainActivity).mainViewModel.characterID.observe(viewLifecycleOwner) { characterID ->
             statsViewModel.characterID = characterID
 
             statsViewModel.skills.observe(viewLifecycleOwner) {
                 skillAdapter.skills = it
+            }
+
+            statsViewModel.abilityModifiers.observe(viewLifecycleOwner) {
+                savingThrowAdapter.abilities = it
             }
         }
 
@@ -72,5 +86,17 @@ class StatsFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    override fun onAbilityChanged(ability: Ability) {
+        statsViewModel.updateAbilityProficiency(ability)
+    }
+
+    override fun onSkillChanged(skill: SkillView) {
+        statsViewModel.updateSkill(skill)
+    }
+
+    override fun onAbilityChanged(ability: AbilityModifierView) {
+        statsViewModel.updateAbilityProficiency(ability)
     }
 }

@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.jlahougue.dndcharactersheet.dal.entities.Ability
 import com.jlahougue.dndcharactersheet.databinding.RecyclerAbilityBinding
 
-class AbilityAdapter : RecyclerView.Adapter<AbilityAdapter.ViewHolder>() {
+class AbilityAdapter(private val listener: OnAbilityChangedListener) : RecyclerView.Adapter<AbilityAdapter.ViewHolder>() {
 
     companion object {
         const val MODIFIER = 0
@@ -20,6 +20,10 @@ class AbilityAdapter : RecyclerView.Adapter<AbilityAdapter.ViewHolder>() {
         }
 
     class ViewHolder(val bind: RecyclerAbilityBinding) : RecyclerView.ViewHolder(bind.root)
+
+    interface OnAbilityChangedListener {
+        fun onAbilityChanged(ability: Ability)
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder(RecyclerAbilityBinding.inflate(LayoutInflater.from(parent.context), parent, false))
@@ -37,6 +41,7 @@ class AbilityAdapter : RecyclerView.Adapter<AbilityAdapter.ViewHolder>() {
         holder.bind.editAbilityValue.addTextChangedListener { text ->
             val value = text.toString().toIntOrNull() ?: 0
             abilities[holder.adapterPosition].value = value
+            listener.onAbilityChanged(ability)
             notifyItemChanged(holder.adapterPosition, MODIFIER)
         }
     }

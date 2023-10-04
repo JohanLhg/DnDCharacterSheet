@@ -11,6 +11,7 @@ import com.jlahougue.dndcharactersheet.dal.repositories.AbilityRepository
 import com.jlahougue.dndcharactersheet.dal.repositories.HealthRepository
 import com.jlahougue.dndcharactersheet.dal.repositories.SkillRepository
 import com.jlahougue.dndcharactersheet.dal.repositories.StatsRepository
+import com.jlahougue.dndcharactersheet.dal.room.views.AbilityModifierView
 import com.jlahougue.dndcharactersheet.dal.room.views.SkillView
 import kotlin.concurrent.thread
 
@@ -22,6 +23,7 @@ class StatsViewModel(application: Application) : AndroidViewModel(application) {
     private val healthRepository = HealthRepository(application)
 
     val abilities = MutableLiveData<List<Ability>>(null)
+    lateinit var abilityModifiers: LiveData<List<AbilityModifierView>>
     lateinit var skills: LiveData<List<SkillView>>
     val stats = MutableLiveData<Stats>(null)
     val health = MutableLiveData<Health>(null)
@@ -29,6 +31,7 @@ class StatsViewModel(application: Application) : AndroidViewModel(application) {
     var characterID = 0L
         set(value) {
             field = value
+            abilityModifiers = abilityRepository.getModifiers(value)
             skills = skillRepository.get(value)
             thread {
                 abilities.postValue(abilityRepository.get(value))
@@ -36,4 +39,22 @@ class StatsViewModel(application: Application) : AndroidViewModel(application) {
                 health.postValue(healthRepository.get(value))
             }
         }
+
+    fun updateAbilityProficiency(ability: Ability) {
+        thread {
+            abilityRepository.update(ability)
+        }
+    }
+
+    fun updateAbilityProficiency(ability: AbilityModifierView) {
+        thread {
+            abilityRepository.updateProficiency(ability)
+        }
+    }
+
+    fun updateSkill(skill: SkillView) {
+        thread {
+            skillRepository.update(skill)
+        }
+    }
 }

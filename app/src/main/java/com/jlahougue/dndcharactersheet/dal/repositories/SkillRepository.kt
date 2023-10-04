@@ -9,6 +9,7 @@ import com.jlahougue.dndcharactersheet.dal.repositories.AbilityRepository.Compan
 import com.jlahougue.dndcharactersheet.dal.repositories.AbilityRepository.Companion.STRENGTH
 import com.jlahougue.dndcharactersheet.dal.repositories.AbilityRepository.Companion.WISDOM
 import com.jlahougue.dndcharactersheet.dal.room.DnDDatabase
+import com.jlahougue.dndcharactersheet.dal.room.views.SkillView
 
 class SkillRepository(application: Application) {
     private val roomDao = DnDDatabase.getInstance(application).skillDao()
@@ -41,6 +42,10 @@ class SkillRepository(application: Application) {
     }
 
     fun saveToLocal(skill: Skill) = roomDao.insert(skill)
+
+    fun update(skill: SkillView) {
+        update(Skill(skill.cid, skill.name, skill.modifierType, skill.proficiency))
+    }
 
     fun update(skill: Skill) {
         roomDao.update(skill)

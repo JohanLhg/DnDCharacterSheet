@@ -9,4 +9,8 @@ class AbilityDao {
     fun save(ability: Ability) {
         firebaseDatabase.updateCharacterSheet(ability.cid, mapOf("abilities.${ability.name}" to ability))
     }
+
+    fun updateProficiency(characterID: Long, abilityName: String, proficiency: Boolean) {
+        firebaseDatabase.updateCharacterSheet(characterID, mapOf("abilities.${abilityName}.proficiency" to proficiency))
+    }
 }

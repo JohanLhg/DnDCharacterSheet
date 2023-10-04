@@ -7,13 +7,17 @@ import com.jlahougue.dndcharactersheet.R
 import com.jlahougue.dndcharactersheet.dal.room.views.SkillView
 import com.jlahougue.dndcharactersheet.databinding.RecyclerSkillSavingThrowBinding
 
-class SkillAdapter : RecyclerView.Adapter<SkillSavingThrowViewHolder>() {
+class SkillAdapter(private val listener: OnSkillChangedListener) : RecyclerView.Adapter<SkillSavingThrowViewHolder>() {
 
     var skills = listOf<SkillView>()
         set(value) {
             field = value
             notifyDataSetChanged()
         }
+
+    interface OnSkillChangedListener {
+        fun onSkillChanged(skill: SkillView)
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SkillSavingThrowViewHolder {
         return SkillSavingThrowViewHolder(RecyclerSkillSavingThrowBinding.inflate(LayoutInflater.from(parent.context), parent, false))
@@ -26,7 +30,12 @@ class SkillAdapter : RecyclerView.Adapter<SkillSavingThrowViewHolder>() {
         val skill = skills[position]
 
         holder.bind.checkProficiency.isChecked = skill.proficiency
-        holder.bind.textSkillName.text = skill.getFullName(context)
-        holder.bind.textSkillModifier.text = context.getString(R.string.plus_value, skill.modifier)
+        holder.bind.textName.text = skill.getFullName(context)
+        holder.bind.textModifier.text = context.getString(R.string.plus_value, skill.modifier)
+
+        holder.bind.checkProficiency.setOnCheckedChangeListener { _, isChecked ->
+            skill.proficiency = isChecked
+            listener.onSkillChanged(skill)
+        }
     }
 }

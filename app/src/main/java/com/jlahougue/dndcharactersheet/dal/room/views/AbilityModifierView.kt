@@ -1,7 +1,10 @@
 package com.jlahougue.dndcharactersheet.dal.room.views
 
+import android.content.Context
 import androidx.room.ColumnInfo
 import androidx.room.DatabaseView
+import com.jlahougue.dndcharactersheet.R
+import com.jlahougue.dndcharactersheet.dal.repositories.AbilityRepository
 
 @DatabaseView(
     """
@@ -33,5 +36,15 @@ class AbilityModifierView(
         const val ABILITY_MODIFIER_NAME = "name"
         const val ABILITY_MODIFIER_MODIFIER = "modifier"
         const val ABILITY_MODIFIER_PROFICIENCY = "proficiency"
+    }
+
+    fun getName(context: Context) = when(name) {
+        AbilityRepository.STRENGTH -> context.getString(R.string.strength)
+        AbilityRepository.DEXTERITY -> context.getString(R.string.dexterity)
+        AbilityRepository.CONSTITUTION -> context.getString(R.string.constitution)
+        AbilityRepository.INTELLIGENCE -> context.getString(R.string.intelligence)
+        AbilityRepository.WISDOM -> context.getString(R.string.wisdom)
+        AbilityRepository.CHARISMA -> context.getString(R.string.charisma)
+        else -> ""
     }
 }

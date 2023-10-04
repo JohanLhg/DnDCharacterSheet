@@ -4,6 +4,7 @@ import android.app.Application
 import com.jlahougue.dndcharactersheet.dal.entities.Ability
 import com.jlahougue.dndcharactersheet.dal.firebase.dao.AbilityDao
 import com.jlahougue.dndcharactersheet.dal.room.DnDDatabase
+import com.jlahougue.dndcharactersheet.dal.room.views.AbilityModifierView
 
 class AbilityRepository(application: Application) {
     private val roomDao = DnDDatabase.getInstance(application).abilityDao()
@@ -30,7 +31,14 @@ class AbilityRepository(application: Application) {
         firebaseDao.save(ability)
     }
 
+    fun updateProficiency(ability: AbilityModifierView) {
+        roomDao.updateProficiency(ability.cid, ability.name, ability.proficiency)
+        firebaseDao.updateProficiency(ability.cid, ability.name, ability.proficiency)
+    }
+
     fun get(characterID: Long) = roomDao.get(characterID)
+
+    fun getModifiers(characterID: Long) = roomDao.getModifiers(characterID)
 
     fun getMap(characterID: Long) = roomDao.getMap(characterID)
 

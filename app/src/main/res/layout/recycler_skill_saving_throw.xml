@@ -11,7 +11,7 @@
         android:layout_height="match_parent" />
 
     <TextView
-        android:id="@+id/textSkillModifier"
+        android:id="@+id/textModifier"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="center"
@@ -19,7 +19,7 @@
         android:textAppearance="@style/TextAppearance.AppCompat.Small" />
 
     <TextView
-        android:id="@+id/textSkillName"
+        android:id="@+id/textName"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
