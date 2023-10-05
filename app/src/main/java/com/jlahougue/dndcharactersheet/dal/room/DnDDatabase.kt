@@ -7,6 +7,7 @@ import androidx.room.RoomDatabase
 import androidx.sqlite.db.SupportSQLiteDatabase
 import com.jlahougue.dndcharactersheet.dal.entities.Ability
 import com.jlahougue.dndcharactersheet.dal.entities.Character
+import com.jlahougue.dndcharactersheet.dal.entities.CharacterSpell
 import com.jlahougue.dndcharactersheet.dal.entities.DeathSaves
 import com.jlahougue.dndcharactersheet.dal.entities.Equipment
 import com.jlahougue.dndcharactersheet.dal.entities.Health
@@ -16,6 +17,7 @@ import com.jlahougue.dndcharactersheet.dal.entities.Preferences
 import com.jlahougue.dndcharactersheet.dal.entities.Preferences.Companion.TABLE_PREFERENCES
 import com.jlahougue.dndcharactersheet.dal.entities.Quests
 import com.jlahougue.dndcharactersheet.dal.entities.Skill
+import com.jlahougue.dndcharactersheet.dal.entities.Spell
 import com.jlahougue.dndcharactersheet.dal.entities.Stats
 import com.jlahougue.dndcharactersheet.dal.room.dao.AbilityDao
 import com.jlahougue.dndcharactersheet.dal.room.dao.CharacterDao
@@ -34,10 +36,10 @@ import com.jlahougue.dndcharactersheet.dal.room.views.ProficiencyView
 import com.jlahougue.dndcharactersheet.dal.room.views.SkillView
 
 @Database(
-    entities = [Ability::class, Character::class, DeathSaves::class, Equipment::class, Health::class,
-        Money::class, Notes::class, Preferences::class, Quests::class, Skill::class, Stats::class],
+    entities = [Ability::class, Character::class, CharacterSpell::class, DeathSaves::class, Equipment::class, Health::class,
+        Money::class, Notes::class, Preferences::class, Quests::class, Skill::class, Spell::class, Stats::class],
     views = [AbilityView::class, AbilityModifierView::class, ProficiencyView::class, SkillView::class],
-    version = 7
+    version = 8
 )
 abstract class DnDDatabase : RoomDatabase() {
     companion object {
@@ -52,6 +54,8 @@ abstract class DnDDatabase : RoomDatabase() {
          * Stats
          * Health
          * Death Saves
+         * Spell
+         * Character Spell
          * Equipment
          * Money
          * Notes

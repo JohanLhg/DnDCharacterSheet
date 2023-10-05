@@ -3,6 +3,7 @@
     <string name="title_profile">Profile</string>
     <string name="title_stats">Stats</string>
     <string name="title_inventory">Inventory</string>
+    <string name="title_spells">Spells</string>
 
     <!-- General -->
     <string name="cancel">Cancel</string>
@@ -104,6 +105,14 @@
     <string name="modifier_intelligence">Int</string>
     <string name="modifier_wisdom">Wis</string>
     <string name="modifier_charisma">Cha</string>
+    <array name="modifiers">
+        <item>@string/modifier_strength</item>
+        <item>@string/modifier_dexterity</item>
+        <item>@string/modifier_constitution</item>
+        <item>@string/modifier_intelligence</item>
+        <item>@string/modifier_wisdom</item>
+        <item>@string/modifier_charisma</item>
+    </array>
 
     <string name="acrobatics">Acrobatics</string>
     <string name="animal_handling">Animal Handling</string>
@@ -130,7 +139,7 @@
     <string name="initiative">Initiative</string>
     <string name="speed">Speed</string>
     <string name="hit_points">Hit Points</string>
-    <string name="temporary_hit_points">Temporary Hit Points</string>
+    <string name="temporary_hit_points">Temp. HP</string>
     <string name="hit_dice">Hit Dice</string>
     <string name="hit_dice_nbr">Hit Dice Nbr</string>
     <string name="death_saves">Death Saves</string>
@@ -150,4 +159,14 @@
     <string name="copper_pieces">CP</string>
     <string name="other_currencies">OTHER CURRENCIES</string>
     <string name="equipment">EQUIPMENT</string>
+
+    <!-- Spells -->
+    <string name="label_spellcasting_ability">Spellcasting Ability</string>
+    <string name="label_spell_save_dc">Spell Save DC</string>
+    <string name="label_spell_attack_bonus">Spell Attack Bonus</string>
+    <string name="label_cantrips">Cantrips</string>
+    <string name="label_casting_time">Casting time :</string>
+    <string name="label_range">Range :</string>
+    <string name="label_duration">Duration :</string>
+    <string name="label_description">Description :</string>
 </resources>

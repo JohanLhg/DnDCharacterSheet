@@ -22,4 +22,10 @@
         android:name="com.jlahougue.dndcharactersheet.ui.fragments.inventory.InventoryFragment"
         android:label="@string/title_inventory"
         tools:layout="@layout/fragment_inventory" />
+
+    <fragment
+        android:id="@+id/navigation_spells"
+        android:name="com.jlahougue.dndcharactersheet.ui.fragments.spells.SpellsFragment"
+        android:label="@string/title_spells"
+        tools:layout="@layout/fragment_spells" />
 </navigation>

@@ -4,16 +4,18 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.jlahougue.dndcharactersheet.R
 import com.jlahougue.dndcharactersheet.dal.repositories.AbilityRepository.Companion.DEXTERITY
 import com.jlahougue.dndcharactersheet.dal.room.views.AbilityView
 import com.jlahougue.dndcharactersheet.dal.room.views.SkillView
 import com.jlahougue.dndcharactersheet.databinding.FragmentStatsBinding
 import com.jlahougue.dndcharactersheet.extensions.observeOnce
+import com.jlahougue.dndcharactersheet.ui.fragments.stats.StatsViewModel.Companion.CURRENT
+import com.jlahougue.dndcharactersheet.ui.fragments.stats.StatsViewModel.Companion.TEMPORARY
 import com.jlahougue.dndcharactersheet.ui.main.MainActivity
 
 class StatsFragment : Fragment(),
@@ -42,15 +44,20 @@ class StatsFragment : Fragment(),
 
         val abilityAdapter = AbilityAdapter(this)
         binding.recyclerAbilities.adapter = abilityAdapter
-        binding.recyclerAbilities.layoutManager = LinearLayoutManager(requireContext())
 
         val skillAdapter = SkillAdapter(this)
         binding.recyclerSkills.adapter = skillAdapter
-        binding.recyclerSkills.layoutManager = LinearLayoutManager(requireContext())
 
         val savingThrowAdapter = SavingThrowAdapter(this)
         binding.recyclerSavingThrows.adapter = savingThrowAdapter
-        binding.recyclerSavingThrows.layoutManager = LinearLayoutManager(requireContext())
+
+        binding.columnHealth.labelCurrentHealth.setOnClickListener {
+            statsViewModel.healthMode.value = CURRENT
+        }
+
+        binding.columnHealth.labelTemporaryHealth.setOnClickListener {
+            statsViewModel.healthMode.value = TEMPORARY
+        }
 
         (activity as MainActivity).mainViewModel.characterID.observe(viewLifecycleOwner) { characterID ->
             statsViewModel.characterID = characterID
@@ -81,6 +88,23 @@ class StatsFragment : Fragment(),
         statsViewModel.stats.observeOnce(viewLifecycleOwner) {
             binding.editValueArmorClass.setText(it.armorClass.toString())
             binding.editValueSpeed.setText(it.speed.toString())
+        }
+
+        statsViewModel.healthMode.observe(viewLifecycleOwner) {
+            when (it) {
+                CURRENT -> {
+                    binding.columnHealth.labelCurrentHealth.setTextColor(ContextCompat.getColorStateList(requireContext(), R.color.text))
+                    binding.columnHealth.labelTemporaryHealth.setTextColor(ContextCompat.getColorStateList(requireContext(), R.color.text_light))
+                    binding.columnHealth.layoutCurrentHealth.visibility = View.VISIBLE
+                    binding.columnHealth.layoutTemporaryHealth.visibility = View.GONE
+                }
+                TEMPORARY -> {
+                    binding.columnHealth.labelCurrentHealth.setTextColor(ContextCompat.getColorStateList(requireContext(), R.color.text_light))
+                    binding.columnHealth.labelTemporaryHealth.setTextColor(ContextCompat.getColorStateList(requireContext(), R.color.text))
+                    binding.columnHealth.layoutCurrentHealth.visibility = View.GONE
+                    binding.columnHealth.layoutTemporaryHealth.visibility = View.VISIBLE
+                }
+            }
         }
 
         statsViewModel.health.observeOnce(viewLifecycleOwner) {

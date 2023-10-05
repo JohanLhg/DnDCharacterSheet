@@ -16,4 +16,9 @@
         android:icon="@drawable/inventory"
         android:title="@string/title_inventory" />
 
+    <item
+        android:id="@+id/navigation_spells"
+        android:icon="@drawable/spell_book"
+        android:title="@string/title_spells" />
+
 </menu>

@@ -44,7 +44,8 @@ class MainActivity : AppCompatActivity() {
             setOf(
                 R.id.navigation_profile,
                 R.id.navigation_stats,
-                R.id.navigation_inventory
+                R.id.navigation_inventory,
+                R.id.navigation_spells
             )
         )
         navView.setupWithNavController(navController)

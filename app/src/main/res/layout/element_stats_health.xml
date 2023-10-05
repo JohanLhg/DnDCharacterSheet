@@ -7,12 +7,13 @@
     android:orientation="vertical">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/layoutCurrentHealth"
+        android:id="@+id/layoutHealth"
         android:layout_width="250dp"
         android:layout_height="wrap_content"
         android:layout_margin="5dp">
 
         <FrameLayout
+            android:id="@+id/frameLayout"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_marginTop="12dp"
@@ -27,21 +28,41 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@color/white"
-            android:paddingStart="15dp"
-            android:paddingEnd="15dp"
+            android:paddingStart="10dp"
+            android:paddingEnd="10dp"
             android:text="@string/hit_points"
+            android:textAllCaps="true"
             android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+            android:textColor="@color/text"
             android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/labelTemporaryHealth"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
+        <TextView
+            android:id="@+id/labelTemporaryHealth"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:paddingStart="10dp"
+            android:paddingEnd="10dp"
+            android:text="@string/temporary_hit_points"
+            android:textAllCaps="true"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+            android:textColor="@color/text_light"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/labelCurrentHealth"
+            app:layout_constraintTop_toTopOf="parent" />
+
         <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/layoutCurrentHealth"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="5dp"
+            android:layout_marginTop="5dp"
             android:layout_marginEnd="5dp"
-            android:layout_marginBottom="10dp"
+            android:layout_marginBottom="15dp"
             android:orientation="vertical"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -107,7 +128,6 @@
                 android:paddingEnd="5dp"
                 android:selectAllOnFocus="true"
                 android:textAppearance="@style/TextAppearance.AppCompat.Large"
-                android:textSize="28sp"
                 app:layout_constraintEnd_toEndOf="@+id/imageSlash"
                 app:layout_constraintTop_toTopOf="@+id/imageSlash" />
 
@@ -126,7 +146,6 @@
                 android:paddingEnd="5dp"
                 android:selectAllOnFocus="true"
                 android:textAppearance="@style/TextAppearance.AppCompat.Large"
-                android:textSize="28sp"
                 app:layout_constraintBottom_toBottomOf="@+id/imageSlash"
                 app:layout_constraintStart_toStartOf="@+id/imageSlash" />
 
@@ -162,46 +181,17 @@
                     app:tint="@color/white" />
             </LinearLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/layoutTemporaryHealth"
-        android:layout_width="250dp"
-        android:layout_height="wrap_content"
-        android:layout_margin="5dp">
-
-        <FrameLayout
-            android:id="@+id/frameLayout"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_marginTop="12dp"
-            android:background="@drawable/frame_rounded_corners"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:id="@+id/labelTemporaryHealth"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@color/white"
-            android:paddingStart="15dp"
-            android:paddingEnd="15dp"
-            android:text="@string/temporary_hit_points"
-            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-            android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/layoutTemporaryHealth"
             android:layout_width="0dp"
             android:layout_height="80dp"
             android:layout_marginStart="5dp"
+            android:layout_marginTop="5dp"
             android:layout_marginEnd="5dp"
-            android:layout_marginBottom="10dp"
+            android:layout_marginBottom="15dp"
             android:orientation="vertical"
+            android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -299,6 +289,7 @@
             android:paddingStart="15dp"
             android:paddingEnd="15dp"
             android:text="@string/hit_dice"
+            android:textAllCaps="true"
             android:textAppearance="@style/TextAppearance.AppCompat.Medium"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
@@ -387,6 +378,7 @@
             android:paddingStart="15dp"
             android:paddingEnd="15dp"
             android:text="@string/death_saves"
+            android:textAllCaps="true"
             android:textAppearance="@style/TextAppearance.AppCompat.Medium"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"

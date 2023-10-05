@@ -4,7 +4,6 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.jlahougue.dndcharactersheet.dal.entities.Ability
 import com.jlahougue.dndcharactersheet.dal.entities.Health
 import com.jlahougue.dndcharactersheet.dal.entities.Stats
 import com.jlahougue.dndcharactersheet.dal.repositories.AbilityRepository
@@ -18,6 +17,11 @@ import kotlin.concurrent.thread
 
 class StatsViewModel(application: Application) : AndroidViewModel(application) {
 
+    companion object {
+        const val CURRENT = 0
+        const val TEMPORARY = 1
+    }
+
     private val characterRepository = CharacterRepository(application)
     private val abilityRepository = AbilityRepository(application)
     private val skillRepository = SkillRepository(application)
@@ -28,6 +32,7 @@ class StatsViewModel(application: Application) : AndroidViewModel(application) {
     lateinit var skills: LiveData<List<SkillView>>
     val stats = MutableLiveData<Stats>(null)
     lateinit var proficiency: LiveData<Int>
+    val healthMode = MutableLiveData(CURRENT)
     val health = MutableLiveData<Health>(null)
     lateinit var hitDiceNbr: LiveData<Int>
 
