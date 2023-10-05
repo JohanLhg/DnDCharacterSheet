@@ -26,4 +26,6 @@ class HealthRepository(application: Application) {
     }
 
     fun get(characterID: Long) = roomDao.get(characterID)
+
+    fun getHitDiceNbr(characterID: Long) = roomDao.getHitDiceNbr(characterID)
 }

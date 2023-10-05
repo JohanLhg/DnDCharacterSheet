@@ -29,14 +29,15 @@ import com.jlahougue.dndcharactersheet.dal.room.dao.QuestsDao
 import com.jlahougue.dndcharactersheet.dal.room.dao.SkillDao
 import com.jlahougue.dndcharactersheet.dal.room.dao.StatsDao
 import com.jlahougue.dndcharactersheet.dal.room.views.AbilityModifierView
+import com.jlahougue.dndcharactersheet.dal.room.views.AbilityView
 import com.jlahougue.dndcharactersheet.dal.room.views.ProficiencyView
 import com.jlahougue.dndcharactersheet.dal.room.views.SkillView
 
 @Database(
     entities = [Ability::class, Character::class, DeathSaves::class, Equipment::class, Health::class,
         Money::class, Notes::class, Preferences::class, Quests::class, Skill::class, Stats::class],
-    views = [AbilityModifierView::class, ProficiencyView::class, SkillView::class],
-    version = 5
+    views = [AbilityView::class, AbilityModifierView::class, ProficiencyView::class, SkillView::class],
+    version = 7
 )
 abstract class DnDDatabase : RoomDatabase() {
     companion object {

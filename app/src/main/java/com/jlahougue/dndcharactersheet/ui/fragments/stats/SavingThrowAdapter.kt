@@ -4,19 +4,25 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.jlahougue.dndcharactersheet.R
-import com.jlahougue.dndcharactersheet.dal.room.views.AbilityModifierView
+import com.jlahougue.dndcharactersheet.dal.room.views.AbilityView
 import com.jlahougue.dndcharactersheet.databinding.RecyclerSkillSavingThrowBinding
 
 class SavingThrowAdapter(private val listener: OnAbilityChangedListener) : RecyclerView.Adapter<SkillSavingThrowViewHolder>() {
 
-    var abilities = listOf<AbilityModifierView>()
+    companion object {
+        const val MODIFIER = 0
+    }
+
+    var abilities = listOf<AbilityView>()
         set(value) {
+            val oldField = field
             field = value
-            notifyDataSetChanged()
+            if (oldField.isEmpty()) notifyItemRangeInserted(0, value.size)
+            else notifyItemRangeChanged(0, value.size, MODIFIER)
         }
 
     interface OnAbilityChangedListener {
-        fun onAbilityChanged(ability: AbilityModifierView)
+        fun onAbilityProficiencyChanged(ability: AbilityView)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SkillSavingThrowViewHolder {
@@ -40,9 +46,20 @@ class SavingThrowAdapter(private val listener: OnAbilityChangedListener) : Recyc
         }
     }
 
+    override fun onBindViewHolder(
+        holder: SkillSavingThrowViewHolder,
+        position: Int,
+        payloads: MutableList<Any>
+    ) {
+        when {
+            payloads.contains(MODIFIER) -> holder.bind.textModifier.text = holder.itemView.context.getString(R.string.plus_value, abilities[position].modifier)
+            else -> super.onBindViewHolder(holder, position, payloads)
+        }
+    }
+
     private fun changeProficiency(position: Int, isChecked: Boolean) {
         val ability = abilities[position]
         ability.proficiency = isChecked
-        listener.onAbilityChanged(ability)
+        listener.onAbilityProficiencyChanged(ability)
     }
 }

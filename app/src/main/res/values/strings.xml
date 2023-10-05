@@ -132,7 +132,7 @@
     <string name="hit_points">Hit Points</string>
     <string name="temporary_hit_points">Temporary Hit Points</string>
     <string name="hit_dice">Hit Dice</string>
-    <string name="nbr_hit_dice">Nbr Hit Dice</string>
+    <string name="hit_dice_nbr">Hit Dice Nbr</string>
     <string name="death_saves">Death Saves</string>
     <string name="successes">Successes</string>
     <string name="failures">Failures</string>

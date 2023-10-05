@@ -1,5 +1,6 @@
 package com.jlahougue.dndcharactersheet.dal.room.dao
 
+import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
@@ -21,4 +22,7 @@ interface HealthDao {
 
     @Query("SELECT * FROM health WHERE cid = :characterID")
     fun get(characterID: Long): Health
+
+    @Query("SELECT level FROM character WHERE id = :characterID")
+    fun getHitDiceNbr(characterID: Long): LiveData<Int>
 }

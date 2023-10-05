@@ -151,7 +151,7 @@
                     app:tint="@color/white" />
 
                 <ImageButton
-                    android:id="@+id/ButtonMaxHealthMinus"
+                    android:id="@+id/buttonMaxHealthMinus"
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_weight="1"
@@ -323,7 +323,7 @@
                 app:columnCount="2">
 
                 <TextView
-                    android:id="@+id/textView11"
+                    android:id="@+id/labelHitDice"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:gravity="center"
@@ -333,7 +333,7 @@
                     app:layout_rowWeight="1" />
 
                 <Spinner
-                    android:id="@+id/spinner"
+                    android:id="@+id/spinnerHitDice"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:entries="@array/health_dice"
@@ -341,17 +341,17 @@
                     app:layout_rowWeight="1" />
 
                 <TextView
-                    android:id="@+id/textView13"
+                    android:id="@+id/labelHitDiceNbr"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:gravity="center"
                     android:padding="5dp"
-                    android:text="@string/nbr_hit_dice"
+                    android:text="@string/hit_dice_nbr"
                     app:layout_columnWeight="3"
                     app:layout_rowWeight="1" />
 
                 <TextView
-                    android:id="@+id/textView14"
+                    android:id="@+id/textHitDiceNbr"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:gravity="center"
@@ -412,7 +412,7 @@
                 android:orientation="vertical">
 
                 <TextView
-                    android:id="@+id/textView86"
+                    android:id="@+id/labelDeathSavesSuccess"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -421,7 +421,7 @@
                     android:text="@string/successes" />
 
                 <TextView
-                    android:id="@+id/textView85"
+                    android:id="@+id/labelDeathSavesFailure"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -442,21 +442,21 @@
                     android:orientation="horizontal">
 
                     <CheckBox
-                        android:id="@+id/checkBox29"
+                        android:id="@+id/checkBoxSuccess1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:buttonTint="@color/green" />
 
                     <CheckBox
-                        android:id="@+id/checkBox58"
+                        android:id="@+id/checkBoxSuccess2"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:buttonTint="@color/green" />
 
                     <CheckBox
-                        android:id="@+id/checkBox75"
+                        android:id="@+id/checkBoxSuccess3"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -470,21 +470,21 @@
                     android:orientation="horizontal">
 
                     <CheckBox
-                        android:id="@+id/checkBox13"
+                        android:id="@+id/checkBoxFailure1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:buttonTint="@color/red" />
 
                     <CheckBox
-                        android:id="@+id/checkBox8"
+                        android:id="@+id/checkBoxFailure2"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:buttonTint="@color/red" />
 
                     <CheckBox
-                        android:id="@+id/checkBox7"
+                        android:id="@+id/checkBoxFailure3"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"

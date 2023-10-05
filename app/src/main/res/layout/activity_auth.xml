@@ -32,7 +32,8 @@
             android:layout_marginTop="50dp"
             android:text="@string/loading"
             android:textAlignment="center"
-            android:textAppearance="@style/TextAppearance.AppCompat.Display1" />
+            android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+            android:visibility="gone" />
 
         <LinearLayout
             android:id="@+id/layoutAuth"
