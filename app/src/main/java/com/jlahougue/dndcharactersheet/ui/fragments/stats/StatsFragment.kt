@@ -126,13 +126,13 @@ class StatsFragment : Fragment(),
         binding.columnHealth.buttonCurrentHealthPlus.setOnClickListener {
             val health = statsViewModel.health.value!!
             health.currentHp++
-            statsViewModel.updateHealth(health)
+            binding.columnHealth.editCurrent.setText(health.currentHp.toString())
         }
 
         binding.columnHealth.buttonCurrentHealthMinus.setOnClickListener {
             val health = statsViewModel.health.value!!
             health.currentHp--
-            statsViewModel.updateHealth(health)
+            binding.columnHealth.editCurrent.setText(health.currentHp.toString())
         }
 
         binding.columnHealth.editMax.addTextChangedListener {
@@ -144,13 +144,13 @@ class StatsFragment : Fragment(),
         binding.columnHealth.buttonMaxHealthPlus.setOnClickListener {
             val health = statsViewModel.health.value!!
             health.maxHp++
-            statsViewModel.updateHealth(health)
+            binding.columnHealth.editMax.setText(health.maxHp.toString())
         }
 
         binding.columnHealth.buttonMaxHealthMinus.setOnClickListener {
             val health = statsViewModel.health.value!!
             health.maxHp--
-            statsViewModel.updateHealth(health)
+            binding.columnHealth.editMax.setText(health.maxHp.toString())
         }
 
         binding.columnHealth.editTemporaryHealth.addTextChangedListener {
@@ -162,13 +162,13 @@ class StatsFragment : Fragment(),
         binding.columnHealth.buttonTemporaryHealthPlus.setOnClickListener {
             val health = statsViewModel.health.value!!
             health.temporaryHp++
-            statsViewModel.updateHealth(health)
+            binding.columnHealth.editTemporaryHealth.setText(health.temporaryHp.toString())
         }
 
         binding.columnHealth.buttonTemporaryHealthMinus.setOnClickListener {
             val health = statsViewModel.health.value!!
             health.temporaryHp--
-            statsViewModel.updateHealth(health)
+            binding.columnHealth.editTemporaryHealth.setText(health.temporaryHp.toString())
         }
     }
 
