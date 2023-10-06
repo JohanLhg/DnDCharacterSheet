@@ -8,7 +8,9 @@ class DnDAPIRequest {
     companion object {
         private var INSTANCE: DnDAPIRequest? = null
 
-        val DND_API_URL = "https://www.dnd5eapi.co/api/"
+        private const val DND_API_URL = "https://www.dnd5eapi.co"
+
+        const val DND_API_SPELLS_URL = "$DND_API_URL/api/spells"
 
         fun getInstance(): DnDAPIRequest {
             if (INSTANCE == null) {
@@ -16,6 +18,8 @@ class DnDAPIRequest {
             }
             return INSTANCE!!
         }
+
+        fun getUrl(url: String) = "$DND_API_URL$url"
     }
 
     private val client = OkHttpClient()

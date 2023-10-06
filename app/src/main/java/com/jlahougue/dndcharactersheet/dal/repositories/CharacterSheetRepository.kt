@@ -14,6 +14,8 @@ class CharacterSheetRepository(application: Application) {
     private val abilityRepository = AbilityRepository(application)
     private val skillRepository = SkillRepository(application)
     private val statsRepository = StatsRepository(application)
+    private val spellRepository = SpellRepository(application)
+    private val characterSpellRepository = CharacterSpellRepository(application)
     private val healthRepository = HealthRepository(application)
     private val deathSavesRepository = DeathSavesRepository(application)
     private val notesRepository = NotesRepository(application)

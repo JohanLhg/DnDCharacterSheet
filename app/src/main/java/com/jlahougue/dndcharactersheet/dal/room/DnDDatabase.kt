@@ -18,9 +18,12 @@ import com.jlahougue.dndcharactersheet.dal.entities.Preferences.Companion.TABLE_
 import com.jlahougue.dndcharactersheet.dal.entities.Quests
 import com.jlahougue.dndcharactersheet.dal.entities.Skill
 import com.jlahougue.dndcharactersheet.dal.entities.Spell
+import com.jlahougue.dndcharactersheet.dal.entities.SpellClass
+import com.jlahougue.dndcharactersheet.dal.entities.SpellDamage
 import com.jlahougue.dndcharactersheet.dal.entities.Stats
 import com.jlahougue.dndcharactersheet.dal.room.dao.AbilityDao
 import com.jlahougue.dndcharactersheet.dal.room.dao.CharacterDao
+import com.jlahougue.dndcharactersheet.dal.room.dao.CharacterSpellDao
 import com.jlahougue.dndcharactersheet.dal.room.dao.DeathSavesDao
 import com.jlahougue.dndcharactersheet.dal.room.dao.EquipmentDao
 import com.jlahougue.dndcharactersheet.dal.room.dao.HealthDao
@@ -29,6 +32,8 @@ import com.jlahougue.dndcharactersheet.dal.room.dao.NotesDao
 import com.jlahougue.dndcharactersheet.dal.room.dao.PreferencesDao
 import com.jlahougue.dndcharactersheet.dal.room.dao.QuestsDao
 import com.jlahougue.dndcharactersheet.dal.room.dao.SkillDao
+import com.jlahougue.dndcharactersheet.dal.room.dao.SpellClassDao
+import com.jlahougue.dndcharactersheet.dal.room.dao.SpellDamageDao
 import com.jlahougue.dndcharactersheet.dal.room.dao.SpellDao
 import com.jlahougue.dndcharactersheet.dal.room.dao.StatsDao
 import com.jlahougue.dndcharactersheet.dal.room.views.AbilityModifierView
@@ -37,10 +42,12 @@ import com.jlahougue.dndcharactersheet.dal.room.views.ProficiencyView
 import com.jlahougue.dndcharactersheet.dal.room.views.SkillView
 
 @Database(
-    entities = [Ability::class, Character::class, CharacterSpell::class, DeathSaves::class, Equipment::class, Health::class,
-        Money::class, Notes::class, Preferences::class, Quests::class, Skill::class, Spell::class, Stats::class],
+    entities = [Ability::class, Character::class, CharacterSpell::class, DeathSaves::class,
+        Equipment::class, Health::class, Money::class, Notes::class, Preferences::class,
+        Quests::class, Skill::class, Spell::class, SpellClass::class, SpellDamage::class,
+        Stats::class],
     views = [AbilityView::class, AbilityModifierView::class, ProficiencyView::class, SkillView::class],
-    version = 8
+    version = 14
 )
 abstract class DnDDatabase : RoomDatabase() {
     companion object {
@@ -56,6 +63,8 @@ abstract class DnDDatabase : RoomDatabase() {
          * Health
          * Death Saves
          * Spell
+         * Spell Class
+         * Spell Damage
          * Character Spell
          * Equipment
          * Money
@@ -102,6 +111,7 @@ abstract class DnDDatabase : RoomDatabase() {
     //region DAOs
     abstract fun abilityDao(): AbilityDao
     abstract fun characterDao(): CharacterDao
+    abstract fun characterSpellDao(): CharacterSpellDao
     abstract fun deathSavesDao(): DeathSavesDao
     abstract fun equipmentDao(): EquipmentDao
     abstract fun healthDao(): HealthDao
@@ -111,6 +121,8 @@ abstract class DnDDatabase : RoomDatabase() {
     abstract fun questsDao(): QuestsDao
     abstract fun skillDao(): SkillDao
     abstract fun spellDao(): SpellDao
+    abstract fun spellClassDao(): SpellClassDao
+    abstract fun spellDamageDao(): SpellDamageDao
     abstract fun statDao(): StatsDao
     //endregion
 }

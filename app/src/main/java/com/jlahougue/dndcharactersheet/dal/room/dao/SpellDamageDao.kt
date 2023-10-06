@@ -4,21 +4,17 @@ import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
-import androidx.room.Query
 import androidx.room.Update
-import com.jlahougue.dndcharactersheet.dal.entities.Spell
+import com.jlahougue.dndcharactersheet.dal.entities.SpellDamage
 
 @Dao
-interface SpellDao {
+interface SpellDamageDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insert(spell: Spell)
+    fun insert(spellDamage: SpellDamage)
 
     @Update
-    fun update(spell: Spell)
+    fun update(spellDamage: SpellDamage)
 
     @Delete
-    fun delete(spell: Spell)
-
-    @Query("SELECT name FROM spell")
-    fun getNames(): List<String>
+    fun delete(spellDamage: SpellDamage)
 }

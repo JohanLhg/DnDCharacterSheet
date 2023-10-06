@@ -1,7 +1,12 @@
 package com.jlahougue.dndcharactersheet.dal.firebase.dao
 
+import com.jlahougue.dndcharactersheet.dal.entities.CharacterSpell
 import com.jlahougue.dndcharactersheet.dal.firebase.FirebaseDatabase
 
-class SpellDao {
+class CharacterSpellDao {
     private val firebaseDatabase = FirebaseDatabase.getInstance()
+
+    fun insert(characterSpell: CharacterSpell) {
+
+    }
 }

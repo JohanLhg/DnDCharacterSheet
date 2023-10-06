@@ -10,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.jlahougue.dndcharactersheet.R
 import com.jlahougue.dndcharactersheet.databinding.ActivityAuthBinding
+import com.jlahougue.dndcharactersheet.ui.authentication.AuthViewModel.Companion.FETCHING_SPELLS
 import com.jlahougue.dndcharactersheet.ui.authentication.AuthViewModel.Companion.LANGUAGE_LOADED
 import com.jlahougue.dndcharactersheet.ui.authentication.AuthViewModel.Companion.LOGIN
 import com.jlahougue.dndcharactersheet.ui.authentication.AuthViewModel.Companion.REGISTER
@@ -97,6 +98,8 @@ class AuthActivity : AppCompatActivity() {
             when (it[0]) {
                 SEARCHING_FOR_CHARACTER -> binding.textLoading.text =
                     resources.getString(R.string.searching_for_character)
+                FETCHING_SPELLS -> binding.textLoading.text =
+                    resources.getString(R.string.fetching_spells)
             }
         }
     }

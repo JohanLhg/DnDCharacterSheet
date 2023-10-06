@@ -43,9 +43,7 @@
 
     <string name="loading">Loading…</string>
     <string name="searching_for_character">Fetching character…</string>
-    <string name="loading_character">Loading character…</string>
-    <string name="loading_paths">Loading paths…</string>
-    <string name="launching">Launching…</string>
+    <string name="fetching_spells">Fetching spells…</string>
 
     <string name="sign_out">Sign Out</string>
 

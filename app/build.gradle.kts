@@ -60,7 +60,7 @@ dependencies {
     ksp("com.github.bumptech.glide:compiler:4.13.2")
 
     //API calls
-    implementation("com.squareup.okhttp3:okhttp:3.8.1")
+    implementation("com.squareup.okhttp3:okhttp:3.10.0")
     implementation("com.google.code.gson:gson:2.10.1")
 
     implementation("androidx.legacy:legacy-support-v4:1.0.0")

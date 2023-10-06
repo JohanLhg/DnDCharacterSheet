@@ -1,24 +1,26 @@
 package com.jlahougue.dndcharactersheet.dal.repositories
 
 import android.app.Application
+import com.jlahougue.dndcharactersheet.dal.dndAPI.dao.SpellDao
 import com.jlahougue.dndcharactersheet.dal.entities.Spell
+import com.jlahougue.dndcharactersheet.dal.entities.SpellClass
+import com.jlahougue.dndcharactersheet.dal.entities.SpellDamage
 import com.jlahougue.dndcharactersheet.dal.room.DnDDatabase
 
 class SpellRepository(application: Application) {
     private val roomDao = DnDDatabase.getInstance(application).spellDao()
-    private val firebaseDao = com.jlahougue.dndcharactersheet.dal.firebase.dao.SpellDao()
-    private val apiDao = com.jlahougue.dndcharactersheet.dal.dndAPI.SpellDao()
+    private var roomClassDao = DnDDatabase.getInstance(application).spellClassDao()
+    private var roomDamageDao = DnDDatabase.getInstance(application).spellDamageDao()
+    private val apiDao = SpellDao()
 
-    fun create(characterID: Long) {
+    fun fetchAll(callback: () -> Unit) {
+        val names = roomDao.getNames()
+        apiDao.fetchSpells(names, this::saveSpell, this::saveSpellClass, this::saveSpellDamage, callback)
     }
 
-    fun saveNewSpell(characterID: Long, spell: Spell) {
-        roomDao.insert(spell)
-    }
+    private fun saveSpell(spell: Spell) = roomDao.insert(spell)
 
-    fun fetchAll() {
-        apiDao.getSpells().forEach { spell ->
-            roomDao.insert(spell)
-        }
-    }
+    private fun saveSpellClass(spellClass: SpellClass) = roomClassDao.insert(spellClass)
+
+    private fun saveSpellDamage(spellDamage: SpellDamage) = roomDamageDao.insert(spellDamage)
 }
