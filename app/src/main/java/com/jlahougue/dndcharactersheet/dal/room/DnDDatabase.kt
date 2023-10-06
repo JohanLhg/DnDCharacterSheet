@@ -29,6 +29,7 @@ import com.jlahougue.dndcharactersheet.dal.room.dao.NotesDao
 import com.jlahougue.dndcharactersheet.dal.room.dao.PreferencesDao
 import com.jlahougue.dndcharactersheet.dal.room.dao.QuestsDao
 import com.jlahougue.dndcharactersheet.dal.room.dao.SkillDao
+import com.jlahougue.dndcharactersheet.dal.room.dao.SpellDao
 import com.jlahougue.dndcharactersheet.dal.room.dao.StatsDao
 import com.jlahougue.dndcharactersheet.dal.room.views.AbilityModifierView
 import com.jlahougue.dndcharactersheet.dal.room.views.AbilityView
@@ -109,6 +110,7 @@ abstract class DnDDatabase : RoomDatabase() {
     abstract fun preferencesDao(): PreferencesDao
     abstract fun questsDao(): QuestsDao
     abstract fun skillDao(): SkillDao
+    abstract fun spellDao(): SpellDao
     abstract fun statDao(): StatsDao
     //endregion
 }

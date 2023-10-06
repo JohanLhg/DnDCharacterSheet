@@ -35,6 +35,10 @@ class StatsFragment : Fragment(),
             .create(StatsViewModel::class.java)
     }
 
+    private val skillAdapter: SkillAdapter by lazy {
+        SkillAdapter(this)
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -45,7 +49,6 @@ class StatsFragment : Fragment(),
         val abilityAdapter = AbilityAdapter(this)
         binding.recyclerAbilities.adapter = abilityAdapter
 
-        val skillAdapter = SkillAdapter(this)
         binding.recyclerSkills.adapter = skillAdapter
 
         val savingThrowAdapter = SavingThrowAdapter(this)
@@ -122,8 +125,15 @@ class StatsFragment : Fragment(),
     }
 
     private fun initializeListeners() {
+        initializeSkillsListeners()
         initializeStatsListeners()
         initializeHealthListeners()
+    }
+
+    private fun initializeSkillsListeners() {
+        binding.editSkillsSearch.addTextChangedListener {
+            skillAdapter.filter(it.toString())
+        }
     }
 
     private fun initializeStatsListeners() {
@@ -196,7 +206,7 @@ class StatsFragment : Fragment(),
         }
     }
 
-    override fun onSkillChanged(skill: SkillView) {
+    override fun onSkillProficiencyChanged(skill: SkillView) {
         statsViewModel.updateSkill(skill)
     }
 

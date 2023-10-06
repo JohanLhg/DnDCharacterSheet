@@ -65,7 +65,7 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/layoutSearch"
+                android:id="@+id/layoutSkillsSearch"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="5dp"
@@ -75,7 +75,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/labelSkills">
 
                 <EditText
-                    android:id="@+id/editSearch"
+                    android:id="@+id/editSkillsSearch"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:ems="10"
@@ -88,7 +88,7 @@
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <ImageView
-                    android:id="@+id/imageSearch"
+                    android:id="@+id/imageSkillsSearch"
                     android:layout_width="wrap_content"
                     android:layout_height="0dp"
                     android:adjustViewBounds="true"
@@ -96,9 +96,9 @@
                     android:padding="12dp"
                     android:scaleType="fitCenter"
                     android:src="@drawable/searching"
-                    app:layout_constraintBottom_toBottomOf="@+id/editSearch"
-                    app:layout_constraintEnd_toEndOf="@+id/editSearch"
-                    app:layout_constraintTop_toTopOf="@+id/editSearch" />
+                    app:layout_constraintBottom_toBottomOf="@+id/editSkillsSearch"
+                    app:layout_constraintEnd_toEndOf="@+id/editSkillsSearch"
+                    app:layout_constraintTop_toTopOf="@+id/editSkillsSearch" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <ScrollView
@@ -112,7 +112,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="@id/frameSkills"
                 app:layout_constraintStart_toStartOf="@id/frameSkills"
-                app:layout_constraintTop_toBottomOf="@id/layoutSearch"
+                app:layout_constraintTop_toBottomOf="@id/layoutSkillsSearch"
                 app:layout_constraintVertical_bias="0.0">
 
                 <androidx.recyclerview.widget.RecyclerView
