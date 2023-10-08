@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
+import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Update
 import com.jlahougue.dndcharactersheet.dal.entities.Spellcasting
@@ -11,7 +12,7 @@ import com.jlahougue.dndcharactersheet.dal.room.views.SpellcastingView
 
 @Dao
 interface SpellcastingDao {
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(spellcasting: Spellcasting)
 
     @Update

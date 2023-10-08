@@ -14,9 +14,9 @@ class SpellRepository(application: Application) {
     private var roomDamageDao = DnDDatabase.getInstance(application).spellDamageDao()
     private val apiDao = SpellDao()
 
-    fun fetchAll(callback: () -> Unit) {
+    fun fetchAll(setProgress: (Int, Int) -> Unit, callback: () -> Unit) {
         val names = roomDao.getNames()
-        apiDao.fetchSpells(names, this::saveSpell, this::saveSpellClass, this::saveSpellDamage, callback)
+        apiDao.fetchSpells(names, this::saveSpell, this::saveSpellClass, this::saveSpellDamage, setProgress, callback)
     }
 
     private fun saveSpell(spell: Spell) = roomDao.insert(spell)

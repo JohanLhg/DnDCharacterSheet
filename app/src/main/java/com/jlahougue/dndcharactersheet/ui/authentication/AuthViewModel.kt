@@ -19,6 +19,8 @@ class AuthViewModel(application: Application) : AndroidViewModel(application) {
     var authMode = MutableLiveData(REGISTER)
 
     val waitingFor = MutableLiveData(listOf(SEARCHING_FOR_CHARACTER, FETCHING_SPELLS))
+    val progressMax = MutableLiveData(0)
+    val progress = MutableLiveData(0)
 
     fun isLoggedIn() = authRepository.isLoggedIn()
 
@@ -35,10 +37,15 @@ class AuthViewModel(application: Application) : AndroidViewModel(application) {
             characterSheetRepository.createCharacterIfNotExists {
                 waitingFor.postValue(waitingFor.value!!.filter { it != SEARCHING_FOR_CHARACTER })
             }
-            spellRepository.fetchAll {
+            spellRepository.fetchAll(this::setProgress) {
                 waitingFor.postValue(waitingFor.value!!.filter { it != FETCHING_SPELLS })
             }
         }
+    }
+
+    fun setProgress(progress: Int, max: Int) {
+        this.progress.postValue(progress)
+        this.progressMax.postValue(max)
     }
 
     fun getLanguage(callback: (String) -> Unit) {

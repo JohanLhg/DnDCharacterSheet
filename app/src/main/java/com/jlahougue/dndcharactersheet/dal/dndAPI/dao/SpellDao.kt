@@ -16,10 +16,12 @@ class SpellDao {
         saveSpell: (Spell) -> Unit,
         saveSpellClass: (SpellClass) -> Unit,
         saveSpellDamage: (SpellDamage) -> Unit,
+        setProgress: (Int, Int) -> Unit,
         callback: () -> Unit
     ) {
         val response = apiRequest.sendGet(DND_API_SPELLS_URL) ?: return
         val json = JSONObject(response)
+        setProgress(0, json.getInt("count"))
         val results = json.getJSONArray("results")
         var name: String
         var url: String
@@ -28,6 +30,7 @@ class SpellDao {
             url = results.getJSONObject(i).getString("url")
             if (names.contains(name)) continue
             fetchSpell(getUrl(url), saveSpell, saveSpellClass, saveSpellDamage)
+            setProgress(i, json.getInt("count"))
         }
         callback()
     }

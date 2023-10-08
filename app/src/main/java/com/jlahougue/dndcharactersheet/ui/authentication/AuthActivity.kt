@@ -4,6 +4,7 @@ import android.app.ProgressDialog
 import android.content.Intent
 import android.os.Bundle
 import android.view.View.GONE
+import android.view.View.INVISIBLE
 import android.view.View.VISIBLE
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -88,7 +89,8 @@ class AuthActivity : AppCompatActivity() {
 
     private fun startLoading() {
         binding.textLoading.visibility = VISIBLE
-        binding.imageLoading.visibility = VISIBLE
+        //binding.imageLoading.visibility = VISIBLE
+        binding.progressBar.visibility = INVISIBLE
         binding.layoutAuth.visibility = GONE
 
         authViewModel.load()
@@ -104,7 +106,18 @@ class AuthActivity : AppCompatActivity() {
 
             when (it[0]) {
                 SEARCHING_FOR_CHARACTER -> binding.textLoading.text = resources.getString(R.string.searching_for_character)
-                FETCHING_SPELLS -> binding.textLoading.text = resources.getString(R.string.fetching_spells)
+                FETCHING_SPELLS -> {
+                    binding.textLoading.text = resources.getString(R.string.fetching_spells)
+                    binding.progressBar.visibility = VISIBLE
+
+                    authViewModel.progressMax.observe(this) { max ->
+                        binding.progressBar.max = max
+                    }
+
+                    authViewModel.progress.observe(this) { progress ->
+                        binding.progressBar.progress = progress
+                    }
+                }
             }
         }
     }

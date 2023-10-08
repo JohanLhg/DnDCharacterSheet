@@ -33,7 +33,8 @@
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toStartOf="@+id/layoutSpellcastingAbilityValue"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:importantForAccessibility="no" />
 
                 <ImageView
                     android:id="@+id/backgroundSpellcastingAbilityMiddle"
@@ -44,7 +45,8 @@
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toStartOf="@+id/backgroundSpellcastingAbilityEnd"
                     app:layout_constraintStart_toEndOf="@+id/backgroundSpellcastingAbilityStart"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:importantForAccessibility="no" />
 
                 <ImageView
                     android:id="@+id/backgroundSpellcastingAbilityEnd"
@@ -56,7 +58,8 @@
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@id/layoutSpellcastingAbilityValue"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:importantForAccessibility="no" />
 
                 <LinearLayout
                     android:id="@+id/layoutSpellcastingAbilityValue"
@@ -125,7 +128,8 @@
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toStartOf="@+id/textSpellSaveDC"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:importantForAccessibility="no" />
 
                 <ImageView
                     android:id="@+id/backgroundSpellSaveDCMiddle"
@@ -136,7 +140,8 @@
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toStartOf="@+id/backgroundSpellSaveDCEnd"
                     app:layout_constraintStart_toEndOf="@+id/backgroundSpellSaveDCStart"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:importantForAccessibility="no" />
 
                 <ImageView
                     android:id="@+id/backgroundSpellSaveDCEnd"
@@ -148,7 +153,8 @@
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@id/textSpellSaveDC"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:importantForAccessibility="no" />
 
                 <TextView
                     android:id="@+id/textSpellSaveDC"
@@ -199,7 +205,8 @@
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toStartOf="@+id/textSpellAttackBonus"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:importantForAccessibility="no" />
 
                 <ImageView
                     android:id="@+id/backgroundSpellAttackBonusMiddle"
@@ -210,7 +217,8 @@
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toStartOf="@+id/backgroundSpellAttackBonusEnd"
                     app:layout_constraintStart_toEndOf="@+id/backgroundSpellAttackBonusStart"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:importantForAccessibility="no" />
 
                 <ImageView
                     android:id="@+id/backgroundSpellAttackBonusEnd"
@@ -222,7 +230,8 @@
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@id/textSpellAttackBonus"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:importantForAccessibility="no" />
 
                 <TextView
                     android:id="@+id/textSpellAttackBonus"

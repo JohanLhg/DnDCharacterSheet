@@ -45,6 +45,13 @@
             android:src="@drawable/loading"
             android:visibility="gone" />
 
+        <ProgressBar
+            android:id="@+id/progressBar"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone" />
+
         <LinearLayout
             android:id="@+id/layoutAuth"
             android:layout_width="300dp"
