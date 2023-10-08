@@ -65,5 +65,19 @@ class CharacterSpellRepository(application: Application) {
                 else -> -1
             }
         }
+
+        fun getMaxSpellLevel(characterLevel: Int): Int {
+            return when {
+                characterLevel < 3 -> 1
+                characterLevel < 5 -> 2
+                characterLevel < 7 -> 3
+                characterLevel < 9 -> 4
+                characterLevel < 11 -> 5
+                characterLevel < 13 -> 6
+                characterLevel < 15 -> 7
+                characterLevel < 17 -> 8
+                else -> 9
+            }
+        }
     }
 }

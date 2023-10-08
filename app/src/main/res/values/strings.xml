@@ -169,4 +169,6 @@
     <string name="label_duration">Duration :</string>
     <string name="label_description">Description :</string>
     <string name="label_higher_levels">At higher levels :</string>
+    <string name="cast_spell">Cast spell</string>
+    <string name="show_spell_details">Show spell details</string>
 </resources>

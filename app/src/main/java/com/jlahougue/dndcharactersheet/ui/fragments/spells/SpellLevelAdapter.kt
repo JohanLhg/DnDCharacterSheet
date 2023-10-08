@@ -5,6 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.jlahougue.dndcharactersheet.dal.entities.SpellWithCharacterInfo
 import com.jlahougue.dndcharactersheet.dal.repositories.CharacterSpellRepository
+import com.jlahougue.dndcharactersheet.dal.repositories.CharacterSpellRepository.Companion.getMaxSpellLevel
 import com.jlahougue.dndcharactersheet.databinding.RecyclerCantripsBinding
 import com.jlahougue.dndcharactersheet.databinding.RecyclerSpellLevelBinding
 
@@ -18,12 +19,10 @@ class SpellLevelAdapter(private val characterLevel: Int) : RecyclerView.Adapter<
     var spellLevels = mapOf<Int, List<SpellWithCharacterInfo>>()
         set(value) {
             field = value
-            notifyItemRangeInserted(0, value.size)
+            notifyDataSetChanged()
         }
 
-    class SpellLevelViewHolder(val bind: RecyclerSpellLevelBinding) : RecyclerView.ViewHolder(bind.root) {
-        //init { this.setIsRecyclable(false) }
-    }
+    class SpellLevelViewHolder(val bind: RecyclerSpellLevelBinding) : RecyclerView.ViewHolder(bind.root)
 
     class CantripsViewHolder(val bind: RecyclerCantripsBinding) : RecyclerView.ViewHolder(bind.root)
 
@@ -39,10 +38,10 @@ class SpellLevelAdapter(private val characterLevel: Int) : RecyclerView.Adapter<
     }
 
     override fun getItemCount(): Int {
-        if (spellLevels.isEmpty()) return 0
-        var max = 0
-        spellLevels.keys.forEach { if (it > max) max = it }
-        return max + 1
+        //if (spellLevels.isEmpty()) return 0
+        //var max = 0
+        //spellLevels.keys.forEach { if (it > max) max = it }
+        return getMaxSpellLevel(characterLevel) + 1
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {

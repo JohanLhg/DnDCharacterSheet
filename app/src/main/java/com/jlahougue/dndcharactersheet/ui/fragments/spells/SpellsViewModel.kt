@@ -27,7 +27,14 @@ class SpellsViewModel(application: Application) : AndroidViewModel(application) 
             spellcasting = spellcastingRepository.get(value)
             thread {
                 characterLevel.postValue(characterRepository.getLevel(value))
-                spells.postValue(spellRepository.get(value))
+                spells.postValue(spellRepository.getUnlocked(value))
             }
         }
+
+    fun setEditMode(editMode: Boolean) {
+        thread {
+            if (editMode) spells.postValue(spellRepository.get(characterID))
+            else spells.postValue(spellRepository.getUnlocked(characterID))
+        }
+    }
 }

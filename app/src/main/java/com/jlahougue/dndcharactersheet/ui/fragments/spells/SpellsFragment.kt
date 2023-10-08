@@ -37,7 +37,6 @@ class SpellsFragment : Fragment() {
             spellsViewModel.characterID = it
 
             spellsViewModel.spellcasting.observeOnce(viewLifecycleOwner) { spellcasting ->
-                println("${AbilityRepository.getModifierName(requireContext(), spellcasting.ability)} ${spellcasting.saveDC} ${spellcasting.attackBonus}")
                 binding.textSpellcastingAbility.text = AbilityRepository.getModifierName(requireContext(), spellcasting.ability)
                 binding.textSpellSaveDC.text = spellcasting.saveDC.toString()
                 binding.textSpellAttackBonus.text = spellcasting.attackBonus.toString()
@@ -47,8 +46,21 @@ class SpellsFragment : Fragment() {
                 val spellLevelAdapter = SpellLevelAdapter(characterLevel)
                 binding.recyclerSpellLevels.adapter = spellLevelAdapter
 
-                spellsViewModel.spells.observeOnce(viewLifecycleOwner) { spellLevels ->
-                    spellLevelAdapter.spellLevels = spellLevels
+                spellsViewModel.spells.observe(viewLifecycleOwner) { spellLevels ->
+                    if (spellLevels != null)
+                        spellLevelAdapter.spellLevels = spellLevels
+                }
+
+                binding.buttonEdit.setOnClickListener {
+                    spellsViewModel.setEditMode(true)
+                    binding.buttonEdit.visibility = View.GONE
+                    binding.layoutEditingButtons.visibility = View.VISIBLE
+                }
+
+                binding.buttonUndo.setOnClickListener {
+                    spellsViewModel.setEditMode(false)
+                    binding.buttonEdit.visibility = View.VISIBLE
+                    binding.layoutEditingButtons.visibility = View.GONE
                 }
             }
         }
