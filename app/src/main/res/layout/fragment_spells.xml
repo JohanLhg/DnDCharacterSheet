@@ -4,23 +4,24 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="horizontal">
 
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center_horizontal"
-        android:orientation="horizontal">
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
         <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_margin="5dp"
-            android:orientation="vertical">
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
+            android:paddingHorizontal="10dp"
+            android:paddingVertical="5dp">
 
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="150dp"
-                android:layout_height="70dp">
+                android:layout_width="match_parent"
+                android:layout_height="60dp">
 
                 <ImageView
                     android:id="@+id/backgroundSpellcastingAbilityStart"
@@ -30,7 +31,7 @@
                     android:scaleType="fitCenter"
                     android:src="@drawable/spell_stats_background_start"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toStartOf="@+id/spinnerSpellcastingAbility"
+                    app:layout_constraintEnd_toStartOf="@+id/layoutSpellcastingAbilityValue"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
@@ -54,19 +55,39 @@
                     android:src="@drawable/spell_stats_background_end"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@id/spinnerSpellcastingAbility"
+                    app:layout_constraintStart_toEndOf="@id/layoutSpellcastingAbilityValue"
                     app:layout_constraintTop_toTopOf="parent" />
 
-                <Spinner
-                    android:id="@+id/spinnerSpellcastingAbility"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="10dp"
-                    android:entries="@array/modifiers"
+                <LinearLayout
+                    android:id="@+id/layoutSpellcastingAbilityValue"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:gravity="center"
+                    android:orientation="vertical"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toStartOf="@+id/backgroundSpellcastingAbilityEnd"
                     app:layout_constraintStart_toEndOf="@+id/backgroundSpellcastingAbilityStart"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <TextView
+                        android:id="@+id/textSpellcastingAbility"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="10dp"
+                        android:gravity="center"
+                        android:textAllCaps="true"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                        android:textStyle="bold" />
+
+                    <Spinner
+                        android:id="@+id/spinnerSpellcastingAbility"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="10dp"
+                        android:entries="@array/modifiers"
+                        android:visibility="gone" />
+
+                </LinearLayout>
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -76,20 +97,23 @@
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:lines="2"
+                android:paddingHorizontal="10dp"
                 android:text="@string/label_spellcasting_ability"
                 android:textAllCaps="true"
-                android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+                android:textAppearance="@style/TextAppearance.AppCompat.Small" />
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_margin="5dp"
-            android:orientation="vertical">
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
+            android:paddingHorizontal="10dp"
+            android:paddingVertical="5dp">
 
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="150dp"
-                android:layout_height="70dp">
+                android:layout_width="match_parent"
+                android:layout_height="60dp">
 
                 <ImageView
                     android:id="@+id/backgroundSpellSaveDCStart"
@@ -132,9 +156,8 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
                     android:gravity="center"
-                    android:text="12"
                     android:textAllCaps="true"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Large"
                     android:textStyle="bold"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toStartOf="@+id/backgroundSpellSaveDCEnd"
@@ -145,23 +168,26 @@
 
             <TextView
                 android:id="@+id/labelSpellSaveDC"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center"
+                android:paddingHorizontal="10dp"
                 android:text="@string/label_spell_save_dc"
                 android:textAllCaps="true"
-                android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+                android:textAppearance="@style/TextAppearance.AppCompat.Small" />
         </LinearLayout>
 
         <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_margin="5dp"
-            android:orientation="vertical">
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
+            android:paddingHorizontal="10dp"
+            android:paddingVertical="5dp">
 
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="150dp"
-                android:layout_height="70dp">
+                android:layout_width="match_parent"
+                android:layout_height="60dp">
 
                 <ImageView
                     android:id="@+id/backgroundSpellAttackBonusStart"
@@ -204,9 +230,8 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
                     android:gravity="center"
-                    android:text="12"
                     android:textAllCaps="true"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Large"
                     android:textStyle="bold"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toStartOf="@+id/backgroundSpellAttackBonusEnd"
@@ -220,20 +245,80 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
+                android:lines="2"
+                android:paddingHorizontal="10dp"
                 android:text="@string/label_spell_attack_bonus"
                 android:textAllCaps="true"
-                android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+                android:textAppearance="@style/TextAppearance.AppCompat.Small" />
         </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+
+        <LinearLayout
+            android:id="@+id/layoutEditingButtons"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <Button
+                android:id="@+id/buttonUndo"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:layout_marginEnd="5dp"
+                android:text="@string/undo"
+                app:icon="@drawable/undo"
+                app:iconPadding="5dp"
+                app:iconSize="20dp"
+                app:strokeColor="@color/purple_500" />
+
+            <Button
+                android:id="@+id/buttonSave"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:layout_marginEnd="5dp"
+                android:text="@string/save"
+                app:icon="@drawable/save"
+                app:iconPadding="5dp"
+                app:iconSize="20dp" />
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/buttonEdit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:layout_marginEnd="5dp"
+            android:text="@string/edit"
+            app:icon="@drawable/edit"
+            app:iconPadding="5dp"
+            app:iconSize="20dp" />
 
     </LinearLayout>
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerSpellLevels"
-        android:layout_width="match_parent"
+    <View
+        android:layout_width="2dp"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        app:layoutManager="StaggeredGridLayoutManager"
-        app:spanCount="4"
-        tools:itemCount="10"
-        tools:listitem="@layout/recycler_spell_level" />
+        android:layout_marginStart="5dp"
+        android:background="?android:attr/listDivider" />
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerSpellLevels"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:nestedScrollingEnabled="false"
+            android:orientation="vertical"
+            app:layoutManager="LinearLayoutManager"
+            tools:listitem="@layout/recycler_spell_level" />
+    </androidx.core.widget.NestedScrollView>
+
 </LinearLayout>

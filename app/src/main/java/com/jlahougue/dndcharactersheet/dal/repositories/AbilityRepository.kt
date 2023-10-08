@@ -1,10 +1,11 @@
 package com.jlahougue.dndcharactersheet.dal.repositories
 
 import android.app.Application
+import android.content.Context
+import com.jlahougue.dndcharactersheet.R
 import com.jlahougue.dndcharactersheet.dal.entities.Ability
 import com.jlahougue.dndcharactersheet.dal.firebase.dao.AbilityDao
 import com.jlahougue.dndcharactersheet.dal.room.DnDDatabase
-import com.jlahougue.dndcharactersheet.dal.room.views.AbilityModifierView
 import com.jlahougue.dndcharactersheet.dal.room.views.AbilityView
 
 class AbilityRepository(application: Application) {
@@ -52,5 +53,25 @@ class AbilityRepository(application: Application) {
         const val INTELLIGENCE = "INT"
         const val WISDOM = "WIS"
         const val CHARISMA = "CHA"
+
+        fun getName(context: Context, name: String) = when(name) {
+            STRENGTH -> context.getString(R.string.strength)
+            DEXTERITY -> context.getString(R.string.dexterity)
+            CONSTITUTION -> context.getString(R.string.constitution)
+            INTELLIGENCE -> context.getString(R.string.intelligence)
+            WISDOM -> context.getString(R.string.wisdom)
+            CHARISMA -> context.getString(R.string.charisma)
+            else -> ""
+        }
+
+        fun getModifierName(context: Context, modifierType: String) = when(modifierType) {
+            STRENGTH -> context.getString(R.string.modifier_strength)
+            DEXTERITY -> context.getString(R.string.modifier_dexterity)
+            CONSTITUTION -> context.getString(R.string.modifier_constitution)
+            INTELLIGENCE -> context.getString(R.string.modifier_intelligence)
+            WISDOM -> context.getString(R.string.modifier_wisdom)
+            CHARISMA -> context.getString(R.string.modifier_charisma)
+            else -> ""
+        }
     }
 }

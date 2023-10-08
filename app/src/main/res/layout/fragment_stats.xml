@@ -95,7 +95,7 @@
                     android:contentDescription="@string/button_search"
                     android:padding="12dp"
                     android:scaleType="fitCenter"
-                    android:src="@drawable/searching"
+                    android:src="@drawable/search"
                     app:layout_constraintBottom_toBottomOf="@+id/editSkillsSearch"
                     app:layout_constraintEnd_toEndOf="@+id/editSkillsSearch"
                     app:layout_constraintTop_toTopOf="@+id/editSkillsSearch" />

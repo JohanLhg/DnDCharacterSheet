@@ -9,7 +9,7 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/layoutSpellLevelHeader"
-        android:layout_width="match_parent"
+        android:layout_width="250dp"
         android:layout_height="wrap_content">
 
         <ImageView
@@ -81,7 +81,9 @@
         android:id="@+id/recyclerSpells"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        tools:itemCount="5"
+        app:layoutManager="GridLayoutManager"
+        app:spanCount="4"
+        tools:itemCount="10"
         tools:listitem="@layout/recycler_spell" />
 
 </LinearLayout>

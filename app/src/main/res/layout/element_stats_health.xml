@@ -507,7 +507,7 @@
         android:layout_marginEnd="5dp"
         android:backgroundTint="@color/green"
         android:text="@string/long_rest"
-        app:icon="@drawable/sleep_b"
+        app:icon="@drawable/sleep"
         app:iconPadding="5dp"
         app:iconSize="20dp" />
 

@@ -6,7 +6,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import com.jlahougue.dndcharactersheet.dal.repositories.AbilityRepository
 import com.jlahougue.dndcharactersheet.databinding.FragmentSpellsBinding
+import com.jlahougue.dndcharactersheet.extensions.observeOnce
 import com.jlahougue.dndcharactersheet.ui.main.MainActivity
 
 class SpellsFragment : Fragment() {
@@ -33,6 +35,22 @@ class SpellsFragment : Fragment() {
         (activity as MainActivity).mainViewModel.characterID.observe(viewLifecycleOwner) {
             if (it == 0L) return@observe
             spellsViewModel.characterID = it
+
+            spellsViewModel.spellcasting.observeOnce(viewLifecycleOwner) { spellcasting ->
+                println("${AbilityRepository.getModifierName(requireContext(), spellcasting.ability)} ${spellcasting.saveDC} ${spellcasting.attackBonus}")
+                binding.textSpellcastingAbility.text = AbilityRepository.getModifierName(requireContext(), spellcasting.ability)
+                binding.textSpellSaveDC.text = spellcasting.saveDC.toString()
+                binding.textSpellAttackBonus.text = spellcasting.attackBonus.toString()
+            }
+
+            spellsViewModel.characterLevel.observeOnce(viewLifecycleOwner) { characterLevel ->
+                val spellLevelAdapter = SpellLevelAdapter(characterLevel)
+                binding.recyclerSpellLevels.adapter = spellLevelAdapter
+
+                spellsViewModel.spells.observeOnce(viewLifecycleOwner) { spellLevels ->
+                    spellLevelAdapter.spellLevels = spellLevels
+                }
+            }
         }
 
         return binding.root

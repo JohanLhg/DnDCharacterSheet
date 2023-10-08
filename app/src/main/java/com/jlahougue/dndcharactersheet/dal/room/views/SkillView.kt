@@ -1,11 +1,7 @@
 package com.jlahougue.dndcharactersheet.dal.room.views
 
-import android.content.Context
 import androidx.room.ColumnInfo
 import androidx.room.DatabaseView
-import com.jlahougue.dndcharactersheet.R
-import com.jlahougue.dndcharactersheet.dal.repositories.AbilityRepository
-import com.jlahougue.dndcharactersheet.dal.repositories.SkillRepository
 
 @DatabaseView(
     """
@@ -44,38 +40,4 @@ class SkillView(
         const val SKILL_MODIFIER = "modifier"
         const val SKILL_PROFICIENCY = "proficiency"
     }
-
-    private fun getName(context: Context) = when(name) {
-        SkillRepository.ACROBATICS -> context.getString(R.string.acrobatics)
-        SkillRepository.ANIMAL_HANDLING -> context.getString(R.string.animal_handling)
-        SkillRepository.ARCANA -> context.getString(R.string.arcana)
-        SkillRepository.ATHLETICS -> context.getString(R.string.athletics)
-        SkillRepository.DECEPTION -> context.getString(R.string.deception)
-        SkillRepository.HISTORY -> context.getString(R.string.history)
-        SkillRepository.INSIGHT -> context.getString(R.string.insight)
-        SkillRepository.INTIMIDATION -> context.getString(R.string.intimidation)
-        SkillRepository.INVESTIGATION -> context.getString(R.string.investigation)
-        SkillRepository.MEDICINE -> context.getString(R.string.medicine)
-        SkillRepository.NATURE -> context.getString(R.string.nature)
-        SkillRepository.PERCEPTION -> context.getString(R.string.perception)
-        SkillRepository.PERFORMANCE -> context.getString(R.string.performance)
-        SkillRepository.PERSUASION -> context.getString(R.string.persuasion)
-        SkillRepository.RELIGION -> context.getString(R.string.religion)
-        SkillRepository.SLEIGHT_OF_HAND -> context.getString(R.string.sleight_of_hand)
-        SkillRepository.STEALTH -> context.getString(R.string.stealth)
-        SkillRepository.SURVIVAL -> context.getString(R.string.survival)
-        else -> ""
-    }
-
-    private fun getAbilityName(context: Context) = when(modifierType) {
-        AbilityRepository.STRENGTH -> context.getString(R.string.modifier_strength)
-        AbilityRepository.DEXTERITY -> context.getString(R.string.modifier_dexterity)
-        AbilityRepository.CONSTITUTION -> context.getString(R.string.modifier_constitution)
-        AbilityRepository.INTELLIGENCE -> context.getString(R.string.modifier_intelligence)
-        AbilityRepository.WISDOM -> context.getString(R.string.modifier_wisdom)
-        AbilityRepository.CHARISMA -> context.getString(R.string.modifier_charisma)
-        else -> ""
-    }
-
-    fun getFullName(context: Context) = "${getName(context)} (${getAbilityName(context)})"
 }

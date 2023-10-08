@@ -9,6 +9,7 @@
     <string name="cancel">Cancel</string>
     <string name="save">Save</string>
     <string name="back">Back</string>
+    <string name="undo">Undo</string>
     <string name="edit">Edit</string>
     <string name="delete">Delete</string>
     <string name="add">Add</string>
@@ -167,4 +168,5 @@
     <string name="label_range">Range :</string>
     <string name="label_duration">Duration :</string>
     <string name="label_description">Description :</string>
+    <string name="label_higher_levels">At higher levels :</string>
 </resources>

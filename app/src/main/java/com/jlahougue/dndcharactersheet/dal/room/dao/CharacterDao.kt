@@ -32,6 +32,9 @@ interface CharacterDao {
     @Query("SELECT * FROM character WHERE id = :characterID")
     fun get(characterID: Long): Character
 
+    @Query("SELECT level FROM character WHERE id = :characterID")
+    fun getLevel(characterID: Long): Int
+
     @Query("SELECT bonus FROM proficiency_view WHERE cid = :characterID")
     fun getProficiency(characterID: Long): LiveData<Int>
 
@@ -46,9 +49,9 @@ interface CharacterDao {
 
     @Query("SELECT id FROM character WHERE is_favorite = 1")
     fun getFavorite(): Long
-
     @Query("UPDATE character SET is_favorite = (id = :id AND :isFavorite)")
     fun updateFavorite(id: Long, isFavorite: Boolean)
+
     @MapInfo(keyColumn = CHARACTER_ID, valueColumn = CHARACTER_IS_FAVORITE)
     @Query("SELECT id, is_favorite FROM character")
     fun getFavoriteMap(): Map<Long, Boolean>

@@ -8,6 +8,7 @@ import android.view.View.VISIBLE
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
+import com.bumptech.glide.Glide
 import com.jlahougue.dndcharactersheet.R
 import com.jlahougue.dndcharactersheet.databinding.ActivityAuthBinding
 import com.jlahougue.dndcharactersheet.ui.authentication.AuthViewModel.Companion.FETCHING_SPELLS
@@ -34,6 +35,11 @@ class AuthActivity : AppCompatActivity() {
 
         binding = ActivityAuthBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        Glide.with(applicationContext)
+            .load(R.drawable.loading)
+            .centerInside()
+            .into(binding.imageLoading)
 
         if (!intent.getBooleanExtra(LANGUAGE_LOADED, false)) {
             authViewModel.getLanguage {
@@ -82,6 +88,7 @@ class AuthActivity : AppCompatActivity() {
 
     private fun startLoading() {
         binding.textLoading.visibility = VISIBLE
+        binding.imageLoading.visibility = VISIBLE
         binding.layoutAuth.visibility = GONE
 
         authViewModel.load()
@@ -96,10 +103,8 @@ class AuthActivity : AppCompatActivity() {
             }
 
             when (it[0]) {
-                SEARCHING_FOR_CHARACTER -> binding.textLoading.text =
-                    resources.getString(R.string.searching_for_character)
-                FETCHING_SPELLS -> binding.textLoading.text =
-                    resources.getString(R.string.fetching_spells)
+                SEARCHING_FOR_CHARACTER -> binding.textLoading.text = resources.getString(R.string.searching_for_character)
+                FETCHING_SPELLS -> binding.textLoading.text = resources.getString(R.string.fetching_spells)
             }
         }
     }

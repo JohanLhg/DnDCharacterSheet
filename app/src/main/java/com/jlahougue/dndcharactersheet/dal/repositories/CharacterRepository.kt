@@ -39,15 +39,13 @@ class CharacterRepository(application: Application) {
 
     fun get(characterID: Long) = roomDao.get(characterID)
 
+    fun getLevel(characterID: Long) = roomDao.getLevel(characterID)
+
     fun getProficiency(characterID: Long) = roomDao.getProficiency(characterID)
 
     fun getIDs() = roomDao.getIDs()
 
     fun exists() = roomDao.exists()
-
-    fun loadImage(characterID: Long, context: Context, view: ImageView) {
-        firebaseDao.loadImage(characterID, context, view)
-    }
 
     fun getFavoriteCharacter(callback: (Long?) -> Unit) {
         if (roomDao.hasFavorite())
@@ -61,4 +59,8 @@ class CharacterRepository(application: Application) {
     }
 
     fun uploadImage(characterID: Long, uri: Uri) = firebaseDao.uploadImage(characterID, uri)
+
+    fun loadImage(characterID: Long, context: Context, view: ImageView) {
+        firebaseDao.loadImage(characterID, context, view)
+    }
 }

@@ -4,6 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.jlahougue.dndcharactersheet.R
+import com.jlahougue.dndcharactersheet.dal.repositories.SkillRepository
 import com.jlahougue.dndcharactersheet.dal.room.views.SkillView
 import com.jlahougue.dndcharactersheet.databinding.RecyclerSkillSavingThrowBinding
 
@@ -42,7 +43,7 @@ class SkillAdapter(private val listener: OnSkillChangedListener) : RecyclerView.
         val skill = filteredSkills[position]
 
         holder.bind.checkProficiency.isChecked = skill.proficiency
-        holder.bind.textName.text = skill.getFullName(context)
+        holder.bind.textName.text = SkillRepository.getFullName(context, skill.name, skill.modifierType)
         holder.bind.textModifier.text = context.getString(R.string.plus_value, skill.modifier)
 
         holder.bind.checkProficiency.setOnCheckedChangeListener { _, isChecked ->

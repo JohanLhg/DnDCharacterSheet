@@ -5,6 +5,7 @@ import com.jlahougue.dndcharactersheet.dal.dndAPI.dao.SpellDao
 import com.jlahougue.dndcharactersheet.dal.entities.Spell
 import com.jlahougue.dndcharactersheet.dal.entities.SpellClass
 import com.jlahougue.dndcharactersheet.dal.entities.SpellDamage
+import com.jlahougue.dndcharactersheet.dal.entities.SpellWithCharacterInfo
 import com.jlahougue.dndcharactersheet.dal.room.DnDDatabase
 
 class SpellRepository(application: Application) {
@@ -23,4 +24,26 @@ class SpellRepository(application: Application) {
     private fun saveSpellClass(spellClass: SpellClass) = roomClassDao.insert(spellClass)
 
     private fun saveSpellDamage(spellDamage: SpellDamage) = roomDamageDao.insert(spellDamage)
+
+    fun get(characterID: Long): Map<Int, List<SpellWithCharacterInfo>> {
+        val spells = roomDao.get(characterID)
+        val map = mutableMapOf<Int, MutableList<SpellWithCharacterInfo>>()
+        spells.forEach {
+            val level = it.spell.level
+            if (map[level] == null) map[level] = mutableListOf()
+            map[level]!!.add(it)
+        }
+        return map
+    }
+
+    fun getUnlocked(characterID: Long): Map<Int, List<SpellWithCharacterInfo>> {
+        val spells = roomDao.getUnlocked(characterID)
+        val map = mutableMapOf<Int, MutableList<SpellWithCharacterInfo>>()
+        spells.forEach {
+            val level = it.spell.level
+            if (map[level] == null) map[level] = mutableListOf()
+            map[level]!!.add(it)
+        }
+        return map
+    }
 }
