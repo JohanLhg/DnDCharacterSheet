@@ -1,111 +1,172 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/layoutSpellDetails"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:padding="5dp">
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+    <data>
+        <import type="android.view.View"/>
+        <import type="android.text.TextUtils"/>
+        <variable
+            name="spell"
+            type="com.jlahougue.dndcharactersheet.dal.entities.Spell" />
+    </data>
 
     <LinearLayout
+        android:id="@+id/layoutSpellDetails"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center_vertical"
-        android:orientation="horizontal">
+        android:background="@color/spell"
+        android:orientation="vertical">
 
         <TextView
-            android:id="@+id/labelCastingTime"
-            style="@style/TextAppearance.AppCompat.Small"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:labelFor="@+id/textCastingTime"
-            android:text="@string/label_casting_time"
-            android:textColor="@color/text_light"
-            android:textStyle="bold" />
-
-        <TextView
-            android:id="@+id/textCastingTime"
-            style="@style/TextAppearance.AppCompat.Small"
+            android:id="@+id/titleSpellDetails"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="5dp" />
-    </LinearLayout>
+            android:padding="5dp"
+            android:text="@{@string/title_spell_details(spell.name)}"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            android:textColor="@color/white" />
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center_vertical"
-        android:orientation="horizontal">
-
-        <TextView
-            android:id="@+id/labelRange"
-            style="@style/TextAppearance.AppCompat.Small"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:labelFor="@+id/textRange"
-            android:text="@string/label_range"
-            android:textColor="@color/text_light"
-            android:textStyle="bold" />
-
-        <TextView
-            android:id="@+id/textRange"
-            style="@style/TextAppearance.AppCompat.Small"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="5dp" />
+            android:layout_marginHorizontal="3dp"
+            android:layout_marginBottom="3dp"
+            android:background="@color/white"
+            android:orientation="vertical"
+            android:padding="5dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/labelLevel"
+                    style="@style/TextAppearance.AppCompat.Medium"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:labelFor="@+id/textCastingTime"
+                    android:text="@string/label_level"
+                    android:textColor="@color/text_light"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/textLevel"
+                    style="@style/TextAppearance.AppCompat.Medium"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:text="@{spell.level == 0 ? @string/level_cantrip : String.valueOf(spell.level)}" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/labelCastingTime"
+                    style="@style/TextAppearance.AppCompat.Medium"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:labelFor="@+id/textCastingTime"
+                    android:text="@string/label_casting_time"
+                    android:textColor="@color/text_light"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/textCastingTime"
+                    style="@style/TextAppearance.AppCompat.Medium"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:text="@{spell.castingTime}" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/labelRange"
+                    style="@style/TextAppearance.AppCompat.Medium"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:labelFor="@+id/textRange"
+                    android:text="@string/label_range"
+                    android:textColor="@color/text_light"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/textRange"
+                    style="@style/TextAppearance.AppCompat.Medium"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:text="@{spell.range}" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/labelDuration"
+                    style="@style/TextAppearance.AppCompat.Medium"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:labelFor="@+id/textDuration"
+                    android:text="@string/label_duration"
+                    android:textColor="@color/text_light"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/textDuration"
+                    style="@style/TextAppearance.AppCompat.Medium"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:text="@{spell.duration}" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/labelDescription"
+                style="@style/TextAppearance.AppCompat.Medium"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:labelFor="@+id/textDescription"
+                android:text="@string/label_description"
+                android:textColor="@color/text_light"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/textDescription"
+                style="@style/TextAppearance.AppCompat.Medium"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@{spell.description}" />
+
+            <TextView
+                android:id="@+id/labelHigherLevels"
+                style="@style/TextAppearance.AppCompat.Medium"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:labelFor="@+id/textHigherLevels"
+                android:text="@string/label_higher_levels"
+                android:textColor="@color/text_light"
+                android:textStyle="bold"
+                android:visibility="@{TextUtils.isEmpty(spell.higherLevels) ? View.GONE : View.VISIBLE}" />
+
+            <TextView
+                android:id="@+id/textHigherLevels"
+                style="@style/TextAppearance.AppCompat.Medium"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@{spell.higherLevels}"
+                android:visibility="@{TextUtils.isEmpty(spell.higherLevels) ? View.GONE : View.VISIBLE}" />
+        </LinearLayout>
     </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-        <TextView
-            android:id="@+id/labelDuration"
-            style="@style/TextAppearance.AppCompat.Small"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:labelFor="@+id/textDuration"
-            android:text="@string/label_duration"
-            android:textColor="@color/text_light"
-            android:textStyle="bold" />
-
-        <TextView
-            android:id="@+id/textDuration"
-            style="@style/TextAppearance.AppCompat.Small"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="5dp" />
-    </LinearLayout>
-
-    <TextView
-        android:id="@+id/labelDescription"
-        style="@style/TextAppearance.AppCompat.Small"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:labelFor="@+id/textDescription"
-        android:text="@string/label_description"
-        android:textColor="@color/text_light"
-        android:textStyle="bold" />
-
-    <TextView
-        android:id="@+id/textDescription"
-        style="@style/TextAppearance.AppCompat.Small"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-
-    <TextView
-        android:id="@+id/labelHigherLevels"
-        style="@style/TextAppearance.AppCompat.Small"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:labelFor="@+id/textHigherLevels"
-        android:text="@string/label_higher_levels"
-        android:textColor="@color/text_light"
-        android:textStyle="bold" />
-
-    <TextView
-        android:id="@+id/textHigherLevels"
-        style="@style/TextAppearance.AppCompat.Small"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-</LinearLayout>
+</layout>

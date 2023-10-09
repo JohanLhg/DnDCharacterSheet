@@ -4,6 +4,7 @@ import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.MapInfo
+import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Update
 import com.jlahougue.dndcharactersheet.dal.entities.CharacterSpell
@@ -11,7 +12,7 @@ import com.jlahougue.dndcharactersheet.dal.entities.CharacterSpell.Companion.CHA
 
 @Dao
 interface CharacterSpellDao {
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(characterSpell: CharacterSpell)
 
     @Update

@@ -6,12 +6,13 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import com.jlahougue.dndcharactersheet.dal.entities.SpellWithCharacterInfo
 import com.jlahougue.dndcharactersheet.dal.repositories.AbilityRepository
 import com.jlahougue.dndcharactersheet.databinding.FragmentSpellsBinding
 import com.jlahougue.dndcharactersheet.extensions.observeOnce
 import com.jlahougue.dndcharactersheet.ui.main.MainActivity
 
-class SpellsFragment : Fragment() {
+class SpellsFragment : Fragment(), SpellAdapter.SpellListener {
 
     private var _binding: FragmentSpellsBinding? = null
 
@@ -19,11 +20,15 @@ class SpellsFragment : Fragment() {
     // onDestroyView.
     private val binding get() = _binding!!
 
+    private val main: MainActivity by lazy { activity as MainActivity }
+
     private val spellsViewModel: SpellsViewModel by lazy {
         ViewModelProvider.AndroidViewModelFactory
             .getInstance(requireActivity().application)
             .create(SpellsViewModel::class.java)
     }
+
+    private val spellLevelAdapter by lazy { SpellLevelAdapter(this) }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -32,7 +37,7 @@ class SpellsFragment : Fragment() {
     ): View {
         _binding = FragmentSpellsBinding.inflate(inflater, container, false)
 
-        (activity as MainActivity).mainViewModel.characterID.observe(viewLifecycleOwner) {
+        main.mainViewModel.characterID.observe(viewLifecycleOwner) {
             if (it == 0L) return@observe
             spellsViewModel.characterID = it
 
@@ -43,7 +48,7 @@ class SpellsFragment : Fragment() {
             }
 
             spellsViewModel.characterLevel.observeOnce(viewLifecycleOwner) { characterLevel ->
-                val spellLevelAdapter = SpellLevelAdapter(characterLevel)
+                spellLevelAdapter.characterLevel = characterLevel
                 binding.recyclerSpellLevels.adapter = spellLevelAdapter
 
                 spellsViewModel.spells.observe(viewLifecycleOwner) { spellLevels ->
@@ -51,17 +56,19 @@ class SpellsFragment : Fragment() {
                         spellLevelAdapter.spellLevels = spellLevels
                 }
 
-                binding.buttonEdit.setOnClickListener {
-                    spellsViewModel.setEditMode(true)
-                    binding.buttonEdit.visibility = View.GONE
-                    binding.layoutEditingButtons.visibility = View.VISIBLE
-                }
+                binding.buttonEdit.setOnClickListener { spellsViewModel.setEditMode(true) }
+                binding.buttonDone.setOnClickListener { spellsViewModel.setEditMode(false) }
+            }
+        }
 
-                binding.buttonUndo.setOnClickListener {
-                    spellsViewModel.setEditMode(false)
-                    binding.buttonEdit.visibility = View.VISIBLE
-                    binding.layoutEditingButtons.visibility = View.GONE
-                }
+        spellsViewModel.editMode.observe(viewLifecycleOwner) { editMode ->
+            spellLevelAdapter.editMode = editMode
+            if (editMode) {
+                binding.buttonEdit.visibility = View.GONE
+                binding.buttonDone.visibility = View.VISIBLE
+            } else {
+                binding.buttonEdit.visibility = View.VISIBLE
+                binding.buttonDone.visibility = View.GONE
             }
         }
 
@@ -71,5 +78,20 @@ class SpellsFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    override fun onSpellClick(spell: SpellWithCharacterInfo) {
+        DialogSpellDetails(spell).show(
+            main.supportFragmentManager,
+            DialogSpellDetails.TAG
+        )
+    }
+
+    override fun setSpellPrepared(spell: SpellWithCharacterInfo, prepared: Boolean) {
+        spellsViewModel.setSpellPrepared(spell, prepared)
+    }
+
+    override fun setSpellUnlocked(spell: SpellWithCharacterInfo, unlocked: Boolean) {
+        spellsViewModel.setSpellUnlocked(spell, unlocked)
     }
 }

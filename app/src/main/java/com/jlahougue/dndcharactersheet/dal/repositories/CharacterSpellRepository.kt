@@ -9,8 +9,7 @@ class CharacterSpellRepository(application: Application) {
     private val roomDao = DnDDatabase.getInstance(application).characterSpellDao()
     private val firebaseDao = CharacterSpellDao()
 
-    fun insert(characterID: Long, spellName: String) {
-        val characterSpell = CharacterSpell(cid = characterID, name = spellName)
+    fun update(characterSpell: CharacterSpell) {
         roomDao.insert(characterSpell)
         firebaseDao.insert(characterSpell)
     }

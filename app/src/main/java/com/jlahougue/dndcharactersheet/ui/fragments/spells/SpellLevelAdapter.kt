@@ -9,12 +9,15 @@ import com.jlahougue.dndcharactersheet.dal.repositories.CharacterSpellRepository
 import com.jlahougue.dndcharactersheet.databinding.RecyclerCantripsBinding
 import com.jlahougue.dndcharactersheet.databinding.RecyclerSpellLevelBinding
 
-class SpellLevelAdapter(private val characterLevel: Int) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class SpellLevelAdapter(private val spellListener: SpellAdapter.SpellListener) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     companion object {
         const val VIEW_TYPE_CANTRIPS = 0
         const val VIEW_TYPE_SPELL_LEVEL = 1
     }
+
+    var characterLevel = 0
+    var editMode = false
 
     var spellLevels = mapOf<Int, List<SpellWithCharacterInfo>>()
         set(value) {
@@ -50,13 +53,13 @@ class SpellLevelAdapter(private val characterLevel: Int) : RecyclerView.Adapter<
         when (holder) {
             is CantripsViewHolder -> {
                 holder.bind.textSpellLevel.text = position.toString()
-                holder.bind.recyclerSpells.adapter = SpellAdapter(spells)
+                holder.bind.recyclerSpells.adapter = SpellAdapter(editMode, spells, spellListener)
             }
             is SpellLevelViewHolder -> {
                 holder.bind.textSpellLevel.text = position.toString()
                 holder.bind.textSpellLevelMax.text = CharacterSpellRepository.getSpellSlotsForLevel(characterLevel, position).toString()
 
-                holder.bind.recyclerSpells.adapter = SpellAdapter(spells)
+                holder.bind.recyclerSpells.adapter = SpellAdapter(editMode, spells, spellListener)
             }
         }
     }

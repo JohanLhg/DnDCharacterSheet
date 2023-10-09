@@ -15,7 +15,9 @@ class CharacterSpell(
     @ColumnInfo(name = CHARACTER_SPELL_UNLOCKED)
     var unlocked: Boolean = false,
     @ColumnInfo(name = CHARACTER_SPELL_PREPARED)
-    var prepared: Boolean = false
+    var prepared: Boolean = false,
+    @ColumnInfo(name = CHARACTER_SPELL_HIGHLIGHTED)
+    var highlighted: Boolean = false
 ) {
     companion object {
         const val TABLE_CHARACTER_SPELL = "character_spell"
@@ -23,5 +25,6 @@ class CharacterSpell(
         const val CHARACTER_SPELL_NAME = "name"
         const val CHARACTER_SPELL_UNLOCKED = "unlocked"
         const val CHARACTER_SPELL_PREPARED = "prepared"
+        const val CHARACTER_SPELL_HIGHLIGHTED = "highlighted"
     }
 }

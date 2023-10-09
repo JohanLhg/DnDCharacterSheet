@@ -266,37 +266,17 @@
             android:layout_height="0dp"
             android:layout_weight="1" />
 
-        <LinearLayout
-            android:id="@+id/layoutEditingButtons"
+        <Button
+            android:id="@+id/buttonDone"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:visibility="gone">
-
-            <Button
-                android:id="@+id/buttonUndo"
-                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="5dp"
-                android:layout_marginEnd="5dp"
-                android:text="@string/undo"
-                app:icon="@drawable/undo"
-                app:iconPadding="5dp"
-                app:iconSize="20dp"
-                app:strokeColor="@color/purple_500" />
-
-            <Button
-                android:id="@+id/buttonSave"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="5dp"
-                android:layout_marginEnd="5dp"
-                android:text="@string/save"
-                app:icon="@drawable/save"
-                app:iconPadding="5dp"
-                app:iconSize="20dp" />
-        </LinearLayout>
+            android:layout_marginStart="5dp"
+            android:layout_marginEnd="5dp"
+            android:text="@string/done"
+            android:visibility="gone"
+            app:icon="@drawable/tick"
+            app:iconPadding="5dp"
+            app:iconSize="20dp" />
 
         <Button
             android:id="@+id/buttonEdit"

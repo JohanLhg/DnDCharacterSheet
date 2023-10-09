@@ -51,7 +51,7 @@ import com.jlahougue.dndcharactersheet.dal.room.views.SpellcastingView
         Quests::class, Skill::class, Spell::class, Spellcasting::class, SpellClass::class,
         SpellDamage::class, SpellSlotUses::class, Stats::class],
     views = [AbilityView::class, AbilityModifierView::class, ProficiencyView::class, SkillView::class, SpellcastingView::class],
-    version = 16
+    version = 17
 )
 abstract class DnDDatabase : RoomDatabase() {
     companion object {

@@ -28,9 +28,11 @@ class SpellDao {
         for (i in 0 until results.length()) {
             name = results.getJSONObject(i).getString("name")
             url = results.getJSONObject(i).getString("url")
-            if (names.contains(name)) continue
+            if (names.contains(name)) {
+                setProgress(i, json.getInt("count"))
+                continue
+            }
             fetchSpell(getUrl(url), saveSpell, saveSpellClass, saveSpellDamage)
-            setProgress(i, json.getInt("count"))
         }
         callback()
     }

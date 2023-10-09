@@ -7,11 +7,11 @@
     </data>
 
     <LinearLayout
+        android:id="@+id/layoutSpell"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center_vertical"
-        android:orientation="vertical"
-        android:padding="5dp">
+        android:orientation="vertical">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -22,38 +22,42 @@
             <CheckBox
                 android:id="@+id/checkBoxSpellPrepared"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:checked="@{spell.characterSpell.prepared}"
                 android:minWidth="0dp"
-                android:minHeight="0dp" />
+                android:minHeight="0dp"
+                android:padding="5dp" />
 
             <CheckBox
                 android:id="@+id/checkBoxSpellUnlocked"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:checked="@{spell.characterSpell.unlocked}"
-                android:visibility="gone"
                 android:minWidth="0dp"
-                android:minHeight="0dp" />
+                android:minHeight="0dp"
+                android:padding="5dp"
+                android:visibility="gone" />
 
             <TextView
                 android:id="@+id/textSpellName"
                 style="@style/TextAppearance.AppCompat.Medium"
-                android:text="@{spell.spell.name}"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1" />
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
+                android:layout_weight="1"
+                android:text="@{spell.spell.name}" />
 
             <ImageView
                 android:id="@+id/buttonCast"
-                android:layout_width="wrap_content"
-                android:layout_height="25dp"
-                android:layout_marginStart="5dp"
+                android:layout_width="35dp"
+                android:layout_height="match_parent"
                 android:layout_marginEnd="5dp"
                 android:adjustViewBounds="true"
+                android:contentDescription="@string/cast_spell"
+                android:padding="5dp"
                 android:scaleType="fitCenter"
-                android:src="@drawable/die"
-                android:contentDescription="@string/cast_spell" />
+                android:src="@drawable/die" />
 
             <ImageView
                 android:id="@+id/buttonDetails"
@@ -62,16 +66,18 @@
                 android:layout_marginStart="5dp"
                 android:layout_marginEnd="5dp"
                 android:adjustViewBounds="true"
+                android:contentDescription="@string/show_spell_details"
                 android:scaleType="fitCenter"
                 android:src="@drawable/details"
-                android:visibility="gone"
-                android:contentDescription="@string/show_spell_details" />
+                android:visibility="gone" />
         </LinearLayout>
 
         <View
             android:id="@+id/divider4"
             android:layout_width="match_parent"
             android:layout_height="2dp"
+            android:layout_marginStart="5dp"
+            android:layout_marginEnd="5dp"
             android:background="?android:attr/listDivider" />
 
     </LinearLayout>

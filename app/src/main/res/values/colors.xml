@@ -14,6 +14,8 @@
     <color name="transparent">#00000000</color>
     <color name="transparent_white">#80FFFFFF</color>
 
+    <color name="spell">#78461F</color>
+
     <color name="grey">#D6D6D6</color>
     <color name="red">#BC0606</color>
     <color name="green">#3E9400</color>
