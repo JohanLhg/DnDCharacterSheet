@@ -5,7 +5,7 @@ import com.jlahougue.dndcharactersheet.dal.dndAPI.dao.SpellDao
 import com.jlahougue.dndcharactersheet.dal.entities.Spell
 import com.jlahougue.dndcharactersheet.dal.entities.SpellClass
 import com.jlahougue.dndcharactersheet.dal.entities.SpellDamage
-import com.jlahougue.dndcharactersheet.dal.entities.SpellWithCharacterInfo
+import com.jlahougue.dndcharactersheet.dal.entities.utilityClasses.SpellWithCharacterInfo
 import com.jlahougue.dndcharactersheet.dal.room.DnDDatabase
 
 class SpellRepository(application: Application) {
@@ -29,7 +29,7 @@ class SpellRepository(application: Application) {
         val spells = roomDao.get(characterID)
         val map = mutableMapOf<Int, MutableList<SpellWithCharacterInfo>>()
         spells.forEach {
-            val level = it.spell.level
+            val level = it.level
             if (map[level] == null) map[level] = mutableListOf()
             map[level]!!.add(it)
         }
@@ -40,7 +40,7 @@ class SpellRepository(application: Application) {
         val spells = roomDao.getUnlocked(characterID)
         val map = mutableMapOf<Int, MutableList<SpellWithCharacterInfo>>()
         spells.forEach {
-            val level = it.spell.level
+            val level = it.level
             if (map[level] == null) map[level] = mutableListOf()
             map[level]!!.add(it)
         }

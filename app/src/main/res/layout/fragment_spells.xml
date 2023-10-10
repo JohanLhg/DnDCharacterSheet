@@ -107,7 +107,7 @@
         </LinearLayout>
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center_horizontal"
             android:orientation="vertical"
@@ -123,38 +123,38 @@
                     android:layout_width="wrap_content"
                     android:layout_height="0dp"
                     android:adjustViewBounds="true"
+                    android:importantForAccessibility="no"
                     android:scaleType="fitCenter"
                     android:src="@drawable/spell_stats_background_start"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toStartOf="@+id/textSpellSaveDC"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    android:importantForAccessibility="no" />
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <ImageView
                     android:id="@+id/backgroundSpellSaveDCMiddle"
                     android:layout_width="0dp"
                     android:layout_height="0dp"
+                    android:importantForAccessibility="no"
                     android:scaleType="fitXY"
                     android:src="@drawable/spell_stats_background_middle"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toStartOf="@+id/backgroundSpellSaveDCEnd"
                     app:layout_constraintStart_toEndOf="@+id/backgroundSpellSaveDCStart"
-                    app:layout_constraintTop_toTopOf="parent"
-                    android:importantForAccessibility="no" />
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <ImageView
                     android:id="@+id/backgroundSpellSaveDCEnd"
                     android:layout_width="wrap_content"
                     android:layout_height="0dp"
                     android:adjustViewBounds="true"
+                    android:importantForAccessibility="no"
                     android:scaleType="fitCenter"
                     android:src="@drawable/spell_stats_background_end"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@id/textSpellSaveDC"
-                    app:layout_constraintTop_toTopOf="parent"
-                    android:importantForAccessibility="no" />
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
                     android:id="@+id/textSpellSaveDC"
@@ -265,6 +265,30 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1" />
+
+        <TextView
+            android:id="@+id/textTotalUnlocked"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="5dp"
+            android:text="@string/total_unlocked"
+            android:textAppearance="@style/TextAppearance.AppCompat.Small" />
+
+        <TextView
+            android:id="@+id/textTotalPrepared"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="5dp"
+            android:text="@string/total_prepared"
+            android:textAppearance="@style/TextAppearance.AppCompat.Small" />
+
+        <TextView
+            android:id="@+id/textTotalHighlighted"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="5dp"
+            android:text="@string/total_highlighted"
+            android:textAppearance="@style/TextAppearance.AppCompat.Small" />
 
         <Button
             android:id="@+id/buttonDone"

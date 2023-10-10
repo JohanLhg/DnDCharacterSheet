@@ -10,8 +10,7 @@ import androidx.room.Query
 import androidx.room.Update
 import com.jlahougue.dndcharactersheet.dal.entities.Ability
 import com.jlahougue.dndcharactersheet.dal.entities.Ability.Companion.ABILITY_NAME
-import com.jlahougue.dndcharactersheet.dal.room.views.AbilityModifierView
-import com.jlahougue.dndcharactersheet.dal.room.views.AbilityView
+import com.jlahougue.dndcharactersheet.dal.entities.views.AbilityView
 
 @Dao
 interface AbilityDao {

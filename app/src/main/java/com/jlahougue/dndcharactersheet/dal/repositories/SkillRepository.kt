@@ -4,6 +4,7 @@ import android.app.Application
 import android.content.Context
 import com.jlahougue.dndcharactersheet.R
 import com.jlahougue.dndcharactersheet.dal.entities.Skill
+import com.jlahougue.dndcharactersheet.dal.entities.views.SkillView
 import com.jlahougue.dndcharactersheet.dal.firebase.dao.SkillDao
 import com.jlahougue.dndcharactersheet.dal.repositories.AbilityRepository.Companion.CHARISMA
 import com.jlahougue.dndcharactersheet.dal.repositories.AbilityRepository.Companion.DEXTERITY
@@ -11,7 +12,6 @@ import com.jlahougue.dndcharactersheet.dal.repositories.AbilityRepository.Compan
 import com.jlahougue.dndcharactersheet.dal.repositories.AbilityRepository.Companion.STRENGTH
 import com.jlahougue.dndcharactersheet.dal.repositories.AbilityRepository.Companion.WISDOM
 import com.jlahougue.dndcharactersheet.dal.room.DnDDatabase
-import com.jlahougue.dndcharactersheet.dal.room.views.SkillView
 
 class SkillRepository(application: Application) {
     private val roomDao = DnDDatabase.getInstance(application).skillDao()

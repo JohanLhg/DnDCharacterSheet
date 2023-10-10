@@ -164,8 +164,14 @@
     <string name="label_spellcasting_ability">Spellcasting Ability</string>
     <string name="label_spell_save_dc">Spell Save DC</string>
     <string name="label_spell_attack_bonus">Spell Attack Bonus</string>
+    <string name="total_unlocked">Total unlocked : %d</string>
+    <string name="total_prepared">Total prepared : %d</string>
+    <string name="total_highlighted">Total highlighted : %d</string>
     <string name="label_cantrips">Cantrips</string>
+    <string name="label_spell_slots">Slots total</string>
+    <string name="label_spell_slots_left">Slots left</string>
     <string name="cast_spell">Cast spell</string>
+    <string name="highlight_spell">Highlight spell</string>
     <string name="show_spell_details">Show spell details</string>
 
     <!-- Spell Details -->
@@ -177,4 +183,7 @@
     <string name="label_duration">Duration :</string>
     <string name="label_description">Description :</string>
     <string name="label_higher_levels">At higher levels :</string>
+    <string name="spell_unlocked">Unlocked</string>
+    <string name="spell_prepared">Prepared</string>
+    <string name="spell_highlighted">Highlighted</string>
 </resources>

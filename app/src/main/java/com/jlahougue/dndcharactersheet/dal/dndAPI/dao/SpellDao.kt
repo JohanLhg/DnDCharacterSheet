@@ -33,6 +33,7 @@ class SpellDao {
                 continue
             }
             fetchSpell(getUrl(url), saveSpell, saveSpellClass, saveSpellDamage)
+            setProgress(i, json.getInt("count"))
         }
         callback()
     }
@@ -54,6 +55,7 @@ class SpellDao {
         val spellDesc = json.getJSONArray("desc")
         var desc = ""
         for (i in 0 until spellDesc.length()) {
+            if (i != 0) desc += "\n"
             desc += spellDesc.getString(i)
         }
 
@@ -61,6 +63,7 @@ class SpellDao {
         if (json.has("higher_level")) {
             val spellHigherLevel = json.getJSONArray("higher_level")
             for (i in 0 until spellHigherLevel.length()) {
+                if (i != 0) higherLevel += "\n"
                 higherLevel += spellHigherLevel.getString(i)
             }
         }

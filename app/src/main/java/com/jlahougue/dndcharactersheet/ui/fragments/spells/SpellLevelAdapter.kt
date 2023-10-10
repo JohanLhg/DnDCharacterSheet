@@ -3,7 +3,7 @@ package com.jlahougue.dndcharactersheet.ui.fragments.spells
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.jlahougue.dndcharactersheet.dal.entities.SpellWithCharacterInfo
+import com.jlahougue.dndcharactersheet.dal.entities.utilityClasses.SpellWithCharacterInfo
 import com.jlahougue.dndcharactersheet.dal.repositories.CharacterSpellRepository
 import com.jlahougue.dndcharactersheet.dal.repositories.CharacterSpellRepository.Companion.getMaxSpellLevel
 import com.jlahougue.dndcharactersheet.databinding.RecyclerCantripsBinding
@@ -41,9 +41,6 @@ class SpellLevelAdapter(private val spellListener: SpellAdapter.SpellListener) :
     }
 
     override fun getItemCount(): Int {
-        //if (spellLevels.isEmpty()) return 0
-        //var max = 0
-        //spellLevels.keys.forEach { if (it > max) max = it }
         return getMaxSpellLevel(characterLevel) + 1
     }
 

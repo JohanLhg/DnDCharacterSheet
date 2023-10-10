@@ -3,9 +3,9 @@ package com.jlahougue.dndcharactersheet.dal.repositories
 import android.app.Application
 import androidx.lifecycle.LiveData
 import com.jlahougue.dndcharactersheet.dal.entities.Spellcasting
+import com.jlahougue.dndcharactersheet.dal.entities.views.SpellcastingView
 import com.jlahougue.dndcharactersheet.dal.firebase.dao.SpellcastingDao
 import com.jlahougue.dndcharactersheet.dal.room.DnDDatabase
-import com.jlahougue.dndcharactersheet.dal.room.views.SpellcastingView
 
 class SpellcastingRepository(application: Application) {
     val roomDao = DnDDatabase.getInstance(application).spellcastingDao()

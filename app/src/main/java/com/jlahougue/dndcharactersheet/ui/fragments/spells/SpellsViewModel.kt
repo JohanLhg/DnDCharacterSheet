@@ -5,12 +5,13 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.jlahougue.dndcharactersheet.dal.entities.CharacterSpell
-import com.jlahougue.dndcharactersheet.dal.entities.SpellWithCharacterInfo
+import com.jlahougue.dndcharactersheet.dal.entities.utilityClasses.SpellWithCharacterInfo
+import com.jlahougue.dndcharactersheet.dal.entities.views.CharacterSpellStatsView
+import com.jlahougue.dndcharactersheet.dal.entities.views.SpellcastingView
 import com.jlahougue.dndcharactersheet.dal.repositories.CharacterRepository
 import com.jlahougue.dndcharactersheet.dal.repositories.CharacterSpellRepository
 import com.jlahougue.dndcharactersheet.dal.repositories.SpellRepository
 import com.jlahougue.dndcharactersheet.dal.repositories.SpellcastingRepository
-import com.jlahougue.dndcharactersheet.dal.room.views.SpellcastingView
 import kotlin.concurrent.thread
 
 class SpellsViewModel(application: Application) : AndroidViewModel(application) {
@@ -22,6 +23,7 @@ class SpellsViewModel(application: Application) : AndroidViewModel(application) 
 
     val characterLevel = MutableLiveData<Int>(null)
     lateinit var spellcasting: LiveData<SpellcastingView>
+    lateinit var characterSpellStats: LiveData<CharacterSpellStatsView>
     val editMode = MutableLiveData(false)
     val spells = MutableLiveData<Map<Int, List<SpellWithCharacterInfo>>>(null)
 
@@ -29,6 +31,7 @@ class SpellsViewModel(application: Application) : AndroidViewModel(application) 
         set(value) {
             field = value
             spellcasting = spellcastingRepository.get(value)
+            characterSpellStats = characterSpellRepository.getCharacterSpellStats(value)
             thread {
                 characterLevel.postValue(characterRepository.getLevel(value))
                 spells.postValue(spellRepository.getUnlocked(value))
@@ -43,38 +46,11 @@ class SpellsViewModel(application: Application) : AndroidViewModel(application) 
         }
     }
 
-    fun setSpellPrepared(spell: SpellWithCharacterInfo, prepared: Boolean) {
-        val characterSpell: CharacterSpell
-        if (spell.characterSpell == null) {
-            characterSpell = CharacterSpell(
-                cid = characterID,
-                name = spell.spell.name,
-                prepared = prepared
-            )
-        } else {
-            characterSpell = spell.characterSpell
-            characterSpell.prepared = prepared
-        }
+    fun updateCharacterSpell(characterSpell: CharacterSpell) {
         thread {
             characterSpellRepository.update(characterSpell)
         }
     }
 
-    fun setSpellUnlocked(spell: SpellWithCharacterInfo, unlocked: Boolean) {
-        val characterSpell: CharacterSpell
-        if (spell.characterSpell == null) {
-            characterSpell = CharacterSpell(
-                cid = characterID,
-                name = spell.spell.name,
-                unlocked = unlocked
-            )
-        } else {
-            characterSpell = spell.characterSpell
-            characterSpell.unlocked = unlocked
-        }
-        if (!unlocked) characterSpell.prepared = false
-        thread {
-            characterSpellRepository.update(characterSpell)
-        }
-    }
+    fun refresh() = setEditMode(editMode.value!!)
 }

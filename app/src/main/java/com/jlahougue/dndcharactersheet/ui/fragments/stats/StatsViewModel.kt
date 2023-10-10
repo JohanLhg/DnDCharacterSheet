@@ -6,13 +6,13 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.jlahougue.dndcharactersheet.dal.entities.Health
 import com.jlahougue.dndcharactersheet.dal.entities.Stats
+import com.jlahougue.dndcharactersheet.dal.entities.views.AbilityView
+import com.jlahougue.dndcharactersheet.dal.entities.views.SkillView
 import com.jlahougue.dndcharactersheet.dal.repositories.AbilityRepository
 import com.jlahougue.dndcharactersheet.dal.repositories.CharacterRepository
 import com.jlahougue.dndcharactersheet.dal.repositories.HealthRepository
 import com.jlahougue.dndcharactersheet.dal.repositories.SkillRepository
 import com.jlahougue.dndcharactersheet.dal.repositories.StatsRepository
-import com.jlahougue.dndcharactersheet.dal.room.views.AbilityView
-import com.jlahougue.dndcharactersheet.dal.room.views.SkillView
 import kotlin.concurrent.thread
 
 class StatsViewModel(application: Application) : AndroidViewModel(application) {

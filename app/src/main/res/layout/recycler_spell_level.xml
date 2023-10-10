@@ -16,6 +16,7 @@
             android:id="@+id/backgroundSpellLevel"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
             android:adjustViewBounds="true"
             android:importantForAccessibility="no"
             android:scaleType="fitCenter"
@@ -26,13 +27,49 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <LinearLayout
+            android:id="@+id/linearLayout2"
+            android:layout_width="match_parent"
+            android:layout_height="15dp"
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+
+            <TextView
+                android:id="@+id/labelSpellLevelMax"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="3"
+                android:gravity="bottom|center_horizontal"
+                android:text="@string/label_spell_slots"
+                android:textAppearance="@style/TextAppearance.AppCompat.Small"
+                android:textSize="12sp" />
+
+            <TextView
+                android:id="@+id/labelSpellLevelLeft"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="7"
+                android:gravity="bottom|center_horizontal"
+                android:text="@string/label_spell_slots_left"
+                android:textAppearance="@style/TextAppearance.AppCompat.Small"
+                android:textSize="12sp" />
+
+        </LinearLayout>
+
+        <LinearLayout
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:orientation="horizontal"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            app:layout_constraintTop_toTopOf="@id/backgroundSpellLevel">
 
             <TextView
                 android:id="@+id/textSpellLevel"

@@ -5,10 +5,9 @@ import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import androidx.room.Transaction
 import androidx.room.Update
 import com.jlahougue.dndcharactersheet.dal.entities.Spell
-import com.jlahougue.dndcharactersheet.dal.entities.SpellWithCharacterInfo
+import com.jlahougue.dndcharactersheet.dal.entities.utilityClasses.SpellWithCharacterInfo
 
 @Dao
 interface SpellDao {
@@ -24,7 +23,6 @@ interface SpellDao {
     @Query("SELECT name FROM spell")
     fun getNames(): List<String>
 
-    @Transaction
     @Query("""
         WITH my_character AS (
             SELECT character.*,
@@ -40,22 +38,36 @@ interface SpellDao {
                     ELSE 9
                 END AS max_spell_level
             FROM character WHERE id = :characterID
+        ), my_character_spell AS (
+            SELECT character_spell.*
+            FROM character_spell
+            WHERE character_spell.cid = :characterID
         )
-        SELECT spell.*
-        FROM spell 
+        SELECT 
+            :characterID AS cid,
+            spell.*, 
+            my_character_spell.unlocked, 
+            my_character_spell.prepared, 
+            my_character_spell.highlighted
+        FROM spell
         INNER JOIN spell_class ON spell.name = spell_class.spell
         LEFT JOIN my_character
+        LEFT JOIN my_character_spell ON spell.name = my_character_spell.spell_name
         WHERE spell.level <= my_character.max_spell_level
         AND spell_class.class = my_character.class
         ORDER BY spell.level ASC, spell.name ASC
     """)
     fun get(characterID: Long): List<SpellWithCharacterInfo>
 
-    @Transaction
     @Query("""
-        SELECT spell.* 
+        SELECT
+            :characterID AS cid, 
+            spell.*, 
+            character_spell.unlocked, 
+            character_spell.prepared, 
+            character_spell.highlighted
         FROM spell 
-        INNER JOIN character_spell ON spell.name = character_spell.name
+        INNER JOIN character_spell ON spell.name = character_spell.spell_name
         WHERE character_spell.cid = :characterID 
         AND character_spell.unlocked = 1
     """)

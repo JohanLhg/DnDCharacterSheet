@@ -4,9 +4,9 @@ import android.app.Application
 import android.content.Context
 import com.jlahougue.dndcharactersheet.R
 import com.jlahougue.dndcharactersheet.dal.entities.Ability
+import com.jlahougue.dndcharactersheet.dal.entities.views.AbilityView
 import com.jlahougue.dndcharactersheet.dal.firebase.dao.AbilityDao
 import com.jlahougue.dndcharactersheet.dal.room.DnDDatabase
-import com.jlahougue.dndcharactersheet.dal.room.views.AbilityView
 
 class AbilityRepository(application: Application) {
     private val roomDao = DnDDatabase.getInstance(application).abilityDao()

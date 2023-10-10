@@ -7,6 +7,6 @@ class CharacterSpellDao {
     private val firebaseDatabase = FirebaseDatabase.getInstance()
 
     fun insert(characterSpell: CharacterSpell) {
-        firebaseDatabase.updateCharacterSheet(characterSpell.cid, mapOf("spells.${characterSpell.name}" to characterSpell))
+        firebaseDatabase.updateCharacterSheet(characterSpell.cid, mapOf("spells.${characterSpell.spellName}" to characterSpell))
     }
 }

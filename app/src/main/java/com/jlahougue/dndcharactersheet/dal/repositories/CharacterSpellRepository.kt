@@ -10,13 +10,17 @@ class CharacterSpellRepository(application: Application) {
     private val firebaseDao = CharacterSpellDao()
 
     fun update(characterSpell: CharacterSpell) {
+        if (!characterSpell.unlocked) characterSpell.prepared = false
+        else characterSpell.highlighted = false
         roomDao.insert(characterSpell)
         firebaseDao.insert(characterSpell)
     }
 
-    fun saveToLocal(spell: CharacterSpell) = roomDao.update(spell)
+    fun saveToLocal(spell: CharacterSpell) = roomDao.insert(spell)
 
     fun getMap(characterID: Long): Map<String, CharacterSpell> = roomDao.getMap(characterID)
+
+    fun getCharacterSpellStats(characterID: Long) = roomDao.getCharacterSpellStats(characterID)
 
     companion object {
         fun getSpellSlotsForLevel(characterLevel: Int, spellLevel: Int): Int {

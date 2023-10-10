@@ -1,4 +1,4 @@
-package com.jlahougue.dndcharactersheet.dal.room.views
+package com.jlahougue.dndcharactersheet.dal.entities.views
 
 import androidx.room.ColumnInfo
 import androidx.room.DatabaseView

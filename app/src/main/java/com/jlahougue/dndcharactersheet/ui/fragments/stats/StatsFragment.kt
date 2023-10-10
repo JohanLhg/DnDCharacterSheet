@@ -9,9 +9,9 @@ import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.jlahougue.dndcharactersheet.R
+import com.jlahougue.dndcharactersheet.dal.entities.views.AbilityView
+import com.jlahougue.dndcharactersheet.dal.entities.views.SkillView
 import com.jlahougue.dndcharactersheet.dal.repositories.AbilityRepository.Companion.DEXTERITY
-import com.jlahougue.dndcharactersheet.dal.room.views.AbilityView
-import com.jlahougue.dndcharactersheet.dal.room.views.SkillView
 import com.jlahougue.dndcharactersheet.databinding.FragmentStatsBinding
 import com.jlahougue.dndcharactersheet.extensions.observeOnce
 import com.jlahougue.dndcharactersheet.ui.fragments.stats.StatsViewModel.Companion.CURRENT

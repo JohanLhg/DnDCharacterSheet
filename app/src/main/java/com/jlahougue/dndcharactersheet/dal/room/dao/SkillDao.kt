@@ -10,7 +10,7 @@ import androidx.room.Query
 import androidx.room.Update
 import com.jlahougue.dndcharactersheet.dal.entities.Skill
 import com.jlahougue.dndcharactersheet.dal.entities.Skill.Companion.SKILL_NAME
-import com.jlahougue.dndcharactersheet.dal.room.views.SkillView
+import com.jlahougue.dndcharactersheet.dal.entities.views.SkillView
 
 @Dao
 interface SkillDao {

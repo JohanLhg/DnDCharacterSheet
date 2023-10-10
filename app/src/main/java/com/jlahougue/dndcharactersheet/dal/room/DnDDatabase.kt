@@ -23,6 +23,12 @@ import com.jlahougue.dndcharactersheet.dal.entities.SpellDamage
 import com.jlahougue.dndcharactersheet.dal.entities.SpellSlotUses
 import com.jlahougue.dndcharactersheet.dal.entities.Spellcasting
 import com.jlahougue.dndcharactersheet.dal.entities.Stats
+import com.jlahougue.dndcharactersheet.dal.entities.views.AbilityModifierView
+import com.jlahougue.dndcharactersheet.dal.entities.views.AbilityView
+import com.jlahougue.dndcharactersheet.dal.entities.views.CharacterSpellStatsView
+import com.jlahougue.dndcharactersheet.dal.entities.views.ProficiencyView
+import com.jlahougue.dndcharactersheet.dal.entities.views.SkillView
+import com.jlahougue.dndcharactersheet.dal.entities.views.SpellcastingView
 import com.jlahougue.dndcharactersheet.dal.room.dao.AbilityDao
 import com.jlahougue.dndcharactersheet.dal.room.dao.CharacterDao
 import com.jlahougue.dndcharactersheet.dal.room.dao.CharacterSpellDao
@@ -39,19 +45,15 @@ import com.jlahougue.dndcharactersheet.dal.room.dao.SpellDamageDao
 import com.jlahougue.dndcharactersheet.dal.room.dao.SpellDao
 import com.jlahougue.dndcharactersheet.dal.room.dao.SpellcastingDao
 import com.jlahougue.dndcharactersheet.dal.room.dao.StatsDao
-import com.jlahougue.dndcharactersheet.dal.room.views.AbilityModifierView
-import com.jlahougue.dndcharactersheet.dal.room.views.AbilityView
-import com.jlahougue.dndcharactersheet.dal.room.views.ProficiencyView
-import com.jlahougue.dndcharactersheet.dal.room.views.SkillView
-import com.jlahougue.dndcharactersheet.dal.room.views.SpellcastingView
 
 @Database(
     entities = [Ability::class, Character::class, CharacterSpell::class, DeathSaves::class,
         Equipment::class, Health::class, Money::class, Notes::class, Preferences::class,
         Quests::class, Skill::class, Spell::class, Spellcasting::class, SpellClass::class,
         SpellDamage::class, SpellSlotUses::class, Stats::class],
-    views = [AbilityView::class, AbilityModifierView::class, ProficiencyView::class, SkillView::class, SpellcastingView::class],
-    version = 17
+    views = [AbilityView::class, AbilityModifierView::class, CharacterSpellStatsView::class,
+        ProficiencyView::class, SkillView::class, SpellcastingView::class],
+    version = 20
 )
 abstract class DnDDatabase : RoomDatabase() {
     companion object {
@@ -80,10 +82,12 @@ abstract class DnDDatabase : RoomDatabase() {
          */
 
         /********* VIEWS *********
-         * AbilityModifierView
-         * ProficiencyView
-         * SkillView
-         * SpellcastingView
+         * Ability
+         * Ability Modifier
+         * Character Spell Stats
+         * Proficiency
+         * Skill
+         * Spellcasting
          */
 
         private var INSTANCE: DnDDatabase? = null

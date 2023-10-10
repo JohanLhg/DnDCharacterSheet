@@ -8,7 +8,7 @@ import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Update
 import com.jlahougue.dndcharactersheet.dal.entities.Spellcasting
-import com.jlahougue.dndcharactersheet.dal.room.views.SpellcastingView
+import com.jlahougue.dndcharactersheet.dal.entities.views.SpellcastingView
 
 @Dao
 interface SpellcastingDao {

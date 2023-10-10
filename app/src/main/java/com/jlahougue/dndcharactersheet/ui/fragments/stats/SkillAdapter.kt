@@ -4,8 +4,8 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.jlahougue.dndcharactersheet.R
+import com.jlahougue.dndcharactersheet.dal.entities.views.SkillView
 import com.jlahougue.dndcharactersheet.dal.repositories.SkillRepository
-import com.jlahougue.dndcharactersheet.dal.room.views.SkillView
 import com.jlahougue.dndcharactersheet.databinding.RecyclerSkillSavingThrowBinding
 
 class SkillAdapter(private val listener: OnSkillChangedListener) : RecyclerView.Adapter<SkillSavingThrowViewHolder>() {

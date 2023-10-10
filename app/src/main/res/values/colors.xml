@@ -15,6 +15,9 @@
     <color name="transparent_white">#80FFFFFF</color>
 
     <color name="spell">#78461F</color>
+    <color name="spell_dark">#4F2E0F</color>
+
+    <color name="highlight">#FFC107</color>
 
     <color name="grey">#D6D6D6</color>
     <color name="red">#BC0606</color>

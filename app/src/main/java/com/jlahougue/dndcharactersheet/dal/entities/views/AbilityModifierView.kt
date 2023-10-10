@@ -1,10 +1,7 @@
-package com.jlahougue.dndcharactersheet.dal.room.views
+package com.jlahougue.dndcharactersheet.dal.entities.views
 
-import android.content.Context
 import androidx.room.ColumnInfo
 import androidx.room.DatabaseView
-import com.jlahougue.dndcharactersheet.R
-import com.jlahougue.dndcharactersheet.dal.repositories.AbilityRepository
 
 @DatabaseView(
     """

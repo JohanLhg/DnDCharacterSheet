@@ -5,8 +5,8 @@ import android.view.ViewGroup
 import androidx.core.widget.addTextChangedListener
 import androidx.recyclerview.widget.RecyclerView
 import com.jlahougue.dndcharactersheet.R
+import com.jlahougue.dndcharactersheet.dal.entities.views.AbilityView
 import com.jlahougue.dndcharactersheet.dal.repositories.AbilityRepository
-import com.jlahougue.dndcharactersheet.dal.room.views.AbilityView
 import com.jlahougue.dndcharactersheet.databinding.RecyclerAbilityBinding
 
 class AbilityAdapter(private val listener: OnAbilityChangedListener) : RecyclerView.Adapter<AbilityAdapter.ViewHolder>() {
