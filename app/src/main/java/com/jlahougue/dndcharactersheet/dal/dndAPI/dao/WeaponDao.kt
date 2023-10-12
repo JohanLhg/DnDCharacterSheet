@@ -3,6 +3,8 @@ package com.jlahougue.dndcharactersheet.dal.dndAPI.dao
 import com.jlahougue.dndcharactersheet.dal.dndAPI.DnDAPIRequest
 import com.jlahougue.dndcharactersheet.dal.entities.Weapon
 import com.jlahougue.dndcharactersheet.dal.entities.WeaponProperty
+import com.jlahougue.dndcharactersheet.dal.repositories.AbilityRepository.Companion.DEXTERITY
+import com.jlahougue.dndcharactersheet.dal.repositories.AbilityRepository.Companion.STRENGTH
 import org.json.JSONObject
 
 class WeaponDao {
@@ -42,7 +44,22 @@ class WeaponDao {
 
         val json = JSONObject(response)
         val name = json.getString("name")
-        val cost = if (json.has("cost")) json.getString("cost") else ""
+
+        var test = ""
+        if (json.has("weapon_range")) {
+            val category = json.getString("weapon_range")
+            test = when (category) {
+                "Melee" -> STRENGTH
+                "Ranged" -> DEXTERITY
+                else -> ""
+            }
+        }
+
+        var costStr = ""
+        if (json.has("cost")) {
+            val cost = json.getJSONObject("cost")
+            costStr = cost.getString("quantity") + cost.getJSONObject("unit").getString("name")
+        }
 
         var damageDice = ""
         var damageType = ""
@@ -52,15 +69,39 @@ class WeaponDao {
             damageType = damage.getJSONObject("damage_type").getString("name")
         }
 
-        var rangeNormal = 0
-        var rangeLong = 0
-        if (json.has("range")) {
-            val range = json.getJSONObject("range")
-            rangeNormal = if (range.has("normal")) range.getInt("normal") else 0
-            rangeLong = if (range.has("long")) range.getInt("long") else 0
+        var twoHandedDamageDice = ""
+        var twoHandedDamageType = ""
+        if (json.has("two_handed_damage")) {
+            val twoHandedDamage = json.getJSONObject("two_handed_damage")
+            twoHandedDamageDice = twoHandedDamage.getString("damage_dice")
+            twoHandedDamageType = twoHandedDamage.getJSONObject("damage_type").getString("name")
         }
 
-        val weight = if (json.has("weight")) json.getDouble("weight") else 0.0
+        var rangeStr = ""
+        if (json.has("range")) {
+            val range = json.getJSONObject("range")
+            val rangeNormal = if (range.has("normal")) range.getInt("normal") else 0
+            val rangeLong = if (range.has("long")) range.getInt("long") else 0
+            when {
+                rangeNormal != 0 && rangeLong != 0 -> rangeStr = "$rangeNormal-$rangeLong m"
+                rangeNormal != 0 -> rangeStr = "$rangeNormal m"
+                rangeLong != 0 -> rangeStr = "$rangeLong m"
+            }
+        }
+
+        var throwRangeStr = ""
+        if (json.has("throw_range")) {
+            val throwRange = json.getJSONObject("throw_range")
+            val throwRangeNormal = if (throwRange.has("normal")) throwRange.getInt("normal") else 0
+            val throwRangeLong = if (throwRange.has("long")) throwRange.getInt("long") else 0
+            when {
+                throwRangeNormal != 0 && throwRangeLong != 0 -> throwRangeStr = "$throwRangeNormal-$throwRangeLong m"
+                throwRangeNormal != 0 -> throwRangeStr = "$throwRangeNormal m"
+                throwRangeLong != 0 -> throwRangeStr = "$throwRangeLong m"
+            }
+        }
+
+        val weight = if (json.has("weight")) json.getInt("weight") else 0
 
         var description = ""
         if (json.has("desc")) {
@@ -71,25 +112,26 @@ class WeaponDao {
             }
         }
 
-        var special = ""
         if (json.has("special")) {
             val specialArray = json.getJSONArray("special")
             for (i in 0 until specialArray.length()) {
-                if (i > 0) special += "\n"
-                special += specialArray.getString(i)
+                if (description.isNotEmpty()) description += "\n"
+                description += specialArray.getString(i)
             }
         }
 
         val weapon = Weapon(
             name = name,
+            test = test,
             damage = damageDice,
             damageType = damageType,
-            rangeNormal = rangeNormal,
-            rangeLong = rangeLong,
+            twoHandedDamage = twoHandedDamageDice,
+            twoHandedDamageType = twoHandedDamageType,
+            range = rangeStr,
+            throwRange = throwRangeStr,
             weight = weight,
-            cost = cost,
-            description = description,
-            special = special
+            cost = costStr,
+            description = description
         )
         val id = saveWeapon(weapon)
 

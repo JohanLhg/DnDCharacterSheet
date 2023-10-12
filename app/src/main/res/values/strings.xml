@@ -193,4 +193,5 @@
 
     <!-- Weapons -->
     <string name="weapons">WEAPONS</string>
+    <string name="roll_attack">Roll attack</string>
 </resources>

@@ -11,34 +11,40 @@ class Weapon(
     var id: Long = 0,
     @ColumnInfo(name = WEAPON_NAME)
     var name: String = "",
+    @ColumnInfo(name = WEAPON_TEST)
+    var test: String = "",
     @ColumnInfo(name = WEAPON_DAMAGE)
     var damage: String = "",
     @ColumnInfo(name = WEAPON_DAMAGE_TYPE)
     var damageType: String = "",
-    @ColumnInfo(name = WEAPON_RANGE_NORMAL)
-    var rangeNormal: Int = 0,
-    @ColumnInfo(name = WEAPON_RANGE_LONG)
-    var rangeLong: Int = 0,
+    @ColumnInfo(name = WEAPON_TWO_HANDED_DAMAGE)
+    var twoHandedDamage: String = "",
+    @ColumnInfo(name = WEAPON_TWO_HANDED_DAMAGE_TYPE)
+    var twoHandedDamageType: String = "",
+    @ColumnInfo(name = WEAPON_RANGE)
+    var range: String = "",
+    @ColumnInfo(name = WEAPON_THROW_RANGE)
+    var throwRange: String = "",
     @ColumnInfo(name = WEAPON_WEIGHT)
-    var weight: Double = 0.0,
+    var weight: Int = 0,
     @ColumnInfo(name = WEAPON_COST)
     var cost: String = "",
     @ColumnInfo(name = WEAPON_DESCRIPTION)
-    var description: String = "",
-    @ColumnInfo(name = WEAPON_SPECIAL)
-    var special: String = ""
+    var description: String = ""
 ) {
     companion object {
         const val TABLE_WEAPON = "weapon"
         const val WEAPON_ID = "id"
         const val WEAPON_NAME = "name"
+        const val WEAPON_TEST = "test"
         const val WEAPON_DAMAGE = "damage"
         const val WEAPON_DAMAGE_TYPE = "damage_type"
-        const val WEAPON_RANGE_NORMAL = "range_normal"
-        const val WEAPON_RANGE_LONG = "range_long"
+        const val WEAPON_TWO_HANDED_DAMAGE = "two_handed_damage"
+        const val WEAPON_TWO_HANDED_DAMAGE_TYPE = "two_handed_damage_type"
+        const val WEAPON_RANGE = "range"
+        const val WEAPON_THROW_RANGE = "throw_range"
         const val WEAPON_WEIGHT = "weight"
         const val WEAPON_COST = "cost"
         const val WEAPON_DESCRIPTION = "description"
-        const val WEAPON_SPECIAL = "special"
     }
 }
