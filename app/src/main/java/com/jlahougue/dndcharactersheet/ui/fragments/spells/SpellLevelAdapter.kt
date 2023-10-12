@@ -3,7 +3,7 @@ package com.jlahougue.dndcharactersheet.ui.fragments.spells
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.jlahougue.dndcharactersheet.dal.entities.utilityClasses.SpellWithCharacterInfo
+import com.jlahougue.dndcharactersheet.dal.entities.displayClasses.SpellWithCharacterInfo
 import com.jlahougue.dndcharactersheet.dal.repositories.CharacterSpellRepository
 import com.jlahougue.dndcharactersheet.dal.repositories.CharacterSpellRepository.Companion.getMaxSpellLevel
 import com.jlahougue.dndcharactersheet.databinding.RecyclerCantripsBinding

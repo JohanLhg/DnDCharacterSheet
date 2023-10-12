@@ -11,6 +11,9 @@ class DnDAPIRequest {
         private const val DND_API_URL = "https://www.dnd5eapi.co"
 
         const val DND_API_SPELLS_URL = "$DND_API_URL/api/spells"
+        const val DND_API_DAMAGE_TYPES_URL = "$DND_API_URL/api/damage-types"
+        const val DND_API_WEAPON_PROPERTIES_URL = "$DND_API_URL/api/weapon-properties"
+        const val DND_API_WEAPON_URL = "$DND_API_URL/api/equipment-categories/weapon"
 
         fun getInstance(): DnDAPIRequest {
             if (INSTANCE == null) {

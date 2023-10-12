@@ -1,4 +1,4 @@
-package com.jlahougue.dndcharactersheet.dal.entities.utilityClasses
+package com.jlahougue.dndcharactersheet.dal.entities.displayClasses
 
 import androidx.room.ColumnInfo
 import com.jlahougue.dndcharactersheet.dal.entities.CharacterSpell

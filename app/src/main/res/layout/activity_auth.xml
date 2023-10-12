@@ -35,16 +35,6 @@
             android:textAppearance="@style/TextAppearance.AppCompat.Display1"
             android:visibility="gone" />
 
-        <ImageView
-            android:id="@+id/imageLoading"
-            android:layout_width="wrap_content"
-            android:layout_height="100dp"
-            android:layout_margin="20dp"
-            android:adjustViewBounds="true"
-            android:scaleType="fitCenter"
-            android:src="@drawable/loading"
-            android:visibility="gone" />
-
         <ProgressBar
             android:id="@+id/progressBar"
             style="?android:attr/progressBarStyleHorizontal"

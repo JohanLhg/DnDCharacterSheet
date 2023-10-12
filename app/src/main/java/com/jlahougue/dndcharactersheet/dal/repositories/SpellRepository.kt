@@ -5,7 +5,7 @@ import com.jlahougue.dndcharactersheet.dal.dndAPI.dao.SpellDao
 import com.jlahougue.dndcharactersheet.dal.entities.Spell
 import com.jlahougue.dndcharactersheet.dal.entities.SpellClass
 import com.jlahougue.dndcharactersheet.dal.entities.SpellDamage
-import com.jlahougue.dndcharactersheet.dal.entities.utilityClasses.SpellWithCharacterInfo
+import com.jlahougue.dndcharactersheet.dal.entities.displayClasses.SpellWithCharacterInfo
 import com.jlahougue.dndcharactersheet.dal.room.DnDDatabase
 
 class SpellRepository(application: Application) {

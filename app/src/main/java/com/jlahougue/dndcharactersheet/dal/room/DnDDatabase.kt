@@ -8,6 +8,8 @@ import androidx.sqlite.db.SupportSQLiteDatabase
 import com.jlahougue.dndcharactersheet.dal.entities.Ability
 import com.jlahougue.dndcharactersheet.dal.entities.Character
 import com.jlahougue.dndcharactersheet.dal.entities.CharacterSpell
+import com.jlahougue.dndcharactersheet.dal.entities.CharacterWeapon
+import com.jlahougue.dndcharactersheet.dal.entities.DamageType
 import com.jlahougue.dndcharactersheet.dal.entities.DeathSaves
 import com.jlahougue.dndcharactersheet.dal.entities.Equipment
 import com.jlahougue.dndcharactersheet.dal.entities.Health
@@ -15,6 +17,7 @@ import com.jlahougue.dndcharactersheet.dal.entities.Money
 import com.jlahougue.dndcharactersheet.dal.entities.Notes
 import com.jlahougue.dndcharactersheet.dal.entities.Preferences
 import com.jlahougue.dndcharactersheet.dal.entities.Preferences.Companion.TABLE_PREFERENCES
+import com.jlahougue.dndcharactersheet.dal.entities.Property
 import com.jlahougue.dndcharactersheet.dal.entities.Quests
 import com.jlahougue.dndcharactersheet.dal.entities.Skill
 import com.jlahougue.dndcharactersheet.dal.entities.Spell
@@ -23,6 +26,8 @@ import com.jlahougue.dndcharactersheet.dal.entities.SpellDamage
 import com.jlahougue.dndcharactersheet.dal.entities.SpellSlotUses
 import com.jlahougue.dndcharactersheet.dal.entities.Spellcasting
 import com.jlahougue.dndcharactersheet.dal.entities.Stats
+import com.jlahougue.dndcharactersheet.dal.entities.Weapon
+import com.jlahougue.dndcharactersheet.dal.entities.WeaponProperty
 import com.jlahougue.dndcharactersheet.dal.entities.views.AbilityModifierView
 import com.jlahougue.dndcharactersheet.dal.entities.views.AbilityView
 import com.jlahougue.dndcharactersheet.dal.entities.views.CharacterSpellStatsView
@@ -32,12 +37,15 @@ import com.jlahougue.dndcharactersheet.dal.entities.views.SpellcastingView
 import com.jlahougue.dndcharactersheet.dal.room.dao.AbilityDao
 import com.jlahougue.dndcharactersheet.dal.room.dao.CharacterDao
 import com.jlahougue.dndcharactersheet.dal.room.dao.CharacterSpellDao
+import com.jlahougue.dndcharactersheet.dal.room.dao.CharacterWeaponDao
+import com.jlahougue.dndcharactersheet.dal.room.dao.DamageTypeDao
 import com.jlahougue.dndcharactersheet.dal.room.dao.DeathSavesDao
 import com.jlahougue.dndcharactersheet.dal.room.dao.EquipmentDao
 import com.jlahougue.dndcharactersheet.dal.room.dao.HealthDao
 import com.jlahougue.dndcharactersheet.dal.room.dao.MoneyDao
 import com.jlahougue.dndcharactersheet.dal.room.dao.NotesDao
 import com.jlahougue.dndcharactersheet.dal.room.dao.PreferencesDao
+import com.jlahougue.dndcharactersheet.dal.room.dao.PropertyDao
 import com.jlahougue.dndcharactersheet.dal.room.dao.QuestsDao
 import com.jlahougue.dndcharactersheet.dal.room.dao.SkillDao
 import com.jlahougue.dndcharactersheet.dal.room.dao.SpellClassDao
@@ -45,15 +53,18 @@ import com.jlahougue.dndcharactersheet.dal.room.dao.SpellDamageDao
 import com.jlahougue.dndcharactersheet.dal.room.dao.SpellDao
 import com.jlahougue.dndcharactersheet.dal.room.dao.SpellcastingDao
 import com.jlahougue.dndcharactersheet.dal.room.dao.StatsDao
+import com.jlahougue.dndcharactersheet.dal.room.dao.WeaponDao
+import com.jlahougue.dndcharactersheet.dal.room.dao.WeaponPropertyDao
 
 @Database(
-    entities = [Ability::class, Character::class, CharacterSpell::class, DeathSaves::class,
-        Equipment::class, Health::class, Money::class, Notes::class, Preferences::class,
-        Quests::class, Skill::class, Spell::class, Spellcasting::class, SpellClass::class,
-        SpellDamage::class, SpellSlotUses::class, Stats::class],
+    entities = [Ability::class, Character::class, CharacterSpell::class, CharacterWeapon::class,
+        DamageType::class, DeathSaves::class, Equipment::class, Health::class, Money::class,
+        Notes::class, Preferences::class, Property::class, Quests::class, Skill::class,
+        Spell::class, Spellcasting::class, SpellClass::class, SpellDamage::class,
+        SpellSlotUses::class, Stats::class, Weapon::class, WeaponProperty::class],
     views = [AbilityView::class, AbilityModifierView::class, CharacterSpellStatsView::class,
         ProficiencyView::class, SkillView::class, SpellcastingView::class],
-    version = 20
+    version = 21
 )
 abstract class DnDDatabase : RoomDatabase() {
     companion object {
@@ -74,6 +85,11 @@ abstract class DnDDatabase : RoomDatabase() {
          * Character Spell
          * Spell Slot Uses
          * Spellcasting
+         * Weapon
+         * Character Weapon
+         * Weapon Property
+         * Property
+         * Damage Type
          * Equipment
          * Money
          * Notes
@@ -123,12 +139,15 @@ abstract class DnDDatabase : RoomDatabase() {
     abstract fun abilityDao(): AbilityDao
     abstract fun characterDao(): CharacterDao
     abstract fun characterSpellDao(): CharacterSpellDao
+    abstract fun characterWeaponDao(): CharacterWeaponDao
+    abstract fun damageTypeDao(): DamageTypeDao
     abstract fun deathSavesDao(): DeathSavesDao
     abstract fun equipmentDao(): EquipmentDao
     abstract fun healthDao(): HealthDao
     abstract fun moneyDao(): MoneyDao
     abstract fun notesDao(): NotesDao
     abstract fun preferencesDao(): PreferencesDao
+    abstract fun propertyDao(): PropertyDao
     abstract fun questsDao(): QuestsDao
     abstract fun skillDao(): SkillDao
     abstract fun spellDao(): SpellDao
@@ -136,5 +155,7 @@ abstract class DnDDatabase : RoomDatabase() {
     abstract fun spellClassDao(): SpellClassDao
     abstract fun spellDamageDao(): SpellDamageDao
     abstract fun statDao(): StatsDao
+    abstract fun weaponDao(): WeaponDao
+    abstract fun weaponPropertyDao(): WeaponPropertyDao
     //endregion
 }

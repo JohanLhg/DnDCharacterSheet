@@ -6,9 +6,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import com.jlahougue.dndcharactersheet.R
 import com.jlahougue.dndcharactersheet.dal.entities.CharacterSpell
-import com.jlahougue.dndcharactersheet.dal.entities.utilityClasses.SpellWithCharacterInfo
+import com.jlahougue.dndcharactersheet.dal.entities.displayClasses.SpellWithCharacterInfo
 import com.jlahougue.dndcharactersheet.dal.repositories.AbilityRepository
 import com.jlahougue.dndcharactersheet.databinding.FragmentSpellsBinding
 import com.jlahougue.dndcharactersheet.extensions.observeOnce
@@ -50,9 +49,9 @@ class SpellsFragment : Fragment(), SpellAdapter.SpellListener, DialogSpellDetail
             }
 
             spellsViewModel.characterSpellStats.observe(viewLifecycleOwner) { stats ->
-                binding.textTotalUnlocked.text = main.getString(R.string.total_unlocked, stats.totalUnlocked)
-                binding.textTotalPrepared.text = main.getString(R.string.total_prepared, stats.totalPrepared)
-                binding.textTotalHighlighted.text = main.getString(R.string.total_highlighted, stats.totalHighlighted)
+                binding.textTotalUnlocked.text = stats.totalUnlocked.toString()
+                binding.textTotalPrepared.text = stats.totalPrepared.toString()
+                binding.textTotalHighlighted.text = stats.totalHighlighted.toString()
             }
 
             spellsViewModel.characterLevel.observeOnce(viewLifecycleOwner) { characterLevel ->

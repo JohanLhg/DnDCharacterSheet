@@ -6,7 +6,7 @@
         <import type="android.text.TextUtils"/>
         <variable
             name="spell"
-            type="com.jlahougue.dndcharactersheet.dal.entities.utilityClasses.SpellWithCharacterInfo" />
+            type="com.jlahougue.dndcharactersheet.dal.entities.displayClasses.SpellWithCharacterInfo" />
     </data>
 
     <LinearLayout
@@ -28,7 +28,7 @@
                 android:layout_height="30dp"
                 android:layout_margin="5dp"
                 android:scaleType="fitCenter"
-                android:src="@{spell.unlocked ? @drawable/unlocked : @drawable/locked}"
+                android:src="@{spell.unlocked ? @drawable/padlock_open : @drawable/padlock_close}"
                 app:tint="@color/white"
                 android:importantForAccessibility="no" />
 

@@ -9,10 +9,12 @@ import android.view.View.VISIBLE
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
-import com.bumptech.glide.Glide
 import com.jlahougue.dndcharactersheet.R
 import com.jlahougue.dndcharactersheet.databinding.ActivityAuthBinding
+import com.jlahougue.dndcharactersheet.ui.authentication.AuthViewModel.Companion.FETCHING_DAMAGE_TYPES
 import com.jlahougue.dndcharactersheet.ui.authentication.AuthViewModel.Companion.FETCHING_SPELLS
+import com.jlahougue.dndcharactersheet.ui.authentication.AuthViewModel.Companion.FETCHING_WEAPONS
+import com.jlahougue.dndcharactersheet.ui.authentication.AuthViewModel.Companion.FETCHING_WEAPON_PROPERTIES
 import com.jlahougue.dndcharactersheet.ui.authentication.AuthViewModel.Companion.LANGUAGE_LOADED
 import com.jlahougue.dndcharactersheet.ui.authentication.AuthViewModel.Companion.LOGIN
 import com.jlahougue.dndcharactersheet.ui.authentication.AuthViewModel.Companion.REGISTER
@@ -37,11 +39,6 @@ class AuthActivity : AppCompatActivity() {
         binding = ActivityAuthBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        Glide.with(applicationContext)
-            .load(R.drawable.loading)
-            .centerInside()
-            .into(binding.imageLoading)
-
         if (!intent.getBooleanExtra(LANGUAGE_LOADED, false)) {
             authViewModel.getLanguage {
                 runOnUiThread {
@@ -58,6 +55,14 @@ class AuthActivity : AppCompatActivity() {
     private fun setupActivity() {
         if (authViewModel.isLoggedIn()) {
             startLoading()
+        }
+
+        authViewModel.progressMax.observe(this) { max ->
+            binding.progressBar.max = max
+        }
+
+        authViewModel.progress.observe(this) { progress ->
+            binding.progressBar.progress = progress
         }
 
         authViewModel.authMode.observe(this) {
@@ -89,7 +94,6 @@ class AuthActivity : AppCompatActivity() {
 
     private fun startLoading() {
         binding.textLoading.visibility = VISIBLE
-        //binding.imageLoading.visibility = VISIBLE
         binding.progressBar.visibility = INVISIBLE
         binding.layoutAuth.visibility = GONE
 
@@ -109,14 +113,18 @@ class AuthActivity : AppCompatActivity() {
                 FETCHING_SPELLS -> {
                     binding.textLoading.text = resources.getString(R.string.fetching_spells)
                     binding.progressBar.visibility = VISIBLE
-
-                    authViewModel.progressMax.observe(this) { max ->
-                        binding.progressBar.max = max
-                    }
-
-                    authViewModel.progress.observe(this) { progress ->
-                        binding.progressBar.progress = progress
-                    }
+                }
+                FETCHING_DAMAGE_TYPES -> {
+                    binding.textLoading.text = resources.getString(R.string.fetching_damage_types)
+                    binding.progressBar.visibility = VISIBLE
+                }
+                FETCHING_WEAPON_PROPERTIES -> {
+                    binding.textLoading.text = resources.getString(R.string.fetching_weapon_properties)
+                    binding.progressBar.visibility = VISIBLE
+                }
+                FETCHING_WEAPONS -> {
+                    binding.textLoading.text = resources.getString(R.string.fetching_weapons)
+                    binding.progressBar.visibility = VISIBLE
                 }
             }
         }

@@ -327,7 +327,7 @@
                     android:id="@+id/spinnerHitDice"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:entries="@array/health_dice"
+                    android:entries="@array/dice"
                     app:layout_columnWeight="2"
                     app:layout_rowWeight="1" />
 

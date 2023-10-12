@@ -5,7 +5,7 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.jlahougue.dndcharactersheet.dal.entities.CharacterSpell
-import com.jlahougue.dndcharactersheet.dal.entities.utilityClasses.SpellWithCharacterInfo
+import com.jlahougue.dndcharactersheet.dal.entities.displayClasses.SpellWithCharacterInfo
 import com.jlahougue.dndcharactersheet.dal.entities.views.CharacterSpellStatsView
 import com.jlahougue.dndcharactersheet.dal.entities.views.SpellcastingView
 import com.jlahougue.dndcharactersheet.dal.repositories.CharacterRepository

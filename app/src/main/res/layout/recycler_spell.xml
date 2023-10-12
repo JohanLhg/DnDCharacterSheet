@@ -4,7 +4,7 @@
         <import type="android.view.View" />
         <variable
             name="spell"
-            type="com.jlahougue.dndcharactersheet.dal.entities.utilityClasses.SpellWithCharacterInfo" />
+            type="com.jlahougue.dndcharactersheet.dal.entities.displayClasses.SpellWithCharacterInfo" />
         <variable
             name="editMode"
             type="Boolean" />

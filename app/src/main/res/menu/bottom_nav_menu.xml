@@ -21,4 +21,9 @@
         android:icon="@drawable/spell_book"
         android:title="@string/title_spells" />
 
+    <item
+        android:id="@+id/navigation_weapons"
+        android:icon="@drawable/weapons"
+        android:title="@string/title_weapons" />
+
 </menu>

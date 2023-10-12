@@ -2,6 +2,7 @@ package com.jlahougue.dndcharactersheet.dal.repositories
 
 import android.app.Application
 import com.jlahougue.dndcharactersheet.dal.entities.Character
+import com.jlahougue.dndcharactersheet.dal.entities.CharacterWeapon
 import com.jlahougue.dndcharactersheet.dal.entities.Equipment
 import com.jlahougue.dndcharactersheet.dal.entities.Notes
 import com.jlahougue.dndcharactersheet.dal.entities.Quests
@@ -16,6 +17,7 @@ class CharacterSheetRepository(application: Application) {
     private val statsRepository = StatsRepository(application)
     private val spellcastingRepository = SpellcastingRepository(application)
     private val characterSpellRepository = CharacterSpellRepository(application)
+    private val characterWeaponRepository = CharacterWeaponRepository(application)
     private val healthRepository = HealthRepository(application)
     private val deathSavesRepository = DeathSavesRepository(application)
     private val notesRepository = NotesRepository(application)
@@ -50,6 +52,9 @@ class CharacterSheetRepository(application: Application) {
         characterSheet.deathSaves?.let { deathSavesRepository.saveToLocal(it) }
         characterSheet.spellcastingAbility?.let { spellcastingRepository.saveToLocal(characterID, it) }
         characterSheet.spells.forEach { (_, spell) -> characterSpellRepository.saveToLocal(spell) }
+        characterSheet.weapons.forEach { (id, count) ->
+            characterWeaponRepository.saveToLocal(CharacterWeapon(characterID, id, count))
+        }
         characterSheet.notes?.let { notesRepository.saveToLocal(Notes(characterID, it)) }
         characterSheet.quests?.let { questsRepository.saveToLocal(Quests(characterID, it)) }
         characterSheet.money?.let { moneyRepository.saveToLocal(it) }
@@ -66,6 +71,7 @@ class CharacterSheetRepository(application: Application) {
             deathSavesRepository.get(characterID),
             spellcastingRepository.getAbility(characterID),
             characterSpellRepository.getMap(characterID),
+            characterWeaponRepository.getMap(characterID),
             notesRepository.get(characterID),
             questsRepository.get(characterID),
             moneyRepository.get(characterID),

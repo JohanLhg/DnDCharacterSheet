@@ -18,6 +18,7 @@ class CharacterSheet(
     var deathSaves: DeathSaves? = null,
     var spellcastingAbility: String? = null,
     var spells: Map<String, CharacterSpell> = mapOf(),
+    var weapons: Map<Long, Int> = mapOf(),
     var notes: String? = null,
     var quests: String? = null,
     var money: Money? = null,
@@ -45,6 +46,8 @@ class CharacterSheet(
                 $spellcastingAbility
                 Spells:
                 ${spells.forEach { it.toString() }}
+                Weapons:
+                ${weapons.forEach { it.toString() }}
                 Notes:
                 $notes
                 Quests:

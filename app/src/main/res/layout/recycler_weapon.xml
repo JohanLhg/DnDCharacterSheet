@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable
+            name="weapon"
+            type="com.jlahougue.dndcharactersheet.dal.entities.Weapon" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="32dp"
+        android:background="@color/spell">
+
+        <LinearLayout
+            android:layout_width="240dp"
+            android:layout_height="match_parent"
+            android:layout_margin="1dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/buttonRollAttack"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginEnd="3dp"
+                android:adjustViewBounds="true"
+                android:background="@drawable/background_rounded_corners"
+                android:backgroundTint="@color/spell_dark"
+                android:padding="3dp"
+                android:scaleType="fitCenter"
+                app:srcCompat="@drawable/die"
+                app:tint="@color/white" />
+
+            <TextView
+                android:id="@+id/textWeaponCount"
+                style="@android:style/TextAppearance.Material.Small"
+                android:layout_width="25dp"
+                android:layout_height="match_parent"
+                android:background="@color/white"
+                android:gravity="center"
+                android:padding="3dp"
+                android:textAlignment="center" />
+
+            <TextView
+                android:id="@+id/textWeaponName"
+                style="@android:style/TextAppearance.Material.Small"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@color/white"
+                android:gravity="center_vertical"
+                android:padding="3dp" />
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/textTest"
+            style="@android:style/TextAppearance.Material.Small"
+            android:layout_width="70dp"
+            android:layout_height="match_parent"
+            android:layout_margin="1dp"
+            android:background="@color/white"
+            android:gravity="center"
+            android:padding="3dp"
+            android:textAlignment="center" />
+
+        <LinearLayout
+            android:layout_width="130dp"
+            android:layout_height="match_parent"
+            android:layout_margin="1dp"
+            android:background="@color/white"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/textDiceCount"
+                style="@android:style/TextAppearance.Material.Small"
+                android:layout_width="30dp"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:padding="3dp"
+                android:textAlignment="center" />
+
+            <TextView
+                style="@android:style/TextAppearance.Material.Small"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:padding="3dp"
+                android:text="X"
+                android:textAlignment="center" />
+
+            <TextView
+                android:id="@+id/textDice"
+                style="@android:style/TextAppearance.Material.Small"
+                android:layout_width="40dp"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:padding="3dp"
+                android:textAlignment="center" />
+
+            <TextView
+                android:id="@+id/textDamageBonusSign"
+                style="@android:style/TextAppearance.Material.Small"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:padding="3dp"
+                android:text="+"
+                android:textAlignment="center" />
+
+            <TextView
+                android:id="@+id/textDamageBonus"
+                style="@android:style/TextAppearance.Material.Small"
+                android:layout_width="30dp"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:padding="3dp" />
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/textRange"
+            style="@android:style/TextAppearance.Material.Small"
+            android:layout_width="100dp"
+            android:layout_height="match_parent"
+            android:layout_margin="1dp"
+            android:background="@color/white"
+            android:gravity="center"
+            android:padding="3dp" />
+
+        <TextView
+            android:id="@+id/textSpecial"
+            style="@android:style/TextAppearance.Material.Small"
+            android:layout_width="300dp"
+            android:layout_height="match_parent"
+            android:layout_margin="1dp"
+            android:background="@color/white"
+            android:gravity="center_vertical"
+            android:padding="3dp" />
+    </LinearLayout>
+</layout>
