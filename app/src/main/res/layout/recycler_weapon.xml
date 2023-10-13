@@ -9,65 +9,59 @@
     </data>
 
     <LinearLayout
+        android:id="@+id/layoutWeapon"
         android:layout_width="wrap_content"
-        android:layout_height="32dp"
-        android:background="@color/spell">
+        android:layout_height="wrap_content"
+        android:background="@color/spell"
+        android:gravity="center_vertical">
 
-        <LinearLayout
-            android:layout_width="240dp"
+        <ImageView
+            android:id="@+id/buttonRollAttack"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_margin="1dp"
+            android:adjustViewBounds="true"
+            android:background="@drawable/background_rounded_corners"
+            android:backgroundTint="@color/spell_dark"
+            android:contentDescription="@string/roll_attack"
+            android:padding="3dp"
+            android:scaleType="fitCenter"
+            app:srcCompat="@drawable/die"
+            app:tint="@color/white" />
+
+        <TextView
+            android:id="@+id/textWeaponCount"
+            style="@android:style/TextAppearance.Material.Small"
+            android:layout_width="25dp"
             android:layout_height="match_parent"
             android:layout_margin="1dp"
+            android:background="@color/white"
+            android:gravity="center"
+            android:padding="3dp"
+            android:text="@{String.valueOf(weapon.count)}"
+            android:textAlignment="center" />
+
+        <TextView
+            android:id="@+id/textWeaponName"
+            style="@android:style/TextAppearance.Material.Small"
+            android:layout_width="180dp"
+            android:layout_height="match_parent"
+            android:layout_margin="1dp"
+            android:background="@color/white"
             android:gravity="center_vertical"
-            android:orientation="horizontal">
-
-            <ImageView
-                android:id="@+id/buttonRollAttack"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_marginEnd="3dp"
-                android:adjustViewBounds="true"
-                android:background="@drawable/background_rounded_corners"
-                android:backgroundTint="@color/spell_dark"
-                android:padding="3dp"
-                android:scaleType="fitCenter"
-                app:srcCompat="@drawable/die"
-                app:tint="@color/white"
-                android:contentDescription="@string/roll_attack" />
-
-            <TextView
-                android:id="@+id/textWeaponCount"
-                style="@android:style/TextAppearance.Material.Small"
-                android:layout_width="25dp"
-                android:layout_height="match_parent"
-                android:text="@{String.valueOf(weapon.count)}"
-                android:background="@color/white"
-                android:gravity="center"
-                android:padding="3dp"
-                android:textAlignment="center" />
-
-            <TextView
-                android:id="@+id/textWeaponName"
-                style="@android:style/TextAppearance.Material.Small"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:text="@{weapon.name}"
-                android:background="@color/white"
-                android:gravity="center_vertical"
-                android:padding="3dp" />
-
-        </LinearLayout>
+            android:padding="3dp"
+            android:text="@{weapon.name}" />
 
         <TextView
             android:id="@+id/textTest"
             style="@android:style/TextAppearance.Material.Small"
             android:layout_width="70dp"
             android:layout_height="match_parent"
-            android:text="@{weapon.test}"
             android:layout_margin="1dp"
             android:background="@color/white"
             android:gravity="center"
             android:padding="3dp"
+            android:text="@{weapon.test}"
             android:textAlignment="center" />
 
         <TextView
@@ -75,11 +69,11 @@
             style="@android:style/TextAppearance.Material.Small"
             android:layout_width="140dp"
             android:layout_height="match_parent"
-            android:text="@{weapon.damage}"
             android:layout_margin="1dp"
             android:background="@color/white"
             android:gravity="center"
             android:padding="3dp"
+            android:text="@{weapon.damage}"
             android:textAlignment="center" />
 
         <TextView
@@ -87,10 +81,11 @@
             style="@android:style/TextAppearance.Material.Small"
             android:layout_width="110dp"
             android:layout_height="match_parent"
-            android:text="@{weapon.range}"
             android:layout_margin="1dp"
             android:background="@color/white"
             android:gravity="center"
-            android:padding="3dp" />
+            android:padding="3dp"
+            android:text="@{weapon.range}" />
+
     </LinearLayout>
 </layout>

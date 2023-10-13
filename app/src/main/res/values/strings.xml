@@ -194,4 +194,13 @@
     <!-- Weapons -->
     <string name="weapons">WEAPONS</string>
     <string name="roll_attack">Roll attack</string>
+    <string name="label_weapon_count">Count</string>
+    <string name="label_weapon_name">Name</string>
+    <string name="label_weapon_test">Test</string>
+    <string name="label_weapon_damage">Damage</string>
+    <string name="label_weapon_range">Range</string>
+    <string name="show_weapon_details">Show weapon details</string>
+
+    <!-- Weapon Details -->
+    <string name="title_weapon_details">Weapon details : %s</string>
 </resources>

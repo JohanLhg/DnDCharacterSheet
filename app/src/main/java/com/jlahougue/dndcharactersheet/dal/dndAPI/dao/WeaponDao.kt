@@ -58,7 +58,7 @@ class WeaponDao {
         var costStr = ""
         if (json.has("cost")) {
             val cost = json.getJSONObject("cost")
-            costStr = cost.getString("quantity") + cost.getJSONObject("unit").getString("name")
+            costStr = cost.getString("quantity") + cost.getString("unit")
         }
 
         var damageDice = ""
