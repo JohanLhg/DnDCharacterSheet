@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Pure Necromancer"
+                android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="The school of necromancy often have a bad reputation. Necromancers are often seen as commanders of undead hordes, who devastate villages and cities to increase the dominion of their masters. However, that was not always the case. Necromancy was a method for contacting the souls of ancestors in ancient tribes, of healing, by preventing the soul of leaving the body, a method of purification and warding off evil spirits, and a technique of telling the future.\n\nPure necromancers are keepers of this old tradition of necromancy. They study the ancient techniques of necromancy employed by primitive cultures, and refine their techniques with the arcane academicism wizards are famed for."
+                android:textAppearance="@style/TextAppearance.AppCompat.Small" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Preserve Life"
+                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Starting at 2nd-level, you add spare the dying to your list of cantrips known. You don't count this cantrip against the maximum amount of cantrips you can learn."
+                android:textAppearance="@style/TextAppearance.AppCompat.Small" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Spare the Dying
+                \n Necromancy cantrip
+                \n Cast. time:    1 action
+                \n Range:           Touch
+                \n Duration:        Instantaneous
+                \n You touch a living creature that has 0 hit points. The creature becomes stable and regains 1 hit point.
+                \n This spell has no effect on undead or constructs."
+                android:textAppearance="@style/TextAppearance.AppCompat.Small" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Arcane Protection"
+                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Starting at 2nd level, you have learned how to invoke an old protection magic to help protect someone. As a bonus action, you may touch a creature, giving it a bonus to all saving throws equal to half your proficiency bonus rounded down for 8 hours. Once you use this feature, you can not use it again until after you finish a long rest."
+                android:textAppearance="@style/TextAppearance.AppCompat.Small" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Influence Undead"
+                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="At 6th level, you can influence the undead with your arcane power. As an action, you can force each undead that can see or hear you within 30 feet of you must make a Wisdom saving throw against your spell save DC. If the creature fails its saving throw, you can choose to either charm a creature for 1 hour or turned it for 1 minute or until it takes any damage.
+        \n\nA charmed creature is friendly towards you and your allies, and will follow commands that don't threaten its safety. If you or any of your allies causes damage to that creature, the condition ends immediately. If the creature takes damage from another source, it can repeat the save against the effect.
+        \n\nA turned creature must spend its turns trying to move as far away from you as it can, and it can't willingly move to a space within 30 feet of you. It also can't take reactions. For its action, it can use only the Dash action or try to escape from an effect that prevents it from moving. If there's nowhere to move, the creature can use the Dodge action.
+        \n\nFinally, when an undead fails its saving throw against your Turn Undead feature, the creature is instantly destroyed if its challenge rating is at or below a certain threshold, as shown in the Destroy Undead table.
+                \nDestroy Undead
+                \n|  Wizard Level  |  Destroys Undead of CR . . .  |
+                \n|         6th            |           1/2 or lower                   |
+                \n|         8th            |           1 or lower                       |
+                \n|         10th         |           2 or lower                        |
+                \n|         14th         |           3 or lower                        |
+                \n|         18th         |           4 or lower                        |
+        \nOnce you use this ability, you can't use it again until you finish a long rest, unless you spend a spell slot of 3rd-level or lower to do it again."
+                android:textAppearance="@style/TextAppearance.AppCompat.Small" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Pure Necromancy"
+                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="At 6th level, the following spells are added to the Wizard's Spell List for you: gentle repose, revivify, speak with dead, raise dead, hallow, forbiddance, resurrection, and true resurrection."
+                android:textAppearance="@style/TextAppearance.AppCompat.Small" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Necromantic Mastery"
+                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="At 10th level, you can add any spell from the necromancy school, from your spell list to your grimoire. In addition, you can cast the chosen spell once, without using spell slots or material components. You can't do it again until you finish a long rest."
+                android:textAppearance="@style/TextAppearance.AppCompat.Small" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Soul Calling"
+                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="When you reach the 14th level, you can call the soul of a deceased creature back to its body. As an action, you can touch the corpse of a creature that died within the past 24 hours and spend a spell slot of any level. The creature then returns to life, regaining a number of hit points equal to 10, plus 5 per level of the spell slot spent.
+                \nIf the creature died while subject to any of the following conditions, it revives with them removed: blinded, deafened, paralyzed, poisoned, and stunned.
+                \nOnce you use this feature, you can't use it again until you finish a long rest."
+                android:textAppearance="@style/TextAppearance.AppCompat.Small" />
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>

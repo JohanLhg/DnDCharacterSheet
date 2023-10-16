@@ -11,6 +11,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.jlahougue.dndcharactersheet.R
 import com.jlahougue.dndcharactersheet.databinding.ActivityAuthBinding
+import com.jlahougue.dndcharactersheet.ui.authentication.AuthViewModel.Companion.FETCHING_CLASSES
 import com.jlahougue.dndcharactersheet.ui.authentication.AuthViewModel.Companion.FETCHING_DAMAGE_TYPES
 import com.jlahougue.dndcharactersheet.ui.authentication.AuthViewModel.Companion.FETCHING_SPELLS
 import com.jlahougue.dndcharactersheet.ui.authentication.AuthViewModel.Companion.FETCHING_WEAPONS
@@ -110,6 +111,10 @@ class AuthActivity : AppCompatActivity() {
 
             when (it[0]) {
                 SEARCHING_FOR_CHARACTER -> binding.textLoading.text = resources.getString(R.string.searching_for_character)
+                FETCHING_CLASSES -> {
+                    binding.textLoading.text = resources.getString(R.string.fetching_classes)
+                    binding.progressBar.visibility = VISIBLE
+                }
                 FETCHING_SPELLS -> {
                     binding.textLoading.text = resources.getString(R.string.fetching_spells)
                     binding.progressBar.visibility = VISIBLE

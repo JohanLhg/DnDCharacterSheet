@@ -10,6 +10,7 @@ import androidx.room.Update
 import com.jlahougue.dndcharactersheet.dal.entities.CharacterWeapon
 import com.jlahougue.dndcharactersheet.dal.entities.CharacterWeapon.Companion.CHARACTER_WEAPON_COUNT
 import com.jlahougue.dndcharactersheet.dal.entities.CharacterWeapon.Companion.CHARACTER_WEAPON_WID
+import com.jlahougue.dndcharactersheet.dal.entities.views.WeaponView
 
 @Dao
 interface CharacterWeaponDao {
@@ -21,6 +22,9 @@ interface CharacterWeaponDao {
 
     @Delete
     fun delete(characterWeapon: CharacterWeapon)
+
+    @Query("SELECT * FROM weapon_view WHERE cid = :characterID")
+    fun get(characterID: Long): List<WeaponView>
 
     @MapInfo(keyColumn = CHARACTER_WEAPON_WID, valueColumn = CHARACTER_WEAPON_COUNT)
     @Query("SELECT * FROM character_weapon WHERE cid = :characterID")

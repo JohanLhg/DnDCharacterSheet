@@ -14,7 +14,7 @@ class Character(
     @ColumnInfo(name = CHARACTER_RACE)
     var race: String = "",
     @ColumnInfo(name = CHARACTER_CLASS)
-    var charClass: String = "",
+    var clazz: String = "",
     @ColumnInfo(name = CHARACTER_LEVEL)
     var level: Int = 1,
     @ColumnInfo(name = CHARACTER_GENDER)
@@ -65,7 +65,7 @@ class Character(
             $id
             $name
             $race
-            $charClass
+            $clazz
             $level
             $gender
             $age

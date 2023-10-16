@@ -9,6 +9,9 @@ import com.jlahougue.dndcharactersheet.dal.entities.Ability
 import com.jlahougue.dndcharactersheet.dal.entities.Character
 import com.jlahougue.dndcharactersheet.dal.entities.CharacterSpell
 import com.jlahougue.dndcharactersheet.dal.entities.CharacterWeapon
+import com.jlahougue.dndcharactersheet.dal.entities.Class
+import com.jlahougue.dndcharactersheet.dal.entities.ClassLevel
+import com.jlahougue.dndcharactersheet.dal.entities.ClassSpellSlot
 import com.jlahougue.dndcharactersheet.dal.entities.DamageType
 import com.jlahougue.dndcharactersheet.dal.entities.DeathSaves
 import com.jlahougue.dndcharactersheet.dal.entities.Equipment
@@ -23,7 +26,7 @@ import com.jlahougue.dndcharactersheet.dal.entities.Skill
 import com.jlahougue.dndcharactersheet.dal.entities.Spell
 import com.jlahougue.dndcharactersheet.dal.entities.SpellClass
 import com.jlahougue.dndcharactersheet.dal.entities.SpellDamage
-import com.jlahougue.dndcharactersheet.dal.entities.SpellSlotUses
+import com.jlahougue.dndcharactersheet.dal.entities.SpellSlot
 import com.jlahougue.dndcharactersheet.dal.entities.Spellcasting
 import com.jlahougue.dndcharactersheet.dal.entities.Stats
 import com.jlahougue.dndcharactersheet.dal.entities.Weapon
@@ -34,10 +37,14 @@ import com.jlahougue.dndcharactersheet.dal.entities.views.CharacterSpellStatsVie
 import com.jlahougue.dndcharactersheet.dal.entities.views.ProficiencyView
 import com.jlahougue.dndcharactersheet.dal.entities.views.SkillView
 import com.jlahougue.dndcharactersheet.dal.entities.views.SpellcastingView
+import com.jlahougue.dndcharactersheet.dal.entities.views.WeaponView
 import com.jlahougue.dndcharactersheet.dal.room.dao.AbilityDao
 import com.jlahougue.dndcharactersheet.dal.room.dao.CharacterDao
 import com.jlahougue.dndcharactersheet.dal.room.dao.CharacterSpellDao
 import com.jlahougue.dndcharactersheet.dal.room.dao.CharacterWeaponDao
+import com.jlahougue.dndcharactersheet.dal.room.dao.ClassDao
+import com.jlahougue.dndcharactersheet.dal.room.dao.ClassLevelDao
+import com.jlahougue.dndcharactersheet.dal.room.dao.ClassSpellSlotDao
 import com.jlahougue.dndcharactersheet.dal.room.dao.DamageTypeDao
 import com.jlahougue.dndcharactersheet.dal.room.dao.DeathSavesDao
 import com.jlahougue.dndcharactersheet.dal.room.dao.EquipmentDao
@@ -51,6 +58,7 @@ import com.jlahougue.dndcharactersheet.dal.room.dao.SkillDao
 import com.jlahougue.dndcharactersheet.dal.room.dao.SpellClassDao
 import com.jlahougue.dndcharactersheet.dal.room.dao.SpellDamageDao
 import com.jlahougue.dndcharactersheet.dal.room.dao.SpellDao
+import com.jlahougue.dndcharactersheet.dal.room.dao.SpellSlotDao
 import com.jlahougue.dndcharactersheet.dal.room.dao.SpellcastingDao
 import com.jlahougue.dndcharactersheet.dal.room.dao.StatsDao
 import com.jlahougue.dndcharactersheet.dal.room.dao.WeaponDao
@@ -58,53 +66,19 @@ import com.jlahougue.dndcharactersheet.dal.room.dao.WeaponPropertyDao
 
 @Database(
     entities = [Ability::class, Character::class, CharacterSpell::class, CharacterWeapon::class,
-        DamageType::class, DeathSaves::class, Equipment::class, Health::class, Money::class,
-        Notes::class, Preferences::class, Property::class, Quests::class, Skill::class,
-        Spell::class, Spellcasting::class, SpellClass::class, SpellDamage::class,
-        SpellSlotUses::class, Stats::class, Weapon::class, WeaponProperty::class],
+        Class::class, ClassLevel::class, ClassSpellSlot::class, DamageType::class,
+        DeathSaves::class, Equipment::class, Health::class, Money::class, Notes::class,
+        Preferences::class, Property::class, Quests::class, Skill::class, Spell::class,
+        Spellcasting::class, SpellClass::class, SpellDamage::class, SpellSlot::class, Stats::class,
+        Weapon::class, WeaponProperty::class],
     views = [AbilityView::class, AbilityModifierView::class, CharacterSpellStatsView::class,
-        ProficiencyView::class, SkillView::class, SpellcastingView::class],
-    version = 21
+        ProficiencyView::class, SkillView::class, SpellcastingView::class, WeaponView::class],
+    version = 31
 )
 abstract class DnDDatabase : RoomDatabase() {
     companion object {
         //Database name
         private const val DATABASE_NAME = "dnd_database"
-
-        /********* TABLES *********
-         * Preferences
-         * Character
-         * Ability
-         * Skill
-         * Stats
-         * Health
-         * Death Saves
-         * Spell
-         * Spell Class
-         * Spell Damage
-         * Character Spell
-         * Spell Slot Uses
-         * Spellcasting
-         * Weapon
-         * Character Weapon
-         * Weapon Property
-         * Property
-         * Damage Type
-         * Equipment
-         * Money
-         * Notes
-         * Preferences
-         * Quests
-         */
-
-        /********* VIEWS *********
-         * Ability
-         * Ability Modifier
-         * Character Spell Stats
-         * Proficiency
-         * Skill
-         * Spellcasting
-         */
 
         private var INSTANCE: DnDDatabase? = null
 
@@ -140,6 +114,9 @@ abstract class DnDDatabase : RoomDatabase() {
     abstract fun characterDao(): CharacterDao
     abstract fun characterSpellDao(): CharacterSpellDao
     abstract fun characterWeaponDao(): CharacterWeaponDao
+    abstract fun classDao(): ClassDao
+    abstract fun classLevelDao(): ClassLevelDao
+    abstract fun classSpellSlotDao(): ClassSpellSlotDao
     abstract fun damageTypeDao(): DamageTypeDao
     abstract fun deathSavesDao(): DeathSavesDao
     abstract fun equipmentDao(): EquipmentDao
@@ -150,10 +127,11 @@ abstract class DnDDatabase : RoomDatabase() {
     abstract fun propertyDao(): PropertyDao
     abstract fun questsDao(): QuestsDao
     abstract fun skillDao(): SkillDao
-    abstract fun spellDao(): SpellDao
     abstract fun spellcastingDao(): SpellcastingDao
     abstract fun spellClassDao(): SpellClassDao
     abstract fun spellDamageDao(): SpellDamageDao
+    abstract fun spellDao(): SpellDao
+    abstract fun spellSlotDao(): SpellSlotDao
     abstract fun statDao(): StatsDao
     abstract fun weaponDao(): WeaponDao
     abstract fun weaponPropertyDao(): WeaponPropertyDao

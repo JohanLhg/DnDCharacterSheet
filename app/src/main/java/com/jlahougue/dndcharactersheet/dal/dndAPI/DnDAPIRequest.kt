@@ -2,6 +2,7 @@ package com.jlahougue.dndcharactersheet.dal.dndAPI
 
 import okhttp3.OkHttpClient
 import okhttp3.Request
+import java.util.Locale
 
 class DnDAPIRequest {
 
@@ -23,6 +24,8 @@ class DnDAPIRequest {
         }
 
         fun getUrl(url: String) = "$DND_API_URL$url"
+
+        fun getClassLevelsUrl(clazz: String) = "$DND_API_URL/api/classes/${clazz.lowercase(Locale.ROOT)}/levels"
     }
 
     private val client = OkHttpClient()

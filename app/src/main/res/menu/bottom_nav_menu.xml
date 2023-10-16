@@ -26,4 +26,9 @@
         android:icon="@drawable/weapons"
         android:title="@string/title_weapons" />
 
+    <item
+        android:id="@+id/navigation_subclass"
+        android:icon="@drawable/die"
+        android:title="@string/title_subclass" />
+
 </menu>

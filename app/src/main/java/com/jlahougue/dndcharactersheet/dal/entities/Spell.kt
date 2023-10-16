@@ -15,6 +15,14 @@ class Spell(
     var castingTime: String = "",
     @ColumnInfo(name = SPELL_RANGE)
     var range: String = "",
+    @ColumnInfo(name = SPELL_COMPONENTS)
+    var components: String = "",
+    @ColumnInfo(name = SPELL_MATERIALS)
+    var materials: String = "",
+    @ColumnInfo(name = SPELL_RITUAL)
+    var ritual: Boolean = false,
+    @ColumnInfo(name = SPELL_CONCENTRATION)
+    var concentration: Boolean = false,
     @ColumnInfo(name = SPELL_DURATION)
     var duration: String = "",
     @ColumnInfo(name = SPELL_DESCRIPTION)
@@ -30,6 +38,10 @@ class Spell(
         const val SPELL_LEVEL = "level"
         const val SPELL_CASTING_TIME = "casting_time"
         const val SPELL_RANGE = "range"
+        const val SPELL_COMPONENTS = "components"
+        const val SPELL_MATERIALS = "materials"
+        const val SPELL_RITUAL = "ritual"
+        const val SPELL_CONCENTRATION = "concentration"
         const val SPELL_DURATION = "duration"
         const val SPELL_DESCRIPTION = "description"
         const val SPELL_HIGHER_LEVELS = "higher_levels"

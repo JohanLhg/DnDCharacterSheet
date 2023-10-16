@@ -6,10 +6,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import com.jlahougue.dndcharactersheet.dal.entities.views.WeaponView
 import com.jlahougue.dndcharactersheet.databinding.FragmentWeaponsBinding
 import com.jlahougue.dndcharactersheet.ui.main.MainActivity
 
-class WeaponsFragment : Fragment() {
+class WeaponsFragment : Fragment(), WeaponAdapter.WeaponListener {
 
     private var _binding: FragmentWeaponsBinding? = null
 
@@ -32,9 +33,18 @@ class WeaponsFragment : Fragment() {
     ): View {
         _binding = FragmentWeaponsBinding.inflate(inflater, container, false)
 
+        val weaponAdapter = WeaponAdapter(this)
+        binding.recyclerWeapons.adapter = weaponAdapter
+
         main.mainViewModel.characterID.observe(viewLifecycleOwner) {
             if (it == 0L) return@observe
             weaponsViewModel.characterID = it
+
+            weaponsViewModel.weapons.observe(viewLifecycleOwner) { weapons ->
+                if (weapons == null) return@observe
+println(weapons.size)
+                weaponAdapter.weapons = weapons
+            }
         }
 
         return binding.root
@@ -43,5 +53,9 @@ class WeaponsFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    override fun onWeaponClicked(weapon: WeaponView) {
+        TODO("Not yet implemented")
     }
 }

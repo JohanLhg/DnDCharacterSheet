@@ -68,7 +68,7 @@ class ProfileFragment : Fragment() {
         profileViewModel.character.observeOnce(viewLifecycleOwner) {
             binding.editName.setText(it.name)
             binding.editRace.setText(it.race)
-            binding.editClass.setText(it.charClass)
+            binding.editClass.setText(it.clazz)
             binding.editLevel.setText(it.level.toString())
             binding.editGender.setText(it.gender)
             binding.editAge.setText(it.age.toString())
@@ -107,7 +107,7 @@ class ProfileFragment : Fragment() {
         }
         binding.editClass.addTextChangedListener {
             val character = profileViewModel.character.value ?: return@addTextChangedListener
-            character.charClass = it.toString()
+            character.clazz = it.toString()
             profileViewModel.updateCharacter(character)
         }
         binding.editLevel.addTextChangedListener {

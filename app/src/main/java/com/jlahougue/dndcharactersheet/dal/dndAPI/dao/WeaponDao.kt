@@ -6,6 +6,7 @@ import com.jlahougue.dndcharactersheet.dal.entities.WeaponProperty
 import com.jlahougue.dndcharactersheet.dal.repositories.AbilityRepository.Companion.DEXTERITY
 import com.jlahougue.dndcharactersheet.dal.repositories.AbilityRepository.Companion.STRENGTH
 import org.json.JSONObject
+import kotlin.concurrent.thread
 
 class WeaponDao {
     private val apiRequest = DnDAPIRequest.getInstance()
@@ -27,10 +28,16 @@ class WeaponDao {
         var name: String
         var url: String
         for (i in 0 until weapons.length()) {
-            name = weapons.getJSONObject(i).getString("name")
-            url = weapons.getJSONObject(i).getString("url")
-            if (!names.contains(name)) fetchWeapon(DnDAPIRequest.getUrl(url), saveWeapon, saveProperty)
-            setProgress(i, count)
+            thread {
+                name = weapons.getJSONObject(i).getString("name")
+                url = weapons.getJSONObject(i).getString("url")
+                if (!names.contains(name)) fetchWeapon(
+                    DnDAPIRequest.getUrl(url),
+                    saveWeapon,
+                    saveProperty
+                )
+                setProgress(i, count)
+            }
         }
         callback()
     }

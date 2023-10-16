@@ -34,4 +34,10 @@
         android:name="com.jlahougue.dndcharactersheet.ui.fragments.weapons.WeaponsFragment"
         android:label="@string/title_weapons"
         tools:layout="@layout/fragment_weapons" />
+
+    <fragment
+        android:id="@+id/navigation_subclass"
+        android:name="com.jlahougue.dndcharactersheet.ui.fragments.subclass.SubclassFragment"
+        android:label="@string/title_subclass"
+        tools:layout="@layout/fragment_subclass" />
 </navigation>

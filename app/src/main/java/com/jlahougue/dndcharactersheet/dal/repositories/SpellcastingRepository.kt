@@ -17,8 +17,8 @@ class SpellcastingRepository(application: Application) {
         firebaseDao.save(spellcasting)
     }
 
-    fun saveToLocal(characterID: Long, spellcastingAbility: String) {
-        roomDao.insert(Spellcasting(characterID, spellcastingAbility))
+    fun saveToLocal(spellcasting: Spellcasting) {
+        roomDao.insert(spellcasting)
     }
 
     fun getAbility(characterID: Long) = roomDao.getAbility(characterID)

@@ -18,6 +18,11 @@ class SpellLevelAdapter(private val spellListener: SpellAdapter.SpellListener) :
 
     var characterLevel = 0
     var editMode = false
+    var search = ""
+        set(value) {
+            field = value
+            notifyItemRangeChanged(0, itemCount)
+        }
 
     var spellLevels = mapOf<Int, List<SpellWithCharacterInfo>>()
         set(value) {
@@ -45,7 +50,8 @@ class SpellLevelAdapter(private val spellListener: SpellAdapter.SpellListener) :
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        val spells = spellLevels[position] ?: listOf()
+        var spells = spellLevels[position] ?: listOf()
+        spells = spells.filter { it.name.contains(search, true) }
 
         when (holder) {
             is CantripsViewHolder -> {

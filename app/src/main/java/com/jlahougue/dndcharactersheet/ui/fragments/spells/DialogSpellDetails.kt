@@ -26,7 +26,7 @@ class DialogSpellDetails(
 
     private lateinit var dialogBinding: DialogSpellDetailsBinding
 
-    private var spellChanged = false
+    private val oldSpell = spell.copy()
 
     //Make dialog fullscreen
     override fun onStart() {
@@ -48,6 +48,8 @@ class DialogSpellDetails(
 
         dialogBinding.spell = spell
 
+        dialogBinding.recyclerSpellDamge.adapter = SpellDamageAdapter(spell.damages)
+
         dialogBinding.checkBoxSpellUnlocked.setOnCheckedChangeListener { _, isChecked ->
             spell.setUnlocked(isChecked)
             updateSpell()
@@ -68,13 +70,12 @@ class DialogSpellDetails(
 
     override fun onDestroy() {
         super.onDestroy()
-        if (spellChanged)
+        if (spell != oldSpell)
             listener.onSpellDetailsClosed()
     }
 
     private fun updateSpell() {
         dialogBinding.spell = spell
         listener.updateCharacterSpell(spell.getCharacterSpell())
-        spellChanged = true
     }
 }

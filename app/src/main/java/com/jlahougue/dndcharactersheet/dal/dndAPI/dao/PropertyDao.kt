@@ -3,6 +3,7 @@ package com.jlahougue.dndcharactersheet.dal.dndAPI.dao
 import com.jlahougue.dndcharactersheet.dal.dndAPI.DnDAPIRequest
 import com.jlahougue.dndcharactersheet.dal.entities.Property
 import org.json.JSONObject
+import kotlin.concurrent.thread
 
 class PropertyDao {
     private val apiRequest = DnDAPIRequest.getInstance()
@@ -23,10 +24,12 @@ class PropertyDao {
         var name: String
         var url: String
         for (i in 0 until results.length()) {
-            name = results.getJSONObject(i).getString("name")
-            url = results.getJSONObject(i).getString("url")
-            if (!names.contains(name)) fetchProperty(DnDAPIRequest.getUrl(url), saveProperty)
-            setProgress(i, count)
+            thread {
+                name = results.getJSONObject(i).getString("name")
+                url = results.getJSONObject(i).getString("url")
+                if (!names.contains(name)) fetchProperty(DnDAPIRequest.getUrl(url), saveProperty)
+                setProgress(i, count)
+            }
         }
         callback()
     }

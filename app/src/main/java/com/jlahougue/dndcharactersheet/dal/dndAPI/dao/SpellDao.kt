@@ -7,6 +7,7 @@ import com.jlahougue.dndcharactersheet.dal.entities.Spell
 import com.jlahougue.dndcharactersheet.dal.entities.SpellClass
 import com.jlahougue.dndcharactersheet.dal.entities.SpellDamage
 import org.json.JSONObject
+import kotlin.concurrent.thread
 
 class SpellDao {
     private val apiRequest = DnDAPIRequest.getInstance()
@@ -26,11 +27,13 @@ class SpellDao {
         var name: String
         var url: String
         for (i in 0 until results.length()) {
-            name = results.getJSONObject(i).getString("name")
-            url = results.getJSONObject(i).getString("url")
-            if (!names.contains(name))
-                fetchSpell(getUrl(url), saveSpell, saveSpellClass, saveSpellDamage)
-            setProgress(i, json.getInt("count"))
+            thread {
+                name = results.getJSONObject(i).getString("name")
+                url = results.getJSONObject(i).getString("url")
+                if (!names.contains(name))
+                    fetchSpell(getUrl(url), saveSpell, saveSpellClass, saveSpellDamage)
+                setProgress(i, json.getInt("count"))
+            }
         }
         callback()
     }
@@ -44,11 +47,26 @@ class SpellDao {
         val response = apiRequest.sendGet(url) ?: return
 
         val json = JSONObject(response)
-        val spellName = json.getString("name")
-        val spellLevel = json.getInt("level")
-        val spellCastingTime = json.getString("casting_time")
-        val spellRange = json.getString("range")
-        val spellDuration = json.getString("duration")
+        val name = json.getString("name")
+        val level = json.getInt("level")
+        val castingTime = json.getString("casting_time")
+        val range = json.getString("range")
+        val duration = json.getString("duration")
+        val ritual = json.getBoolean("ritual")
+        val concentration = json.getBoolean("concentration")
+
+        val spellComponents = json.getJSONArray("components")
+        var components = ""
+        for (i in 0 until spellComponents.length()) {
+            if (i != 0) components += ", "
+            components += spellComponents.getString(i)
+        }
+
+        var materials = ""
+        if (json.has("material")) {
+            materials = json.getString("material")
+        }
+
         val spellDesc = json.getJSONArray("desc")
         var desc = ""
         for (i in 0 until spellDesc.length()) {
@@ -65,33 +83,37 @@ class SpellDao {
             }
         }
 
-        var spellDamage: JSONObject? = null
-        var spellDamageDamageType = ""
+        var damage: JSONObject? = null
+        var damageDamageType = ""
         if (json.has("damage")) {
-            spellDamage = json.getJSONObject("damage")
-            if (spellDamage.has("damage_type")) {
-                spellDamageDamageType = spellDamage.getJSONObject("damage_type").getString("name")
+            damage = json.getJSONObject("damage")
+            if (damage.has("damage_type")) {
+                damageDamageType = damage.getJSONObject("damage_type").getString("name")
             }
         }
 
         saveSpell(Spell(
-            spellName,
-            spellLevel,
-            spellCastingTime,
-            spellRange,
-            spellDuration,
+            name,
+            level,
+            castingTime,
+            range,
+            components,
+            materials,
+            ritual,
+            concentration,
+            duration,
             desc,
             higherLevel,
-            spellDamageDamageType
+            damageDamageType
         ))
 
         val spellClasses = json.getJSONArray("classes")
         for (i in 0 until spellClasses.length()) {
-            saveSpellClass(SpellClass(spellClasses.getJSONObject(i).getString("name"), spellName))
+            saveSpellClass(SpellClass(spellClasses.getJSONObject(i).getString("name"), name))
         }
 
-        if (spellDamage == null) return
-        fetchSpellDamage(spellName, spellLevel, spellDamage, saveSpellDamage)
+        if (damage == null) return
+        fetchSpellDamage(name, level, damage, saveSpellDamage)
     }
 
     private fun fetchSpellDamage(name: String, level: Int, jsonDamage: JSONObject, saveSpellDamage: (SpellDamage) -> Unit) {

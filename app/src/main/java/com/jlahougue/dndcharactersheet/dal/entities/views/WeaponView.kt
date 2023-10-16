@@ -15,11 +15,11 @@ import androidx.room.DatabaseView
             ELSE weapon.damage || ' ' || weapon.damage_type
         END AS damage,
         CASE 
-            WHEN weapon.throw_range != 0 THEN weapon.range || ' / ' || weapon.throw_range
+            WHEN weapon.throw_range != '' THEN weapon.range || ' / ' || weapon.throw_range
             ELSE weapon.range
         END AS range
         FROM weapon
-        INNER JOIN character_weapon AS cw
+        INNER JOIN character_weapon AS cw ON weapon.id = cw.wid
     """,
     viewName = WeaponView.TABLE_WEAPON_VIEW
 )

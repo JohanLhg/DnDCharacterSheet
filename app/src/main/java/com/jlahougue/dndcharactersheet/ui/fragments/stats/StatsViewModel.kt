@@ -4,12 +4,14 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.jlahougue.dndcharactersheet.dal.entities.DeathSaves
 import com.jlahougue.dndcharactersheet.dal.entities.Health
 import com.jlahougue.dndcharactersheet.dal.entities.Stats
 import com.jlahougue.dndcharactersheet.dal.entities.views.AbilityView
 import com.jlahougue.dndcharactersheet.dal.entities.views.SkillView
 import com.jlahougue.dndcharactersheet.dal.repositories.AbilityRepository
 import com.jlahougue.dndcharactersheet.dal.repositories.CharacterRepository
+import com.jlahougue.dndcharactersheet.dal.repositories.DeathSavesRepository
 import com.jlahougue.dndcharactersheet.dal.repositories.HealthRepository
 import com.jlahougue.dndcharactersheet.dal.repositories.SkillRepository
 import com.jlahougue.dndcharactersheet.dal.repositories.StatsRepository
@@ -27,6 +29,7 @@ class StatsViewModel(application: Application) : AndroidViewModel(application) {
     private val skillRepository = SkillRepository(application)
     private val statsRepository = StatsRepository(application)
     private val healthRepository = HealthRepository(application)
+    private val deathSavesRepository = DeathSavesRepository(application)
 
     lateinit var abilities: LiveData<List<AbilityView>>
     lateinit var skills: LiveData<List<SkillView>>
@@ -35,6 +38,7 @@ class StatsViewModel(application: Application) : AndroidViewModel(application) {
     val healthMode = MutableLiveData(CURRENT)
     val health = MutableLiveData<Health>(null)
     lateinit var hitDiceNbr: LiveData<Int>
+    val deathSaves = MutableLiveData<DeathSaves>(null)
 
     var characterID = 0L
         set(value) {
@@ -46,6 +50,7 @@ class StatsViewModel(application: Application) : AndroidViewModel(application) {
             thread {
                 stats.postValue(statsRepository.get(value))
                 health.postValue(healthRepository.get(value))
+                deathSaves.postValue(deathSavesRepository.get(value))
             }
         }
 
@@ -76,6 +81,12 @@ class StatsViewModel(application: Application) : AndroidViewModel(application) {
     fun updateHealth(health: Health) {
         thread {
             healthRepository.update(health)
+        }
+    }
+
+    fun updateDeathSaves(deathSaves: DeathSaves) {
+        thread {
+            deathSavesRepository.update(deathSaves)
         }
     }
 }

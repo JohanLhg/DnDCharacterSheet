@@ -46,7 +46,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="3"
                 android:gravity="bottom|center_horizontal"
-                android:text="@string/label_spell_slots"
+                android:text="@string/label_total_spell_slots"
                 android:textAppearance="@style/TextAppearance.AppCompat.Small"
                 android:textSize="12sp" />
 

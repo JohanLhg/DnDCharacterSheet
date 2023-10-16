@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
 import androidx.core.content.ContextCompat
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
@@ -28,6 +29,8 @@ class StatsFragment : Fragment(),
     // This property is only valid between onCreateView and
     // onDestroyView.
     private val binding get() = _binding!!
+
+    private val main: MainActivity by lazy { activity as MainActivity }
 
     private val statsViewModel: StatsViewModel  by lazy {
         ViewModelProvider.AndroidViewModelFactory
@@ -62,7 +65,7 @@ class StatsFragment : Fragment(),
             statsViewModel.healthMode.value = TEMPORARY
         }
 
-        (activity as MainActivity).mainViewModel.characterID.observe(viewLifecycleOwner) { characterID ->
+        main.mainViewModel.characterID.observe(viewLifecycleOwner) { characterID ->
             statsViewModel.characterID = characterID
 
             statsViewModel.skills.observe(viewLifecycleOwner) {
@@ -74,7 +77,7 @@ class StatsFragment : Fragment(),
                 savingThrowAdapter.abilities = it
 
                 val dexterity = it.find { ability -> ability.name == DEXTERITY }
-                binding.textInitiativeModifier.text = dexterity?.modifier.toString()
+                binding.textInitiativeModifier.text = main.getString(R.string.plus_value, dexterity?.modifier)
             }
 
             statsViewModel.proficiency.observe(viewLifecycleOwner) {
@@ -98,8 +101,8 @@ class StatsFragment : Fragment(),
                 CURRENT -> {
                     binding.columnHealth.labelCurrentHealth.setTextColor(ContextCompat.getColorStateList(requireContext(), R.color.text))
                     binding.columnHealth.labelTemporaryHealth.setTextColor(ContextCompat.getColorStateList(requireContext(), R.color.text_light))
-                    binding.columnHealth.layoutCurrentHealth.visibility = View.VISIBLE
                     binding.columnHealth.layoutTemporaryHealth.visibility = View.GONE
+                    binding.columnHealth.layoutCurrentHealth.visibility = View.VISIBLE
                 }
                 TEMPORARY -> {
                     binding.columnHealth.labelCurrentHealth.setTextColor(ContextCompat.getColorStateList(requireContext(), R.color.text_light))
@@ -114,6 +117,13 @@ class StatsFragment : Fragment(),
             binding.columnHealth.editCurrent.setText(it.currentHp.toString())
             binding.columnHealth.editMax.setText(it.maxHp.toString())
             binding.columnHealth.editTemporaryHealth.setText(it.temporaryHp.toString())
+            val spinnerValues = resources.getStringArray(R.array.dice)
+            binding.columnHealth.spinnerHitDice.setSelection(spinnerValues.indexOf(it.hitDice))
+        }
+
+        statsViewModel.deathSaves.observeOnce(viewLifecycleOwner) {
+            setDeathSavesFailures(it.failures)
+            setDeathSavesSuccesses(it.successes)
         }
 
         return binding.root
@@ -128,6 +138,7 @@ class StatsFragment : Fragment(),
         initializeSkillsListeners()
         initializeStatsListeners()
         initializeHealthListeners()
+        initializeDeathSavesListeners()
     }
 
     private fun initializeSkillsListeners() {
@@ -204,6 +215,53 @@ class StatsFragment : Fragment(),
             health.temporaryHp--
             binding.columnHealth.editTemporaryHealth.setText(health.temporaryHp.toString())
         }
+
+        binding.columnHealth.spinnerHitDice.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(
+                parent: AdapterView<*>?,
+                view: View?,
+                position: Int,
+                id: Long) {
+                if (parent != null && statsViewModel.health.value != null) {
+                    val health = statsViewModel.health.value!!
+                    health.hitDice = parent.getItemAtPosition(position).toString()
+                    statsViewModel.updateHealth(health)
+                }
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>?) {}
+        }
+    }
+
+    private fun initializeDeathSavesListeners() {
+        binding.columnHealth.checkBoxFailure1.setOnClickListener { setDeathSavesFailures(1) }
+        binding.columnHealth.checkBoxFailure2.setOnClickListener { setDeathSavesFailures(2) }
+        binding.columnHealth.checkBoxFailure3.setOnClickListener { setDeathSavesFailures(3) }
+        binding.columnHealth.checkBoxSuccess1.setOnClickListener { setDeathSavesSuccesses(1) }
+        binding.columnHealth.checkBoxSuccess2.setOnClickListener { setDeathSavesSuccesses(2) }
+        binding.columnHealth.checkBoxSuccess3.setOnClickListener { setDeathSavesSuccesses(3) }
+    }
+
+    private fun setDeathSavesFailures(failures: Int) {
+        val deathSaves = statsViewModel.deathSaves.value!!
+        if (deathSaves.failures >= failures) deathSaves.failures = failures - 1
+        else deathSaves.failures = failures
+        statsViewModel.updateDeathSaves(deathSaves)
+
+        binding.columnHealth.checkBoxFailure1.isChecked = deathSaves.failures >= 1
+        binding.columnHealth.checkBoxFailure2.isChecked = deathSaves.failures >= 2
+        binding.columnHealth.checkBoxFailure3.isChecked = deathSaves.failures >= 3
+    }
+
+    private fun setDeathSavesSuccesses(successes: Int) {
+        val deathSaves = statsViewModel.deathSaves.value!!
+        if (deathSaves.successes >= successes) deathSaves.successes = successes - 1
+        else deathSaves.successes = successes
+        statsViewModel.updateDeathSaves(deathSaves)
+
+        binding.columnHealth.checkBoxSuccess1.isChecked = deathSaves.successes >= 1
+        binding.columnHealth.checkBoxSuccess2.isChecked = deathSaves.successes >= 2
+        binding.columnHealth.checkBoxSuccess3.isChecked = deathSaves.successes >= 3
     }
 
     override fun onSkillProficiencyChanged(skill: SkillView) {

@@ -17,4 +17,6 @@ class CharacterWeaponRepository(application: Application) {
     fun saveToLocal(characterWeapon: CharacterWeapon) = roomDao.insert(characterWeapon)
 
     fun getMap(characterID: Long) = roomDao.getMap(characterID)
+
+    fun get(characterID: Long) = roomDao.get(characterID)
 }

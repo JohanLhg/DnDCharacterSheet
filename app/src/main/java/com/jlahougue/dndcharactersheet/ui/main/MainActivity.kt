@@ -46,7 +46,8 @@ class MainActivity : AppCompatActivity() {
                 R.id.navigation_stats,
                 R.id.navigation_inventory,
                 R.id.navigation_spells,
-                R.id.navigation_weapons
+                R.id.navigation_weapons,
+                R.id.navigation_subclass
             )
         )
         navView.setupWithNavController(navController)

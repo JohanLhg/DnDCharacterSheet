@@ -26,6 +26,7 @@ class SpellsViewModel(application: Application) : AndroidViewModel(application) 
     lateinit var characterSpellStats: LiveData<CharacterSpellStatsView>
     val editMode = MutableLiveData(false)
     val spells = MutableLiveData<Map<Int, List<SpellWithCharacterInfo>>>(null)
+    val classes = MutableLiveData<List<String>>(null)
 
     var characterID = 0L
         set(value) {

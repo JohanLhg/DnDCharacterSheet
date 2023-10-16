@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+    <data>
+        <variable
+            name="damage"
+            type="com.jlahougue.dndcharactersheet.dal.entities.SpellDamage" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@color/spell"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/textDamageLevel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="1dp"
+            android:background="@color/white"
+            android:gravity="center"
+            android:paddingHorizontal="5dp"
+            android:paddingVertical="3dp"
+            android:text="@{String.valueOf(damage.characterLevel != 0 ? damage.characterLevel : damage.slotLevel)}"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+
+        <TextView
+            android:id="@+id/textDamage"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="1dp"
+            android:background="@color/white"
+            android:gravity="center"
+            android:paddingHorizontal="5dp"
+            android:paddingVertical="3dp"
+            android:text="@{damage.damage}"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+    </LinearLayout>
+</layout>

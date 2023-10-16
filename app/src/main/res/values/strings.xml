@@ -5,6 +5,7 @@
     <string name="title_inventory">Inventory</string>
     <string name="title_spells">Spells</string>
     <string name="title_weapons">Weapons</string>
+    <string name="title_subclass">Subclass</string>
 
     <!-- General -->
     <string name="cancel">Cancel</string>
@@ -53,6 +54,7 @@
 
     <string name="loading">Loading…</string>
     <string name="searching_for_character">Fetching character…</string>
+    <string name="fetching_classes">Fetching classes…</string>
     <string name="fetching_spells">Fetching spells…</string>
     <string name="fetching_damage_types">Fetching damage types…</string>
     <string name="fetching_weapon_properties">Fetching weapon properties…</string>
@@ -166,13 +168,15 @@
 
     <!-- Spells -->
     <string name="label_spellcasting_ability">Spellcasting Ability</string>
+    <string name="text_spellcasting_ability">%s (%d)</string>
     <string name="label_spell_save_dc">Spell Save DC</string>
     <string name="label_spell_attack_bonus">Spell Attack Bonus</string>
     <string name="total_unlocked">Total unlocked</string>
     <string name="total_prepared">Total prepared</string>
+    <string name="text_prepared">%d / %d</string>
     <string name="total_highlighted">Total highlighted</string>
     <string name="label_cantrips">Cantrips</string>
-    <string name="label_spell_slots">Slots total</string>
+    <string name="label_total_spell_slots">Total slots</string>
     <string name="label_spell_slots_left">Slots left</string>
     <string name="cast_spell">Cast spell</string>
     <string name="highlight_spell">Highlight spell</string>
@@ -184,9 +188,22 @@
     <string name="level_cantrip">Cantrip</string>
     <string name="label_casting_time">Casting time :</string>
     <string name="label_range">Range :</string>
+    <string name="label_components">Components :</string>
+    <string name="vocal">Vocal</string>
+    <string name="somatic">Somatic</string>
+    <string name="materials">Materials</string>
+    <string name="label_materials">Materials :</string>
     <string name="label_duration">Duration :</string>
+    <string name="concentration_duration">Concentration, %s</string>
+    <string name="ritual">This spell can be cast as a ritual but will take an additional 10 min.</string>
     <string name="label_description">Description :</string>
     <string name="label_higher_levels">At higher levels :</string>
+    <string name="label_damage">Damage :</string>
+    <string name="label_damage_type">Damage type :</string>
+    <string name="label_damage_character_level">Character level</string>
+    <string name="label_damage_spell_slot_level">Slot level</string>
+    <string name="label_damage_row">Damage</string>
+    <string name="label_classes">Classes :</string>
     <string name="spell_unlocked">Unlocked</string>
     <string name="spell_prepared">Prepared</string>
     <string name="spell_highlighted">Highlighted</string>
