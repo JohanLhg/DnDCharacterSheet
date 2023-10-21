@@ -11,9 +11,20 @@ class WeaponRepository(application: Application) {
     private val roomPropertyDao = DnDDatabase.getInstance(application).weaponPropertyDao()
     private val apiDao = WeaponDao()
 
-    fun fetchAll(setProgress: (Int, Int) -> Unit, callback: () -> Unit) {
+    fun fetchAll(
+        progressKey: Int,
+        setProgressMax: (Int, Int) -> Unit,
+        updateProgress: (Int) -> Unit
+    ) {
         val names = roomDao.getNames()
-        apiDao.fetchWeapons(names, this::saveWeapon, this::saveProperty, setProgress, callback)
+        apiDao.fetchWeapons(
+            names,
+            this::saveWeapon,
+            this::saveProperty,
+            progressKey,
+            setProgressMax,
+            updateProgress
+        )
     }
 
     private fun saveWeapon(weapon: Weapon) = roomDao.insert(weapon)

@@ -1,5 +1,6 @@
 package com.jlahougue.dndcharactersheet.dal.room.dao
 
+import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
@@ -10,6 +11,7 @@ import androidx.room.Update
 import com.jlahougue.dndcharactersheet.dal.entities.SpellSlot
 import com.jlahougue.dndcharactersheet.dal.entities.SpellSlot.Companion.SPELL_SLOT_LEVEL
 import com.jlahougue.dndcharactersheet.dal.entities.SpellSlot.Companion.SPELL_SLOT_USED
+import com.jlahougue.dndcharactersheet.dal.entities.views.SpellSlotView
 
 @Dao
 interface SpellSlotDao {
@@ -25,8 +27,8 @@ interface SpellSlotDao {
     @Delete
     fun delete(spellSlot: SpellSlot)
 
-    @Query("SELECT * FROM spell_slot WHERE cid = :characterID")
-    fun get(characterID: Long): List<SpellSlot>
+    @Query("SELECT * FROM spell_slot_view WHERE cid = :characterID")
+    fun get(characterID: Long): LiveData<List<SpellSlotView>>
 
     @MapInfo(keyColumn = SPELL_SLOT_LEVEL, valueColumn = SPELL_SLOT_USED)
     @Query("SELECT level, slots_used FROM spell_slot WHERE cid = :characterID")

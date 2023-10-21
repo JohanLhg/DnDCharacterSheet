@@ -1,11 +1,11 @@
 package com.jlahougue.dndcharactersheet.dal.repositories
 
 import android.app.Application
-import com.jlahougue.dndcharactersheet.dal.dndAPI.dao.SpellDao
 import com.jlahougue.dndcharactersheet.dal.entities.Spell
 import com.jlahougue.dndcharactersheet.dal.entities.SpellClass
 import com.jlahougue.dndcharactersheet.dal.entities.SpellDamage
 import com.jlahougue.dndcharactersheet.dal.entities.displayClasses.SpellWithCharacterInfo
+import com.jlahougue.dndcharactersheet.dal.open5eAPI.dao.SpellDao
 import com.jlahougue.dndcharactersheet.dal.room.DnDDatabase
 
 class SpellRepository(application: Application) {
@@ -14,9 +14,20 @@ class SpellRepository(application: Application) {
     private var roomDamageDao = DnDDatabase.getInstance(application).spellDamageDao()
     private val apiDao = SpellDao()
 
-    fun fetchAll(setProgress: (Int, Int) -> Unit, callback: () -> Unit) {
+    fun fetchAll(
+        progressKey: Int,
+        setProgressMax: (Int, Int) -> Unit,
+        updateProgress: (Int) -> Unit
+    ) {
         val names = roomDao.getNames()
-        apiDao.fetchSpells(names, this::saveSpell, this::saveSpellClass, this::saveSpellDamage, setProgress, callback)
+        apiDao.fetchSpells(
+            names,
+            this::saveSpell,
+            this::saveSpellClass,
+            progressKey,
+            setProgressMax,
+            updateProgress
+        )
     }
 
     private fun saveSpell(spell: Spell) = roomDao.insert(spell)
@@ -36,6 +47,8 @@ class SpellRepository(application: Application) {
         return map
     }
 
+    fun get(characterID: Long, spellLevel: Int) = roomDao.get(characterID, spellLevel)
+
     fun getUnlocked(characterID: Long): Map<Int, List<SpellWithCharacterInfo>> {
         val spells = roomDao.getUnlocked(characterID)
         val map = mutableMapOf<Int, MutableList<SpellWithCharacterInfo>>()
@@ -46,4 +59,6 @@ class SpellRepository(application: Application) {
         }
         return map
     }
+
+    fun getUnlocked(characterID: Long, spellLevel: Int) = roomDao.getUnlocked(characterID, spellLevel)
 }

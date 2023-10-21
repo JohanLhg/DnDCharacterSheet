@@ -28,8 +28,8 @@ class FirebaseDatabase {
         }
     }
 
-    val firestore: FirebaseFirestore
-    val auth: FirebaseAuth
+    private val firestore: FirebaseFirestore
+    private val auth: FirebaseAuth
     val storage: FirebaseStorage
     var id = ""
     val uid

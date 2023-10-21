@@ -34,7 +34,7 @@ class Spell(
 ) {
     companion object {
         const val TABLE_SPELL = "spell"
-        const val SPELL_NAME = "name"
+        const val SPELL_NAME = "spell_name"
         const val SPELL_LEVEL = "level"
         const val SPELL_CASTING_TIME = "casting_time"
         const val SPELL_RANGE = "range"

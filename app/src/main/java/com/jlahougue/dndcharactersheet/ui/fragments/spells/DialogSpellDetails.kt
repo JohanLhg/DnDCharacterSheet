@@ -7,17 +7,21 @@ import android.view.ViewGroup
 import androidx.fragment.app.DialogFragment
 import com.jlahougue.dndcharactersheet.R
 import com.jlahougue.dndcharactersheet.dal.entities.CharacterSpell
+import com.jlahougue.dndcharactersheet.dal.entities.Class
 import com.jlahougue.dndcharactersheet.dal.entities.displayClasses.SpellWithCharacterInfo
 import com.jlahougue.dndcharactersheet.databinding.DialogSpellDetailsBinding
+import com.jlahougue.dndcharactersheet.ui.fragments.spells.clazz.ClassAdapter
+import io.noties.markwon.Markwon
 
 class DialogSpellDetails(
     private val spell: SpellWithCharacterInfo,
     private val listener: DialogSpellDetailsListener
-) : DialogFragment() {
+) : DialogFragment(), ClassAdapter.ClassListener {
 
     interface DialogSpellDetailsListener {
         fun updateCharacterSpell(characterSpell: CharacterSpell)
         fun onSpellDetailsClosed()
+        fun onClassClicked(clazz: Class)
     }
 
     companion object {
@@ -32,10 +36,7 @@ class DialogSpellDetails(
     override fun onStart() {
         super.onStart()
         val window = dialog!!.window
-        //get screen width
-        val width = (resources.displayMetrics.widthPixels * 0.90).toInt()
-        //set dialog width
-        window!!.setLayout(width, ViewGroup.LayoutParams.WRAP_CONTENT)
+        window!!.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
         window.setBackgroundDrawableResource(R.color.transparent)
     }
 
@@ -46,9 +47,12 @@ class DialogSpellDetails(
     ): View {
         dialogBinding = DialogSpellDetailsBinding.inflate(inflater, container, false)
 
+        dialogBinding.markwon = Markwon.create(requireContext())
         dialogBinding.spell = spell
 
         dialogBinding.recyclerSpellDamge.adapter = SpellDamageAdapter(spell.damages)
+
+        dialogBinding.recyclerClasses.adapter = ClassAdapter(spell.classes, this)
 
         dialogBinding.checkBoxSpellUnlocked.setOnCheckedChangeListener { _, isChecked ->
             spell.setUnlocked(isChecked)
@@ -65,6 +69,8 @@ class DialogSpellDetails(
             updateSpell()
         }
 
+        dialogBinding.root.setOnClickListener { dismiss() }
+
         return dialogBinding.root
     }
 
@@ -77,5 +83,9 @@ class DialogSpellDetails(
     private fun updateSpell() {
         dialogBinding.spell = spell
         listener.updateCharacterSpell(spell.getCharacterSpell())
+    }
+
+    override fun onClassClicked(clazz: Class) {
+        listener.onClassClicked(clazz)
     }
 }

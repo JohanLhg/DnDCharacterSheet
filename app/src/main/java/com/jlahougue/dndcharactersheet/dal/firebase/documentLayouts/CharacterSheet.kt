@@ -3,6 +3,7 @@ package com.jlahougue.dndcharactersheet.dal.firebase.documentLayouts
 import com.jlahougue.dndcharactersheet.dal.entities.Ability
 import com.jlahougue.dndcharactersheet.dal.entities.Character
 import com.jlahougue.dndcharactersheet.dal.entities.CharacterSpell
+import com.jlahougue.dndcharactersheet.dal.entities.CharacterWeapon
 import com.jlahougue.dndcharactersheet.dal.entities.DeathSaves
 import com.jlahougue.dndcharactersheet.dal.entities.Health
 import com.jlahougue.dndcharactersheet.dal.entities.Money
@@ -17,9 +18,9 @@ class CharacterSheet(
     var health: Health? = null,
     var deathSaves: DeathSaves? = null,
     var spellcastingAbility: String? = null,
-    var spellSlots: Map<Int, Int> = mapOf(),
+    var spellSlots: Map<String, Int> = mapOf(),
     var spells: Map<String, CharacterSpell> = mapOf(),
-    var weapons: Map<Long, Int> = mapOf(),
+    var weapons: Map<String, CharacterWeapon> = mapOf(),
     var notes: String? = null,
     var quests: String? = null,
     var money: Money? = null,

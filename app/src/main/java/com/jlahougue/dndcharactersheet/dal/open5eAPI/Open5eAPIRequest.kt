@@ -11,7 +11,7 @@ class Open5eAPIRequest {
         private const val OPEN5E_API_URL = "https://api.open5e.com/v1"
 
         const val OPEN5E_API_CLASSES_URL = "$OPEN5E_API_URL/classes"
-        const val OPEN5E_API_SPELLS_URL = "$OPEN5E_API_URL/spells"
+        const val OPEN5E_API_SPELLS_URL = "$OPEN5E_API_URL/spells/?limit=999999"
         const val OPEN5E_API_DAMAGE_TYPES_URL = "$OPEN5E_API_URL/api/damage-types"
         const val OPEN5E_API_WEAPON_PROPERTIES_URL = "$OPEN5E_API_URL/api/weapon-properties"
         const val OPEN5E_API_WEAPON_URL = "$OPEN5E_API_URL/api/equipment-categories/weapon"

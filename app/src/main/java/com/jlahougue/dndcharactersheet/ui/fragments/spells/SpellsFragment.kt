@@ -6,19 +6,23 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
-import com.jlahougue.dndcharactersheet.R
+import androidx.fragment.app.viewModels
 import com.jlahougue.dndcharactersheet.dal.entities.CharacterSpell
+import com.jlahougue.dndcharactersheet.dal.entities.Class
 import com.jlahougue.dndcharactersheet.dal.entities.displayClasses.SpellWithCharacterInfo
 import com.jlahougue.dndcharactersheet.dal.repositories.AbilityRepository
 import com.jlahougue.dndcharactersheet.databinding.FragmentSpellsBinding
+import com.jlahougue.dndcharactersheet.extensions.observeNonNull
 import com.jlahougue.dndcharactersheet.extensions.observeOnce
+import com.jlahougue.dndcharactersheet.ui.fragments.spells.clazz.DialogClassDetails
 import com.jlahougue.dndcharactersheet.ui.main.MainActivity
 
 class SpellsFragment : Fragment(),
     SpellAdapter.SpellListener,
     DialogSpellDetails.DialogSpellDetailsListener,
-    ClassFilterAdapter.ClassFilterListener {
+    ClassFilterAdapter.ClassFilterListener,
+    SpellLevelAdapter.SpellLevelListener
+{
 
     private var _binding: FragmentSpellsBinding? = null
 
@@ -28,13 +32,10 @@ class SpellsFragment : Fragment(),
 
     private val main: MainActivity by lazy { activity as MainActivity }
 
-    private val spellsViewModel: SpellsViewModel by lazy {
-        ViewModelProvider.AndroidViewModelFactory
-            .getInstance(requireActivity().application)
-            .create(SpellsViewModel::class.java)
-    }
+    private val spellsViewModel: SpellsViewModel by viewModels()
 
     private val spellLevelAdapter by lazy { SpellLevelAdapter(this) }
+    private val spellAdapter by lazy { SpellAdapter(this) }
 
     private val classFilterAdapter by lazy { ClassFilterAdapter(this) }
 
@@ -45,48 +46,37 @@ class SpellsFragment : Fragment(),
     ): View {
         _binding = FragmentSpellsBinding.inflate(inflater, container, false)
 
+        binding.lifecycleOwner = viewLifecycleOwner
+        binding.ability = AbilityRepository.Companion
+
         initializeSpellSearchBar()
 
-        main.mainViewModel.characterID.observe(viewLifecycleOwner) {
-            if (it == 0L) return@observe
+        binding.recyclerSpellLevelsFilter.adapter = spellLevelAdapter
+        binding.recyclerSpells.adapter = spellAdapter
+
+        binding.buttonEdit.setOnClickListener { spellsViewModel.setEditMode(true) }
+        binding.buttonDone.setOnClickListener { spellsViewModel.setEditMode(false) }
+
+        main.mainViewModel.characterID.observeOnce(viewLifecycleOwner) {
             spellsViewModel.characterID = it
 
-            spellsViewModel.spellcasting.observe(viewLifecycleOwner) { spellcasting ->
-                val ability = AbilityRepository.getModifierName(requireContext(), spellcasting.ability)
-                binding.textSpellcastingAbility.text = main.getString(R.string.text_spellcasting_ability, ability, spellcasting.modifier)
-                binding.textSpellSaveDC.text = spellcasting.saveDC.toString()
-                binding.textSpellAttackBonus.text = spellcasting.attackBonus.toString()
+            binding.viewModel = spellsViewModel
+
+            spellsViewModel.spellLevels.observe(viewLifecycleOwner) { spellLevels ->
+                spellLevelAdapter.spellLevels = spellLevels
             }
 
-            spellsViewModel.characterSpellStats.observe(viewLifecycleOwner) { stats ->
-                binding.textTotalUnlocked.text = stats.totalUnlocked.toString()
-                binding.textTotalPrepared.text = main.getString(R.string.text_prepared, stats.totalPrepared, stats.maxPrepared)
-                binding.textTotalHighlighted.text = stats.totalHighlighted.toString()
-            }
-
-            spellsViewModel.characterLevel.observeOnce(viewLifecycleOwner) { characterLevel ->
-                spellLevelAdapter.characterLevel = characterLevel
-                binding.recyclerSpellLevels.adapter = spellLevelAdapter
-
-                spellsViewModel.spells.observe(viewLifecycleOwner) { spellLevels ->
-                    if (spellLevels != null)
-                        spellLevelAdapter.spellLevels = spellLevels
-                }
-
-                binding.buttonEdit.setOnClickListener { spellsViewModel.setEditMode(true) }
-                binding.buttonDone.setOnClickListener { spellsViewModel.setEditMode(false) }
+            spellsViewModel.spells.observeNonNull(viewLifecycleOwner) { spells ->
+                spellAdapter.spells = spells
             }
         }
 
         spellsViewModel.editMode.observe(viewLifecycleOwner) { editMode ->
-            spellLevelAdapter.editMode = editMode
-            if (editMode) {
-                binding.buttonEdit.visibility = View.GONE
-                binding.buttonDone.visibility = View.VISIBLE
-            } else {
-                binding.buttonEdit.visibility = View.VISIBLE
-                binding.buttonDone.visibility = View.GONE
-            }
+            spellAdapter.editMode = editMode
+        }
+
+        spellsViewModel.spellLevel.observe(viewLifecycleOwner) { spellLevel ->
+            spellLevelAdapter.activeLevel = spellLevel
         }
 
         return binding.root
@@ -99,7 +89,7 @@ class SpellsFragment : Fragment(),
 
     private fun initializeSpellSearchBar() {
         binding.editSpellsSearch.addTextChangedListener {
-            spellLevelAdapter.search = it.toString()
+            spellAdapter.search = it.toString()
         }
     }
 
@@ -118,5 +108,16 @@ class SpellsFragment : Fragment(),
 
     override fun onFilterChange(filteredClasses: List<String>) {
 
+    }
+
+    override fun onSpellLevelClick(position: Int) {
+        spellsViewModel.setSpellLevel(position)
+    }
+
+    override fun onClassClicked(clazz: Class) {
+        DialogClassDetails(clazz).show(
+            main.supportFragmentManager,
+            DialogClassDetails.TAG
+        )
     }
 }

@@ -19,6 +19,7 @@ class AbilityAdapter(private val listener: OnAbilityChangedListener) : RecyclerV
         set(value) {
             val oldField = field
             field = value
+            notifyDataSetChanged()
             if (oldField.isEmpty()) notifyItemRangeInserted(0, value.size)
             else notifyItemRangeChanged(0, value.size, MODIFIER)
         }

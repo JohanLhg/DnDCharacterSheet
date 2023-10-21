@@ -2,7 +2,6 @@ package com.jlahougue.dndcharactersheet.dal.repositories
 
 import android.app.Application
 import com.jlahougue.dndcharactersheet.dal.entities.Character
-import com.jlahougue.dndcharactersheet.dal.entities.CharacterWeapon
 import com.jlahougue.dndcharactersheet.dal.entities.Equipment
 import com.jlahougue.dndcharactersheet.dal.entities.Notes
 import com.jlahougue.dndcharactersheet.dal.entities.Quests
@@ -58,19 +57,17 @@ class CharacterSheetRepository(application: Application) {
             spellcastingRepository.saveToLocal(Spellcasting(characterID, it))
         }
         characterSheet.spellSlots.forEach { (level, count) ->
-            spellSlotRepository.saveToLocal(SpellSlot(characterID, level, count))
+            spellSlotRepository.saveToLocal(SpellSlot(characterID, Integer.valueOf(level), count))
         }
         characterSheet.spells.forEach { (_, spell) -> characterSpellRepository.saveToLocal(spell) }
-        characterSheet.weapons.forEach { (id, count) ->
-            characterWeaponRepository.saveToLocal(CharacterWeapon(characterID, id, count))
-        }
+        characterSheet.weapons.forEach { (_, weapon) -> characterWeaponRepository.saveToLocal(weapon) }
         characterSheet.notes?.let { notesRepository.saveToLocal(Notes(characterID, it)) }
         characterSheet.quests?.let { questsRepository.saveToLocal(Quests(characterID, it)) }
         characterSheet.money?.let { moneyRepository.saveToLocal(it) }
         characterSheet.equipment?.let { equipmentRepository.saveToLocal(Equipment(characterID, it)) }
     }
 
-    private fun saveToRemote(characterID: Long) {
+    fun saveToRemote(characterID: Long) {
         val characterSheet = CharacterSheet(
             characterRepository.get(characterID),
             abilityRepository.getMap(characterID),

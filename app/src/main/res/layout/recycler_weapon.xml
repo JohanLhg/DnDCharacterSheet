@@ -61,13 +61,13 @@
             android:background="@color/white"
             android:gravity="center"
             android:padding="3dp"
-            android:text="@{weapon.test}"
+            android:text="@{@string/plus_value(weapon.modifier)}"
             android:textAlignment="center" />
 
         <TextView
             android:id="@+id/textDamage"
             style="@android:style/TextAppearance.Material.Medium"
-            android:layout_width="140dp"
+            android:layout_width="200dp"
             android:layout_height="match_parent"
             android:layout_margin="1dp"
             android:background="@color/white"
@@ -79,7 +79,7 @@
         <TextView
             android:id="@+id/textRange"
             style="@android:style/TextAppearance.Material.Medium"
-            android:layout_width="110dp"
+            android:layout_width="150dp"
             android:layout_height="match_parent"
             android:layout_margin="1dp"
             android:background="@color/white"

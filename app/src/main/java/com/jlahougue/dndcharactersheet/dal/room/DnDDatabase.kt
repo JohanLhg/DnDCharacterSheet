@@ -36,6 +36,7 @@ import com.jlahougue.dndcharactersheet.dal.entities.views.AbilityView
 import com.jlahougue.dndcharactersheet.dal.entities.views.CharacterSpellStatsView
 import com.jlahougue.dndcharactersheet.dal.entities.views.ProficiencyView
 import com.jlahougue.dndcharactersheet.dal.entities.views.SkillView
+import com.jlahougue.dndcharactersheet.dal.entities.views.SpellSlotView
 import com.jlahougue.dndcharactersheet.dal.entities.views.SpellcastingView
 import com.jlahougue.dndcharactersheet.dal.entities.views.WeaponView
 import com.jlahougue.dndcharactersheet.dal.room.dao.AbilityDao
@@ -72,8 +73,9 @@ import com.jlahougue.dndcharactersheet.dal.room.dao.WeaponPropertyDao
         Spellcasting::class, SpellClass::class, SpellDamage::class, SpellSlot::class, Stats::class,
         Weapon::class, WeaponProperty::class],
     views = [AbilityView::class, AbilityModifierView::class, CharacterSpellStatsView::class,
-        ProficiencyView::class, SkillView::class, SpellcastingView::class, WeaponView::class],
-    version = 31
+        ProficiencyView::class, SkillView::class, SpellcastingView::class, SpellSlotView::class,
+        WeaponView::class],
+    version = 51
 )
 abstract class DnDDatabase : RoomDatabase() {
     companion object {

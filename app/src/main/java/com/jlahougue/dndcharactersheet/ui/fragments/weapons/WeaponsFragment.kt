@@ -6,11 +6,15 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import com.jlahougue.dndcharactersheet.dal.entities.Property
+import com.jlahougue.dndcharactersheet.dal.entities.displayClasses.WeaponDetail
 import com.jlahougue.dndcharactersheet.dal.entities.views.WeaponView
 import com.jlahougue.dndcharactersheet.databinding.FragmentWeaponsBinding
+import com.jlahougue.dndcharactersheet.extensions.observeNonNull
+import com.jlahougue.dndcharactersheet.extensions.observeOnce
 import com.jlahougue.dndcharactersheet.ui.main.MainActivity
 
-class WeaponsFragment : Fragment(), WeaponAdapter.WeaponListener {
+class WeaponsFragment : Fragment(), WeaponAdapter.WeaponListener, DialogWeaponDetails.DialogWeaponDetailsListener {
 
     private var _binding: FragmentWeaponsBinding? = null
 
@@ -36,13 +40,10 @@ class WeaponsFragment : Fragment(), WeaponAdapter.WeaponListener {
         val weaponAdapter = WeaponAdapter(this)
         binding.recyclerWeapons.adapter = weaponAdapter
 
-        main.mainViewModel.characterID.observe(viewLifecycleOwner) {
-            if (it == 0L) return@observe
+        main.mainViewModel.characterID.observeOnce(viewLifecycleOwner) {
             weaponsViewModel.characterID = it
 
-            weaponsViewModel.weapons.observe(viewLifecycleOwner) { weapons ->
-                if (weapons == null) return@observe
-println(weapons.size)
+            weaponsViewModel.weapons.observeNonNull(viewLifecycleOwner) { weapons ->
                 weaponAdapter.weapons = weapons
             }
         }
@@ -56,6 +57,24 @@ println(weapons.size)
     }
 
     override fun onWeaponClicked(weapon: WeaponView) {
-        TODO("Not yet implemented")
+        weaponsViewModel.getWeapon(weapon.name, this::openWeaponDetailsDialog)
+    }
+
+    private fun openWeaponDetailsDialog(weapon: WeaponDetail) {
+        val dialog = DialogWeaponDetails(weapon, this)
+        main.runOnUiThread {
+            dialog.show(parentFragmentManager, DialogWeaponDetails.TAG)
+        }
+    }
+
+    override fun updateCharacterWeapon(weapon: WeaponDetail) {
+        weaponsViewModel.updateCharacterWeapon(weapon)
+    }
+
+    override fun onWeaponPropertyClicked(property: Property) {
+        val dialog = DialogPropertyDetails(property)
+        main.runOnUiThread {
+            dialog.show(parentFragmentManager, DialogPropertyDetails.TAG)
+        }
     }
 }

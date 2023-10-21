@@ -1,8 +1,10 @@
 package com.jlahougue.dndcharactersheet.dal.entities.displayClasses
 
 import androidx.room.ColumnInfo
+import androidx.room.Junction
 import androidx.room.Relation
 import com.jlahougue.dndcharactersheet.dal.entities.CharacterSpell
+import com.jlahougue.dndcharactersheet.dal.entities.Class
 import com.jlahougue.dndcharactersheet.dal.entities.Spell
 import com.jlahougue.dndcharactersheet.dal.entities.SpellClass
 import com.jlahougue.dndcharactersheet.dal.entities.SpellDamage
@@ -43,9 +45,10 @@ class SpellWithCharacterInfo(
     var highlighted: Boolean = false,
     @Relation(
         parentColumn = Spell.SPELL_NAME,
-        entityColumn = SpellClass.SPELL_CLASS_SPELL
+        entityColumn = Class.CLASS_NAME,
+        associateBy = Junction(SpellClass::class)
     )
-    var classes: List<SpellClass> = listOf(),
+    var classes: List<Class> = listOf(),
     @Relation(
         parentColumn = Spell.SPELL_NAME,
         entityColumn = SpellDamage.SPELL_DAMAGE_NAME
@@ -66,10 +69,6 @@ class SpellWithCharacterInfo(
             prepared,
             highlighted
         )
-    }
-
-    fun getClassesString(): String {
-        return classes.joinToString(", ") { it.className }
     }
 
     fun copy(): SpellWithCharacterInfo {

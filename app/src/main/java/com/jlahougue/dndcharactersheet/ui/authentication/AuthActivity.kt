@@ -58,11 +58,11 @@ class AuthActivity : AppCompatActivity() {
             startLoading()
         }
 
-        authViewModel.progressMax.observe(this) { max ->
+        authViewModel.currentProgressMax.observe(this) { max ->
             binding.progressBar.max = max
         }
 
-        authViewModel.progress.observe(this) { progress ->
+        authViewModel.currentProgress.observe(this) { progress ->
             binding.progressBar.progress = progress
         }
 
@@ -91,6 +91,12 @@ class AuthActivity : AppCompatActivity() {
                 }
             }
         }
+    }
+
+    private fun getProgressKey(): Int {
+        val keys = authViewModel.waitingFor.value?: return -1
+        if (keys.isEmpty()) return -1
+        return keys[0]
     }
 
     private fun startLoading() {

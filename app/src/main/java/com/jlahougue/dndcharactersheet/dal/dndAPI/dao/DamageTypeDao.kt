@@ -11,14 +11,15 @@ class DamageTypeDao {
     fun fetchDamageTypes(
         names: List<String>,
         saveDamageType: (DamageType) -> Unit,
-        setProgress: (Int, Int) -> Unit,
-        callback: () -> Unit
+        progressKey: Int,
+        setProgressMax: (Int, Int) -> Unit,
+        updateProgress: (Int) -> Unit
     ) {
         val response = apiRequest.sendGet(DnDAPIRequest.DND_API_DAMAGE_TYPES_URL) ?: return
         val json = JSONObject(response)
 
         val count = json.getInt("count")
-        setProgress(0, count)
+        setProgressMax(progressKey, count)
 
         val results = json.getJSONArray("results")
         var name: String
@@ -31,10 +32,9 @@ class DamageTypeDao {
                     DnDAPIRequest.getUrl(url),
                     saveDamageType
                 )
-                setProgress(i, count)
+                updateProgress(progressKey)
             }
         }
-        callback()
     }
 
     private fun fetchDamageType(

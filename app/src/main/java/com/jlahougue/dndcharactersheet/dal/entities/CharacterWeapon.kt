@@ -5,20 +5,23 @@ import androidx.room.Entity
 
 @Entity(
     tableName = CharacterWeapon.TABLE_CHARACTER_WEAPON,
-    primaryKeys = [CharacterWeapon.CHARACTER_WEAPON_CID, CharacterWeapon.CHARACTER_WEAPON_WID]
+    primaryKeys = [CharacterWeapon.CHARACTER_WEAPON_CID, CharacterWeapon.CHARACTER_WEAPON_NAME]
 )
 class CharacterWeapon(
     @ColumnInfo(name = CHARACTER_WEAPON_CID)
     var cid: Long = 0,
-    @ColumnInfo(name = CHARACTER_WEAPON_WID)
-    var wid: Long = 0,
+    @ColumnInfo(name = CHARACTER_WEAPON_NAME)
+    var name: String = "",
     @ColumnInfo(name = CHARACTER_WEAPON_COUNT)
-    var count: Int = 0
+    var count: Int = 0,
+    @ColumnInfo(name = CHARACTER_WEAPON_PROFICIENCY)
+    var proficiency: Boolean = false
 ) {
     companion object {
         const val TABLE_CHARACTER_WEAPON = "character_weapon"
         const val CHARACTER_WEAPON_CID = "cid"
-        const val CHARACTER_WEAPON_WID = "wid"
+        const val CHARACTER_WEAPON_NAME = "name"
         const val CHARACTER_WEAPON_COUNT = "count"
+        const val CHARACTER_WEAPON_PROFICIENCY = "proficiency"
     }
 }

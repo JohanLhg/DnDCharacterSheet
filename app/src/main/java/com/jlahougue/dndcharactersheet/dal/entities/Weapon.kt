@@ -6,9 +6,7 @@ import androidx.room.PrimaryKey
 
 @Entity(tableName = Weapon.TABLE_WEAPON)
 class Weapon(
-    @PrimaryKey(autoGenerate = true)
-    @ColumnInfo(name = WEAPON_ID)
-    var id: Long = 0,
+    @PrimaryKey
     @ColumnInfo(name = WEAPON_NAME)
     var name: String = "",
     @ColumnInfo(name = WEAPON_TEST)
@@ -34,8 +32,7 @@ class Weapon(
 ) {
     companion object {
         const val TABLE_WEAPON = "weapon"
-        const val WEAPON_ID = "id"
-        const val WEAPON_NAME = "name"
+        const val WEAPON_NAME = "weapon_name"
         const val WEAPON_TEST = "test"
         const val WEAPON_DAMAGE = "damage"
         const val WEAPON_DAMAGE_TYPE = "damage_type"

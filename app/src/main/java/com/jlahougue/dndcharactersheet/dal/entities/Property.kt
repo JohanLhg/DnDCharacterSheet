@@ -6,9 +6,7 @@ import androidx.room.PrimaryKey
 
 @Entity(tableName = Property.TABLE_PROPERTY)
 class Property(
-    @PrimaryKey(autoGenerate = true)
-    @ColumnInfo(name = PROPERTY_ID)
-    var id: Long = 0,
+    @PrimaryKey
     @ColumnInfo(name = PROPERTY_NAME)
     var name: String = "",
     @ColumnInfo(name = PROPERTY_DESCRIPTION)
@@ -16,8 +14,7 @@ class Property(
 ) {
     companion object {
         const val TABLE_PROPERTY = "property"
-        const val PROPERTY_ID = "id"
-        const val PROPERTY_NAME = "name"
+        const val PROPERTY_NAME = "property_name"
         const val PROPERTY_DESCRIPTION = "description"
     }
 }

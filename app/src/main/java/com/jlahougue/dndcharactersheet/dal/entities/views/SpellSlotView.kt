@@ -36,4 +36,8 @@ class SpellSlotView(
         const val SPELL_SLOT_TOTAL = "total"
         const val SPELL_SLOT_LEFT = "slots_left"
     }
+
+    override fun toString(): String {
+        return "$cid : ${level}th slot $left/$total"
+    }
 }

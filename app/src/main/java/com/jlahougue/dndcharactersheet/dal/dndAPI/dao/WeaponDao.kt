@@ -13,17 +13,18 @@ class WeaponDao {
 
     fun fetchWeapons(
         names: List<String>,
-        saveWeapon: (Weapon) -> Long,
+        saveWeapon: (Weapon) -> Unit,
         saveProperty: (WeaponProperty) -> Unit,
-        setProgress: (Int, Int) -> Unit,
-        callback: () -> Unit
+        progressKey: Int,
+        setProgressMax: (Int, Int) -> Unit,
+        updateProgress: (Int) -> Unit
     ) {
         val response = apiRequest.sendGet(DnDAPIRequest.DND_API_WEAPON_URL) ?: return
         val json = JSONObject(response)
 
         val weapons = json.getJSONArray("equipment")
         val count = weapons.length()
-        setProgress(0, count)
+        setProgressMax(progressKey, count)
 
         var name: String
         var url: String
@@ -36,15 +37,14 @@ class WeaponDao {
                     saveWeapon,
                     saveProperty
                 )
-                setProgress(i, count)
+                updateProgress(progressKey)
             }
         }
-        callback()
     }
 
     private fun fetchWeapon(
         url: String,
-        saveWeapon: (Weapon) -> Long,
+        saveWeapon: (Weapon) -> Unit,
         saveProperty: (WeaponProperty) -> Unit
     ) {
         val response = apiRequest.sendGet(url) ?: return
@@ -140,14 +140,14 @@ class WeaponDao {
             cost = costStr,
             description = description
         )
-        val id = saveWeapon(weapon)
+        saveWeapon(weapon)
 
         if (!json.has("properties")) return
         val properties = json.getJSONArray("properties")
         var property: String
         for (i in 0 until properties.length()) {
             property = properties.getJSONObject(i).getString("name")
-            saveProperty(WeaponProperty(id, property))
+            saveProperty(WeaponProperty(name, property))
         }
     }
 }

@@ -40,9 +40,10 @@ class AuthViewModel(application: Application) : AndroidViewModel(application) {
     var authMode = MutableLiveData(REGISTER)
     val waitingFor = MutableLiveData(listOf(SEARCHING_FOR_CHARACTER, FETCHING_CLASSES,
         FETCHING_SPELLS, FETCHING_DAMAGE_TYPES, FETCHING_WEAPON_PROPERTIES, FETCHING_WEAPONS))
-    val progressMax = MutableLiveData(0)
-
-    val progress = MutableLiveData(0)
+    val currentProgressMax = MutableLiveData(0)
+    val currentProgress = MutableLiveData(0)
+    private var progressMax = mapOf<Int, Int>()
+    private var progress = mapOf<Int, Int>()
 
     fun isLoggedIn() = authRepository.isLoggedIn()
 
@@ -61,35 +62,61 @@ class AuthViewModel(application: Application) : AndroidViewModel(application) {
             }
         }
         thread {
-            classRepository.fetchAll(this::setProgress) {
-                waitingFor.postValue(waitingFor.value!!.filter { it != FETCHING_CLASSES })
-            }
+            classRepository.fetchAll(
+                FETCHING_CLASSES,
+                this::setProgressMax,
+                this::updateProgress
+            )
         }
         thread {
-            spellRepository.fetchAll(this::setProgress) {
-                waitingFor.postValue(waitingFor.value!!.filter { it != FETCHING_SPELLS })
-            }
+            spellRepository.fetchAll(
+                FETCHING_SPELLS,
+                this::setProgressMax,
+                this::updateProgress
+            )
         }
         thread {
-            damageTypeRepository.fetchAll(this::setProgress) {
-                waitingFor.postValue(waitingFor.value!!.filter { it != FETCHING_DAMAGE_TYPES })
-            }
+            damageTypeRepository.fetchAll(
+                FETCHING_DAMAGE_TYPES,
+                this::setProgressMax,
+                this::updateProgress
+            )
         }
         thread {
-            propertyRepository.fetchAll(this::setProgress) {
-                waitingFor.postValue(waitingFor.value!!.filter { it != FETCHING_WEAPON_PROPERTIES })
-            }
+            propertyRepository.fetchAll(
+                FETCHING_WEAPON_PROPERTIES,
+                this::setProgressMax,
+                this::updateProgress
+            )
         }
         thread {
-            weaponRepository.fetchAll(this::setProgress) {
-                waitingFor.postValue(waitingFor.value!!.filter { it != FETCHING_WEAPONS })
-            }
+            weaponRepository.fetchAll(
+                FETCHING_WEAPONS,
+                this::setProgressMax,
+                this::updateProgress
+            )
         }
     }
 
-    private fun setProgress(progress: Int, max: Int) {
-        this.progress.postValue(progress)
-        this.progressMax.postValue(max)
+    @Synchronized
+    private fun setProgressMax(key: Int, max: Int) {
+        progress = progress.plus(key to 0)
+        progressMax = progressMax.plus(key to max)
+    }
+
+    @Synchronized
+    private fun updateProgress(key: Int) {
+        val progressValue = (progress[key] ?: 0) + 1
+        progress = progress.plus(key to progressValue)
+
+        if (key == waitingFor.value!![0]) {
+            currentProgressMax.postValue(progressMax[key])
+            currentProgress.postValue(progress[key])
+        }
+
+        if (progressValue == progressMax[key]) {
+            waitingFor.postValue(waitingFor.value!!.filter { it != key })
+        }
     }
 
     fun getLanguage(callback: (String) -> Unit) {

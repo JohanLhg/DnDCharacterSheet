@@ -3,8 +3,6 @@ package com.jlahougue.dndcharactersheet.dal.dndAPI.dao
 import com.jlahougue.dndcharactersheet.dal.dndAPI.DnDAPIRequest
 import com.jlahougue.dndcharactersheet.dal.dndAPI.DnDAPIRequest.Companion.DND_API_SPELLS_URL
 import com.jlahougue.dndcharactersheet.dal.dndAPI.DnDAPIRequest.Companion.getUrl
-import com.jlahougue.dndcharactersheet.dal.entities.Spell
-import com.jlahougue.dndcharactersheet.dal.entities.SpellClass
 import com.jlahougue.dndcharactersheet.dal.entities.SpellDamage
 import org.json.JSONObject
 import kotlin.concurrent.thread
@@ -14,15 +12,14 @@ class SpellDao {
 
     fun fetchSpells(
         names: List<String>,
-        saveSpell: (Spell) -> Unit,
-        saveSpellClass: (SpellClass) -> Unit,
         saveSpellDamage: (SpellDamage) -> Unit,
-        setProgress: (Int, Int) -> Unit,
-        callback: () -> Unit
+        progressKey: Int,
+        setProgressMax: (Int, Int) -> Unit,
+        updateProgress: (Int) -> Unit
     ) {
         val response = apiRequest.sendGet(DND_API_SPELLS_URL) ?: return
         val json = JSONObject(response)
-        setProgress(0, json.getInt("count"))
+        setProgressMax(progressKey, json.getInt("count"))
         val results = json.getJSONArray("results")
         var name: String
         var url: String
@@ -31,17 +28,14 @@ class SpellDao {
                 name = results.getJSONObject(i).getString("name")
                 url = results.getJSONObject(i).getString("url")
                 if (!names.contains(name))
-                    fetchSpell(getUrl(url), saveSpell, saveSpellClass, saveSpellDamage)
-                setProgress(i, json.getInt("count"))
+                    fetchSpell(getUrl(url), saveSpellDamage)
+                updateProgress(progressKey)
             }
         }
-        callback()
     }
 
     private fun fetchSpell(
         url: String,
-        saveSpell: (Spell) -> Unit,
-        saveSpellClass: (SpellClass) -> Unit,
         saveSpellDamage: (SpellDamage) -> Unit
     ) {
         val response = apiRequest.sendGet(url) ?: return
@@ -49,39 +43,6 @@ class SpellDao {
         val json = JSONObject(response)
         val name = json.getString("name")
         val level = json.getInt("level")
-        val castingTime = json.getString("casting_time")
-        val range = json.getString("range")
-        val duration = json.getString("duration")
-        val ritual = json.getBoolean("ritual")
-        val concentration = json.getBoolean("concentration")
-
-        val spellComponents = json.getJSONArray("components")
-        var components = ""
-        for (i in 0 until spellComponents.length()) {
-            if (i != 0) components += ", "
-            components += spellComponents.getString(i)
-        }
-
-        var materials = ""
-        if (json.has("material")) {
-            materials = json.getString("material")
-        }
-
-        val spellDesc = json.getJSONArray("desc")
-        var desc = ""
-        for (i in 0 until spellDesc.length()) {
-            if (i != 0) desc += "\n"
-            desc += spellDesc.getString(i)
-        }
-
-        var higherLevel = ""
-        if (json.has("higher_level")) {
-            val spellHigherLevel = json.getJSONArray("higher_level")
-            for (i in 0 until spellHigherLevel.length()) {
-                if (i != 0) higherLevel += "\n"
-                higherLevel += spellHigherLevel.getString(i)
-            }
-        }
 
         var damage: JSONObject? = null
         var damageDamageType = ""
@@ -90,26 +51,6 @@ class SpellDao {
             if (damage.has("damage_type")) {
                 damageDamageType = damage.getJSONObject("damage_type").getString("name")
             }
-        }
-
-        saveSpell(Spell(
-            name,
-            level,
-            castingTime,
-            range,
-            components,
-            materials,
-            ritual,
-            concentration,
-            duration,
-            desc,
-            higherLevel,
-            damageDamageType
-        ))
-
-        val spellClasses = json.getJSONArray("classes")
-        for (i in 0 until spellClasses.length()) {
-            saveSpellClass(SpellClass(spellClasses.getJSONObject(i).getString("name"), name))
         }
 
         if (damage == null) return

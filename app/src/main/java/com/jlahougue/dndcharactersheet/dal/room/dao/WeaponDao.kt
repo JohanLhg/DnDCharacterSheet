@@ -11,7 +11,7 @@ import com.jlahougue.dndcharactersheet.dal.entities.Weapon
 @Dao
 interface WeaponDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insert(weapon: Weapon): Long
+    fun insert(weapon: Weapon)
 
     @Update
     fun update(weapon: Weapon)
@@ -19,6 +19,6 @@ interface WeaponDao {
     @Delete
     fun delete(weapon: Weapon)
 
-    @Query("SELECT name FROM weapon")
+    @Query("SELECT weapon_name FROM weapon")
     fun getNames(): List<String>
 }

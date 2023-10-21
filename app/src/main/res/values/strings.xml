@@ -20,6 +20,9 @@
     <string name="plus_value">+ %d</string>
     <string name="hint_search">Search…</string>
     <string name="button_search">Search button</string>
+    <string name="empty">-</string>
+    <string name="comma">,</string>
+    <string name="parenthesis">(%d)</string>
     <array name="dice">
         <item>d4</item>
         <item>d6</item>
@@ -78,6 +81,7 @@
     <string name="delete_account_text">Are you sure you want to delete your account ?</string>
     <string name="delete_account_success">Your account has been deleted.</string>
     <string name="delete_account_failed">An error occurred while deleting your account.</string>
+    <string name="save_to_remote">Save to Remote</string>
     <string name="switch_character">Switch character</string>
 
     <!-- Profile -->
@@ -176,6 +180,7 @@
     <string name="text_prepared">%d / %d</string>
     <string name="total_highlighted">Total highlighted</string>
     <string name="label_cantrips">Cantrips</string>
+    <string name="cantrips_level">0</string>
     <string name="label_total_spell_slots">Total slots</string>
     <string name="label_spell_slots_left">Slots left</string>
     <string name="cast_spell">Cast spell</string>
@@ -183,7 +188,6 @@
     <string name="show_spell_details">Show spell details</string>
 
     <!-- Spell Details -->
-    <string name="title_spell_details">Spell details : %s</string>
     <string name="label_level">Level :</string>
     <string name="level_cantrip">Cantrip</string>
     <string name="label_casting_time">Casting time :</string>
@@ -210,7 +214,7 @@
 
     <!-- Weapons -->
     <string name="weapons">WEAPONS</string>
-    <string name="roll_attack">Roll attack</string>
+    <string name="roll_attack">Roll for attack</string>
     <string name="label_weapon_count">Count</string>
     <string name="label_weapon_name">Name</string>
     <string name="label_weapon_test">Test</string>
@@ -219,5 +223,26 @@
     <string name="show_weapon_details">Show weapon details</string>
 
     <!-- Weapon Details -->
-    <string name="title_weapon_details">Weapon details : %s</string>
+    <string name="label_count">Count :</string>
+    <string name="label_weight">Weight :</string>
+    <string name="label_cost">Cost :</string>
+    <string name="label_properties">Properties :</string>
+    <string name="label_attack_test">Attack test :</string>
+    <string name="text_attack_test">%s (%d)</string>
+    <string name="label_attack_normal">Normal</string>
+    <string name="label_attack_two_handed">Two-handed</string>
+    <string name="roll_damage">Roll for damage</string>
+    <string name="label_type">Type :</string>
+
+    <!-- Class Details -->
+    <string name="label_hit_dice">Hit Dice :</string>
+    <string name="label_equipment">Equipment :</string>
+    <string name="label_proficiencies">Proficiencies</string>
+    <string name="label_saving_throws">Saving Throws :</string>
+    <string name="label_skills">Skills :</string>
+    <string name="label_armor">Armor :</string>
+    <string name="label_weapons">Weapons :</string>
+    <string name="label_tools">Tools :</string>
+    <string name="text_spellcaster">%ss are spellcasters.</string>
+    <string name="label_class_spellcasting_ability">Spellcasting ability :</string>
 </resources>

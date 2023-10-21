@@ -9,7 +9,7 @@ class CharacterWeaponDao {
     fun insert(characterWeapon: CharacterWeapon) {
         firebaseDatabase.updateCharacterSheet(
             characterWeapon.cid,
-            mapOf("weapons.${characterWeapon.wid}" to characterWeapon.count)
+            mapOf("weapons.${characterWeapon.name}" to characterWeapon.count)
         )
     }
 }

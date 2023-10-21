@@ -15,9 +15,20 @@ class ClassRepository(application: Application) {
     private val apiDao = ClassDao()
     private val apiLevelDao = ClassLevelDao()
 
-    fun fetchAll(setProgress: (Int, Int) -> Unit, callback: () -> Unit) {
+    fun fetchAll(
+        progressKey: Int,
+        setProgressMax: (Int, Int) -> Unit,
+        updateProgress: (Int) -> Unit
+    ) {
         val names = roomDao.getNames()
-        apiDao.fetchClasses(names, this::saveClass, this::fetchLevels, setProgress, callback)
+        apiDao.fetchClasses(
+            names,
+            this::saveClass,
+            this::fetchLevels,
+            progressKey,
+            setProgressMax,
+            updateProgress
+        )
     }
 
     private fun fetchLevels(clazz: String) {

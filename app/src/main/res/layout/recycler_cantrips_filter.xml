@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable
+            name="active"
+            type="Boolean" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingHorizontal="10dp"
+        android:paddingVertical="5dp">
+
+        <ImageView
+            android:id="@+id/backgroundLevel"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:adjustViewBounds="true"
+            android:importantForAccessibility="no"
+            android:scaleType="fitCenter"
+            android:src="@drawable/spell_background_level"
+            app:layout_constraintBottom_toBottomOf="@id/textSpellLevel"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/textSpellLevel" />
+
+        <TextView
+            android:id="@+id/textSpellLevel"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:layout_marginTop="8dp"
+            android:gravity="center"
+            android:text="@string/cantrips_level"
+            android:textColor="@{active ? @color/spell : @color/black}"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/backgroundLevel"
+            app:layout_constraintStart_toStartOf="@+id/backgroundLevel"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="1.0" />
+
+        <ImageView
+            android:id="@+id/backgroundMiddle"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:adjustViewBounds="true"
+            android:importantForAccessibility="no"
+            android:scaleType="fitXY"
+            android:src="@drawable/spell_background_middle"
+            app:layout_constraintBottom_toBottomOf="@id/textSpellLevel"
+            app:layout_constraintStart_toEndOf="@+id/backgroundLevel"
+            app:layout_constraintTop_toTopOf="@id/textSpellLevel" />
+
+        <ImageView
+            android:id="@+id/backgroundLeft"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:importantForAccessibility="no"
+            android:scaleType="fitXY"
+            android:src="@drawable/spell_background_left"
+            app:layout_constraintBottom_toBottomOf="@id/textSpellLevel"
+            app:layout_constraintEnd_toStartOf="@+id/backgroundEnd"
+            app:layout_constraintStart_toStartOf="@id/textSpellSlotLeft"
+            app:layout_constraintTop_toTopOf="@id/textSpellLevel" />
+
+        <TextView
+            android:id="@+id/textSpellSlotLeft"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:paddingStart="5dp"
+            android:paddingEnd="15dp"
+            android:text="@string/label_cantrips"
+            android:textColor="@{active ? @color/spell : @color/black}"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@id/backgroundEnd"
+            app:layout_constraintStart_toEndOf="@+id/backgroundMiddle"
+            app:layout_constraintTop_toTopOf="@+id/textSpellLevel" />
+
+        <ImageView
+            android:id="@+id/backgroundEnd"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:adjustViewBounds="true"
+            android:importantForAccessibility="no"
+            android:scaleType="fitCenter"
+            android:src="@drawable/spell_background_end"
+            app:layout_constraintBottom_toBottomOf="@id/textSpellLevel"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/textSpellLevel" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

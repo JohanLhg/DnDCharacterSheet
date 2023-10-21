@@ -6,460 +6,480 @@
         <import type="android.view.View"/>
         <import type="android.text.TextUtils"/>
         <variable
+            name="markwon"
+            type="io.noties.markwon.Markwon" />
+        <variable
             name="spell"
             type="com.jlahougue.dndcharactersheet.dal.entities.displayClasses.SpellWithCharacterInfo" />
     </data>
 
-    <LinearLayout
-        android:id="@+id/layoutSpellDetails"
-        android:layout_width="900dp"
-        android:layout_height="wrap_content"
-        android:background="@color/spell"
-        android:orientation="vertical">
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
         <LinearLayout
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:gravity="center_vertical"
-            android:orientation="horizontal">
-
-            <ImageView
-                android:id="@+id/imageSpellUnlocked"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_margin="5dp"
-                android:scaleType="fitCenter"
-                android:src="@{spell.unlocked ? @drawable/padlock_open : @drawable/padlock_close}"
-                app:tint="@color/white"
-                android:importantForAccessibility="no" />
-
-            <TextView
-                android:id="@+id/titleSpellDetails"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:padding="5dp"
-                android:textAppearance="@style/TextAppearance.AppCompat.Large"
-                android:textColor="@{spell.highlighted ? @color/highlight : @color/white}"
-                android:text="@{@string/title_spell_details(spell.name)}" />
-
-            <Button
-                android:id="@+id/buttonCast"
-                android:layout_width="170dp"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="5dp"
-                android:backgroundTint="@color/spell_dark"
-                android:text="@string/cast_spell"
-                app:icon="@drawable/aim"
-                app:iconPadding="5dp"
-                app:iconSize="20dp" />
-        </LinearLayout>
-
-        <ScrollView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:paddingHorizontal="150dp"
+            android:paddingVertical="100dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
             <LinearLayout
+                android:id="@+id/layoutSpellDetails"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="3dp"
-                android:layout_marginBottom="3dp"
-                android:background="@color/white"
-                android:orientation="vertical"
-                android:padding="5dp">
+                android:background="@color/spell"
+                android:clickable="true"
+                android:orientation="vertical">
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="horizontal"
-                    android:baselineAligned="false">
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
 
-                    <LinearLayout
+                    <ImageView
+                        android:id="@+id/imageSpellUnlocked"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_margin="5dp"
+                        android:importantForAccessibility="no"
+                        android:scaleType="fitCenter"
+                        android:src="@{spell.unlocked ? @drawable/padlock_open : @drawable/padlock_close}"
+                        app:tint="@color/white" />
+
+                    <TextView
+                        android:id="@+id/titleSpellDetails"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:orientation="vertical">
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:gravity="center_vertical"
-                            android:orientation="horizontal">
-
-                            <TextView
-                                android:id="@+id/labelLevel"
-                                style="@style/TextAppearance.AppCompat.Medium"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:labelFor="@+id/textCastingTime"
-                                android:text="@string/label_level"
-                                android:textColor="@color/text_light"
-                                android:textStyle="bold" />
-
-                            <TextView
-                                android:id="@+id/textLevel"
-                                style="@style/TextAppearance.AppCompat.Medium"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_marginStart="5dp"
-                                android:text="@{spell.level == 0 ? @string/level_cantrip : String.valueOf(spell.level)}" />
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:gravity="center_vertical"
-                            android:orientation="horizontal">
-
-                            <TextView
-                                android:id="@+id/labelCastingTime"
-                                style="@style/TextAppearance.AppCompat.Medium"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:labelFor="@+id/textCastingTime"
-                                android:text="@string/label_casting_time"
-                                android:textColor="@color/text_light"
-                                android:textStyle="bold" />
-
-                            <TextView
-                                android:id="@+id/textCastingTime"
-                                style="@style/TextAppearance.AppCompat.Medium"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_marginStart="5dp"
-                                android:text="@{spell.castingTime}" />
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:gravity="center_vertical"
-                            android:orientation="horizontal">
-
-                            <TextView
-                                android:id="@+id/labelRange"
-                                style="@style/TextAppearance.AppCompat.Medium"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:labelFor="@+id/textRange"
-                                android:text="@string/label_range"
-                                android:textColor="@color/text_light"
-                                android:textStyle="bold" />
-
-                            <TextView
-                                android:id="@+id/textRange"
-                                style="@style/TextAppearance.AppCompat.Medium"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_marginStart="5dp"
-                                android:text="@{spell.range}" />
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:gravity="center_vertical"
-                            android:orientation="horizontal"
-                            android:visibility="@{TextUtils.isEmpty(spell.components) ? View.GONE : View.VISIBLE}">
-
-                            <TextView
-                                android:id="@+id/labelComponents"
-                                style="@style/TextAppearance.AppCompat.Medium"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="@string/label_components"
-                                android:textColor="@color/text_light"
-                                android:textStyle="bold" />
-
-                            <ImageView
-                                android:id="@+id/imageVocal"
-                                android:layout_width="25dp"
-                                android:layout_height="25dp"
-                                android:layout_marginStart="5dp"
-                                android:scaleType="fitCenter"
-                                android:src="@drawable/vocal"
-                                android:visibility="@{TextUtils.indexOf(spell.components, 'V') == -1 ? View.GONE : View.VISIBLE}"
-                                android:contentDescription="@string/vocal" />
-
-                            <ImageView
-                                android:id="@+id/imageSomatic"
-                                android:layout_width="25dp"
-                                android:layout_height="25dp"
-                                android:layout_marginStart="5dp"
-                                android:scaleType="fitCenter"
-                                android:src="@drawable/somatic"
-                                android:visibility="@{TextUtils.indexOf(spell.components, 'S') == -1 ? View.GONE : View.VISIBLE}"
-                                android:contentDescription="@string/somatic" />
-
-                            <ImageView
-                                android:id="@+id/imageMaterials"
-                                android:layout_width="25dp"
-                                android:layout_height="25dp"
-                                android:layout_marginStart="5dp"
-                                android:scaleType="fitCenter"
-                                android:src="@drawable/materials"
-                                android:visibility="@{TextUtils.indexOf(spell.components, 'M') == -1 ? View.GONE : View.VISIBLE}"
-                                android:contentDescription="@string/materials" />
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:orientation="horizontal"
-                            android:visibility="@{TextUtils.isEmpty(spell.materials) ? View.GONE : View.VISIBLE}">
-
-                            <TextView
-                                android:id="@+id/labelMaterials"
-                                style="@style/TextAppearance.AppCompat.Medium"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:labelFor="@+id/textMaterials"
-                                android:text="@string/label_materials"
-                                android:textColor="@color/text_light"
-                                android:textStyle="bold" />
-
-                            <TextView
-                                android:id="@+id/textMaterials"
-                                style="@style/TextAppearance.AppCompat.Medium"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_marginStart="5dp"
-                                android:text="@{spell.materials}" />
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:orientation="horizontal">
-
-                            <TextView
-                                android:id="@+id/labelDuration"
-                                style="@style/TextAppearance.AppCompat.Medium"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:labelFor="@+id/textDuration"
-                                android:text="@string/label_duration"
-                                android:textColor="@color/text_light"
-                                android:textStyle="bold" />
-
-                            <TextView
-                                android:id="@+id/textDuration"
-                                style="@style/TextAppearance.AppCompat.Medium"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_marginStart="5dp"
-                                android:text="@{spell.concentration ? @string/concentration_duration(spell.duration) : spell.duration}" />
-                        </LinearLayout>
-
-                        <TextView
-                            android:id="@+id/textRitual"
-                            style="@style/TextAppearance.AppCompat.Medium"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:labelFor="@+id/textDuration"
-                            android:text="@string/ritual"
-                            android:visibility="@{spell.ritual ? View.VISIBLE : View.GONE}" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="175dp"
-                        android:layout_height="match_parent"
-                        android:orientation="vertical">
-
-                        <CheckBox
-                            android:id="@+id/checkBoxSpellUnlocked"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:buttonTint="@color/spell"
-                            android:checked="@{spell.unlocked}"
-                            android:paddingHorizontal="10dp"
-                            android:text="@string/spell_unlocked"
-                            android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
-
-                        <CheckBox
-                            android:id="@+id/checkBoxSpellPrepared"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:buttonTint="@color/spell"
-                            android:checked="@{spell.prepared}"
-                            android:paddingHorizontal="10dp"
-                            android:text="@string/spell_prepared"
-                            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-                            android:visibility="@{spell.unlocked ? View.VISIBLE : View.GONE}" />
-
-                        <CheckBox
-                            android:id="@+id/checkBoxSpellHighlighted"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:buttonTint="@color/spell"
-                            android:checked="@{spell.highlighted}"
-                            android:paddingHorizontal="10dp"
-                            android:text="@string/spell_highlighted"
-                            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-                            android:visibility="@{spell.unlocked ? View.GONE : View.VISIBLE}" />
-                    </LinearLayout>
-
-                </LinearLayout>
-
-                <TextView
-                    android:id="@+id/labelDescription"
-                    style="@style/TextAppearance.AppCompat.Medium"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:labelFor="@+id/textDescription"
-                    android:text="@string/label_description"
-                    android:textColor="@color/text_light"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:id="@+id/textDescription"
-                    style="@style/TextAppearance.AppCompat.Medium"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@{spell.description}" />
-
-                <TextView
-                    android:id="@+id/labelHigherLevels"
-                    style="@style/TextAppearance.AppCompat.Medium"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:labelFor="@+id/textHigherLevels"
-                    android:text="@string/label_higher_levels"
-                    android:textColor="@color/text_light"
-                    android:textStyle="bold"
-                    android:visibility="@{TextUtils.isEmpty(spell.higherLevels) ? View.GONE : View.VISIBLE}" />
-
-                <TextView
-                    android:id="@+id/textHigherLevels"
-                    style="@style/TextAppearance.AppCompat.Medium"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:visibility="@{TextUtils.isEmpty(spell.higherLevels) ? View.GONE : View.VISIBLE}"
-                    android:text="@{spell.higherLevels}" />
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical"
-                    android:visibility="@{spell.damages.isEmpty() ? View.GONE : View.VISIBLE}">
-
-                    <TextView
-                        android:id="@+id/labelDamage"
-                        style="@style/TextAppearance.AppCompat.Medium"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:labelFor="@+id/textHigherLevels"
-                        android:text="@string/label_damage"
-                        android:textColor="@color/text_light"
+                        android:padding="5dp"
+                        android:text="@{spell.name}"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                        android:textColor="@{spell.highlighted ? @color/highlight : @color/white}"
                         android:textStyle="bold" />
 
-                    <LinearLayout
-                        android:layout_width="wrap_content"
+                    <Button
+                        android:id="@+id/buttonCast"
+                        android:layout_width="170dp"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:background="@color/spell"
-                        android:padding="1dp">
+                        android:layout_marginHorizontal="5dp"
+                        android:backgroundTint="@color/spell_dark"
+                        android:text="@string/cast_spell"
+                        app:icon="@drawable/aim"
+                        app:iconPadding="5dp"
+                        app:iconSize="20dp" />
+                </LinearLayout>
 
-                        <LinearLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:background="@color/spell"
-                            android:orientation="vertical">
-
-                            <TextView
-                                android:id="@+id/labelDamageLevel"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_margin="1dp"
-                                android:background="@color/white"
-                                android:paddingHorizontal="5dp"
-                                android:paddingVertical="3dp"
-                                android:text="@{spell.damages[0].characterLevel != 0 ? @string/label_damage_character_level : @string/label_damage_spell_slot_level}"
-                                android:textColor="@color/text_light"
-                                android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
-
-                            <TextView
-                                android:id="@+id/labelDamageRow"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_margin="1dp"
-                                android:background="@color/white"
-                                android:paddingHorizontal="5dp"
-                                android:paddingVertical="3dp"
-                                android:text="@string/label_damage_row"
-                                android:textColor="@color/text_light"
-                                android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
-                        </LinearLayout>
-
-                        <androidx.recyclerview.widget.RecyclerView
-                            android:id="@+id/recyclerSpellDamge"
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:orientation="horizontal"
-                            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                            tools:itemCount="4"
-                            tools:listitem="@layout/recycler_spell_damage" />
-                    </LinearLayout>
+                <ScrollView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="3dp"
+                    android:layout_marginBottom="3dp">
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:visibility="@{TextUtils.isEmpty(spell.damageType) ? View.GONE : View.VISIBLE}">
+                        android:background="@color/white"
+                        android:orientation="vertical"
+                        android:padding="5dp">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:baselineAligned="false"
+                            android:orientation="horizontal">
+
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:orientation="vertical">
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:gravity="center_vertical"
+                                    android:orientation="horizontal">
+
+                                    <TextView
+                                        android:id="@+id/labelLevel"
+                                        style="@style/TextAppearance.AppCompat.Medium"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:labelFor="@+id/textCastingTime"
+                                        android:text="@string/label_level"
+                                        android:textColor="@color/text_light"
+                                        android:textStyle="bold" />
+
+                                    <TextView
+                                        android:id="@+id/textLevel"
+                                        style="@style/TextAppearance.AppCompat.Medium"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginStart="5dp"
+                                        android:text="@{spell.level == 0 ? @string/level_cantrip : String.valueOf(spell.level)}" />
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:gravity="center_vertical"
+                                    android:orientation="horizontal">
+
+                                    <TextView
+                                        android:id="@+id/labelCastingTime"
+                                        style="@style/TextAppearance.AppCompat.Medium"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:labelFor="@+id/textCastingTime"
+                                        android:text="@string/label_casting_time"
+                                        android:textColor="@color/text_light"
+                                        android:textStyle="bold" />
+
+                                    <TextView
+                                        android:id="@+id/textCastingTime"
+                                        style="@style/TextAppearance.AppCompat.Medium"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginStart="5dp"
+                                        android:text="@{spell.castingTime}" />
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:gravity="center_vertical"
+                                    android:orientation="horizontal">
+
+                                    <TextView
+                                        android:id="@+id/labelRange"
+                                        style="@style/TextAppearance.AppCompat.Medium"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:labelFor="@+id/textRange"
+                                        android:text="@string/label_range"
+                                        android:textColor="@color/text_light"
+                                        android:textStyle="bold" />
+
+                                    <TextView
+                                        android:id="@+id/textRange"
+                                        style="@style/TextAppearance.AppCompat.Medium"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginStart="5dp"
+                                        android:text="@{spell.range}" />
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:gravity="center_vertical"
+                                    android:orientation="horizontal"
+                                    android:visibility="@{TextUtils.isEmpty(spell.components) ? View.GONE : View.VISIBLE}">
+
+                                    <TextView
+                                        android:id="@+id/labelComponents"
+                                        style="@style/TextAppearance.AppCompat.Medium"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="@string/label_components"
+                                        android:textColor="@color/text_light"
+                                        android:textStyle="bold" />
+
+                                    <ImageView
+                                        android:id="@+id/imageVocal"
+                                        android:layout_width="25dp"
+                                        android:layout_height="25dp"
+                                        android:layout_marginStart="5dp"
+                                        android:contentDescription="@string/vocal"
+                                        android:scaleType="fitCenter"
+                                        android:src="@drawable/vocal"
+                                        android:visibility="@{TextUtils.indexOf(spell.components, 'V') == -1 ? View.GONE : View.VISIBLE}" />
+
+                                    <ImageView
+                                        android:id="@+id/imageSomatic"
+                                        android:layout_width="25dp"
+                                        android:layout_height="25dp"
+                                        android:layout_marginStart="5dp"
+                                        android:contentDescription="@string/somatic"
+                                        android:scaleType="fitCenter"
+                                        android:src="@drawable/somatic"
+                                        android:visibility="@{TextUtils.indexOf(spell.components, 'S') == -1 ? View.GONE : View.VISIBLE}" />
+
+                                    <ImageView
+                                        android:id="@+id/imageMaterials"
+                                        android:layout_width="25dp"
+                                        android:layout_height="25dp"
+                                        android:layout_marginStart="5dp"
+                                        android:contentDescription="@string/materials"
+                                        android:scaleType="fitCenter"
+                                        android:src="@drawable/materials"
+                                        android:visibility="@{TextUtils.indexOf(spell.components, 'M') == -1 ? View.GONE : View.VISIBLE}" />
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="horizontal"
+                                    android:visibility="@{TextUtils.isEmpty(spell.materials) ? View.GONE : View.VISIBLE}">
+
+                                    <TextView
+                                        android:id="@+id/labelMaterials"
+                                        style="@style/TextAppearance.AppCompat.Medium"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:labelFor="@+id/textMaterials"
+                                        android:text="@string/label_materials"
+                                        android:textColor="@color/text_light"
+                                        android:textStyle="bold" />
+
+                                    <TextView
+                                        android:id="@+id/textMaterials"
+                                        style="@style/TextAppearance.AppCompat.Medium"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginStart="5dp"
+                                        android:text="@{spell.materials}" />
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="horizontal">
+
+                                    <TextView
+                                        android:id="@+id/labelDuration"
+                                        style="@style/TextAppearance.AppCompat.Medium"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:labelFor="@+id/textDuration"
+                                        android:text="@string/label_duration"
+                                        android:textColor="@color/text_light"
+                                        android:textStyle="bold" />
+
+                                    <TextView
+                                        android:id="@+id/textDuration"
+                                        style="@style/TextAppearance.AppCompat.Medium"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginStart="5dp"
+                                        android:text="@{spell.concentration ? @string/concentration_duration(spell.duration) : spell.duration}" />
+                                </LinearLayout>
+
+                                <TextView
+                                    android:id="@+id/textRitual"
+                                    style="@style/TextAppearance.AppCompat.Medium"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:labelFor="@+id/textDuration"
+                                    android:text="@string/ritual"
+                                    android:visibility="@{spell.ritual ? View.VISIBLE : View.GONE}" />
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="175dp"
+                                android:layout_height="match_parent"
+                                android:orientation="vertical">
+
+                                <CheckBox
+                                    android:id="@+id/checkBoxSpellUnlocked"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:buttonTint="@color/spell"
+                                    android:checked="@{spell.unlocked}"
+                                    android:paddingHorizontal="10dp"
+                                    android:text="@string/spell_unlocked"
+                                    android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+
+                                <CheckBox
+                                    android:id="@+id/checkBoxSpellPrepared"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:buttonTint="@color/spell"
+                                    android:checked="@{spell.prepared}"
+                                    android:paddingHorizontal="10dp"
+                                    android:text="@string/spell_prepared"
+                                    android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                                    android:visibility="@{spell.unlocked ? View.VISIBLE : View.GONE}" />
+
+                                <CheckBox
+                                    android:id="@+id/checkBoxSpellHighlighted"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:buttonTint="@color/spell"
+                                    android:checked="@{spell.highlighted}"
+                                    android:paddingHorizontal="10dp"
+                                    android:text="@string/spell_highlighted"
+                                    android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                                    android:visibility="@{spell.unlocked ? View.GONE : View.VISIBLE}" />
+                            </LinearLayout>
+
+                        </LinearLayout>
 
                         <TextView
-                            android:id="@+id/labelDamageType"
+                            android:id="@+id/labelDescription"
                             style="@style/TextAppearance.AppCompat.Medium"
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:labelFor="@+id/textDuration"
-                            android:text="@string/label_damage_type"
+                            android:labelFor="@+id/textDescription"
+                            android:text="@string/label_description"
                             android:textColor="@color/text_light"
                             android:textStyle="bold" />
 
                         <TextView
-                            android:id="@+id/textDamageType"
+                            android:id="@+id/textDescription"
                             style="@style/TextAppearance.AppCompat.Medium"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="5dp"
-                            android:text="@{spell.damageType}" />
+                            android:text="@{markwon.toMarkdown(spell.description)}" />
+
+                        <TextView
+                            android:id="@+id/labelHigherLevels"
+                            style="@style/TextAppearance.AppCompat.Medium"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:labelFor="@+id/textHigherLevels"
+                            android:text="@string/label_higher_levels"
+                            android:textColor="@color/text_light"
+                            android:textStyle="bold"
+                            android:visibility="@{TextUtils.isEmpty(spell.higherLevels) ? View.GONE : View.VISIBLE}" />
+
+                        <TextView
+                            android:id="@+id/textHigherLevels"
+                            style="@style/TextAppearance.AppCompat.Medium"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@{markwon.toMarkdown(spell.higherLevels)}"
+                            android:visibility="@{TextUtils.isEmpty(spell.higherLevels) ? View.GONE : View.VISIBLE}" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="vertical"
+                            android:visibility="@{spell.damages.isEmpty() ? View.GONE : View.VISIBLE}">
+
+                            <TextView
+                                android:id="@+id/labelDamage"
+                                style="@style/TextAppearance.AppCompat.Medium"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:labelFor="@+id/textHigherLevels"
+                                android:text="@string/label_damage"
+                                android:textColor="@color/text_light"
+                                android:textStyle="bold" />
+
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:background="@color/spell"
+                                android:orientation="horizontal"
+                                android:padding="1dp">
+
+                                <LinearLayout
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:background="@color/spell"
+                                    android:orientation="vertical">
+
+                                    <TextView
+                                        android:id="@+id/labelDamageLevel"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_margin="1dp"
+                                        android:background="@color/white"
+                                        android:paddingHorizontal="5dp"
+                                        android:paddingVertical="3dp"
+                                        android:text="@{spell.damages[0].characterLevel != 0 ? @string/label_damage_character_level : @string/label_damage_spell_slot_level}"
+                                        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                                        android:textColor="@color/text_light" />
+
+                                    <TextView
+                                        android:id="@+id/labelDamageRow"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_margin="1dp"
+                                        android:background="@color/white"
+                                        android:paddingHorizontal="5dp"
+                                        android:paddingVertical="3dp"
+                                        android:text="@string/label_damage_row"
+                                        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                                        android:textColor="@color/text_light" />
+                                </LinearLayout>
+
+                                <androidx.recyclerview.widget.RecyclerView
+                                    android:id="@+id/recyclerSpellDamge"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="match_parent"
+                                    android:orientation="horizontal"
+                                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                                    tools:itemCount="4"
+                                    tools:listitem="@layout/recycler_spell_damage" />
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal"
+                                android:visibility="@{TextUtils.isEmpty(spell.damageType) ? View.GONE : View.VISIBLE}">
+
+                                <TextView
+                                    android:id="@+id/labelDamageType"
+                                    style="@style/TextAppearance.AppCompat.Medium"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:labelFor="@+id/textDuration"
+                                    android:text="@string/label_damage_type"
+                                    android:textColor="@color/text_light"
+                                    android:textStyle="bold" />
+
+                                <TextView
+                                    android:id="@+id/textDamageType"
+                                    style="@style/TextAppearance.AppCompat.Medium"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginStart="5dp"
+                                    android:text="@{spell.damageType}" />
+                            </LinearLayout>
+
+                        </LinearLayout>
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="2dp"
+                            android:layout_marginTop="5dp"
+                            android:background="@color/divider" />
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:id="@+id/labelClasses"
+                                style="@style/TextAppearance.AppCompat.Medium"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/label_classes"
+                                android:textColor="@color/text_light"
+                                android:textStyle="bold" />
+
+                            <androidx.recyclerview.widget.RecyclerView
+                                android:id="@+id/recyclerClasses"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal"
+                                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                                tools:itemCount="3"
+                                tools:listitem="@layout/recycler_list_comma" />
+                        </LinearLayout>
                     </LinearLayout>
-
-                </LinearLayout>
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="2dp"
-                    android:layout_marginTop="5dp"
-                    android:background="@color/divider" />
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:id="@+id/labelClasses"
-                        style="@style/TextAppearance.AppCompat.Medium"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:labelFor="@+id/textDuration"
-                        android:text="@string/label_classes"
-                        android:textColor="@color/text_light"
-                        android:textStyle="bold" />
-
-                    <TextView
-                        android:id="@+id/textClasses"
-                        style="@style/TextAppearance.AppCompat.Medium"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="5dp"
-                        android:text="@{spell.classesString}" />
-                </LinearLayout>
-
+                </ScrollView>
             </LinearLayout>
-        </ScrollView>
-
-    </LinearLayout>
+        </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

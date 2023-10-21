@@ -54,6 +54,16 @@ class AbilityRepository(application: Application) {
         const val WISDOM = "WIS"
         const val CHARISMA = "CHA"
 
+        fun getDatabaseCode(name: String) = when(name) {
+            "Strength" -> STRENGTH
+            "Dexterity" -> DEXTERITY
+            "Constitution" -> CONSTITUTION
+            "Intelligence" -> INTELLIGENCE
+            "Wisdom" -> WISDOM
+            "Charisma" -> CHARISMA
+            else -> ""
+        }
+
         fun getName(context: Context, name: String) = when(name) {
             STRENGTH -> context.getString(R.string.strength)
             DEXTERITY -> context.getString(R.string.dexterity)
@@ -62,6 +72,16 @@ class AbilityRepository(application: Application) {
             WISDOM -> context.getString(R.string.wisdom)
             CHARISMA -> context.getString(R.string.charisma)
             else -> ""
+        }
+
+        fun getNameId(name: String?) = when(name) {
+            STRENGTH -> R.string.strength
+            DEXTERITY -> R.string.dexterity
+            CONSTITUTION -> R.string.constitution
+            INTELLIGENCE -> R.string.intelligence
+            WISDOM -> R.string.wisdom
+            CHARISMA -> R.string.charisma
+            else -> R.string.empty
         }
 
         fun getModifierName(context: Context, modifierType: String) = when(modifierType) {

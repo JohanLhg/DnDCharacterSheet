@@ -1,55 +1,85 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:bind="http://schemas.android.com/tools">
     <data>
         <import type="android.view.View"/>
         <import type="android.text.TextUtils"/>
         <variable
-            name="spell"
-            type="com.jlahougue.dndcharactersheet.dal.entities.displayClasses.SpellWithCharacterInfo" />
+            name="context"
+            type="android.content.Context" />
+        <variable
+            name="ability"
+            type="com.jlahougue.dndcharactersheet.dal.repositories.AbilityRepository.Companion" />
+        <variable
+            name="weapon"
+            type="com.jlahougue.dndcharactersheet.dal.entities.displayClasses.WeaponDetail" />
     </data>
 
     <LinearLayout
         android:id="@+id/layoutWeaponDetails"
-        android:layout_width="900dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@color/spell"
         android:orientation="vertical">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:gravity="center_vertical"
             android:orientation="horizontal">
 
             <TextView
                 android:id="@+id/titleWeaponDetails"
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:padding="5dp"
+                android:paddingHorizontal="10dp"
+                android:paddingVertical="5dp"
+                android:text="@{weapon.name}"
                 android:textAppearance="@style/TextAppearance.AppCompat.Large"
-                android:textColor="@{spell.highlighted ? @color/highlight : @color/white}"
-                android:text="@{@string/title_weapon_details(spell.name)}" />
+                android:textColor="@color/white"
+                android:textStyle="bold" />
 
-            <Button
-                android:id="@+id/buttonCast"
-                android:layout_width="170dp"
+            <View
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_weight="1" />
+
+            <ImageView
+                android:id="@+id/buttonCountMinus"
+                android:layout_width="35dp"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="5dp"
-                android:backgroundTint="@color/spell_dark"
-                android:text="@string/cast_spell"
-                app:icon="@drawable/aim"
-                app:iconPadding="5dp"
-                app:iconSize="20dp" />
+                android:adjustViewBounds="true"
+                android:padding="10dp"
+                android:scaleType="fitCenter"
+                android:src="@drawable/chevron_left"
+                app:tint="@color/white" />
+
+            <TextView
+                android:id="@+id/textCount"
+                style="@style/TextAppearance.AppCompat.Large"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{String.valueOf(weapon.count)}"
+                android:textColor="@color/white" />
+
+            <ImageView
+                android:id="@+id/buttonCountPlus"
+                android:layout_width="35dp"
+                android:layout_height="wrap_content"
+                android:adjustViewBounds="true"
+                android:padding="10dp"
+                android:scaleType="fitCenter"
+                android:src="@drawable/chevron_right"
+                app:tint="@color/white" />
         </LinearLayout>
 
         <ScrollView
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content">
 
             <LinearLayout
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="3dp"
                 android:layout_marginBottom="3dp"
@@ -58,155 +88,79 @@
                 android:padding="5dp">
 
                 <LinearLayout
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:orientation="horizontal"
-                    android:baselineAligned="false">
+                    android:baselineAligned="false"
+                    android:orientation="vertical">
 
                     <LinearLayout
-                        android:layout_width="0dp"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:orientation="vertical">
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
 
-                        <LinearLayout
-                            android:layout_width="match_parent"
+                        <TextView
+                            android:id="@+id/labelWeight"
+                            style="@style/TextAppearance.AppCompat.Medium"
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:gravity="center_vertical"
-                            android:orientation="horizontal">
+                            android:labelFor="@+id/textWeight"
+                            android:text="@string/label_weight"
+                            android:textColor="@color/text_light"
+                            android:textStyle="bold" />
 
-                            <TextView
-                                android:id="@+id/labelLevel"
-                                style="@style/TextAppearance.AppCompat.Medium"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:labelFor="@+id/textCastingTime"
-                                android:text="@string/label_level"
-                                android:textColor="@color/text_light"
-                                android:textStyle="bold" />
-
-                            <TextView
-                                android:id="@+id/textLevel"
-                                style="@style/TextAppearance.AppCompat.Medium"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_marginStart="5dp"
-                                android:text="@{spell.level == 0 ? @string/level_cantrip : String.valueOf(spell.level)}" />
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
+                        <TextView
+                            android:id="@+id/textWeight"
+                            style="@style/TextAppearance.AppCompat.Medium"
+                            android:layout_width="100dp"
                             android:layout_height="wrap_content"
-                            android:gravity="center_vertical"
-                            android:orientation="horizontal">
+                            android:layout_marginHorizontal="5dp"
+                            android:text="@{String.valueOf(weapon.weight)}" />
 
-                            <TextView
-                                android:id="@+id/labelCastingTime"
-                                style="@style/TextAppearance.AppCompat.Medium"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:labelFor="@+id/textCastingTime"
-                                android:text="@string/label_casting_time"
-                                android:textColor="@color/text_light"
-                                android:textStyle="bold" />
-
-                            <TextView
-                                android:id="@+id/textCastingTime"
-                                style="@style/TextAppearance.AppCompat.Medium"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_marginStart="5dp"
-                                android:text="@{spell.castingTime}" />
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
+                        <TextView
+                            android:id="@+id/labelCost"
+                            style="@style/TextAppearance.AppCompat.Medium"
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:gravity="center_vertical"
-                            android:orientation="horizontal">
+                            android:labelFor="@+id/textCost"
+                            android:text="@string/label_cost"
+                            android:textColor="@color/text_light"
+                            android:textStyle="bold" />
 
-                            <TextView
-                                android:id="@+id/labelRange"
-                                style="@style/TextAppearance.AppCompat.Medium"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:labelFor="@+id/textRange"
-                                android:text="@string/label_range"
-                                android:textColor="@color/text_light"
-                                android:textStyle="bold" />
-
-                            <TextView
-                                android:id="@+id/textRange"
-                                style="@style/TextAppearance.AppCompat.Medium"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_marginStart="5dp"
-                                android:text="@{spell.range}" />
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
+                        <TextView
+                            android:id="@+id/textCost"
+                            style="@style/TextAppearance.AppCompat.Medium"
+                            android:layout_width="100dp"
                             android:layout_height="wrap_content"
-                            android:orientation="horizontal">
-
-                            <TextView
-                                android:id="@+id/labelDuration"
-                                style="@style/TextAppearance.AppCompat.Medium"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:labelFor="@+id/textDuration"
-                                android:text="@string/label_duration"
-                                android:textColor="@color/text_light"
-                                android:textStyle="bold" />
-
-                            <TextView
-                                android:id="@+id/textDuration"
-                                style="@style/TextAppearance.AppCompat.Medium"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_marginStart="5dp"
-                                android:text="@{spell.duration}" />
-                        </LinearLayout>
+                            android:layout_marginStart="5dp"
+                            android:text="@{weapon.cost}" />
                     </LinearLayout>
 
                     <LinearLayout
-                        android:layout_width="175dp"
-                        android:layout_height="match_parent"
-                        android:orientation="vertical">
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
 
-                        <CheckBox
-                            android:id="@+id/checkBoxSpellUnlocked"
-                            android:layout_width="match_parent"
+                        <TextView
+                            android:id="@+id/labelProperties"
+                            style="@style/TextAppearance.AppCompat.Medium"
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:buttonTint="@color/spell"
-                            android:checked="@{spell.unlocked}"
-                            android:paddingHorizontal="10dp"
-                            android:text="@string/spell_unlocked"
-                            android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+                            android:text="@string/label_properties"
+                            android:textColor="@color/text_light"
+                            android:textStyle="bold" />
 
-                        <CheckBox
-                            android:id="@+id/checkBoxSpellPrepared"
-                            android:layout_width="match_parent"
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/recyclerProperties"
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:buttonTint="@color/spell"
-                            android:checked="@{spell.prepared}"
-                            android:paddingHorizontal="10dp"
-                            android:text="@string/spell_prepared"
-                            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-                            android:visibility="@{spell.unlocked ? View.VISIBLE : View.GONE}" />
+                            android:orientation="horizontal"
+                            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                            bind:itemCount="3"
+                            bind:listitem="@layout/recycler_list_comma" />
 
-                        <CheckBox
-                            android:id="@+id/checkBoxSpellHighlighted"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:buttonTint="@color/spell"
-                            android:checked="@{spell.highlighted}"
-                            android:paddingHorizontal="10dp"
-                            android:text="@string/spell_highlighted"
-                            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-                            android:visibility="@{spell.unlocked ? View.GONE : View.VISIBLE}" />
                     </LinearLayout>
-
                 </LinearLayout>
 
                 <TextView
@@ -217,33 +171,92 @@
                     android:labelFor="@+id/textDescription"
                     android:text="@string/label_description"
                     android:textColor="@color/text_light"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"
+                    android:visibility="@{TextUtils.isEmpty(weapon.description) ? View.GONE : View.VISIBLE}" />
 
                 <TextView
                     android:id="@+id/textDescription"
                     style="@style/TextAppearance.AppCompat.Medium"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@{spell.description}" />
+                    android:text="@{weapon.description}"
+                    android:visibility="@{TextUtils.isEmpty(weapon.description) ? View.GONE : View.VISIBLE}" />
 
-                <TextView
-                    android:id="@+id/labelHigherLevels"
-                    style="@style/TextAppearance.AppCompat.Medium"
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"
+                    android:layout_marginTop="5dp"
+                    android:background="@color/divider" />
+
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:labelFor="@+id/textHigherLevels"
-                    android:text="@string/label_higher_levels"
-                    android:textColor="@color/text_light"
-                    android:textStyle="bold"
-                    android:visibility="@{TextUtils.isEmpty(spell.higherLevels) ? View.GONE : View.VISIBLE}" />
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
 
-                <TextView
-                    android:id="@+id/textHigherLevels"
-                    style="@style/TextAppearance.AppCompat.Medium"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:visibility="@{TextUtils.isEmpty(spell.higherLevels) ? View.GONE : View.VISIBLE}"
-                    android:text="@{spell.higherLevels}" />
+                    <TextView
+                        android:id="@+id/labelAttackTest"
+                        style="@style/TextAppearance.AppCompat.Medium"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:labelFor="@+id/textAttackTest"
+                        android:text="@string/label_attack_test"
+                        android:textColor="@color/text_light"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/textAttackTest"
+                        style="@style/TextAppearance.AppCompat.Medium"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="5dp"
+                        android:text="@{@string/text_attack_test(ability.getName(context, weapon.test), weapon.modifier)}" />
+
+                    <ImageView
+                        android:id="@+id/buttonRollAttack"
+                        android:layout_width="35dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="5dp"
+                        android:adjustViewBounds="true"
+                        android:contentDescription="@string/roll_attack"
+                        android:padding="5dp"
+                        android:scaleType="fitCenter"
+                        android:src="@drawable/die" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal"
+                    android:visibility="@{!TextUtils.isEmpty(weapon.damage) || !TextUtils.isEmpty(weapon.twoHandedDamage) ? View.VISIBLE : View.GONE}">
+
+                    <include
+                        layout="@layout/element_weapon_damage"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:visibility="@{TextUtils.isEmpty(weapon.damage) ? View.GONE : View.VISIBLE}"
+                        bind:attackType="@{@string/label_attack_normal}"
+                        bind:damage="@{weapon.damage}"
+                        bind:damageType="@{weapon.damageType}" />
+
+                    <View
+                        android:layout_width="2dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginHorizontal="10dp"
+                        android:background="@color/divider"
+                        android:visibility="@{TextUtils.isEmpty(weapon.twoHandedDamage) ? View.GONE : View.VISIBLE}" />
+
+                    <include
+                        layout="@layout/element_weapon_damage"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:visibility="@{TextUtils.isEmpty(weapon.twoHandedDamage) ? View.GONE : View.VISIBLE}"
+                        bind:attackType="@{@string/label_attack_two_handed}"
+                        bind:damage="@{weapon.twoHandedDamage}"
+                        bind:damageType="@{weapon.twoHandedDamageType}" />
+                </LinearLayout>
+
             </LinearLayout>
         </ScrollView>
 

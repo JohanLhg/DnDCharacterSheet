@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_margin="2dp">
+
+    <data>
+        <variable
+            name="markwon"
+            type="io.noties.markwon.Markwon" />
+        <variable
+            name="property"
+            type="com.jlahougue.dndcharactersheet.dal.entities.Property" />
+    </data>
+
+    <LinearLayout
+        android:id="@+id/layoutPropertyDetails"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/spell"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/titlePropertyDetails"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingHorizontal="10dp"
+            android:paddingVertical="5dp"
+            android:text="@{property.name}"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            android:textColor="@color/white"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/textDescription"
+            style="@style/TextAppearance.AppCompat.Medium"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="3dp"
+            android:layout_marginBottom="3dp"
+            android:background="@color/white"
+            android:padding="5dp"
+            android:text="@{markwon.toMarkdown(property.description)}" />
+    </LinearLayout>
+</layout>

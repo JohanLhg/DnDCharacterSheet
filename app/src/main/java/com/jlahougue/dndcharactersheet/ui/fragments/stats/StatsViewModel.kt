@@ -20,8 +20,8 @@ import kotlin.concurrent.thread
 class StatsViewModel(application: Application) : AndroidViewModel(application) {
 
     companion object {
-        const val CURRENT = 0
-        const val TEMPORARY = 1
+        val CURRENT = 0
+        val TEMPORARY = 1
     }
 
     private val characterRepository = CharacterRepository(application)
@@ -86,6 +86,7 @@ class StatsViewModel(application: Application) : AndroidViewModel(application) {
 
     fun updateDeathSaves(deathSaves: DeathSaves) {
         thread {
+            this.deathSaves.postValue(deathSaves)
             deathSavesRepository.update(deathSaves)
         }
     }

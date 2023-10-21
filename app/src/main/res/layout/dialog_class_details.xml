@@ -1,0 +1,273 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <data>
+        <import type="android.view.View"/>
+        <import type="android.text.TextUtils"/>
+        <variable
+            name="context"
+            type="android.content.Context" />
+        <variable
+            name="markwon"
+            type="io.noties.markwon.Markwon" />
+        <variable
+            name="ability"
+            type="com.jlahougue.dndcharactersheet.dal.repositories.AbilityRepository.Companion" />
+        <variable
+            name="clazz"
+            type="com.jlahougue.dndcharactersheet.dal.entities.Class" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingHorizontal="150dp"
+            android:paddingVertical="100dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <LinearLayout
+                android:id="@+id/layoutWeaponDetails"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@color/spell"
+                android:clickable="true"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/titleWeaponDetails"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingHorizontal="10dp"
+                    android:paddingVertical="5dp"
+                    android:text="@{clazz.name}"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                    android:textColor="@color/white"
+                    android:textStyle="bold" />
+
+                <ScrollView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="3dp"
+                        android:layout_marginBottom="3dp"
+                        android:background="@color/white"
+                        android:orientation="vertical"
+                        android:padding="5dp">
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:id="@+id/labelHitDice"
+                                style="@style/TextAppearance.AppCompat.Medium"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:labelFor="@+id/textHitDice"
+                                android:text="@string/label_hit_dice"
+                                android:textColor="@color/text_light"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:id="@+id/textHitDice"
+                                style="@style/TextAppearance.AppCompat.Medium"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="5dp"
+                                android:text="@{String.valueOf(clazz.hitDice)}" />
+                        </LinearLayout>
+
+                        <TextView
+                            android:id="@+id/labelEquipment"
+                            style="@style/TextAppearance.AppCompat.Medium"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:labelFor="@+id/textEquipment"
+                            android:text="@string/label_equipment"
+                            android:textColor="@color/text_light"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/textEquipment"
+                            style="@style/TextAppearance.AppCompat.Medium"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@{markwon.toMarkdown(String.valueOf(clazz.equipment))}" />
+
+                        <TextView
+                            android:id="@+id/labelProficiencies"
+                            style="@style/TextAppearance.AppCompat.Medium"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/label_proficiencies"
+                            android:textColor="@color/text_light"
+                            android:textStyle="bold" />
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:id="@+id/labelProficiencySavingThrows"
+                                style="@style/TextAppearance.AppCompat.Medium"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:labelFor="@+id/textProficiencySavingThrows"
+                                android:text="@string/label_saving_throws"
+                                android:textColor="@color/text_light"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:id="@+id/textProficiencySavingThrows"
+                                style="@style/TextAppearance.AppCompat.Medium"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="5dp"
+                                android:text="@{clazz.profSavingThrows}" />
+                        </LinearLayout>
+
+                        <TextView
+                            android:id="@+id/labelProficiencySkills"
+                            style="@style/TextAppearance.AppCompat.Medium"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:labelFor="@+id/textProficiencySkills"
+                            android:text="@string/label_skills"
+                            android:textColor="@color/text_light"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/textProficiencySkills"
+                            style="@style/TextAppearance.AppCompat.Medium"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@{clazz.profSkills}" />
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:id="@+id/labelProficiencyArmor"
+                                style="@style/TextAppearance.AppCompat.Medium"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:labelFor="@+id/textProficiencyArmor"
+                                android:text="@string/label_armor"
+                                android:textColor="@color/text_light"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:id="@+id/textProficiencyArmor"
+                                style="@style/TextAppearance.AppCompat.Medium"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="5dp"
+                                android:text="@{clazz.profArmor}" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:id="@+id/labelProficiencyWeapon"
+                                style="@style/TextAppearance.AppCompat.Medium"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:labelFor="@+id/textProficiencyWeapon"
+                                android:text="@string/label_weapons"
+                                android:textColor="@color/text_light"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:id="@+id/textProficiencyWeapon"
+                                style="@style/TextAppearance.AppCompat.Medium"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="5dp"
+                                android:text="@{clazz.profWeapons}" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:id="@+id/labelProficiencyTools"
+                                style="@style/TextAppearance.AppCompat.Medium"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:labelFor="@+id/textProficiencyTools"
+                                android:text="@string/label_tools"
+                                android:textColor="@color/text_light"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:id="@+id/textProficiencyTools"
+                                style="@style/TextAppearance.AppCompat.Medium"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="5dp"
+                                android:text="@{clazz.profTools}" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:visibility="@{clazz.spellcaster ? View.VISIBLE : View.GONE}">
+
+                            <TextView
+                                android:id="@+id/textSpellcaster"
+                                style="@style/TextAppearance.AppCompat.Medium"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@{@string/text_spellcaster(clazz.name)}" />
+
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:gravity="center_vertical"
+                                android:orientation="horizontal">
+
+                                <TextView
+                                    android:id="@+id/labelSpellcastingAbility"
+                                    style="@style/TextAppearance.AppCompat.Medium"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:labelFor="@+id/textSpellcastingAbility"
+                                    android:text="@string/label_class_spellcasting_ability"
+                                    android:textColor="@color/text_light"
+                                    android:textStyle="bold" />
+
+                                <TextView
+                                    android:id="@+id/textSpellcastingAbility"
+                                    style="@style/TextAppearance.AppCompat.Medium"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginStart="5dp"
+                                    android:text="@{ability.getName(context, clazz.spellcastingAbility)}" />
+                            </LinearLayout>
+                        </LinearLayout>
+                    </LinearLayout>
+                </ScrollView>
+            </LinearLayout>
+        </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

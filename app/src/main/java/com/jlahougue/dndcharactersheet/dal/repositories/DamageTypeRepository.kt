@@ -9,9 +9,19 @@ class DamageTypeRepository(application: Application) {
     private val roomDao = DnDDatabase.getInstance(application).damageTypeDao()
     private val apiDao = DamageTypeDao()
 
-    fun fetchAll(setProgress: (Int, Int) -> Unit, callback: () -> Unit) {
+    fun fetchAll(
+        progressKey: Int,
+        setProgressMax: (Int, Int) -> Unit,
+        updateProgress: (Int) -> Unit
+    ) {
         val names = roomDao.getNames()
-        apiDao.fetchDamageTypes(names, this::saveDamageType, setProgress, callback)
+        apiDao.fetchDamageTypes(
+            names,
+            this::saveDamageType,
+            progressKey,
+            setProgressMax,
+            updateProgress
+        )
     }
 
     private fun saveDamageType(damageType: DamageType) = roomDao.insert(damageType)

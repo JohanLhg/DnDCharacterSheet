@@ -4,18 +4,19 @@
     android:layout_width="400dp"
     android:layout_height="match_parent"
     android:background="@color/transparent_white"
+    android:clickable="true"
     android:orientation="vertical">
 
     <ImageView
         android:id="@+id/imageLogo"
         android:layout_width="match_parent"
-        android:layout_height="160dp"
+        android:layout_height="140dp"
         android:background="@color/white"
         android:elevation="10dp"
+        android:importantForAccessibility="no"
         android:padding="30dp"
         android:scaleType="fitCenter"
-        app:srcCompat="@drawable/die"
-        android:importantForAccessibility="no" />
+        app:srcCompat="@drawable/die" />
 
     <TextView
         android:id="@+id/titleLanguage"
@@ -44,10 +45,10 @@
             android:layout_marginBottom="15dp"
             android:layout_weight="1"
             android:adjustViewBounds="true"
+            android:contentDescription="@string/en"
             android:elevation="5dp"
             android:scaleType="fitCenter"
-            app:srcCompat="@drawable/flag_us"
-            android:contentDescription="@string/en" />
+            app:srcCompat="@drawable/flag_us" />
 
         <ImageView
             android:id="@+id/imageFR"
@@ -59,10 +60,10 @@
             android:layout_marginBottom="15dp"
             android:layout_weight="1"
             android:adjustViewBounds="true"
+            android:contentDescription="@string/fr"
             android:elevation="5dp"
             android:scaleType="fitCenter"
-            app:srcCompat="@drawable/flag_fr"
-            android:contentDescription="@string/fr" />
+            app:srcCompat="@drawable/flag_fr" />
     </LinearLayout>
 
     <TextView
@@ -112,6 +113,22 @@
         android:insetRight="6dp"
         android:text="@string/sign_out"
         app:icon="@drawable/signout"
+        app:iconPadding="5dp"
+        app:iconSize="20dp"
+        app:strokeColor="@color/purple_500" />
+
+    <Button
+        android:id="@+id/buttonSaveToRemote"
+        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:backgroundTint="@color/white"
+        android:elevation="2dp"
+        android:insetLeft="6dp"
+        android:insetRight="6dp"
+        android:text="@string/save_to_remote"
+        app:icon="@drawable/danger"
         app:iconPadding="5dp"
         app:iconSize="20dp"
         app:strokeColor="@color/purple_500" />

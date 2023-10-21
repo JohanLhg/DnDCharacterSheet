@@ -19,6 +19,6 @@ interface PropertyDao {
     @Delete
     fun delete(property: Property)
 
-    @Query("SELECT name FROM property")
+    @Query("SELECT property_name FROM property")
     fun getNames(): List<String>
 }
