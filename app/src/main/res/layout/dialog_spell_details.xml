@@ -89,7 +89,7 @@
 
                         <LinearLayout
                             android:layout_width="match_parent"
-                            android:layout_height="match_parent"
+                            android:layout_height="wrap_content"
                             android:baselineAligned="false"
                             android:orientation="horizontal">
 
@@ -281,14 +281,14 @@
                             </LinearLayout>
 
                             <LinearLayout
-                                android:layout_width="175dp"
-                                android:layout_height="match_parent"
+                                android:layout_width="200dp"
+                                android:layout_height="wrap_content"
                                 android:orientation="vertical">
 
                                 <CheckBox
                                     android:id="@+id/checkBoxSpellUnlocked"
                                     android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
+                                    android:layout_height="40dp"
                                     android:buttonTint="@color/spell"
                                     android:checked="@{spell.unlocked}"
                                     android:paddingHorizontal="10dp"
@@ -298,18 +298,29 @@
                                 <CheckBox
                                     android:id="@+id/checkBoxSpellPrepared"
                                     android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
+                                    android:layout_height="40dp"
                                     android:buttonTint="@color/spell"
                                     android:checked="@{spell.prepared}"
                                     android:paddingHorizontal="10dp"
                                     android:text="@string/spell_prepared"
                                     android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-                                    android:visibility="@{spell.unlocked ? View.VISIBLE : View.GONE}" />
+                                    android:visibility="@{spell.unlocked &amp;&amp; spell.level != 0 ? View.VISIBLE : View.GONE}" />
+
+                                <CheckBox
+                                    android:id="@+id/checkBoxSpellAlwaysPrepared"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="40dp"
+                                    android:buttonTint="@color/spell"
+                                    android:checked="@{spell.alwaysPrepared}"
+                                    android:paddingHorizontal="10dp"
+                                    android:text="@string/spell_always_prepared"
+                                    android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                                    android:visibility="@{spell.unlocked &amp;&amp; spell.level != 0 ? View.VISIBLE : View.GONE}" />
 
                                 <CheckBox
                                     android:id="@+id/checkBoxSpellHighlighted"
                                     android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
+                                    android:layout_height="40dp"
                                     android:buttonTint="@color/spell"
                                     android:checked="@{spell.highlighted}"
                                     android:paddingHorizontal="10dp"

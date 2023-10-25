@@ -30,7 +30,8 @@
         <View
             android:layout_width="2dp"
             android:layout_height="match_parent"
-            android:layout_margin="10dp"
+            android:layout_marginVertical="10dp"
+            android:layout_marginEnd="10dp"
             android:background="?android:attr/listDivider" />
 
         <LinearLayout
@@ -72,42 +73,16 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/layoutSkillsSearch"
+                <include
+                    android:id="@+id/includeSkillsSearch"
+                    layout="@layout/element_searchbar"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="5dp"
                     android:layout_marginEnd="5dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/labelSkills">
-
-                    <EditText
-                        android:id="@+id/editSkillsSearch"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:ems="10"
-                        android:hint="@string/hint_search"
-                        android:inputType="text"
-                        android:textAppearance="@style/TextAppearance.AppCompat.Small"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
-
-                    <ImageView
-                        android:id="@+id/imageSkillsSearch"
-                        android:layout_width="wrap_content"
-                        android:layout_height="0dp"
-                        android:adjustViewBounds="true"
-                        android:contentDescription="@string/button_search"
-                        android:padding="12dp"
-                        android:scaleType="fitCenter"
-                        android:src="@drawable/search"
-                        app:layout_constraintBottom_toBottomOf="@+id/editSkillsSearch"
-                        app:layout_constraintEnd_toEndOf="@+id/editSkillsSearch"
-                        app:layout_constraintTop_toTopOf="@+id/editSkillsSearch" />
-                </androidx.constraintlayout.widget.ConstraintLayout>
+                    app:layout_constraintTop_toBottomOf="@+id/labelSkills" />
 
                 <ScrollView
                     android:id="@+id/scrollSkills"
@@ -120,7 +95,7 @@
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="@id/frameSkills"
                     app:layout_constraintStart_toStartOf="@id/frameSkills"
-                    app:layout_constraintTop_toBottomOf="@id/layoutSkillsSearch"
+                    app:layout_constraintTop_toBottomOf="@id/includeSkillsSearch"
                     app:layout_constraintVertical_bias="0.0">
 
                 <androidx.recyclerview.widget.RecyclerView

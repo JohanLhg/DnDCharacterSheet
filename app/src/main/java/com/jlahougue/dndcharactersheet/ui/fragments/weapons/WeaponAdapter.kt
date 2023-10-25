@@ -9,7 +9,7 @@ import com.jlahougue.dndcharactersheet.databinding.RecyclerWeaponBinding
 class WeaponAdapter(private val listener: WeaponListener) : RecyclerView.Adapter<WeaponAdapter.ViewHolder>() {
 
     interface WeaponListener {
-        fun onWeaponClicked(weapon: WeaponView)
+        fun onWeaponClicked(weapon: String)
     }
 
     class ViewHolder(val bind: RecyclerWeaponBinding) : RecyclerView.ViewHolder(bind.root)
@@ -32,7 +32,7 @@ class WeaponAdapter(private val listener: WeaponListener) : RecyclerView.Adapter
         holder.bind.weapon = weapon
 
         holder.bind.layoutWeapon.setOnClickListener {
-            listener.onWeaponClicked(weapons[holder.adapterPosition])
+            listener.onWeaponClicked(weapons[holder.adapterPosition].name)
         }
     }
 }

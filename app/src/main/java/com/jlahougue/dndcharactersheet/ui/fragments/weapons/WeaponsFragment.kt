@@ -8,13 +8,20 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.jlahougue.dndcharactersheet.dal.entities.Property
 import com.jlahougue.dndcharactersheet.dal.entities.displayClasses.WeaponDetail
-import com.jlahougue.dndcharactersheet.dal.entities.views.WeaponView
 import com.jlahougue.dndcharactersheet.databinding.FragmentWeaponsBinding
 import com.jlahougue.dndcharactersheet.extensions.observeNonNull
 import com.jlahougue.dndcharactersheet.extensions.observeOnce
+import com.jlahougue.dndcharactersheet.ui.fragments.weapons.addDialog.DialogAddWeapon
+import com.jlahougue.dndcharactersheet.ui.fragments.weapons.addDialog.WeaponNameAdapter
+import com.jlahougue.dndcharactersheet.ui.fragments.weapons.details.DialogPropertyDetails
+import com.jlahougue.dndcharactersheet.ui.fragments.weapons.details.DialogWeaponDetails
 import com.jlahougue.dndcharactersheet.ui.main.MainActivity
 
-class WeaponsFragment : Fragment(), WeaponAdapter.WeaponListener, DialogWeaponDetails.DialogWeaponDetailsListener {
+class WeaponsFragment : Fragment(),
+    WeaponAdapter.WeaponListener,
+    DialogWeaponDetails.DialogWeaponDetailsListener,
+    DialogAddWeapon.DialogAddWeaponListener,
+    WeaponNameAdapter.WeaponNameListener {
 
     private var _binding: FragmentWeaponsBinding? = null
 
@@ -37,11 +44,24 @@ class WeaponsFragment : Fragment(), WeaponAdapter.WeaponListener, DialogWeaponDe
     ): View {
         _binding = FragmentWeaponsBinding.inflate(inflater, container, false)
 
+        binding.lifecycleOwner = viewLifecycleOwner
+
+        binding.buttonAddWeapon.setOnClickListener {
+            weaponsViewModel.getNotOwnedWeapons {
+                val dialog = DialogAddWeapon(it, this, this)
+                main.runOnUiThread {
+                    dialog.show(parentFragmentManager, DialogAddWeapon.TAG)
+                }
+            }
+        }
+
         val weaponAdapter = WeaponAdapter(this)
         binding.recyclerWeapons.adapter = weaponAdapter
 
         main.mainViewModel.characterID.observeOnce(viewLifecycleOwner) {
             weaponsViewModel.characterID = it
+
+            binding.viewModel = weaponsViewModel
 
             weaponsViewModel.weapons.observeNonNull(viewLifecycleOwner) { weapons ->
                 weaponAdapter.weapons = weapons
@@ -56,11 +76,11 @@ class WeaponsFragment : Fragment(), WeaponAdapter.WeaponListener, DialogWeaponDe
         _binding = null
     }
 
-    override fun onWeaponClicked(weapon: WeaponView) {
-        weaponsViewModel.getWeapon(weapon.name, this::openWeaponDetailsDialog)
+    override fun onWeaponClicked(weapon: String) {
+        weaponsViewModel.getWeapon(weapon, this::openWeaponDetails)
     }
 
-    private fun openWeaponDetailsDialog(weapon: WeaponDetail) {
+    private fun openWeaponDetails(weapon: WeaponDetail) {
         val dialog = DialogWeaponDetails(weapon, this)
         main.runOnUiThread {
             dialog.show(parentFragmentManager, DialogWeaponDetails.TAG)
@@ -71,10 +91,14 @@ class WeaponsFragment : Fragment(), WeaponAdapter.WeaponListener, DialogWeaponDe
         weaponsViewModel.updateCharacterWeapon(weapon)
     }
 
-    override fun onWeaponPropertyClicked(property: Property) {
+    override fun openWeaponPropertyDetails(property: Property) {
         val dialog = DialogPropertyDetails(property)
         main.runOnUiThread {
             dialog.show(parentFragmentManager, DialogPropertyDetails.TAG)
         }
+    }
+
+    override fun addWeapons(weaponCounts: Map<String, Int>) {
+        weaponsViewModel.addWeapons(weaponCounts)
     }
 }

@@ -20,5 +20,15 @@ class CharacterWeaponRepository(application: Application) {
 
     fun getWeapon(characterID: Long, name: String) = roomDao.getWeapon(characterID, name)
 
+    fun getNotOwned(characterID: Long) = roomDao.getNotOwned(characterID)
+
     fun getMap(characterID: Long) = roomDao.getMap(characterID)
+
+    fun addWeapons(characterID: Long, weaponCounts: Map<String, Int>) {
+        val weapons = listOf<CharacterWeapon>()
+        for ((weaponName, count) in weaponCounts) {
+            weapons.plus(CharacterWeapon(characterID, weaponName, count))
+        }
+        roomDao.insert(weapons)
+    }
 }

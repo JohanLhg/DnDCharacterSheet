@@ -17,22 +17,10 @@ class SpellAdapter(private val spellListener: SpellListener) : RecyclerView.Adap
     var spells = listOf<SpellWithCharacterInfo>()
         set(value) {
             field = value
-            filteredSpells = value.filter { it.name.contains(search, true) }
+            notifyDataSetChanged()
         }
 
     var editMode = false
-
-    var search = ""
-        set(value) {
-            field = value
-            filteredSpells = spells.filter { it.name.contains(search, true) }
-        }
-
-    private var filteredSpells = listOf<SpellWithCharacterInfo>()
-        set(value) {
-            field = value
-            notifyDataSetChanged()
-        }
 
     class ViewHolder(val bind: RecyclerSpellBinding) : RecyclerView.ViewHolder(bind.root)
 
@@ -40,16 +28,16 @@ class SpellAdapter(private val spellListener: SpellListener) : RecyclerView.Adap
         return ViewHolder(RecyclerSpellBinding.inflate(LayoutInflater.from(parent.context), parent, false))
     }
 
-    override fun getItemCount() = filteredSpells.size
+    override fun getItemCount() = spells.size
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val spell = filteredSpells[position]
+        val spell = spells[position]
 
         holder.bind.spell = spell
         holder.bind.editMode = editMode
 
         holder.bind.layoutSpell.setOnClickListener {
-            spellListener.onSpellClick(filteredSpells[holder.adapterPosition])
+            spellListener.onSpellClick(spells[holder.adapterPosition])
         }
 
         holder.bind.checkBoxSpellUnlocked.setOnCheckedChangeListener { _, isChecked ->
@@ -59,6 +47,7 @@ class SpellAdapter(private val spellListener: SpellListener) : RecyclerView.Adap
 
         holder.bind.checkBoxSpellPrepared.setOnCheckedChangeListener { _, isChecked ->
             spell.prepared = isChecked
+            holder.bind.spell = spell
             spellListener.updateCharacterSpell(spell.getCharacterSpell())
         }
 

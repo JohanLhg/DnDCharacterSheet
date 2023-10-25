@@ -16,6 +16,8 @@ class CharacterSpell(
     var unlocked: Boolean = false,
     @ColumnInfo(name = CHARACTER_SPELL_PREPARED)
     var prepared: Boolean = false,
+    @ColumnInfo(name = CHARACTER_SPELL_ALWAYS_PREPARED)
+    var alwaysPrepared: Boolean = false,
     @ColumnInfo(name = CHARACTER_SPELL_HIGHLIGHTED)
     var highlighted: Boolean = false
 ) {
@@ -25,6 +27,7 @@ class CharacterSpell(
         const val CHARACTER_SPELL_NAME = "spell_name"
         const val CHARACTER_SPELL_UNLOCKED = "unlocked"
         const val CHARACTER_SPELL_PREPARED = "prepared"
+        const val CHARACTER_SPELL_ALWAYS_PREPARED = "always_prepared"
         const val CHARACTER_SPELL_HIGHLIGHTED = "highlighted"
     }
 }

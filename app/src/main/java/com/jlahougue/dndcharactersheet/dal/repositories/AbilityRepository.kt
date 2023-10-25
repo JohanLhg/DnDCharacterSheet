@@ -44,7 +44,10 @@ class AbilityRepository(application: Application) {
     }
 
     fun get(characterID: Long) = roomDao.get(characterID)
+
     fun getMap(characterID: Long) = roomDao.getMap(characterID)
+
+    fun getAttackStats(characterID: Long) = roomDao.getAttackStats(characterID)
 
     companion object {
         const val STRENGTH = "STR"

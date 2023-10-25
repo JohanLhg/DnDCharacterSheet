@@ -23,7 +23,7 @@ class ClassRepository(application: Application) {
         val names = roomDao.getNames()
         apiDao.fetchClasses(
             names,
-            this::saveClass,
+            this::save,
             this::fetchLevels,
             progressKey,
             setProgressMax,
@@ -32,12 +32,14 @@ class ClassRepository(application: Application) {
     }
 
     private fun fetchLevels(clazz: String) {
-        apiLevelDao.fetchClassLevels(clazz, this::saveClassLevel, this::saveClassSpellSlot)
+        apiLevelDao.fetchClassLevels(clazz, this::saveLevel, this::saveSpellSlot)
     }
 
-    private fun saveClass(clazz: Class) = roomDao.insert(clazz)
+    private fun save(clazz: Class) = roomDao.insert(clazz)
 
-    private fun saveClassLevel(classLevel: ClassLevel) = roomLevelDao.insert(classLevel)
+    private fun saveLevel(classLevel: ClassLevel) = roomLevelDao.insert(classLevel)
 
-    private fun saveClassSpellSlot(classSpellSlot: ClassSpellSlot) = roomSpellSlotDao.insert(classSpellSlot)
+    private fun saveSpellSlot(classSpellSlot: ClassSpellSlot) = roomSpellSlotDao.insert(classSpellSlot)
+
+    fun getNames() = roomDao.getNames()
 }

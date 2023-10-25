@@ -1,4 +1,4 @@
-package com.jlahougue.dndcharactersheet.ui.fragments.weapons
+package com.jlahougue.dndcharactersheet.ui.fragments.weapons.details
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -17,7 +17,7 @@ class DialogWeaponDetails(
 
     interface DialogWeaponDetailsListener {
         fun updateCharacterWeapon(weapon: WeaponDetail)
-        fun onWeaponPropertyClicked(property: Property)
+        fun openWeaponPropertyDetails(property: Property)
     }
 
     companion object {
@@ -60,6 +60,6 @@ class DialogWeaponDetails(
     }
 
     override fun onPropertyClicked(property: Property) {
-        listener.onWeaponPropertyClicked(property)
+        listener.openWeaponPropertyDetails(property)
     }
 }

@@ -1,4 +1,4 @@
-package com.jlahougue.dndcharactersheet.ui.fragments.spells
+package com.jlahougue.dndcharactersheet.ui.fragments.spells.spellDetails
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -60,7 +60,12 @@ class DialogSpellDetails(
         }
 
         dialogBinding.checkBoxSpellPrepared.setOnCheckedChangeListener { _, isChecked ->
-            spell.prepared = isChecked
+            spell.setPrepared(isChecked)
+            updateSpell()
+        }
+
+        dialogBinding.checkBoxSpellAlwaysPrepared.setOnCheckedChangeListener { _, isChecked ->
+            spell.setAlwaysPrepared(isChecked)
             updateSpell()
         }
 

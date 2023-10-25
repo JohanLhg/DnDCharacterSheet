@@ -19,13 +19,16 @@ interface CharacterWeaponDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(characterWeapon: CharacterWeapon)
 
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun insert(characterWeapons: List<CharacterWeapon>)
+
     @Update
     fun update(characterWeapon: CharacterWeapon)
 
     @Delete
     fun delete(characterWeapon: CharacterWeapon)
 
-    @Query("SELECT * FROM weapon_view WHERE cid = :characterID")
+    @Query("SELECT * FROM weapon_view WHERE cid = :characterID AND count > 0")
     fun get(characterID: Long): LiveData<List<WeaponView>>
 
     @Transaction
@@ -56,4 +59,16 @@ interface CharacterWeaponDao {
     @MapInfo(keyColumn = CHARACTER_WEAPON_NAME)
     @Query("SELECT * FROM character_weapon WHERE cid = :characterID")
     fun getMap(characterID: Long): Map<String, CharacterWeapon>
+
+    @Query("""
+        SELECT weapon_name
+        FROM weapon
+        WHERE weapon_name NOT IN (
+            SELECT name
+            FROM character_weapon
+            WHERE cid = :characterID
+            AND count > 0
+        )
+    """)
+    fun getNotOwned(characterID: Long): List<String>
 }
