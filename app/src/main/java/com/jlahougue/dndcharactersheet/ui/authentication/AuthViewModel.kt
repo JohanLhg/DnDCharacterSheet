@@ -114,9 +114,12 @@ class AuthViewModel(application: Application) : AndroidViewModel(application) {
             currentProgress.postValue(progress[key])
         }
 
-        if (progressValue == progressMax[key]) {
+        if (progress[key] == progressMax[key]) {
             waitingFor.postValue(waitingFor.value!!.filter { it != key })
         }
+
+        println("Still waiting for :")
+        waitingFor.value!!.forEach { println("$it : ${progress[it]} / ${progressMax[it]}}") }
     }
 
     fun getLanguage(callback: (String) -> Unit) {

@@ -10,8 +10,13 @@ class CharacterSpellRepository(application: Application) {
     private val firebaseDao = CharacterSpellDao()
 
     fun update(characterSpell: CharacterSpell) {
-        if (!characterSpell.unlocked) characterSpell.prepared = false
+        if (!characterSpell.unlocked) {
+            characterSpell.prepared = false
+            characterSpell.alwaysPrepared = false
+        }
         else characterSpell.highlighted = false
+        if (characterSpell.prepared) characterSpell.alwaysPrepared = false
+        if (characterSpell.alwaysPrepared) characterSpell.prepared = false
         roomDao.insert(characterSpell)
         firebaseDao.insert(characterSpell)
     }

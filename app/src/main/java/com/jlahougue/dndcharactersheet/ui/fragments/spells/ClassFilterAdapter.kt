@@ -7,6 +7,10 @@ import com.jlahougue.dndcharactersheet.databinding.RecyclerClassFilterBinding
 
 class ClassFilterAdapter(private val listener: ClassFilterListener) : RecyclerView.Adapter<ClassFilterAdapter.ViewHolder>() {
 
+    companion object {
+        const val CHECK_CHANGED = 0
+    }
+
     interface ClassFilterListener {
         fun onFilterChange(filteredClasses: List<String>)
     }
@@ -30,20 +34,36 @@ class ClassFilterAdapter(private val listener: ClassFilterListener) : RecyclerVi
     override fun getItemCount() = classes.size
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val charClass = classes[position]
+        val clazz = classes[position]
 
-        holder.bind.charClass = charClass
-        holder.bind.active = activeClasses.contains(charClass)
+        holder.bind.charClass = clazz
+        holder.bind.active = activeClasses.contains(clazz)
 
         holder.bind.layoutClassFilter.setOnClickListener {
-            if (activeClasses.contains(charClass)) {
-                activeClasses.remove(charClass)
+            if (activeClasses.contains(clazz)) {
+                activeClasses.remove(clazz)
                 holder.bind.active = false
             } else {
-                activeClasses.add(charClass)
+                activeClasses.add(clazz)
                 holder.bind.active = true
             }
             listener.onFilterChange(activeClasses)
         }
+    }
+
+    override fun onBindViewHolder(holder: ViewHolder, position: Int, payloads: MutableList<Any>) {
+        when {
+            payloads.contains(CHECK_CHANGED) -> {
+                val clazz = classes[position]
+                holder.bind.active = activeClasses.contains(clazz)
+            }
+            else -> super.onBindViewHolder(holder, position, payloads)
+        }
+    }
+
+    fun uncheckAll() {
+        activeClasses.clear()
+        notifyItemRangeChanged(0, classes.size, CHECK_CHANGED)
+        listener.onFilterChange(activeClasses)
     }
 }

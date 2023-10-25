@@ -13,6 +13,7 @@ import com.jlahougue.dndcharactersheet.dal.entities.views.AbilityView
 import com.jlahougue.dndcharactersheet.dal.entities.views.SkillView
 import com.jlahougue.dndcharactersheet.databinding.FragmentStatsBinding
 import com.jlahougue.dndcharactersheet.extensions.observeOnce
+import com.jlahougue.dndcharactersheet.ui.elements.SearchBarListener
 import com.jlahougue.dndcharactersheet.ui.fragments.stats.StatsViewModel.Companion.CURRENT
 import com.jlahougue.dndcharactersheet.ui.fragments.stats.StatsViewModel.Companion.TEMPORARY
 import com.jlahougue.dndcharactersheet.ui.main.MainActivity
@@ -94,8 +95,21 @@ class StatsFragment : Fragment(),
     }
 
     private fun initializeSkillsListeners() {
-        binding.editSkillsSearch.addTextChangedListener {
-            skillAdapter.filter(it.toString())
+        binding.includeSkillsSearch.apply {
+            accentColor = main.getColor(R.color.spell)
+
+            listener = object : SearchBarListener {
+                override fun focusOnSearch() { editSearch.requestFocus() }
+                override fun clearSearch() { editSearch.text.clear() }
+            }
+
+            editSearch.addTextChangedListener {
+                skillAdapter.filter(it.toString())
+            }
+
+            editSearch.onFocusChangeListener = View.OnFocusChangeListener { _, hasFocus ->
+                focused = hasFocus
+            }
         }
     }
 

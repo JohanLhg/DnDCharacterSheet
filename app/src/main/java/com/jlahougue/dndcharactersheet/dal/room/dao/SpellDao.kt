@@ -49,7 +49,8 @@ interface SpellDao {
             :characterID AS cid,
             spell.*, 
             my_character_spell.unlocked, 
-            my_character_spell.prepared, 
+            my_character_spell.prepared,
+            my_character_spell.always_prepared,
             my_character_spell.highlighted
         FROM spell
         INNER JOIN spell_class ON spell.spell_name = spell_class.spell_name
@@ -72,6 +73,7 @@ interface SpellDao {
             spell.*, 
             my_character_spell.unlocked, 
             my_character_spell.prepared, 
+            my_character_spell.always_prepared,
             my_character_spell.highlighted
         FROM spell
         INNER JOIN spell_class ON spell.spell_name = spell_class.spell_name
@@ -88,6 +90,7 @@ interface SpellDao {
             spell.*, 
             character_spell.unlocked, 
             character_spell.prepared, 
+            character_spell.always_prepared,
             character_spell.highlighted
         FROM spell 
         INNER JOIN character_spell ON spell.spell_name = character_spell.spell_name
@@ -103,6 +106,7 @@ interface SpellDao {
             spell.*, 
             character_spell.unlocked, 
             character_spell.prepared, 
+            character_spell.always_prepared,
             character_spell.highlighted
         FROM spell 
         INNER JOIN character_spell ON spell.spell_name = character_spell.spell_name

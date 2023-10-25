@@ -59,7 +59,7 @@
                 android:layout_marginBottom="5dp"
                 android:layout_weight="1"
                 android:text="@{spell.name}"
-                android:textColor="@{spell.highlighted ? @color/highlight : @color/text}" />
+                android:textColor="@{spell.highlighted || (!editMode  &amp;&amp; (spell.alwaysPrepared || spell.prepared)) ? @color/highlight : @color/text}" />
 
             <ImageView
                 android:id="@+id/buttonCast"

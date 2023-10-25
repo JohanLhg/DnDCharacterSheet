@@ -406,55 +406,53 @@
                 android:gravity="center_vertical"
                 android:orientation="horizontal">
 
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/layoutSpellsSearch"
+                <FrameLayout
                     android:layout_width="250dp"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="5dp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/labelSkills">
+                    android:layout_height="match_parent"
+                    android:background="@color/white"
+                    android:elevation="5dp">
 
-                    <EditText
-                        android:id="@+id/editSpellsSearch"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:ems="10"
-                        android:hint="@string/hint_search"
-                        android:inputType="text"
-                        android:textAppearance="@style/TextAppearance.AppCompat.Small"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
-
-                    <ImageView
-                        android:id="@+id/imageSpellsSearch"
-                        android:layout_width="wrap_content"
-                        android:layout_height="0dp"
-                        android:adjustViewBounds="true"
-                        android:contentDescription="@string/button_search"
-                        android:padding="12dp"
-                        android:scaleType="fitCenter"
-                        android:src="@drawable/search"
-                        app:layout_constraintBottom_toBottomOf="@+id/editSpellsSearch"
-                        app:layout_constraintEnd_toEndOf="@+id/editSpellsSearch"
-                        app:layout_constraintTop_toTopOf="@+id/editSpellsSearch" />
-                </androidx.constraintlayout.widget.ConstraintLayout>
+                    <include
+                        android:id="@+id/includeSpellsSearch"
+                        layout="@layout/element_searchbar"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" />
+                </FrameLayout>
 
                 <androidx.recyclerview.widget.RecyclerView
-                    android:layout_width="match_parent"
+                    android:id="@+id/recyclerClassFilter"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_weight="1"
                     android:orientation="horizontal"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     tools:listitem="@layout/recycler_class_filter" />
 
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:background="@color/white"
+                    android:elevation="5dp"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:id="@+id/buttonUncheckAll"
+                        android:layout_width="50dp"
+                        android:layout_height="match_parent"
+                        android:adjustViewBounds="true"
+                        android:contentDescription="@string/check_all"
+                        android:paddingHorizontal="10dp"
+                        android:paddingVertical="5dp"
+                        android:scaleType="fitCenter"
+                        android:src="@drawable/close" />
+                </LinearLayout>
             </LinearLayout>
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="2dp"
-                android:background="?android:attr/listDivider" />
+                android:background="?android:attr/listDivider"
+                android:elevation="5dp" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerSpellLevelsFilter"

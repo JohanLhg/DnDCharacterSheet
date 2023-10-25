@@ -9,8 +9,8 @@ import com.jlahougue.dndcharactersheet.dal.entities.displayClasses.SpellWithChar
 import com.jlahougue.dndcharactersheet.dal.entities.views.CharacterSpellStatsView
 import com.jlahougue.dndcharactersheet.dal.entities.views.SpellSlotView
 import com.jlahougue.dndcharactersheet.dal.entities.views.SpellcastingView
-import com.jlahougue.dndcharactersheet.dal.repositories.CharacterRepository
 import com.jlahougue.dndcharactersheet.dal.repositories.CharacterSpellRepository
+import com.jlahougue.dndcharactersheet.dal.repositories.ClassRepository
 import com.jlahougue.dndcharactersheet.dal.repositories.SpellRepository
 import com.jlahougue.dndcharactersheet.dal.repositories.SpellSlotRepository
 import com.jlahougue.dndcharactersheet.dal.repositories.SpellcastingRepository
@@ -18,7 +18,7 @@ import kotlin.concurrent.thread
 
 class SpellsViewModel(application: Application) : AndroidViewModel(application) {
 
-    private val characterRepository = CharacterRepository(application)
+    private val classRepository = ClassRepository(application)
     private val characterSpellRepository = CharacterSpellRepository(application)
     private val spellcastingRepository = SpellcastingRepository(application)
     private val spellSlotRepository = SpellSlotRepository(application)
@@ -26,11 +26,29 @@ class SpellsViewModel(application: Application) : AndroidViewModel(application) 
 
     lateinit var spellcasting: LiveData<SpellcastingView>
     lateinit var characterSpellStats: LiveData<CharacterSpellStatsView>
-    val classes = MutableLiveData<List<String>>(null)
-    val editMode = MutableLiveData(false)
+    val classes = MutableLiveData<List<String>>(listOf())
     val spellLevel = MutableLiveData(0)
     lateinit var spellLevels: LiveData<List<SpellSlotView>>
-    val spells = MutableLiveData<List<SpellWithCharacterInfo>>(null)
+    val spells = MutableLiveData<List<SpellWithCharacterInfo>>(listOf())
+    val filteredSpells = MutableLiveData<List<SpellWithCharacterInfo>>(listOf())
+
+    val editMode = MutableLiveData(false)
+    var classFilter = listOf<String>()
+        set(value) {
+            field = value
+            updateSpellFilters()
+        }
+    var search = ""
+        set(value) {
+            field = value
+            updateSpellFilters()
+        }
+
+    init {
+        thread {
+            classes.postValue(classRepository.getNames())
+        }
+    }
 
     var characterID = 0L
         set(value) {
@@ -38,7 +56,7 @@ class SpellsViewModel(application: Application) : AndroidViewModel(application) 
             spellcasting = spellcastingRepository.get(value)
             characterSpellStats = characterSpellRepository.getCharacterSpellStats(value)
             spellLevels = spellSlotRepository.get(value)
-            updateSpellList()
+            setEditMode(editMode.value!!)
         }
 
     fun setEditMode(editMode: Boolean) {
@@ -56,6 +74,22 @@ class SpellsViewModel(application: Application) : AndroidViewModel(application) 
         thread {
             if (editMode.value!!) spells.postValue(spellRepository.get(characterID, spellLevel.value!!))
             else spells.postValue(spellRepository.getUnlocked(characterID, spellLevel.value!!))
+            updateSpellFilters()
+        }
+    }
+
+    fun updateSpellFilters() {
+        thread {
+            if (classFilter.isEmpty()) {
+                filteredSpells.postValue(spells.value!!.filter { spell ->
+                    spell.name.contains(search, true)
+                })
+                return@thread
+            }
+            filteredSpells.postValue(spells.value!!.filter { spell ->
+                spell.classes.any { clazz -> classFilter.contains(clazz.name) }
+                        && spell.name.contains(search, true)
+            })
         }
     }
 

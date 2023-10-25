@@ -23,6 +23,8 @@
     <string name="empty">-</string>
     <string name="comma">,</string>
     <string name="parenthesis">(%d)</string>
+    <string name="check_all">Check all</string>
+    <string name="uncheck_all">Uncheck all</string>
     <array name="dice">
         <item>d4</item>
         <item>d6</item>
@@ -210,10 +212,14 @@
     <string name="label_classes">Classes :</string>
     <string name="spell_unlocked">Unlocked</string>
     <string name="spell_prepared">Prepared</string>
+    <string name="spell_always_prepared">Always prepared</string>
     <string name="spell_highlighted">Highlighted</string>
 
     <!-- Weapons -->
     <string name="weapons">WEAPONS</string>
+    <string name="label_melee_test">Melee attack test</string>
+    <string name="label_ranged_test">Ranged attack test</string>
+    <string name="add_weapon">Add Weapon</string>
     <string name="roll_attack">Roll for attack</string>
     <string name="label_weapon_count">Count</string>
     <string name="label_weapon_name">Name</string>

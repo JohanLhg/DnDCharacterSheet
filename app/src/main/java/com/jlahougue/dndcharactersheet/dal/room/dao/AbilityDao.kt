@@ -10,7 +10,13 @@ import androidx.room.Query
 import androidx.room.Update
 import com.jlahougue.dndcharactersheet.dal.entities.Ability
 import com.jlahougue.dndcharactersheet.dal.entities.Ability.Companion.ABILITY_NAME
+import com.jlahougue.dndcharactersheet.dal.entities.displayClasses.AttackStats
+import com.jlahougue.dndcharactersheet.dal.entities.displayClasses.AttackStats.Companion.MELEE_MODIFIER
+import com.jlahougue.dndcharactersheet.dal.entities.displayClasses.AttackStats.Companion.PROFICIENCY_BONUS
+import com.jlahougue.dndcharactersheet.dal.entities.displayClasses.AttackStats.Companion.RANGED_MODIFIER
 import com.jlahougue.dndcharactersheet.dal.entities.views.AbilityView
+import com.jlahougue.dndcharactersheet.dal.repositories.AbilityRepository.Companion.DEXTERITY
+import com.jlahougue.dndcharactersheet.dal.repositories.AbilityRepository.Companion.STRENGTH
 
 @Dao
 interface AbilityDao {
@@ -33,4 +39,19 @@ interface AbilityDao {
     @MapInfo(keyColumn = ABILITY_NAME)
     @Query("SELECT * FROM ability WHERE cid = :characterID")
     fun getMap(characterID: Long): Map<String, Ability>
+
+    @Query("""
+        WITH modifiers AS (
+            SELECT * 
+            FROM ability_modifier_view 
+            WHERE cid = :characterID
+        )
+        SELECT 
+            bonus AS $PROFICIENCY_BONUS, 
+            (SELECT modifier FROM ability_modifier_view WHERE name = '$STRENGTH') AS $MELEE_MODIFIER, 
+            (SELECT modifier FROM ability_modifier_view WHERE name = '$DEXTERITY') AS $RANGED_MODIFIER 
+        FROM proficiency_view 
+        WHERE cid = :characterID
+    """)
+    fun getAttackStats(characterID: Long): LiveData<AttackStats>
 }

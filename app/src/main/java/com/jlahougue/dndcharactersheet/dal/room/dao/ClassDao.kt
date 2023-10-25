@@ -22,6 +22,6 @@ interface ClassDao {
     @Query("SELECT * FROM class")
     fun get(): List<Class>
 
-    @Query("SELECT class_name FROM class")
+    @Query("SELECT class_name FROM class WHERE spellcasting_ability != ''")
     fun getNames(): List<String>
 }

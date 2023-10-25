@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <import type="android.text.TextUtils" />
+        <variable
+            name="focused"
+            type="Boolean" />
+        <variable
+            name="search"
+            type="String" />
+        <variable
+            name="listener"
+            type="com.jlahougue.dndcharactersheet.ui.elements.SearchBarListener" />
+        <variable
+            name="accentColor"
+            type="Integer" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/layoutSpellsSearch"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content">
+
+        <EditText
+            android:id="@+id/editSearch"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="@string/hint_search"
+            android:inputType="text"
+            android:paddingStart="5dp"
+            android:paddingEnd="35dp"
+            android:text="@={search}"
+            android:textAppearance="@style/TextAppearance.AppCompat.Small"
+            android:backgroundTint="@{focused ? accentColor : @color/black}"
+            android:textColor="@{focused ? accentColor : @color/black}"
+            android:textCursorDrawable="@null"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/buttonSearch"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:adjustViewBounds="true"
+            android:contentDescription="@string/button_search"
+            android:padding="12dp"
+            android:scaleType="fitCenter"
+            android:src="@{TextUtils.isEmpty(search) ? @drawable/search : @drawable/close}"
+            android:tint="@{focused ? accentColor : @color/black}"
+            android:onClickListener="@{() -> (TextUtils.isEmpty(search) ? listener.focusOnSearch() : listener.clearSearch())}"
+            app:layout_constraintBottom_toBottomOf="@+id/editSearch"
+            app:layout_constraintEnd_toEndOf="@+id/editSearch"
+            app:layout_constraintTop_toTopOf="@+id/editSearch" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

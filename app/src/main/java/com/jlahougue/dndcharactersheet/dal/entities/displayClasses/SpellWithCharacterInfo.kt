@@ -39,8 +39,12 @@ class SpellWithCharacterInfo(
     @JvmField
     @ColumnInfo(name = CharacterSpell.CHARACTER_SPELL_UNLOCKED)
     var unlocked: Boolean = false,
+    @JvmField
     @ColumnInfo(name = CharacterSpell.CHARACTER_SPELL_PREPARED)
     var prepared: Boolean = false,
+    @JvmField
+    @ColumnInfo(name = CharacterSpell.CHARACTER_SPELL_ALWAYS_PREPARED)
+    var alwaysPrepared: Boolean = false,
     @ColumnInfo(name = CharacterSpell.CHARACTER_SPELL_HIGHLIGHTED)
     var highlighted: Boolean = false,
     @Relation(
@@ -58,7 +62,20 @@ class SpellWithCharacterInfo(
     fun setUnlocked(unlocked: Boolean) {
         this.unlocked = unlocked
         if (unlocked) highlighted = false
-        else prepared = false
+        else {
+            prepared = false
+            alwaysPrepared = false
+        }
+    }
+
+    fun setPrepared(prepared: Boolean) {
+        this.prepared = prepared
+        if (prepared) alwaysPrepared = false
+    }
+
+    fun setAlwaysPrepared(alwaysPrepared: Boolean) {
+        this.alwaysPrepared = alwaysPrepared
+        if (alwaysPrepared) prepared = false
     }
 
     fun getCharacterSpell(): CharacterSpell {
@@ -67,6 +84,7 @@ class SpellWithCharacterInfo(
             name,
             unlocked,
             prepared,
+            alwaysPrepared,
             highlighted
         )
     }
@@ -88,8 +106,13 @@ class SpellWithCharacterInfo(
             damageType,
             unlocked,
             prepared,
+            alwaysPrepared,
             highlighted
         )
+    }
+
+    override fun toString(): String {
+        return "$name ($level)"
     }
 
     override fun equals(other: Any?): Boolean {
@@ -110,6 +133,7 @@ class SpellWithCharacterInfo(
                 damageType == other.damageType &&
                 unlocked == other.unlocked &&
                 prepared == other.prepared &&
+                alwaysPrepared == other.alwaysPrepared &&
                 highlighted == other.highlighted
     }
 
@@ -129,6 +153,7 @@ class SpellWithCharacterInfo(
         result = 31 * result + damageType.hashCode()
         result = 31 * result + unlocked.hashCode()
         result = 31 * result + prepared.hashCode()
+        result = 31 * result + alwaysPrepared.hashCode()
         result = 31 * result + highlighted.hashCode()
         return result
     }

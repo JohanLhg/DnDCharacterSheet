@@ -1,4 +1,4 @@
-package com.jlahougue.dndcharactersheet.ui.fragments.weapons
+package com.jlahougue.dndcharactersheet.ui.fragments.weapons.details
 
 import android.view.LayoutInflater
 import android.view.View.GONE
