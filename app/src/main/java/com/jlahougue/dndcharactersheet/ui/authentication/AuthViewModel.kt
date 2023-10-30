@@ -1,6 +1,9 @@
 package com.jlahougue.dndcharactersheet.ui.authentication
 
 import android.app.Application
+import android.content.Context
+import android.net.ConnectivityManager
+import android.net.NetworkCapabilities
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import com.jlahougue.dndcharactersheet.dal.repositories.AuthRepository
@@ -55,7 +58,27 @@ class AuthViewModel(application: Application) : AndroidViewModel(application) {
         authRepository.login(email, password, callback)
     }
 
-    fun load() {
+    private fun isOnline(context: Context): Boolean {
+        val connectivityManager =
+            context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        if (connectivityManager != null) {
+            val capabilities =
+                connectivityManager.getNetworkCapabilities(connectivityManager.activeNetwork)
+            if (capabilities != null) {
+                if (capabilities.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR)) return true
+                if (capabilities.hasTransport(NetworkCapabilities.TRANSPORT_WIFI)) return true
+                if (capabilities.hasTransport(NetworkCapabilities.TRANSPORT_ETHERNET)) return true
+            }
+        }
+        return false
+    }
+
+    fun load(context: Context) {
+        if(!isOnline(context)) {
+            waitingFor.postValue(listOf())
+            return
+        }
+
         thread {
             characterSheetRepository.createCharacterIfNotExists {
                 waitingFor.postValue(waitingFor.value!!.filter { it != SEARCHING_FOR_CHARACTER })

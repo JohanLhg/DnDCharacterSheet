@@ -43,17 +43,18 @@ android {
 
 dependencies {
     // Firebase (remote database)
-    platform("com.google.firebase:firebase-bom:32.3.1")
+    platform("com.google.firebase:firebase-bom:32.4.0")
     implementation("com.google.firebase:firebase-auth")
     implementation("com.google.firebase:firebase-firestore")
     implementation("com.google.firebase:firebase-storage")
     implementation("com.google.firebase:firebase-installations")
     implementation("com.firebaseui:firebase-ui-storage:8.0.2")
-    implementation("com.google.firebase:firebase-storage-ktx:20.2.1")
+    implementation("com.google.firebase:firebase-storage-ktx:20.3.0")
 
     //Room Database (local database)
-    val roomVersion = "2.5.2"
+    val roomVersion = "2.6.0"
     implementation("androidx.room:room-runtime:$roomVersion")
+    implementation("androidx.room:room-ktx:$roomVersion")
     ksp("androidx.room:room-compiler:$roomVersion")
 
     //Glide (image loading)

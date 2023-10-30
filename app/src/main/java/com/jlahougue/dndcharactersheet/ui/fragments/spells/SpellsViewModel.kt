@@ -4,6 +4,7 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.viewModelScope
 import com.jlahougue.dndcharactersheet.dal.entities.CharacterSpell
 import com.jlahougue.dndcharactersheet.dal.entities.displayClasses.SpellWithCharacterInfo
 import com.jlahougue.dndcharactersheet.dal.entities.views.CharacterSpellStatsView
@@ -14,7 +15,10 @@ import com.jlahougue.dndcharactersheet.dal.repositories.ClassRepository
 import com.jlahougue.dndcharactersheet.dal.repositories.SpellRepository
 import com.jlahougue.dndcharactersheet.dal.repositories.SpellSlotRepository
 import com.jlahougue.dndcharactersheet.dal.repositories.SpellcastingRepository
-import kotlin.concurrent.thread
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.launch
 
 class SpellsViewModel(application: Application) : AndroidViewModel(application) {
 
@@ -27,9 +31,15 @@ class SpellsViewModel(application: Application) : AndroidViewModel(application) 
     lateinit var spellcasting: LiveData<SpellcastingView>
     lateinit var characterSpellStats: LiveData<CharacterSpellStatsView>
     val classes = MutableLiveData<List<String>>(listOf())
-    val spellLevel = MutableLiveData(0)
+
+    private val _spellLevel = MutableStateFlow(0)
+    val spellLevel = _spellLevel.asStateFlow()
+
     lateinit var spellLevels: LiveData<List<SpellSlotView>>
-    val spells = MutableLiveData<List<SpellWithCharacterInfo>>(listOf())
+
+    private val _spellsFlow = MutableStateFlow<List<SpellWithCharacterInfo>>(listOf())
+    private val spells = _spellsFlow.asStateFlow()
+
     val filteredSpells = MutableLiveData<List<SpellWithCharacterInfo>>(listOf())
 
     val editMode = MutableLiveData(false)
@@ -45,8 +55,18 @@ class SpellsViewModel(application: Application) : AndroidViewModel(application) 
         }
 
     init {
-        thread {
+        viewModelScope.launch(Dispatchers.IO) {
             classes.postValue(classRepository.getNames())
+        }
+        viewModelScope.launch {
+            spells.collect {
+                updateSpellFilters()
+            }
+        }
+        viewModelScope.launch {
+            spellLevel.collect {
+                updateSpellList()
+            }
         }
     }
 
@@ -65,28 +85,25 @@ class SpellsViewModel(application: Application) : AndroidViewModel(application) 
     }
 
     fun setSpellLevel(spellLevel: Int) {
-        if (spellLevel == this.spellLevel.value) return
-        this.spellLevel.postValue(spellLevel)
-        updateSpellList()
+        _spellLevel.value = spellLevel
     }
 
     private fun updateSpellList() {
-        thread {
-            if (editMode.value!!) spells.postValue(spellRepository.get(characterID, spellLevel.value!!))
-            else spells.postValue(spellRepository.getUnlocked(characterID, spellLevel.value!!))
-            updateSpellFilters()
+        viewModelScope.launch(Dispatchers.IO) {
+            if (editMode.value!!) _spellsFlow.emit(spellRepository.get(characterID, spellLevel.value))
+            else _spellsFlow.emit(spellRepository.getUnlocked(characterID, spellLevel.value))
         }
     }
 
-    fun updateSpellFilters() {
-        thread {
+    private fun updateSpellFilters() {
+        viewModelScope.launch(Dispatchers.IO) {
             if (classFilter.isEmpty()) {
-                filteredSpells.postValue(spells.value!!.filter { spell ->
+                filteredSpells.postValue(spells.value.filter { spell ->
                     spell.name.contains(search, true)
                 })
-                return@thread
+                return@launch
             }
-            filteredSpells.postValue(spells.value!!.filter { spell ->
+            filteredSpells.postValue(spells.value.filter { spell ->
                 spell.classes.any { clazz -> classFilter.contains(clazz.name) }
                         && spell.name.contains(search, true)
             })
@@ -94,7 +111,7 @@ class SpellsViewModel(application: Application) : AndroidViewModel(application) 
     }
 
     fun updateCharacterSpell(characterSpell: CharacterSpell) {
-        thread {
+        viewModelScope.launch(Dispatchers.IO) {
             characterSpellRepository.update(characterSpell)
         }
     }

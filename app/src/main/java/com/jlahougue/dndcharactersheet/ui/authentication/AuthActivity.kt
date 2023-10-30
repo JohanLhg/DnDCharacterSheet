@@ -93,18 +93,12 @@ class AuthActivity : AppCompatActivity() {
         }
     }
 
-    private fun getProgressKey(): Int {
-        val keys = authViewModel.waitingFor.value?: return -1
-        if (keys.isEmpty()) return -1
-        return keys[0]
-    }
-
     private fun startLoading() {
         binding.textLoading.visibility = VISIBLE
         binding.progressBar.visibility = INVISIBLE
         binding.layoutAuth.visibility = GONE
 
-        authViewModel.load()
+        authViewModel.load(this)
 
         authViewModel.waitingFor.observe(this) {
             if (it.isEmpty()) {

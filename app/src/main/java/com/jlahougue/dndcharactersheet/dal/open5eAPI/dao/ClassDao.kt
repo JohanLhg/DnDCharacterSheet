@@ -1,14 +1,14 @@
 package com.jlahougue.dndcharactersheet.dal.open5eAPI.dao
 
-import com.jlahougue.dndcharactersheet.dal.dndAPI.DnDAPIRequest
 import com.jlahougue.dndcharactersheet.dal.entities.Class
+import com.jlahougue.dndcharactersheet.dal.open5eAPI.Open5eAPIRequest
 import com.jlahougue.dndcharactersheet.dal.open5eAPI.Open5eAPIRequest.Companion.OPEN5E_API_CLASSES_URL
 import com.jlahougue.dndcharactersheet.dal.repositories.AbilityRepository
 import org.json.JSONObject
 import kotlin.concurrent.thread
 
 class ClassDao {
-    private val apiRequest = DnDAPIRequest.getInstance()
+    private val apiRequest = Open5eAPIRequest.getInstance()
 
     fun fetchClasses(
         names: List<String>,

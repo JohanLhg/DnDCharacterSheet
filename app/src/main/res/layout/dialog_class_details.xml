@@ -33,7 +33,7 @@
             app:layout_constraintTop_toTopOf="parent">
 
             <LinearLayout
-                android:id="@+id/layoutWeaponDetails"
+                android:id="@+id/layoutClassDetails"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@color/spell"
@@ -41,7 +41,7 @@
                 android:orientation="vertical">
 
                 <TextView
-                    android:id="@+id/titleWeaponDetails"
+                    android:id="@+id/titleClassDetails"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:paddingHorizontal="10dp"
@@ -53,13 +53,13 @@
 
                 <ScrollView
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="3dp"
+                    android:layout_marginBottom="3dp">
 
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginHorizontal="3dp"
-                        android:layout_marginBottom="3dp"
                         android:background="@color/white"
                         android:orientation="vertical"
                         android:padding="5dp">

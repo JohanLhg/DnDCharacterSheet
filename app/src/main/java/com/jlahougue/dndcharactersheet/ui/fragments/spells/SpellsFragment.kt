@@ -13,7 +13,7 @@ import com.jlahougue.dndcharactersheet.dal.entities.Class
 import com.jlahougue.dndcharactersheet.dal.entities.displayClasses.SpellWithCharacterInfo
 import com.jlahougue.dndcharactersheet.dal.repositories.AbilityRepository
 import com.jlahougue.dndcharactersheet.databinding.FragmentSpellsBinding
-import com.jlahougue.dndcharactersheet.extensions.observeNonNull
+import com.jlahougue.dndcharactersheet.extensions.collectLatestLifecycleFlow
 import com.jlahougue.dndcharactersheet.extensions.observeOnce
 import com.jlahougue.dndcharactersheet.ui.elements.SearchBarListener
 import com.jlahougue.dndcharactersheet.ui.fragments.spells.clazz.DialogClassDetails
@@ -70,10 +70,6 @@ class SpellsFragment : Fragment(),
             spellsViewModel.spellLevels.observe(viewLifecycleOwner) { spellLevels ->
                 spellLevelAdapter.spellLevels = spellLevels
             }
-
-            spellsViewModel.spells.observeNonNull(viewLifecycleOwner) {
-                spellsViewModel.updateSpellFilters()
-            }
         }
 
         spellsViewModel.editMode.observe(viewLifecycleOwner) { editMode ->
@@ -84,7 +80,7 @@ class SpellsFragment : Fragment(),
             classFilterAdapter.classes = classes
         }
 
-        spellsViewModel.spellLevel.observe(viewLifecycleOwner) { spellLevel ->
+        collectLatestLifecycleFlow(spellsViewModel.spellLevel) { spellLevel: Int ->
             spellLevelAdapter.activeLevel = spellLevel
         }
 

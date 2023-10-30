@@ -19,7 +19,6 @@ class AbilityAdapter(private val listener: OnAbilityChangedListener) : RecyclerV
         set(value) {
             val oldField = field
             field = value
-            notifyDataSetChanged()
             if (oldField.isEmpty()) notifyItemRangeInserted(0, value.size)
             else notifyItemRangeChanged(0, value.size, MODIFIER)
         }
@@ -49,7 +48,15 @@ class AbilityAdapter(private val listener: OnAbilityChangedListener) : RecyclerV
         holder.bind.editAbilityValue.setText(ability.value.toString())
 
         holder.bind.editAbilityValue.addTextChangedListener { text ->
-            val value = text.toString().toIntOrNull() ?: 0
+            var value = text.toString().toIntOrNull()
+            if (value == null) {
+                value = 0
+                holder.bind.editAbilityValue.setText(value.toString())
+            }
+            if (value == 0) {
+                holder.bind.editAbilityValue.clearFocus()
+                holder.bind.editAbilityValue.requestFocus()
+            }
             abilities[holder.adapterPosition].value = value
             listener.onAbilityValueChanged(abilities[holder.adapterPosition])
         }
