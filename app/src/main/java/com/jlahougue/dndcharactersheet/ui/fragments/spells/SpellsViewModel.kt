@@ -37,8 +37,8 @@ class SpellsViewModel(application: Application) : AndroidViewModel(application) 
 
     lateinit var spellLevels: LiveData<List<SpellSlotView>>
 
-    private val _spellsFlow = MutableStateFlow<List<SpellWithCharacterInfo>>(listOf())
-    private val spells = _spellsFlow.asStateFlow()
+    private val _spells = MutableStateFlow<List<SpellWithCharacterInfo>>(listOf())
+    private val spells = _spells.asStateFlow()
 
     val filteredSpells = MutableLiveData<List<SpellWithCharacterInfo>>(listOf())
 
@@ -90,8 +90,8 @@ class SpellsViewModel(application: Application) : AndroidViewModel(application) 
 
     private fun updateSpellList() {
         viewModelScope.launch(Dispatchers.IO) {
-            if (editMode.value!!) _spellsFlow.emit(spellRepository.get(characterID, spellLevel.value))
-            else _spellsFlow.emit(spellRepository.getUnlocked(characterID, spellLevel.value))
+            if (editMode.value!!) _spells.emit(spellRepository.get(characterID, spellLevel.value))
+            else _spells.emit(spellRepository.getUnlocked(characterID, spellLevel.value))
         }
     }
 

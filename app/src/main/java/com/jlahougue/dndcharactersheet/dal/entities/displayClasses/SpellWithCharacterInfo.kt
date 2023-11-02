@@ -12,6 +12,8 @@ import com.jlahougue.dndcharactersheet.dal.entities.SpellDamage
 class SpellWithCharacterInfo(
     @ColumnInfo(name = CharacterSpell.CHARACTER_SPELL_CID)
     var cid: Long = 0,
+    @ColumnInfo(name = Spell.SPELL_ID)
+    var id: String = "",
     @ColumnInfo(name = Spell.SPELL_NAME)
     var name: String = "",
     @ColumnInfo(name = Spell.SPELL_LEVEL)
@@ -48,14 +50,14 @@ class SpellWithCharacterInfo(
     @ColumnInfo(name = CharacterSpell.CHARACTER_SPELL_HIGHLIGHTED)
     var highlighted: Boolean = false,
     @Relation(
-        parentColumn = Spell.SPELL_NAME,
+        parentColumn = Spell.SPELL_ID,
         entityColumn = Class.CLASS_NAME,
         associateBy = Junction(SpellClass::class)
     )
     var classes: List<Class> = listOf(),
     @Relation(
-        parentColumn = Spell.SPELL_NAME,
-        entityColumn = SpellDamage.SPELL_DAMAGE_NAME
+        parentColumn = Spell.SPELL_ID,
+        entityColumn = SpellDamage.SPELL_DAMAGE_SID
     )
     var damages: List<SpellDamage> = listOf()
 ) {
@@ -78,47 +80,43 @@ class SpellWithCharacterInfo(
         if (alwaysPrepared) prepared = false
     }
 
-    fun getCharacterSpell(): CharacterSpell {
-        return CharacterSpell(
-            cid,
-            name,
-            unlocked,
-            prepared,
-            alwaysPrepared,
-            highlighted
-        )
-    }
+    fun getCharacterSpell() = CharacterSpell(
+        cid,
+        id,
+        unlocked,
+        prepared,
+        alwaysPrepared,
+        highlighted
+    )
 
-    fun copy(): SpellWithCharacterInfo {
-        return SpellWithCharacterInfo(
-            cid,
-            name,
-            level,
-            castingTime,
-            range,
-            components,
-            materials,
-            ritual,
-            concentration,
-            duration,
-            description,
-            higherLevels,
-            damageType,
-            unlocked,
-            prepared,
-            alwaysPrepared,
-            highlighted
-        )
-    }
+    fun copy() = SpellWithCharacterInfo(
+        cid,
+        id,
+        name,
+        level,
+        castingTime,
+        range,
+        components,
+        materials,
+        ritual,
+        concentration,
+        duration,
+        description,
+        higherLevels,
+        damageType,
+        unlocked,
+        prepared,
+        alwaysPrepared,
+        highlighted
+    )
 
-    override fun toString(): String {
-        return "$name ($level)"
-    }
+    override fun toString() = "$name ($level)"
 
     override fun equals(other: Any?): Boolean {
         if (other == null) return false
         if (other !is SpellWithCharacterInfo) return false
         return cid == other.cid &&
+                id == other.id &&
                 name == other.name &&
                 level == other.level &&
                 castingTime == other.castingTime &&

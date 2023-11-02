@@ -1,14 +1,14 @@
-package com.jlahougue.dndcharactersheet.dal.dndAPI.dao
+package com.jlahougue.dndcharactersheet.dal.api.dnd5eAPI.dao
 
-import com.jlahougue.dndcharactersheet.dal.dndAPI.DnDAPIRequest
-import com.jlahougue.dndcharactersheet.dal.dndAPI.DnDAPIRequest.Companion.DND_API_SPELLS_URL
-import com.jlahougue.dndcharactersheet.dal.dndAPI.DnDAPIRequest.Companion.getUrl
+import com.jlahougue.dndcharactersheet.dal.api.dnd5eAPI.DnDApiRequest
+import com.jlahougue.dndcharactersheet.dal.api.dnd5eAPI.DnDApiRequest.Companion.DND_API_SPELLS_URL
+import com.jlahougue.dndcharactersheet.dal.api.dnd5eAPI.DnDApiRequest.Companion.getUrl
 import com.jlahougue.dndcharactersheet.dal.entities.SpellDamage
 import org.json.JSONObject
 import kotlin.concurrent.thread
 
 class SpellDao {
-    private val apiRequest = DnDAPIRequest.getInstance()
+    private val apiRequest = DnDApiRequest.getInstance()
 
     fun fetchSpells(
         names: List<String>,
@@ -41,6 +41,7 @@ class SpellDao {
         val response = apiRequest.sendGet(url) ?: return
 
         val json = JSONObject(response)
+        val id = json.getString("index")
         val name = json.getString("name")
         val level = json.getInt("level")
 
@@ -54,16 +55,16 @@ class SpellDao {
         }
 
         if (damage == null) return
-        fetchSpellDamage(name, level, damage, saveSpellDamage)
+        fetchSpellDamage(id, level, damage, saveSpellDamage)
     }
 
-    private fun fetchSpellDamage(name: String, level: Int, jsonDamage: JSONObject, saveSpellDamage: (SpellDamage) -> Unit) {
+    private fun fetchSpellDamage(id: String, level: Int, jsonDamage: JSONObject, saveSpellDamage: (SpellDamage) -> Unit) {
         //If the spell's damage is based on the slot level
         if (jsonDamage.has("damage_at_slot_level")) {
             val spellDamageDamageAtSlotLevel = jsonDamage.getJSONObject("damage_at_slot_level")
             for (i in level until 9) {
                 if (spellDamageDamageAtSlotLevel.has(i.toString())) {
-                    saveSpellDamage(SpellDamage(name, i, 0, spellDamageDamageAtSlotLevel.getString(i.toString())))
+                    saveSpellDamage(SpellDamage(id, i, 0, spellDamageDamageAtSlotLevel.getString(i.toString())))
                 }
             }
             return
@@ -74,7 +75,7 @@ class SpellDao {
             val spellDamageDamageAtCharacterLevel = jsonDamage.getJSONObject("damage_at_character_level")
             for (i in level until 20) {
                 if (spellDamageDamageAtCharacterLevel.has(i.toString())) {
-                    saveSpellDamage(SpellDamage(name, 0, i, spellDamageDamageAtCharacterLevel.getString(i.toString())))
+                    saveSpellDamage(SpellDamage(id, 0, i, spellDamageDamageAtCharacterLevel.getString(i.toString())))
                 }
             }
         }

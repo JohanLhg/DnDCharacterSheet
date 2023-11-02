@@ -75,7 +75,7 @@ import com.jlahougue.dndcharactersheet.dal.room.dao.WeaponPropertyDao
     views = [AbilityView::class, AbilityModifierView::class, CharacterSpellStatsView::class,
         ProficiencyView::class, SkillView::class, SpellcastingView::class, SpellSlotView::class,
         WeaponView::class],
-    version = 52
+    version = 60
 )
 abstract class DnDDatabase : RoomDatabase() {
     companion object {

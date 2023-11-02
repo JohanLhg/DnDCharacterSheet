@@ -1,44 +1,46 @@
-package com.jlahougue.dndcharactersheet.dal.open5eAPI.dao
+package com.jlahougue.dndcharactersheet.dal.api.open5eAPI.dao
 
+import com.jlahougue.dndcharactersheet.dal.api.open5eAPI.Open5eApiRequest
+import com.jlahougue.dndcharactersheet.dal.api.open5eAPI.Open5eApiRequest.Companion.CLASSES_URL
 import com.jlahougue.dndcharactersheet.dal.entities.Class
-import com.jlahougue.dndcharactersheet.dal.open5eAPI.Open5eAPIRequest
-import com.jlahougue.dndcharactersheet.dal.open5eAPI.Open5eAPIRequest.Companion.OPEN5E_API_CLASSES_URL
 import com.jlahougue.dndcharactersheet.dal.repositories.AbilityRepository
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import org.json.JSONObject
-import kotlin.concurrent.thread
 
 class ClassDao {
-    private val apiRequest = Open5eAPIRequest.getInstance()
+    private val apiRequest = Open5eApiRequest.getInstance()
 
     fun fetchClasses(
         names: List<String>,
-        saveClass: (Class) -> Unit,
-        fetchLevels: (String) -> Unit,
-        progressKey: Int,
-        setProgressMax: (Int, Int) -> Unit,
-        updateProgress: (Int) -> Unit
+        cancel: () -> Unit,
+        setProgressMax: (Int) -> Unit,
+        skip: () -> Unit,
+        save: (Class) -> Unit
     ) {
-        val response = apiRequest.sendGet(OPEN5E_API_CLASSES_URL) ?: return
+        val response = apiRequest.sendGet(CLASSES_URL) ?: return cancel()
         val json = JSONObject(response)
-        setProgressMax(progressKey, json.getInt("count"))
+        val count = json.getInt("count")
+        if (count == names.size) return cancel()
+
+        setProgressMax(count)
         val results = json.getJSONArray("results")
         var clazz: JSONObject
         var name: String
         for (i in 0 until results.length()) {
-            thread {
+            CoroutineScope(Dispatchers.IO).launch {
                 clazz = results.getJSONObject(i)
                 name = clazz.getString("name")
-                if (!names.contains(name))
-                    fetchClass(clazz, saveClass, fetchLevels)
-                updateProgress(progressKey)
+                if (names.contains(name)) skip()
+                else fetchClass(clazz, save)
             }
         }
     }
 
     private fun fetchClass(
         clazz: JSONObject,
-        saveClass: (Class) -> Unit,
-        fetchLevels: (String) -> Unit
+        save: (Class) -> Unit
     ) {
         val name = clazz.getString("name")
         val hitDie = clazz.getString("hit_dice").removePrefix("1d").toInt()
@@ -50,7 +52,7 @@ class ClassDao {
         val profTools = clazz.getString("prof_tools")
         val spellcastingAbility = AbilityRepository.getDatabaseCode(clazz.getString("spellcasting_ability"))
 
-        saveClass(
+        save(
             Class(
                 name,
                 hitDie,
@@ -63,7 +65,5 @@ class ClassDao {
                 spellcastingAbility
             )
         )
-
-        thread { fetchLevels(name) }
     }
 }

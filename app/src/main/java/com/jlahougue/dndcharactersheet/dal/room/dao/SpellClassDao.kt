@@ -12,6 +12,9 @@ interface SpellClassDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(spellClass: SpellClass)
 
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun insert(spellClasses: List<SpellClass>)
+
     @Update
     fun update(spellClass: SpellClass)
 

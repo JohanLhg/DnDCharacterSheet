@@ -1,28 +1,45 @@
 package com.jlahougue.dndcharactersheet.dal.repositories
 
 import android.app.Application
-import com.jlahougue.dndcharactersheet.dal.dndAPI.dao.DamageTypeDao
+import com.jlahougue.dndcharactersheet.dal.api.dnd5eAPI.dao.DamageTypeDao
 import com.jlahougue.dndcharactersheet.dal.entities.DamageType
 import com.jlahougue.dndcharactersheet.dal.room.DnDDatabase
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class DamageTypeRepository(application: Application) {
     private val roomDao = DnDDatabase.getInstance(application).damageTypeDao()
     private val apiDao = DamageTypeDao()
 
     fun fetchAll(
-        progressKey: Int,
-        setProgressMax: (Int, Int) -> Unit,
-        updateProgress: (Int) -> Unit
+        cancel: () -> Unit,
+        setProgressMax: (Int) -> Unit,
+        skip: () -> Unit,
+        save: (DamageType) -> Unit
     ) {
-        val names = roomDao.getNames()
-        apiDao.fetchDamageTypes(
-            names,
-            this::saveDamageType,
-            progressKey,
-            setProgressMax,
-            updateProgress
-        )
+         CoroutineScope(Dispatchers.IO).launch {
+            val names = roomDao.getNames()
+            apiDao.fetchDamageTypes(
+                names,
+                cancel,
+                setProgressMax,
+                skip,
+                save
+            )
+        }
     }
 
-    private fun saveDamageType(damageType: DamageType) = roomDao.insert(damageType)
+    suspend fun save(damageType: DamageType) {
+        withContext(Dispatchers.IO) {
+            roomDao.insert(damageType)
+        }
+    }
+
+    suspend fun getNames(): List<String> {
+        return withContext(Dispatchers.IO) {
+            roomDao.getNames()
+        }
+    }
 }

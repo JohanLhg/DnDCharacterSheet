@@ -13,6 +13,9 @@ interface ClassSpellSlotDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(classSpellSlot: ClassSpellSlot)
 
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun insert(classSpellSlots: List<ClassSpellSlot>)
+
     @Update
     fun update(classSpellSlot: ClassSpellSlot)
 

@@ -11,11 +11,11 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.jlahougue.dndcharactersheet.R
 import com.jlahougue.dndcharactersheet.databinding.ActivityAuthBinding
-import com.jlahougue.dndcharactersheet.ui.authentication.AuthViewModel.Companion.FETCHING_CLASSES
-import com.jlahougue.dndcharactersheet.ui.authentication.AuthViewModel.Companion.FETCHING_DAMAGE_TYPES
-import com.jlahougue.dndcharactersheet.ui.authentication.AuthViewModel.Companion.FETCHING_SPELLS
-import com.jlahougue.dndcharactersheet.ui.authentication.AuthViewModel.Companion.FETCHING_WEAPONS
-import com.jlahougue.dndcharactersheet.ui.authentication.AuthViewModel.Companion.FETCHING_WEAPON_PROPERTIES
+import com.jlahougue.dndcharactersheet.domainLayer.FetchAllFromApiUseCase.Companion.CLASSES
+import com.jlahougue.dndcharactersheet.domainLayer.FetchAllFromApiUseCase.Companion.DAMAGE_TYPES
+import com.jlahougue.dndcharactersheet.domainLayer.FetchAllFromApiUseCase.Companion.PROPERTIES
+import com.jlahougue.dndcharactersheet.domainLayer.FetchAllFromApiUseCase.Companion.SPELLS
+import com.jlahougue.dndcharactersheet.domainLayer.FetchAllFromApiUseCase.Companion.WEAPONS
 import com.jlahougue.dndcharactersheet.ui.authentication.AuthViewModel.Companion.LANGUAGE_LOADED
 import com.jlahougue.dndcharactersheet.ui.authentication.AuthViewModel.Companion.LOGIN
 import com.jlahougue.dndcharactersheet.ui.authentication.AuthViewModel.Companion.REGISTER
@@ -100,37 +100,46 @@ class AuthActivity : AppCompatActivity() {
 
         authViewModel.load(this)
 
-        authViewModel.waitingFor.observe(this) {
-            if (it.isEmpty()) {
+        authViewModel.currentIdentifier.observe(this) {
+            when (it) {
+                SEARCHING_FOR_CHARACTER -> binding.textLoading.text = resources.getString(R.string.searching_for_character)
+                CLASSES -> {
+                    binding.textLoading.text = resources.getString(R.string.fetching_classes)
+                    binding.progressBar.visibility = VISIBLE
+                }
+                SPELLS -> {
+                    binding.textLoading.text = resources.getString(R.string.fetching_spells)
+                    binding.progressBar.visibility = VISIBLE
+                }
+                DAMAGE_TYPES -> {
+                    binding.textLoading.text = resources.getString(R.string.fetching_damage_types)
+                    binding.progressBar.visibility = VISIBLE
+                }
+                PROPERTIES -> {
+                    binding.textLoading.text = resources.getString(R.string.fetching_weapon_properties)
+                    binding.progressBar.visibility = VISIBLE
+                }
+                WEAPONS -> {
+                    binding.textLoading.text = resources.getString(R.string.fetching_weapons)
+                    binding.progressBar.visibility = VISIBLE
+                }
+            }
+        }
+
+        authViewModel.currentProgressMax.observe(this) {
+            binding.progressBar.max = it
+        }
+
+        authViewModel.currentProgress.observe(this) {
+            binding.progressBar.progress = it
+        }
+
+        authViewModel.finished.observe(this) {
+            if (it) {
                 val intent = Intent(this, CharacterSelectionActivity::class.java).apply {
                     putExtra(AUTO_LOAD, true)
                 }
                 startActivity(intent)
-                return@observe
-            }
-
-            when (it[0]) {
-                SEARCHING_FOR_CHARACTER -> binding.textLoading.text = resources.getString(R.string.searching_for_character)
-                FETCHING_CLASSES -> {
-                    binding.textLoading.text = resources.getString(R.string.fetching_classes)
-                    binding.progressBar.visibility = VISIBLE
-                }
-                FETCHING_SPELLS -> {
-                    binding.textLoading.text = resources.getString(R.string.fetching_spells)
-                    binding.progressBar.visibility = VISIBLE
-                }
-                FETCHING_DAMAGE_TYPES -> {
-                    binding.textLoading.text = resources.getString(R.string.fetching_damage_types)
-                    binding.progressBar.visibility = VISIBLE
-                }
-                FETCHING_WEAPON_PROPERTIES -> {
-                    binding.textLoading.text = resources.getString(R.string.fetching_weapon_properties)
-                    binding.progressBar.visibility = VISIBLE
-                }
-                FETCHING_WEAPONS -> {
-                    binding.textLoading.text = resources.getString(R.string.fetching_weapons)
-                    binding.progressBar.visibility = VISIBLE
-                }
             }
         }
     }

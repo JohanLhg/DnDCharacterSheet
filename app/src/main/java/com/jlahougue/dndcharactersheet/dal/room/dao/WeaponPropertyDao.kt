@@ -12,6 +12,9 @@ interface WeaponPropertyDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(weaponProperty: WeaponProperty)
 
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun insert(weaponProperties: List<WeaponProperty>)
+
     @Update
     fun update(weaponProperty: WeaponProperty)
 

@@ -21,8 +21,8 @@ interface SpellDao {
     @Delete
     fun delete(spell: Spell)
 
-    @Query("SELECT spell_name FROM spell")
-    fun getNames(): List<String>
+    @Query("SELECT spell_id FROM spell")
+    fun getIds(): List<String>
 
     @Transaction
     @Query("""
@@ -53,11 +53,11 @@ interface SpellDao {
             my_character_spell.always_prepared,
             my_character_spell.highlighted
         FROM spell
-        INNER JOIN spell_class ON spell.spell_name = spell_class.spell_name
+        INNER JOIN spell_class ON spell.spell_id = spell_class.spell_id
         LEFT JOIN my_character
-        LEFT JOIN my_character_spell ON spell.spell_name = my_character_spell.spell_name
+        LEFT JOIN my_character_spell ON spell.spell_id = my_character_spell.spell_id
         WHERE spell.level <= my_character.max_spell_level
-        ORDER BY spell.level ASC, spell.spell_name ASC
+        ORDER BY spell.level ASC, spell.name ASC
     """)
     fun get(characterID: Long): List<SpellWithCharacterInfo>
 
@@ -76,10 +76,10 @@ interface SpellDao {
             my_character_spell.always_prepared,
             my_character_spell.highlighted
         FROM spell
-        INNER JOIN spell_class ON spell.spell_name = spell_class.spell_name
-        LEFT JOIN my_character_spell ON spell.spell_name = my_character_spell.spell_name
+        INNER JOIN spell_class ON spell.spell_id = spell_class.spell_id
+        LEFT JOIN my_character_spell ON spell.spell_id = my_character_spell.spell_id
         WHERE spell.level = :spellLevel
-        ORDER BY spell.level ASC, spell.spell_name ASC
+        ORDER BY spell.level ASC, spell.name ASC
     """)
     fun get(characterID: Long, spellLevel: Int): List<SpellWithCharacterInfo>
 
@@ -93,12 +93,11 @@ interface SpellDao {
             character_spell.always_prepared,
             character_spell.highlighted
         FROM spell 
-        INNER JOIN character_spell ON spell.spell_name = character_spell.spell_name
+        INNER JOIN character_spell ON spell.spell_id = character_spell.spell_id
         WHERE character_spell.cid = :characterID 
         AND character_spell.unlocked = 1
     """)
     fun getUnlocked(characterID: Long): List<SpellWithCharacterInfo>
-
     @Transaction
     @Query("""
         SELECT
@@ -109,7 +108,7 @@ interface SpellDao {
             character_spell.always_prepared,
             character_spell.highlighted
         FROM spell 
-        INNER JOIN character_spell ON spell.spell_name = character_spell.spell_name
+        INNER JOIN character_spell ON spell.spell_id = character_spell.spell_id
         WHERE character_spell.cid = :characterID 
         AND character_spell.unlocked = 1
         AND spell.level = :spellLevel

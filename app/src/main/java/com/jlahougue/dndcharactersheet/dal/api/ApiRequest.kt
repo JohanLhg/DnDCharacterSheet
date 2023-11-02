@@ -1,26 +1,9 @@
-package com.jlahougue.dndcharactersheet.dal.open5eAPI
+package com.jlahougue.dndcharactersheet.dal.api
 
 import okhttp3.OkHttpClient
 import okhttp3.Request
 
-class Open5eAPIRequest {
-
-    companion object {
-        private var INSTANCE: Open5eAPIRequest? = null
-
-        private const val OPEN5E_API_URL = "https://api.open5e.com/v1"
-
-        const val OPEN5E_API_CLASSES_URL = "$OPEN5E_API_URL/classes"
-        const val OPEN5E_API_SPELLS_URL = "$OPEN5E_API_URL/spells/?limit=999999"
-
-        fun getInstance(): Open5eAPIRequest {
-            if (INSTANCE == null) {
-                INSTANCE = Open5eAPIRequest()
-            }
-            return INSTANCE!!
-        }
-    }
-
+abstract class ApiRequest {
     private val client = OkHttpClient()
 
     @Throws(Exception::class)

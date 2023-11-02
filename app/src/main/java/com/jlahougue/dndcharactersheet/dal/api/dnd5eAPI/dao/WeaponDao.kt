@@ -1,65 +1,66 @@
-package com.jlahougue.dndcharactersheet.dal.dndAPI.dao
+package com.jlahougue.dndcharactersheet.dal.api.dnd5eAPI.dao
 
-import com.jlahougue.dndcharactersheet.dal.dndAPI.DnDAPIRequest
+import com.jlahougue.dndcharactersheet.dal.api.dnd5eAPI.DnDApiRequest
 import com.jlahougue.dndcharactersheet.dal.entities.Weapon
 import com.jlahougue.dndcharactersheet.dal.entities.WeaponProperty
 import com.jlahougue.dndcharactersheet.dal.repositories.AbilityRepository.Companion.DEXTERITY
 import com.jlahougue.dndcharactersheet.dal.repositories.AbilityRepository.Companion.STRENGTH
+import com.jlahougue.dndcharactersheet.extensions.getIntIfExists
+import com.jlahougue.dndcharactersheet.extensions.getJSONArrayIfExists
+import com.jlahougue.dndcharactersheet.extensions.getStringIfExists
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import org.json.JSONObject
-import kotlin.concurrent.thread
 
 class WeaponDao {
-    private val apiRequest = DnDAPIRequest.getInstance()
+    private val apiRequest = DnDApiRequest.getInstance()
 
     fun fetchWeapons(
         names: List<String>,
-        saveWeapon: (Weapon) -> Unit,
-        saveProperty: (WeaponProperty) -> Unit,
-        progressKey: Int,
-        setProgressMax: (Int, Int) -> Unit,
-        updateProgress: (Int) -> Unit
+        cancel: () -> Unit,
+        setProgressMax: (Int) -> Unit,
+        skip: () -> Unit,
+        save: (Weapon, List<WeaponProperty>) -> Unit
     ) {
-        val response = apiRequest.sendGet(DnDAPIRequest.DND_API_WEAPON_URL) ?: return
+        val response = apiRequest.sendGet(DnDApiRequest.DND_API_WEAPON_URL) ?: return cancel()
         val json = JSONObject(response)
 
         val weapons = json.getJSONArray("equipment")
         val count = weapons.length()
-        setProgressMax(progressKey, count)
+        if (count == names.size) {
+            cancel()
+            return
+        }
+
+        setProgressMax(count)
 
         var name: String
         var url: String
         for (i in 0 until weapons.length()) {
-            thread {
+            CoroutineScope(Dispatchers.IO).launch {
                 name = weapons.getJSONObject(i).getString("name")
                 url = weapons.getJSONObject(i).getString("url")
-                if (!names.contains(name)) fetchWeapon(
-                    DnDAPIRequest.getUrl(url),
-                    saveWeapon,
-                    saveProperty
-                )
-                updateProgress(progressKey)
+                if (names.contains(name)) skip()
+                else fetchWeapon(DnDApiRequest.getUrl(url), cancel, save)
             }
         }
     }
 
     private fun fetchWeapon(
         url: String,
-        saveWeapon: (Weapon) -> Unit,
-        saveProperty: (WeaponProperty) -> Unit
+        cancel: () -> Unit,
+        save: (Weapon, List<WeaponProperty>) -> Unit
     ) {
-        val response = apiRequest.sendGet(url) ?: return
+        val response = apiRequest.sendGet(url) ?: return cancel()
 
         val json = JSONObject(response)
         val name = json.getString("name")
 
-        var test = ""
-        if (json.has("weapon_range")) {
-            val category = json.getString("weapon_range")
-            test = when (category) {
-                "Melee" -> STRENGTH
-                "Ranged" -> DEXTERITY
-                else -> ""
-            }
+        val test = when (json.getStringIfExists("weapon_range")) {
+            "Melee" -> STRENGTH
+            "Ranged" -> DEXTERITY
+            else -> ""
         }
 
         var costStr = ""
@@ -87,8 +88,8 @@ class WeaponDao {
         var rangeStr = ""
         if (json.has("range")) {
             val range = json.getJSONObject("range")
-            val rangeNormal = if (range.has("normal")) range.getInt("normal") else 0
-            val rangeLong = if (range.has("long")) range.getInt("long") else 0
+            val rangeNormal = range.getIntIfExists("normal")
+            val rangeLong = range.getIntIfExists("long")
             when {
                 rangeNormal != 0 && rangeLong != 0 -> rangeStr = "$rangeNormal-$rangeLong m"
                 rangeNormal != 0 -> rangeStr = "$rangeNormal m"
@@ -99,8 +100,8 @@ class WeaponDao {
         var throwRangeStr = ""
         if (json.has("throw_range")) {
             val throwRange = json.getJSONObject("throw_range")
-            val throwRangeNormal = if (throwRange.has("normal")) throwRange.getInt("normal") else 0
-            val throwRangeLong = if (throwRange.has("long")) throwRange.getInt("long") else 0
+            val throwRangeNormal = throwRange.getIntIfExists("normal")
+            val throwRangeLong = throwRange.getIntIfExists("long")
             when {
                 throwRangeNormal != 0 && throwRangeLong != 0 -> throwRangeStr = "$throwRangeNormal-$throwRangeLong m"
                 throwRangeNormal != 0 -> throwRangeStr = "$throwRangeNormal m"
@@ -108,23 +109,19 @@ class WeaponDao {
             }
         }
 
-        val weight = if (json.has("weight")) json.getInt("weight") else 0
+        val weight = json.getIntIfExists("weight")
 
         var description = ""
-        if (json.has("desc")) {
-            val desc = json.getJSONArray("desc")
-            for (i in 0 until desc.length()) {
-                if (i > 0) description += "\n"
-                description += desc.getString(i)
-            }
+        val desc = json.getJSONArrayIfExists("desc")
+        for (i in 0 until desc.length()) {
+            if (i > 0) description += "\n"
+            description += desc.getString(i)
         }
 
-        if (json.has("special")) {
-            val specialArray = json.getJSONArray("special")
-            for (i in 0 until specialArray.length()) {
-                if (description.isNotEmpty()) description += "\n"
-                description += specialArray.getString(i)
-            }
+        val specialArray = json.getJSONArrayIfExists("special")
+        for (i in 0 until specialArray.length()) {
+            if (description.isNotEmpty()) description += "\n"
+            description += specialArray.getString(i)
         }
 
         val weapon = Weapon(
@@ -140,14 +137,15 @@ class WeaponDao {
             cost = costStr,
             description = description
         )
-        saveWeapon(weapon)
 
-        if (!json.has("properties")) return
-        val properties = json.getJSONArray("properties")
+        val properties = listOf<WeaponProperty>()
+        val weaponProperties = json.getJSONArrayIfExists("properties")
         var property: String
-        for (i in 0 until properties.length()) {
-            property = properties.getJSONObject(i).getString("name")
-            saveProperty(WeaponProperty(name, property))
+        for (i in 0 until weaponProperties.length()) {
+            property = weaponProperties.getJSONObject(i).getString("name")
+            properties.plus(WeaponProperty(name, property))
         }
+
+        save(weapon, properties)
     }
 }

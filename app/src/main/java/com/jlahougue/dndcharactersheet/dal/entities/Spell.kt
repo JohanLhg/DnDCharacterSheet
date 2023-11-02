@@ -7,6 +7,8 @@ import androidx.room.PrimaryKey
 @Entity(tableName = Spell.TABLE_SPELL)
 class Spell(
     @PrimaryKey
+    @ColumnInfo(name = SPELL_ID)
+    var id: String = "",
     @ColumnInfo(name = SPELL_NAME)
     var name: String = "",
     @ColumnInfo(name = SPELL_LEVEL)
@@ -34,7 +36,8 @@ class Spell(
 ) {
     companion object {
         const val TABLE_SPELL = "spell"
-        const val SPELL_NAME = "spell_name"
+        const val SPELL_ID = "spell_id"
+        const val SPELL_NAME = "name"
         const val SPELL_LEVEL = "level"
         const val SPELL_CASTING_TIME = "casting_time"
         const val SPELL_RANGE = "range"
