@@ -39,6 +39,8 @@ import com.jlahougue.dndcharactersheet.dal.entities.views.SkillView
 import com.jlahougue.dndcharactersheet.dal.entities.views.SpellSlotView
 import com.jlahougue.dndcharactersheet.dal.entities.views.SpellcastingView
 import com.jlahougue.dndcharactersheet.dal.entities.views.WeaponView
+import com.jlahougue.dndcharactersheet.dal.repositories.PreferencesRepository.Companion.LANGUAGE_EN
+import com.jlahougue.dndcharactersheet.dal.repositories.PreferencesRepository.Companion.UNIT_SYSTEM_METRIC
 import com.jlahougue.dndcharactersheet.dal.room.dao.AbilityDao
 import com.jlahougue.dndcharactersheet.dal.room.dao.CharacterDao
 import com.jlahougue.dndcharactersheet.dal.room.dao.CharacterSpellDao
@@ -75,7 +77,7 @@ import com.jlahougue.dndcharactersheet.dal.room.dao.WeaponPropertyDao
     views = [AbilityView::class, AbilityModifierView::class, CharacterSpellStatsView::class,
         ProficiencyView::class, SkillView::class, SpellcastingView::class, SpellSlotView::class,
         WeaponView::class],
-    version = 60
+    version = 61
 )
 abstract class DnDDatabase : RoomDatabase() {
     companion object {
@@ -87,7 +89,7 @@ abstract class DnDDatabase : RoomDatabase() {
         private val callback = object : Callback() {
             override fun onCreate(db: SupportSQLiteDatabase) {
                 super.onCreate(db)
-                db.execSQL("INSERT INTO $TABLE_PREFERENCES VALUES (1, 'en')")
+                db.execSQL("INSERT INTO $TABLE_PREFERENCES VALUES (1, '$LANGUAGE_EN', '$UNIT_SYSTEM_METRIC')")
             }
         }
 

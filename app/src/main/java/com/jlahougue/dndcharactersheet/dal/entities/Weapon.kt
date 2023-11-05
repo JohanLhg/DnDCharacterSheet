@@ -20,9 +20,11 @@ class Weapon(
     @ColumnInfo(name = WEAPON_TWO_HANDED_DAMAGE_TYPE)
     var twoHandedDamageType: String = "",
     @ColumnInfo(name = WEAPON_RANGE)
-    var range: String = "",
-    @ColumnInfo(name = WEAPON_THROW_RANGE)
-    var throwRange: String = "",
+    var range: Int = 0,
+    @ColumnInfo(name = WEAPON_THROW_RANGE_MIN)
+    var throwRangeMin: Int = 0,
+    @ColumnInfo(name = WEAPON_THROW_RANGE_MAX)
+    var throwRangeMax: Int = 0,
     @ColumnInfo(name = WEAPON_WEIGHT)
     var weight: Int = 0,
     @ColumnInfo(name = WEAPON_COST)
@@ -39,7 +41,8 @@ class Weapon(
         const val WEAPON_TWO_HANDED_DAMAGE = "two_handed_damage"
         const val WEAPON_TWO_HANDED_DAMAGE_TYPE = "two_handed_damage_type"
         const val WEAPON_RANGE = "range"
-        const val WEAPON_THROW_RANGE = "throw_range"
+        const val WEAPON_THROW_RANGE_MIN = "throw_range_min"
+        const val WEAPON_THROW_RANGE_MAX = "throw_range_max"
         const val WEAPON_WEIGHT = "weight"
         const val WEAPON_COST = "cost"
         const val WEAPON_DESCRIPTION = "description"

@@ -31,9 +31,11 @@ class WeaponDetail(
     @ColumnInfo(name = Weapon.WEAPON_TWO_HANDED_DAMAGE_TYPE)
     var twoHandedDamageType: String = "",
     @ColumnInfo(name = Weapon.WEAPON_RANGE)
-    var range: String = "",
-    @ColumnInfo(name = Weapon.WEAPON_THROW_RANGE)
-    var throwRange: String = "",
+    var range: Int = 0,
+    @ColumnInfo(name = Weapon.WEAPON_THROW_RANGE_MIN)
+    var throwRange: Int = 0,
+    @ColumnInfo(name = Weapon.WEAPON_THROW_RANGE_MAX)
+    var throwRangeMax: Int = 0,
     @ColumnInfo(name = Weapon.WEAPON_WEIGHT)
     var weight: Int = 0,
     @ColumnInfo(name = Weapon.WEAPON_COST)

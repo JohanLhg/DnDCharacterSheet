@@ -74,7 +74,8 @@
             layout="@layout/panel_settings"
             android:layout_width="400dp"
             android:layout_height="match_parent"
-            android:layout_gravity="end" />
+            android:layout_gravity="end"
+            bind:preferences="@{viewModel.preferences}"/>
 
         <include
             android:id="@+id/panelProfile"

@@ -11,7 +11,7 @@ import com.jlahougue.dndcharactersheet.dal.entities.Class
 @Dao
 interface ClassDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insert(clazz: Class)
+    fun insert(clazz: Class): Long
 
     @Update
     fun update(clazz: Class)

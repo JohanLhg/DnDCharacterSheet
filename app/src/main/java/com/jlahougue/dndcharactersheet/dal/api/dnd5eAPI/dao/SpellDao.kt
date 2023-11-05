@@ -1,14 +1,14 @@
 package com.jlahougue.dndcharactersheet.dal.api.dnd5eAPI.dao
 
-import com.jlahougue.dndcharactersheet.dal.api.dnd5eAPI.DnDApiRequest
-import com.jlahougue.dndcharactersheet.dal.api.dnd5eAPI.DnDApiRequest.Companion.DND_API_SPELLS_URL
-import com.jlahougue.dndcharactersheet.dal.api.dnd5eAPI.DnDApiRequest.Companion.getUrl
+import com.jlahougue.dndcharactersheet.dal.api.dnd5eAPI.DnD5eApiRequest
+import com.jlahougue.dndcharactersheet.dal.api.dnd5eAPI.DnD5eApiRequest.Companion.SPELLS_URL
+import com.jlahougue.dndcharactersheet.dal.api.dnd5eAPI.DnD5eApiRequest.Companion.getUrl
 import com.jlahougue.dndcharactersheet.dal.entities.SpellDamage
 import org.json.JSONObject
 import kotlin.concurrent.thread
 
 class SpellDao {
-    private val apiRequest = DnDApiRequest.getInstance()
+    private val apiRequest = DnD5eApiRequest.getInstance()
 
     fun fetchSpells(
         names: List<String>,
@@ -17,7 +17,7 @@ class SpellDao {
         setProgressMax: (Int, Int) -> Unit,
         updateProgress: (Int) -> Unit
     ) {
-        val response = apiRequest.sendGet(DND_API_SPELLS_URL) ?: return
+        val response = apiRequest.sendGet(SPELLS_URL) ?: return
         val json = JSONObject(response)
         setProgressMax(progressKey, json.getInt("count"))
         val results = json.getJSONArray("results")

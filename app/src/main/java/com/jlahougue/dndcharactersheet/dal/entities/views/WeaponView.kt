@@ -2,6 +2,8 @@ package com.jlahougue.dndcharactersheet.dal.entities.views
 
 import androidx.room.ColumnInfo
 import androidx.room.DatabaseView
+import com.jlahougue.dndcharactersheet.dal.repositories.PreferencesRepository.Companion.UNIT_SYSTEM_IMPERIAL
+import com.jlahougue.dndcharactersheet.extensions.feetToMeterString
 
 @DatabaseView(
     """
@@ -16,10 +18,9 @@ import androidx.room.DatabaseView
             WHEN weapon.two_handed_damage != '' THEN weapon.two_handed_damage || ' ' || weapon.two_handed_damage_type
             ELSE weapon.damage || ' ' || weapon.damage_type
         END AS damage,
-        CASE 
-            WHEN weapon.throw_range != '' THEN weapon.range || ' / ' || weapon.throw_range
-            ELSE weapon.range
-        END AS range
+        weapon.range,
+        weapon.throw_range_min,
+        weapon.throw_range_max
         FROM weapon
         INNER JOIN character_weapon AS cw ON weapon.weapon_name = cw.name
         INNER JOIN proficiency_view AS proficiency ON proficiency.cid = cw.cid
@@ -39,8 +40,34 @@ class WeaponView(
     @ColumnInfo(name = WEAPON_VIEW_DAMAGE)
     var damage: String = "",
     @ColumnInfo(name = WEAPON_VIEW_RANGE)
-    var range: String = ""
+    var range: Int = 0,
+    @ColumnInfo(name = WEAPON_VIEW_THROW_RANGE_MIN)
+    var throwRangeMin: Int = 0,
+    @ColumnInfo(name = WEAPON_VIEW_THROW_RANGE_MAX)
+    var throwRangeMax: Int = 0
 ) {
+    fun getRangeString(unitSystem: String): String {
+        var rangeStr = ""
+        when (unitSystem) {
+            UNIT_SYSTEM_IMPERIAL -> {
+                if (range > 0) rangeStr = "$range ft."
+                if (throwRangeMin > 0) {
+                    if (rangeStr.isNotEmpty()) rangeStr += " / "
+                    rangeStr += "$throwRangeMin - $throwRangeMax ft."
+                }
+            }
+            //Metric system by default
+            else -> {
+                if (range > 0) rangeStr = "${range.feetToMeterString()} m"
+                if (throwRangeMin > 0) {
+                    if (rangeStr.isNotEmpty()) rangeStr += " / "
+                    rangeStr += "${throwRangeMin.feetToMeterString()} - ${throwRangeMax.feetToMeterString()} m"
+                }
+            }
+        }
+        return rangeStr
+    }
+
     companion object {
         const val TABLE_WEAPON_VIEW = "weapon_view"
         const val WEAPON_VIEW_NAME = "name"
@@ -49,5 +76,7 @@ class WeaponView(
         const val WEAPON_VIEW_MODIFIER = "modifier"
         const val WEAPON_VIEW_DAMAGE = "damage"
         const val WEAPON_VIEW_RANGE = "range"
+        const val WEAPON_VIEW_THROW_RANGE_MIN = "throw_range_min"
+        const val WEAPON_VIEW_THROW_RANGE_MAX = "throw_range_max"
     }
 }

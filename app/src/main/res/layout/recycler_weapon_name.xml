@@ -17,8 +17,7 @@
             android:id="@+id/textWeaponName"
             style="@style/TextAppearance.AppCompat.Large"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@{weapon}" />
+            android:layout_height="wrap_content" />
 
         <View
             android:layout_width="0dp"

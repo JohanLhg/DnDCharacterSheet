@@ -11,7 +11,7 @@ import com.jlahougue.dndcharactersheet.dal.entities.ClassLevel
 @Dao
 interface ClassLevelDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insert(classLevel: ClassLevel)
+    fun insert(classLevel: ClassLevel): Long
 
     @Update
     fun update(classLevel: ClassLevel)

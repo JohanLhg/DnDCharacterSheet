@@ -41,7 +41,7 @@ class FetchAllFromApiUseCase(application: Application) {
     val progress = _progress.asStateFlow()
 
     private val _finished = MutableStateFlow(false)
-    val finished = _finished.asStateFlow()
+    private val finished = _finished.asStateFlow()
 
     init {
         CoroutineScope(Dispatchers.IO).launch {
@@ -67,9 +67,9 @@ class FetchAllFromApiUseCase(application: Application) {
         fetchDamageTypesFromApiUseCase {
             fetchSpellsFromApiUseCase()
         }
-        fetchWeaponsFromApiUseCase()
-        fetchClassesFromApiUseCase()
         fetchPropertiesFromApiUseCase()
+        fetchClassesFromApiUseCase()
+        fetchWeaponsFromApiUseCase()
     }
 
     private fun setupProgressCollectors(identifier: Int) {

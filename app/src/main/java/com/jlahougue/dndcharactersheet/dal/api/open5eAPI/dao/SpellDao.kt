@@ -8,19 +8,23 @@ import com.jlahougue.dndcharactersheet.dal.entities.SpellClass
 import com.jlahougue.dndcharactersheet.dal.entities.SpellDamage
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.joinAll
 import kotlinx.coroutines.launch
 import org.json.JSONObject
 
 class SpellDao {
     private val apiRequest = Open5eApiRequest.getInstance()
 
-    fun fetchSpells(
+    suspend fun fetchSpells(
         ids: List<String>,
         damageTypes: List<String>,
         cancel: () -> Unit,
         setProgressMax: (Int) -> Unit,
         skip: () -> Unit,
-        save: (Spell, List<SpellClass>, List<SpellDamage>) -> Unit
+        updateProgress: () -> Unit,
+        saveSpell: (Spell) -> Long,
+        saveClasses: (List<SpellClass>) -> Unit,
+        saveDamages: (List<SpellDamage>) -> Unit
     ) {
         var response = apiRequest.sendGet(SPELLS_CHECK_URL) ?: return cancel()
         var json = JSONObject(response)
@@ -32,22 +36,33 @@ class SpellDao {
         json = JSONObject(response)
         val results = json.getJSONArray("results")
 
-        var id: String
-        var spell: JSONObject
-        for (i in 0 until results.length()) {
+        (0..<results.length()).map {
             CoroutineScope(Dispatchers.IO).launch {
-                spell = results.getJSONObject(i)
-                id = spell.getString("slug")
+                val spell = results.getJSONObject(it)
+                val id = spell.getString("slug")
+
                 if (ids.contains(id)) skip()
-                else fetchSpell(spell, damageTypes, save)
+                else fetchSpell(
+                    spell,
+                    damageTypes,
+                    skip,
+                    updateProgress,
+                    saveSpell,
+                    saveClasses,
+                    saveDamages
+                )
             }
-        }
+        }.joinAll()
     }
 
     private fun fetchSpell(
         jsonSpell: JSONObject,
         damageTypes: List<String>,
-        save: (Spell, List<SpellClass>, List<SpellDamage>) -> Unit,
+        skip: () -> Unit,
+        updateProgress: () -> Unit,
+        saveSpell: (Spell) -> Long,
+        saveClasses: (List<SpellClass>) -> Unit,
+        saveDamages: (List<SpellDamage>) -> Unit
     ) {
         val id = jsonSpell.getString("slug")
         val name = jsonSpell.getString("name").replace("/", " - ")
@@ -66,32 +81,36 @@ class SpellDao {
 
         val damageType = getDamageType(damageTypes, desc)
 
-        val spell = Spell(
-            id,
-            name,
-            level,
-            castingTime,
-            range,
-            components,
-            materials,
-            ritual,
-            concentration,
-            duration,
-            desc,
-            higherLevel,
-            damageType
-        )
+        val failed = saveSpell(
+            Spell(
+                id,
+                name,
+                level,
+                castingTime,
+                range,
+                components,
+                materials,
+                ritual,
+                concentration,
+                duration,
+                desc,
+                higherLevel,
+                damageType
+            )
+        ) == -1L
 
+        if (failed) return skip()
+
+        //Classes
         val classes = mutableListOf<SpellClass>()
         val spellClasses = jsonSpell.getString("dnd_class").split(", ")
         for (clazz in spellClasses) {
             if (clazz.isBlank()) continue
             classes.add(SpellClass(id, clazz))
         }
+        saveClasses(classes)
 
-        val damages = mutableListOf<SpellDamage>()
-
-        save(spell, classes, damages)
+        updateProgress()
     }
 
     private fun getDamageType(damageTypes: List<String>, description: String): String {

@@ -4,6 +4,9 @@
 
     <data>
         <variable
+            name="unitSystem"
+            type="String" />
+        <variable
             name="weapon"
             type="com.jlahougue.dndcharactersheet.dal.entities.views.WeaponView" />
     </data>
@@ -79,13 +82,13 @@
         <TextView
             android:id="@+id/textRange"
             style="@android:style/TextAppearance.Material.Medium"
-            android:layout_width="150dp"
+            android:layout_width="160dp"
             android:layout_height="match_parent"
             android:layout_margin="1dp"
             android:background="@color/white"
             android:gravity="center"
             android:padding="3dp"
-            android:text="@{weapon.range}" />
+            android:text="@{weapon.getRangeString(unitSystem)}" />
 
     </LinearLayout>
 </layout>

@@ -13,7 +13,7 @@ import com.jlahougue.dndcharactersheet.dal.entities.displayClasses.SpellWithChar
 @Dao
 interface SpellDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insert(spell: Spell)
+    fun insert(spell: Spell): Long
 
     @Update
     fun update(spell: Spell)

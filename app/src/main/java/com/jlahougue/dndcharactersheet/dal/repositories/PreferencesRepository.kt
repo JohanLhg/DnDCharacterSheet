@@ -13,7 +13,7 @@ class PreferencesRepository(application: Application) {
 
     fun update(preferences: Preferences) = roomDao.update(preferences)
 
-    fun setLanguage(language: String) = roomDao.setLanguage(language)
+    fun get() = roomDao.get()
 
     fun getLanguage(callback: (String) -> Unit) {
         val language = roomDao.getLanguage()
@@ -22,5 +22,13 @@ class PreferencesRepository(application: Application) {
             callback(roomDao.getLanguage()!!)
         } else
             callback(language)
+    }
+
+    companion object {
+        const val LANGUAGE_EN = "en"
+        const val LANGUAGE_FR = "fr"
+
+        const val UNIT_SYSTEM_IMPERIAL = "imperial"
+        const val UNIT_SYSTEM_METRIC = "metric"
     }
 }

@@ -18,7 +18,7 @@ fun <T> LiveData<T>.observeOnce(lifecycleOwner: LifecycleOwner, observer: Observ
 fun <T> LiveData<T>.observeNonNull(lifecycleOwner: LifecycleOwner, observer: Observer<T>) {
     observe(lifecycleOwner, object : Observer<T> {
         override fun onChanged(value: T) {
-            if (value == null) return
+            if (value == null || (value is Long && value == -1L)) return
             observer.onChanged(value)
         }
     })

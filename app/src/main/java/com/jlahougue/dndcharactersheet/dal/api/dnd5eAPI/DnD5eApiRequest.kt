@@ -3,21 +3,21 @@ package com.jlahougue.dndcharactersheet.dal.api.dnd5eAPI
 import com.jlahougue.dndcharactersheet.dal.api.ApiRequest
 import java.util.Locale
 
-class DnDApiRequest: ApiRequest() {
+class DnD5eApiRequest: ApiRequest() {
 
     companion object {
-        private var INSTANCE: DnDApiRequest? = null
+        private var INSTANCE: DnD5eApiRequest? = null
 
         private const val DND_API_URL = "https://www.dnd5eapi.co"
 
-        const val DND_API_SPELLS_URL = "$DND_API_URL/api/spells"
-        const val DND_API_DAMAGE_TYPES_URL = "$DND_API_URL/api/damage-types"
-        const val DND_API_WEAPON_PROPERTIES_URL = "$DND_API_URL/api/weapon-properties"
-        const val DND_API_WEAPON_URL = "$DND_API_URL/api/equipment-categories/weapon"
+        const val SPELLS_URL = "$DND_API_URL/api/spells"
+        const val DAMAGE_TYPES_URL = "$DND_API_URL/api/damage-types"
+        const val WEAPON_PROPERTIES_URL = "$DND_API_URL/api/weapon-properties"
+        const val WEAPON_URL = "$DND_API_URL/api/equipment-categories/weapon"
 
-        fun getInstance(): DnDApiRequest {
+        fun getInstance(): DnD5eApiRequest {
             if (INSTANCE == null) {
-                INSTANCE = DnDApiRequest()
+                INSTANCE = DnD5eApiRequest()
             }
             return INSTANCE!!
         }

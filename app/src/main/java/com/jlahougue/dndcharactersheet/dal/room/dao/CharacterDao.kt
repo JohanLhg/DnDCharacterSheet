@@ -4,13 +4,15 @@ import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
-import androidx.room.MapInfo
+import androidx.room.MapColumn
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
+import androidx.room.Transaction
 import androidx.room.Update
 import com.jlahougue.dndcharactersheet.dal.entities.Character
 import com.jlahougue.dndcharactersheet.dal.entities.Character.Companion.CHARACTER_ID
 import com.jlahougue.dndcharactersheet.dal.entities.Character.Companion.CHARACTER_IS_FAVORITE
+import com.jlahougue.dndcharactersheet.dal.entities.displayClasses.CharacterInfo
 
 @Dao
 interface CharacterDao {
@@ -32,6 +34,10 @@ interface CharacterDao {
     @Query("SELECT * FROM character WHERE id = :characterID")
     fun get(characterID: Long): Character
 
+    @Transaction
+    @Query("SELECT * FROM character WHERE id = :characterID")
+    fun getInfo(characterID: Long): CharacterInfo
+
     @Query("SELECT level FROM character WHERE id = :characterID")
     fun getLevel(characterID: Long): Int
 
@@ -52,7 +58,7 @@ interface CharacterDao {
     @Query("UPDATE character SET is_favorite = (id = :id AND :isFavorite)")
     fun updateFavorite(id: Long, isFavorite: Boolean)
 
-    @MapInfo(keyColumn = CHARACTER_ID, valueColumn = CHARACTER_IS_FAVORITE)
     @Query("SELECT id, is_favorite FROM character")
-    fun getFavoriteMap(): Map<Long, Boolean>
+    fun getFavoriteMap(): Map<@MapColumn(columnName = CHARACTER_ID) Long,
+            @MapColumn(columnName = CHARACTER_IS_FAVORITE) Boolean>
 }

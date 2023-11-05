@@ -1,5 +1,6 @@
 package com.jlahougue.dndcharactersheet.domainLayer
 
+import com.jlahougue.dndcharactersheet.extensions.setCollectorIO
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -27,10 +28,8 @@ abstract class FetchFromApiUseCase {
     }
 
     protected open fun invoke(onFinished: () -> Unit) {
-        CoroutineScope(Dispatchers.IO).launch {
-            finished.collect {
-                if (it) onFinished()
-            }
+        setCollectorIO(finished) {
+            if (it) onFinished()
         }
     }
 
@@ -53,9 +52,15 @@ abstract class FetchFromApiUseCase {
         }
     }
 
-    protected fun progress() {
+    protected fun updateProgress() {
         CoroutineScope(Dispatchers.IO).launch {
             _progress.emit(_progress.value + 1)
+        }
+    }
+
+    protected fun finish() {
+        CoroutineScope(Dispatchers.IO).launch {
+            _finished.emit(true)
         }
     }
 }

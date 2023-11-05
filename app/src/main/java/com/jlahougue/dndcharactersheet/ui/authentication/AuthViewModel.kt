@@ -4,7 +4,6 @@ import android.app.Application
 import android.content.Context
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
-import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
@@ -12,7 +11,6 @@ import com.jlahougue.dndcharactersheet.dal.repositories.AuthRepository
 import com.jlahougue.dndcharactersheet.dal.repositories.CharacterSheetRepository
 import com.jlahougue.dndcharactersheet.dal.repositories.PreferencesRepository
 import com.jlahougue.dndcharactersheet.domainLayer.FetchAllFromApiUseCase
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
@@ -41,19 +39,16 @@ class AuthViewModel(application: Application) : AndroidViewModel(application) {
     init {
         viewModelScope.launch {
             fetchAllFromApiUseCase.currentIdentifier.collect {
-                Log.d("AuthViewModel", "Current identifier : $it")
                 currentIdentifier.postValue(it)
             }
         }
         viewModelScope.launch {
             fetchAllFromApiUseCase.progressMax.collect {
-                Log.d("AuthViewModel", "Progress max : $it")
                 currentProgressMax.postValue(it)
             }
         }
         viewModelScope.launch {
             fetchAllFromApiUseCase.progress.collect {
-                Log.d("AuthViewModel", "Progress : $it")
                 currentProgress.postValue(it)
             }
         }
@@ -90,7 +85,6 @@ class AuthViewModel(application: Application) : AndroidViewModel(application) {
         viewModelScope.launch {
             characterSheetRepository.createCharacterIfNotExists {
                 fetchAllFromApiUseCase {
-                    Log.d("AuthViewModel", "API calls finished")
                     finished.postValue(true)
                 }
             }
@@ -98,10 +92,8 @@ class AuthViewModel(application: Application) : AndroidViewModel(application) {
     }
 
     fun getLanguage(callback: (String) -> Unit) {
-        CoroutineScope(viewModelScope.coroutineContext + Dispatchers.IO).launch {
-            preferencesRepository.getLanguage {
-                callback(it)
-            }
+        viewModelScope.launch(Dispatchers.IO) {
+            preferencesRepository.getLanguage(callback)
         }
     }
 }

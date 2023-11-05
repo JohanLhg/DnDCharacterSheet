@@ -11,7 +11,7 @@ import com.jlahougue.dndcharactersheet.dal.entities.DamageType
 @Dao
 interface DamageTypeDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insert(damageType: DamageType)
+    fun insert(damageType: DamageType): Long
 
     @Update
     fun update(damageType: DamageType)

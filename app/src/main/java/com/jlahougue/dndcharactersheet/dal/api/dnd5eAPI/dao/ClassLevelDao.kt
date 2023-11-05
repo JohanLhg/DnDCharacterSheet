@@ -1,45 +1,47 @@
 package com.jlahougue.dndcharactersheet.dal.api.dnd5eAPI.dao
 
-import com.jlahougue.dndcharactersheet.dal.api.dnd5eAPI.DnDApiRequest
-import com.jlahougue.dndcharactersheet.dal.api.dnd5eAPI.DnDApiRequest.Companion.getClassLevelsUrl
+import com.jlahougue.dndcharactersheet.dal.api.dnd5eAPI.DnD5eApiRequest
+import com.jlahougue.dndcharactersheet.dal.api.dnd5eAPI.DnD5eApiRequest.Companion.getClassLevelsUrl
 import com.jlahougue.dndcharactersheet.dal.entities.ClassLevel
 import com.jlahougue.dndcharactersheet.dal.entities.ClassSpellSlot
 import com.jlahougue.dndcharactersheet.extensions.getIntIfExists
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.joinAll
 import kotlinx.coroutines.launch
 import org.json.JSONArray
 import org.json.JSONObject
 
 class ClassLevelDao {
-    private val apiRequest = DnDApiRequest.getInstance()
+    private val apiRequest = DnD5eApiRequest.getInstance()
 
-    fun fetchClassLevels(
+    suspend fun fetchClassLevels(
         clazz: String,
-        cancel: () -> Unit,
-        setProgressMax: (Int) -> Unit,
-        save: (ClassLevel, List<ClassSpellSlot>) -> Unit
+        saveLevel: (ClassLevel) -> Long,
+        saveSpellSlots: (List<ClassSpellSlot>) -> Unit
     ) {
-        val response = apiRequest.sendGet(getClassLevelsUrl(clazz)) ?: return cancel()
+        val response = apiRequest.sendGet(getClassLevelsUrl(clazz)) ?: return
         val json = JSONArray(response)
-        setProgressMax(json.length())
         var classLevel: JSONObject
-        for (i in 0 until json.length()) {
+        (0..<json.length()).map {
             CoroutineScope(Dispatchers.IO).launch {
-                classLevel = json.getJSONObject(i)
-                fetchClassLevel(clazz, classLevel, save)
+                classLevel = json.getJSONObject(it)
+                fetchClassLevel(clazz, classLevel, saveLevel, saveSpellSlots)
             }
-        }
+        }.joinAll()
     }
 
     private fun fetchClassLevel(
         clazz: String,
         jsonClassLevel: JSONObject,
-        save: (ClassLevel, List<ClassSpellSlot>) -> Unit
+        saveLevel: (ClassLevel) -> Long,
+        saveSpellSlots: (List<ClassSpellSlot>) -> Unit
     ) {
         val level = jsonClassLevel.getInt("level")
         val abilityScoreBonuses = jsonClassLevel.getInt("ability_score_bonuses")
         val profBonus = jsonClassLevel.getInt("prof_bonus")
+
+        //Spells
         var cantripsKnown = 0
         var spellsKnown = 0
         var classSpellSlots = listOf<ClassSpellSlot>()
@@ -50,7 +52,8 @@ class ClassLevelDao {
             classSpellSlots = fetchClassSpellSlots(clazz, level, spellcasting)
         }
 
-        val classLevel = ClassLevel(
+        val failed = saveLevel(
+            ClassLevel(
             clazz,
             level,
             abilityScoreBonuses,
@@ -58,8 +61,11 @@ class ClassLevelDao {
             cantripsKnown,
             spellsKnown
         )
+        ) == -1L
 
-        save(classLevel, classSpellSlots)
+        if (failed) return
+
+        saveSpellSlots(classSpellSlots)
     }
 
     private fun fetchClassSpellSlots(

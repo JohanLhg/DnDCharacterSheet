@@ -11,7 +11,7 @@ import com.jlahougue.dndcharactersheet.dal.entities.displayClasses.WeaponDetail
 import com.jlahougue.dndcharactersheet.databinding.FragmentWeaponsBinding
 import com.jlahougue.dndcharactersheet.extensions.observeNonNull
 import com.jlahougue.dndcharactersheet.extensions.observeOnce
-import com.jlahougue.dndcharactersheet.ui.fragments.weapons.addDialog.DialogAddWeapon
+import com.jlahougue.dndcharactersheet.ui.fragments.weapons.addDialog.DialogAddWeapons
 import com.jlahougue.dndcharactersheet.ui.fragments.weapons.addDialog.WeaponNameAdapter
 import com.jlahougue.dndcharactersheet.ui.fragments.weapons.details.DialogPropertyDetails
 import com.jlahougue.dndcharactersheet.ui.fragments.weapons.details.DialogWeaponDetails
@@ -20,7 +20,7 @@ import com.jlahougue.dndcharactersheet.ui.main.MainActivity
 class WeaponsFragment : Fragment(),
     WeaponAdapter.WeaponListener,
     DialogWeaponDetails.DialogWeaponDetailsListener,
-    DialogAddWeapon.DialogAddWeaponListener,
+    DialogAddWeapons.DialogAddWeaponListener,
     WeaponNameAdapter.WeaponNameListener {
 
     private var _binding: FragmentWeaponsBinding? = null
@@ -48,9 +48,9 @@ class WeaponsFragment : Fragment(),
 
         binding.buttonAddWeapon.setOnClickListener {
             weaponsViewModel.getNotOwnedWeapons {
-                val dialog = DialogAddWeapon(it, this, this)
+                val dialog = DialogAddWeapons(it, this, this)
                 main.runOnUiThread {
-                    dialog.show(parentFragmentManager, DialogAddWeapon.TAG)
+                    dialog.show(parentFragmentManager, DialogAddWeapons.TAG)
                 }
             }
         }
@@ -65,6 +65,10 @@ class WeaponsFragment : Fragment(),
 
             weaponsViewModel.weapons.observeNonNull(viewLifecycleOwner) { weapons ->
                 weaponAdapter.weapons = weapons
+            }
+
+            main.mainViewModel.preferences.observeNonNull(viewLifecycleOwner) { preferences ->
+                weaponAdapter.unitSystem = preferences.unitSystem
             }
         }
 

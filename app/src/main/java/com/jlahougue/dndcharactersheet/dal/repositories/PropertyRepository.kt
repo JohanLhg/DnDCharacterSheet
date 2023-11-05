@@ -9,10 +9,11 @@ class PropertyRepository(application: Application) {
     private val roomDao = DnDDatabase.getInstance(application).propertyDao()
     private val apiDao = PropertyDao()
 
-    fun fetchAll(
+    suspend fun fetchAll(
         cancel: () -> Unit,
         setProgressMax: (Int) -> Unit,
         skip: () -> Unit,
+        updateProgress: () -> Unit,
         save: (Property) -> Unit
     ) {
         val names = roomDao.getNames()
@@ -21,6 +22,7 @@ class PropertyRepository(application: Application) {
             cancel,
             setProgressMax,
             skip,
+            updateProgress,
             save
         )
     }

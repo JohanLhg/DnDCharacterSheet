@@ -6,18 +6,21 @@ import com.jlahougue.dndcharactersheet.dal.entities.Class
 import com.jlahougue.dndcharactersheet.dal.repositories.AbilityRepository
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.joinAll
 import kotlinx.coroutines.launch
 import org.json.JSONObject
+import kotlin.reflect.KSuspendFunction1
 
 class ClassDao {
     private val apiRequest = Open5eApiRequest.getInstance()
 
-    fun fetchClasses(
+    suspend fun fetchClasses(
         names: List<String>,
         cancel: () -> Unit,
         setProgressMax: (Int) -> Unit,
         skip: () -> Unit,
-        save: (Class) -> Unit
+        save: (Class) -> Long,
+        fetchClassLevels: KSuspendFunction1<String, Unit>
     ) {
         val response = apiRequest.sendGet(CLASSES_URL) ?: return cancel()
         val json = JSONObject(response)
@@ -26,21 +29,21 @@ class ClassDao {
 
         setProgressMax(count)
         val results = json.getJSONArray("results")
-        var clazz: JSONObject
-        var name: String
-        for (i in 0 until results.length()) {
+
+        (0..<results.length()).map {
             CoroutineScope(Dispatchers.IO).launch {
-                clazz = results.getJSONObject(i)
-                name = clazz.getString("name")
+                val clazz = results.getJSONObject(it)
+                val name = clazz.getString("name")
                 if (names.contains(name)) skip()
-                else fetchClass(clazz, save)
+                else fetchClass(clazz, save, fetchClassLevels)
             }
-        }
+        }.joinAll()
     }
 
-    private fun fetchClass(
+    private suspend fun fetchClass(
         clazz: JSONObject,
-        save: (Class) -> Unit
+        save: (Class) -> Long,
+        fetchClassLevels: KSuspendFunction1<String, Unit>
     ) {
         val name = clazz.getString("name")
         val hitDie = clazz.getString("hit_dice").removePrefix("1d").toInt()
@@ -52,7 +55,7 @@ class ClassDao {
         val profTools = clazz.getString("prof_tools")
         val spellcastingAbility = AbilityRepository.getDatabaseCode(clazz.getString("spellcasting_ability"))
 
-        save(
+        val failed = save(
             Class(
                 name,
                 hitDie,
@@ -64,6 +67,10 @@ class ClassDao {
                 profTools,
                 spellcastingAbility
             )
-        )
+        ) == -1L
+
+        if (failed) return
+
+        fetchClassLevels(name)
     }
 }

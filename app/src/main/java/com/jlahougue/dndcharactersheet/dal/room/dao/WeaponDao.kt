@@ -11,7 +11,7 @@ import com.jlahougue.dndcharactersheet.dal.entities.Weapon
 @Dao
 interface WeaponDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insert(weapon: Weapon)
+    fun insert(weapon: Weapon): Long
 
     @Update
     fun update(weapon: Weapon)

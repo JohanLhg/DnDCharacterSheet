@@ -20,6 +20,12 @@ class WeaponAdapter(private val listener: WeaponListener) : RecyclerView.Adapter
             notifyDataSetChanged()
         }
 
+    var unitSystem = ""
+        set(value) {
+            field = value
+            notifyItemRangeChanged(0, weapons.size, UNIT_SYSTEM_CHANGED)
+        }
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder(RecyclerWeaponBinding.inflate(LayoutInflater.from(parent.context), parent, false))
     }
@@ -30,9 +36,21 @@ class WeaponAdapter(private val listener: WeaponListener) : RecyclerView.Adapter
         val weapon = weapons[position]
 
         holder.bind.weapon = weapon
+        holder.bind.unitSystem = unitSystem
 
         holder.bind.layoutWeapon.setOnClickListener {
             listener.onWeaponClicked(weapons[holder.adapterPosition].name)
         }
+    }
+
+    override fun onBindViewHolder(holder: ViewHolder, position: Int, payloads: MutableList<Any>) {
+        when {
+            payloads.contains(UNIT_SYSTEM_CHANGED) -> holder.bind.unitSystem = unitSystem
+            else -> super.onBindViewHolder(holder, position, payloads)
+        }
+    }
+
+    companion object {
+        const val UNIT_SYSTEM_CHANGED = 0
     }
 }

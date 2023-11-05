@@ -40,4 +40,37 @@ class Class(
     }
 
     fun isSpellcaster() = spellcastingAbility.isNotBlank()
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (javaClass != other?.javaClass) return false
+
+        other as Class
+
+        if (name != other.name) return false
+        if (hitDice != other.hitDice) return false
+        if (equipment != other.equipment) return false
+        if (profSavingThrows != other.profSavingThrows) return false
+        if (profSkills != other.profSkills) return false
+        if (profArmor != other.profArmor) return false
+        if (profWeapons != other.profWeapons) return false
+        if (profTools != other.profTools) return false
+        if (spellcastingAbility != other.spellcastingAbility) return false
+
+        return true
+    }
+
+    override fun hashCode(): Int {
+        var result = name.hashCode()
+        result = 31 * result + hitDice
+        result = 31 * result + equipment.hashCode()
+        result = 31 * result + profSavingThrows.hashCode()
+        result = 31 * result + profSkills.hashCode()
+        result = 31 * result + profArmor.hashCode()
+        result = 31 * result + profWeapons.hashCode()
+        result = 31 * result + profTools.hashCode()
+        result = 31 * result + spellcastingAbility.hashCode()
+        return result
+    }
+
+
 }

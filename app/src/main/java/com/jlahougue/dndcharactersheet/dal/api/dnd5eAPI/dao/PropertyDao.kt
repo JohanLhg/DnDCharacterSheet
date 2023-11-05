@@ -1,44 +1,45 @@
 package com.jlahougue.dndcharactersheet.dal.api.dnd5eAPI.dao
 
-import com.jlahougue.dndcharactersheet.dal.api.dnd5eAPI.DnDApiRequest
+import com.jlahougue.dndcharactersheet.dal.api.dnd5eAPI.DnD5eApiRequest
 import com.jlahougue.dndcharactersheet.dal.entities.Property
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.joinAll
 import kotlinx.coroutines.launch
 import org.json.JSONObject
 
 class PropertyDao {
-    private val apiRequest = DnDApiRequest.getInstance()
+    private val apiRequest = DnD5eApiRequest.getInstance()
 
-    fun fetchProperties(
+    suspend fun fetchProperties(
         names: List<String>,
         cancel: () -> Unit,
         setProgressMax: (Int) -> Unit,
         skip: () -> Unit,
+        updateProgress: () -> Unit,
         save: (Property) -> Unit
     ) {
-        val response = apiRequest.sendGet(DnDApiRequest.DND_API_WEAPON_PROPERTIES_URL) ?: return cancel()
+        val response = apiRequest.sendGet(DnD5eApiRequest.WEAPON_PROPERTIES_URL) ?: return cancel()
         val json = JSONObject(response)
         val count = json.getInt("count")
         if (count == names.size) return cancel()
 
         setProgressMax(count)
         val results = json.getJSONArray("results")
-        var name: String
-        var url: String
-        for (i in 0 until results.length()) {
+        (0..<results.length()).map {
             CoroutineScope(Dispatchers.IO).launch {
-                name = results.getJSONObject(i).getString("name")
-                url = results.getJSONObject(i).getString("url")
+                val name = results.getJSONObject(it).getString("name")
+                val url = results.getJSONObject(it).getString("url")
                 if (names.contains(name)) skip()
-                else fetchProperty(DnDApiRequest.getUrl(url), skip, save)
+                else fetchProperty(DnD5eApiRequest.getUrl(url), skip, updateProgress, save)
             }
-        }
+        }.joinAll()
     }
 
     private fun fetchProperty(
         url: String,
         skip: () -> Unit,
+        updateProgress: () -> Unit,
         save: (Property) -> Unit
     ) {
         val response = apiRequest.sendGet(url) ?: return skip()
@@ -52,6 +53,8 @@ class PropertyDao {
             desc += descArray.getString(i)
         }
 
-        save(Property(name = name, description = desc))
+        save(Property(name, desc))
+
+        updateProgress()
     }
 }

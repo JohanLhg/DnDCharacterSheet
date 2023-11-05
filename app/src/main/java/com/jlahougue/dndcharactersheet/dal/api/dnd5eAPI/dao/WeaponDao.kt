@@ -1,6 +1,7 @@
 package com.jlahougue.dndcharactersheet.dal.api.dnd5eAPI.dao
 
-import com.jlahougue.dndcharactersheet.dal.api.dnd5eAPI.DnDApiRequest
+import android.util.Log
+import com.jlahougue.dndcharactersheet.dal.api.dnd5eAPI.DnD5eApiRequest
 import com.jlahougue.dndcharactersheet.dal.entities.Weapon
 import com.jlahougue.dndcharactersheet.dal.entities.WeaponProperty
 import com.jlahougue.dndcharactersheet.dal.repositories.AbilityRepository.Companion.DEXTERITY
@@ -10,49 +11,56 @@ import com.jlahougue.dndcharactersheet.extensions.getJSONArrayIfExists
 import com.jlahougue.dndcharactersheet.extensions.getStringIfExists
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.joinAll
 import kotlinx.coroutines.launch
 import org.json.JSONObject
 
 class WeaponDao {
-    private val apiRequest = DnDApiRequest.getInstance()
+    private val apiRequest = DnD5eApiRequest.getInstance()
 
-    fun fetchWeapons(
+    suspend fun fetchWeapons(
         names: List<String>,
         cancel: () -> Unit,
         setProgressMax: (Int) -> Unit,
         skip: () -> Unit,
-        save: (Weapon, List<WeaponProperty>) -> Unit
+        updateProgress: () -> Unit,
+        saveWeapon: (Weapon) -> Long,
+        saveProperties: (List<WeaponProperty>) -> Unit
     ) {
-        val response = apiRequest.sendGet(DnDApiRequest.DND_API_WEAPON_URL) ?: return cancel()
+        val response = apiRequest.sendGet(DnD5eApiRequest.WEAPON_URL) ?: return cancel()
         val json = JSONObject(response)
 
         val weapons = json.getJSONArray("equipment")
         val count = weapons.length()
-        if (count == names.size) {
-            cancel()
-            return
-        }
+        if (count == names.size) return cancel()
 
         setProgressMax(count)
 
-        var name: String
-        var url: String
-        for (i in 0 until weapons.length()) {
+        (0 until weapons.length()).map {
             CoroutineScope(Dispatchers.IO).launch {
-                name = weapons.getJSONObject(i).getString("name")
-                url = weapons.getJSONObject(i).getString("url")
+                val name = weapons.getJSONObject(it).getString("name")
+                val url = weapons.getJSONObject(it).getString("url")
+
                 if (names.contains(name)) skip()
-                else fetchWeapon(DnDApiRequest.getUrl(url), cancel, save)
+                else fetchWeapon(
+                    DnD5eApiRequest.getUrl(url),
+                    skip,
+                    updateProgress,
+                    saveWeapon,
+                    saveProperties
+                )
             }
-        }
+        }.joinAll()
     }
 
     private fun fetchWeapon(
         url: String,
-        cancel: () -> Unit,
-        save: (Weapon, List<WeaponProperty>) -> Unit
+        skip: () -> Unit,
+        updateProgress: () -> Unit,
+        saveWeapon: (Weapon) -> Long,
+        saveProperties: (List<WeaponProperty>) -> Unit
     ) {
-        val response = apiRequest.sendGet(url) ?: return cancel()
+        val response = apiRequest.sendGet(url) ?: return skip()
 
         val json = JSONObject(response)
         val name = json.getString("name")
@@ -69,6 +77,7 @@ class WeaponDao {
             costStr = cost.getString("quantity") + cost.getString("unit")
         }
 
+        //region Damage
         var damageDice = ""
         var damageType = ""
         if (json.has("damage")) {
@@ -84,33 +93,35 @@ class WeaponDao {
             twoHandedDamageDice = twoHandedDamage.getString("damage_dice")
             twoHandedDamageType = twoHandedDamage.getJSONObject("damage_type").getString("name")
         }
+        //endregion
 
-        var rangeStr = ""
+        //region Range
+        var rangeMin = 0
+        var rangeMax = 0
         if (json.has("range")) {
             val range = json.getJSONObject("range")
-            val rangeNormal = range.getIntIfExists("normal")
-            val rangeLong = range.getIntIfExists("long")
-            when {
-                rangeNormal != 0 && rangeLong != 0 -> rangeStr = "$rangeNormal-$rangeLong m"
-                rangeNormal != 0 -> rangeStr = "$rangeNormal m"
-                rangeLong != 0 -> rangeStr = "$rangeLong m"
-            }
+            rangeMin = range.getIntIfExists("normal")
+            rangeMax = range.getIntIfExists("long")
         }
 
-        var throwRangeStr = ""
+        var throwRangeMin = 0
+        var throwRangeMax = 0
         if (json.has("throw_range")) {
             val throwRange = json.getJSONObject("throw_range")
-            val throwRangeNormal = throwRange.getIntIfExists("normal")
-            val throwRangeLong = throwRange.getIntIfExists("long")
-            when {
-                throwRangeNormal != 0 && throwRangeLong != 0 -> throwRangeStr = "$throwRangeNormal-$throwRangeLong m"
-                throwRangeNormal != 0 -> throwRangeStr = "$throwRangeNormal m"
-                throwRangeLong != 0 -> throwRangeStr = "$throwRangeLong m"
-            }
+            throwRangeMin = throwRange.getIntIfExists("normal")
+            throwRangeMax = throwRange.getIntIfExists("long")
         }
+
+        if (test == DEXTERITY) {
+            if (throwRangeMin == 0) throwRangeMin = rangeMin
+            if (throwRangeMax == 0) throwRangeMax = rangeMax
+        }
+        val normalRange = rangeMin
+        //endregion
 
         val weight = json.getIntIfExists("weight")
 
+        //region Description
         var description = ""
         val desc = json.getJSONArrayIfExists("desc")
         for (i in 0 until desc.length()) {
@@ -123,29 +134,37 @@ class WeaponDao {
             if (description.isNotEmpty()) description += "\n"
             description += specialArray.getString(i)
         }
+        //endregion
 
-        val weapon = Weapon(
-            name = name,
-            test = test,
-            damage = damageDice,
-            damageType = damageType,
-            twoHandedDamage = twoHandedDamageDice,
-            twoHandedDamageType = twoHandedDamageType,
-            range = rangeStr,
-            throwRange = throwRangeStr,
-            weight = weight,
-            cost = costStr,
-            description = description
-        )
+        val failed = saveWeapon(
+            Weapon(
+                name,
+                test,
+                damageDice,
+                damageType,
+                twoHandedDamageDice,
+                twoHandedDamageType,
+                normalRange,
+                throwRangeMin,
+                throwRangeMax,
+                weight,
+                costStr,
+                description
+            )
+        ) == -1L
+
+        if (failed) return skip()
 
         val properties = listOf<WeaponProperty>()
         val weaponProperties = json.getJSONArrayIfExists("properties")
+        Log.d("WeaponDao", weaponProperties.toString())
         var property: String
         for (i in 0 until weaponProperties.length()) {
             property = weaponProperties.getJSONObject(i).getString("name")
             properties.plus(WeaponProperty(name, property))
         }
+        saveProperties(properties)
 
-        save(weapon, properties)
+        updateProgress()
     }
 }

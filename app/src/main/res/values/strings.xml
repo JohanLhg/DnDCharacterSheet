@@ -76,6 +76,9 @@
     <string name="language">Language</string>
     <string name="fr">French</string>
     <string name="en">English</string>
+    <string name="unit_system">Unit System</string>
+    <string name="imperial">Imperial</string>
+    <string name="metric">Metric</string>
     <string name="account">Account</string>
     <string name="change_email">Change email address</string>
     <string name="change_password">Change password</string>
@@ -101,6 +104,10 @@
     <string name="profile_bonds">Bonds</string>
     <string name="profile_flaws">Flaws</string>
     <string name="profile_background">Background</string>
+
+    <!-- Class selection -->
+    <string name="title_select_class">Select a class</string>
+    <string name="select_class">Select class</string>
 
     <!-- Stats -->
     <string name="strength">Strength</string>

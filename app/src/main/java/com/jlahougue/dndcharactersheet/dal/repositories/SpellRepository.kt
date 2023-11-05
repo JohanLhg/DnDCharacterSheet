@@ -7,32 +7,33 @@ import com.jlahougue.dndcharactersheet.dal.entities.SpellClass
 import com.jlahougue.dndcharactersheet.dal.entities.SpellDamage
 import com.jlahougue.dndcharactersheet.dal.entities.displayClasses.SpellWithCharacterInfo
 import com.jlahougue.dndcharactersheet.dal.room.DnDDatabase
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 
 class SpellRepository(application: Application) {
     private val roomDao = DnDDatabase.getInstance(application).spellDao()
     private val apiDao = SpellDao()
 
-    fun fetchAll(
+    suspend fun fetchAll(
         damageTypes: List<String>,
         cancel: () -> Unit,
         setProgressMax: (Int) -> Unit,
         skip: () -> Unit,
-        save: (Spell, List<SpellClass>, List<SpellDamage>) -> Unit
+        updateProgress: () -> Unit,
+        saveSpell: (Spell) -> Long,
+        saveClasses: (List<SpellClass>) -> Unit,
+        saveDamages: (List<SpellDamage>) -> Unit
     ) {
-        CoroutineScope(Dispatchers.IO).launch {
-            val ids = roomDao.getIds()
-            apiDao.fetchSpells(
-                ids,
-                damageTypes,
-                cancel,
-                setProgressMax,
-                skip,
-                save
-            )
-        }
+        val ids = roomDao.getIds()
+        apiDao.fetchSpells(
+            ids,
+            damageTypes,
+            cancel,
+            setProgressMax,
+            skip,
+            updateProgress,
+            saveSpell,
+            saveClasses,
+            saveDamages
+        )
     }
 
     fun save(spell: Spell) = roomDao.insert(spell)

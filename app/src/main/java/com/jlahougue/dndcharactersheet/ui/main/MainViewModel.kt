@@ -6,48 +6,65 @@ import android.net.Uri
 import android.widget.ImageView
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
-import com.jlahougue.dndcharactersheet.dal.entities.Character
+import androidx.lifecycle.viewModelScope
+import com.jlahougue.dndcharactersheet.dal.entities.Class
+import com.jlahougue.dndcharactersheet.dal.entities.displayClasses.CharacterInfo
 import com.jlahougue.dndcharactersheet.dal.repositories.AuthRepository
 import com.jlahougue.dndcharactersheet.dal.repositories.CharacterRepository
 import com.jlahougue.dndcharactersheet.dal.repositories.CharacterSheetRepository
+import com.jlahougue.dndcharactersheet.dal.repositories.ClassRepository
 import com.jlahougue.dndcharactersheet.dal.repositories.PreferencesRepository
-import kotlin.concurrent.thread
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 class MainViewModel(application: Application): AndroidViewModel(application) {
 
     private val characterSheetRepository = CharacterSheetRepository(application)
     private val characterRepository = CharacterRepository(application)
     private val preferencesRepository = PreferencesRepository(application)
+    private val classRepository = ClassRepository(application)
 
     private val authRepository = AuthRepository()
 
-    val character = MutableLiveData<Character>(null)
+    val preferences = preferencesRepository.get()
+
+    val character = MutableLiveData<CharacterInfo>(null)
 
     var characterID = MutableLiveData(-1L)
 
     fun setCharacterId(id: Long) {
         if (id == -1L) return
-        thread {
+        viewModelScope.launch(Dispatchers.IO) {
             characterID.postValue(id)
-            character.postValue(characterRepository.get(id))
+            character.postValue(characterRepository.getInfo(id))
         }
     }
 
-    fun updateCharacter(character: Character) {
-        thread { characterRepository.update(character) }
+    fun updateCharacter(character: CharacterInfo) {
+        viewModelScope.launch(Dispatchers.IO) {
+            this@MainViewModel.character.postValue(character)
+            characterRepository.update(character.getCharacter())
+        }
+    }
+    
+    fun getClasses(callback: (List<Class>) -> Unit) {
+        viewModelScope.launch(Dispatchers.IO) { callback(classRepository.get()) }
     }
 
     fun loadCharacterImage(context: Context, imageProfile: ImageView) {
-        thread { characterRepository.loadImage(characterID.value!!, context, imageProfile) }
+        viewModelScope.launch(Dispatchers.IO) { characterRepository.loadImage(characterID.value!!, context, imageProfile) }
     }
 
     fun updateProfileImage(uri: Uri) {
-        thread { characterRepository.uploadImage(characterID.value!!, uri) }
+        viewModelScope.launch(Dispatchers.IO) { characterRepository.uploadImage(characterID.value!!, uri) }
     }
 
-    fun setLanguage(language: String) {
-        thread {
-            preferencesRepository.setLanguage(language)
+    fun updatePreferences(language: String = "", unitSystem: String = "") {
+        viewModelScope.launch(Dispatchers.IO) {
+            val pref = preferences.value!!
+            if (language != "") pref.language = language
+            if (unitSystem != "") pref.unitSystem = unitSystem
+            preferencesRepository.update(pref)
         }
     }
 
@@ -63,12 +80,8 @@ class MainViewModel(application: Application): AndroidViewModel(application) {
         authRepository.signOut()
     }
 
-    fun getLanguage(callback: (String) -> Unit) {
-        thread { preferencesRepository.getLanguage(callback) }
-    }
-
     fun saveToRemote() {
-        thread { characterSheetRepository.saveToRemote(characterID.value!!) }
+        viewModelScope.launch(Dispatchers.IO) { characterSheetRepository.saveToRemote(characterID.value!!) }
     }
 
     companion object {

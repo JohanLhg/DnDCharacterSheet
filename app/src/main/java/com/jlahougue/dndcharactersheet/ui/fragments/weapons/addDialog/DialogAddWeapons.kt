@@ -6,9 +6,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.DialogFragment
 import com.jlahougue.dndcharactersheet.R
-import com.jlahougue.dndcharactersheet.databinding.DialogAddWeaponBinding
+import com.jlahougue.dndcharactersheet.databinding.DialogAddWeaponsBinding
 
-class DialogAddWeapon(
+class DialogAddWeapons(
     private val weapons: List<String>,
     private val listener: DialogAddWeaponListener,
     private val adapterListener: WeaponNameAdapter.WeaponNameListener
@@ -22,7 +22,7 @@ class DialogAddWeapon(
         fun addWeapons(weaponCounts: Map<String, Int>)
     }
 
-    private lateinit var dialogBinding: DialogAddWeaponBinding
+    private lateinit var dialogBinding: DialogAddWeaponsBinding
 
     //Make dialog fullscreen
     override fun onStart() {
@@ -37,7 +37,7 @@ class DialogAddWeapon(
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        dialogBinding = DialogAddWeaponBinding.inflate(inflater, container, false)
+        dialogBinding = DialogAddWeaponsBinding.inflate(inflater, container, false)
 
         val adapter = WeaponNameAdapter(weapons, adapterListener)
         dialogBinding.recyclerWeaponNames.adapter = adapter

@@ -39,6 +39,8 @@ class CharacterRepository(application: Application) {
 
     fun get(characterID: Long) = roomDao.get(characterID)
 
+    fun getInfo(characterID: Long) = roomDao.getInfo(characterID)
+
     fun getLevel(characterID: Long) = roomDao.getLevel(characterID)
 
     fun getProficiency(characterID: Long) = roomDao.getProficiency(characterID)

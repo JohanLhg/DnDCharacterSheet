@@ -1,5 +1,6 @@
 package com.jlahougue.dndcharactersheet.dal.room.dao
 
+import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
@@ -19,8 +20,8 @@ interface PreferencesDao {
     @Delete
     fun delete(preferences: Preferences)
 
-    @Query("UPDATE preferences SET language = :language WHERE id = 1")
-    fun setLanguage(language: String)
+    @Query("SELECT * FROM preferences WHERE id = 1")
+    fun get(): LiveData<Preferences>
 
     @Query("SELECT language FROM preferences WHERE id = 1")
     fun getLanguage(): String?

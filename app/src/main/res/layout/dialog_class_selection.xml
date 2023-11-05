@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -16,7 +17,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <LinearLayout
-            android:id="@+id/layoutSpellDetails"
+            android:id="@+id/layoutSelectClass"
             android:layout_width="600dp"
             android:layout_height="wrap_content"
             android:background="@color/spell"
@@ -24,11 +25,11 @@
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/titleAddWeapons"
+                android:id="@+id/titleSelectClass"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="5dp"
-                android:text="@string/add_weapon"
+                android:text="@string/title_select_class"
                 android:textAppearance="@style/TextAppearance.AppCompat.Large"
                 android:textColor="@color/white"
                 android:textStyle="bold" />
@@ -41,57 +42,14 @@
                 android:background="@color/white"
                 android:orientation="vertical">
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
-                    <include
-                        layout="@layout/element_searchbar"
-                        android:layout_width="250dp"
-                        android:layout_height="wrap_content" />
-
-                    <Space
-                        android:layout_width="0dp"
-                        android:layout_height="0dp"
-                        android:layout_weight="1" />
-
-                    <ImageView
-                        android:id="@+id/buttonMelee"
-                        android:layout_width="50dp"
-                        android:layout_height="match_parent"
-                        android:adjustViewBounds="true"
-                        android:contentDescription="@string/check_all"
-                        android:paddingHorizontal="10dp"
-                        android:paddingVertical="5dp"
-                        android:scaleType="fitCenter"
-                        android:src="@drawable/weapon_melee" />
-
-                    <ImageView
-                        android:id="@+id/buttonRanged"
-                        android:layout_width="50dp"
-                        android:layout_height="match_parent"
-                        android:adjustViewBounds="true"
-                        android:contentDescription="@string/check_all"
-                        android:paddingHorizontal="10dp"
-                        android:paddingVertical="5dp"
-                        android:scaleType="fitCenter"
-                        android:src="@drawable/weapon_ranged" />
-
-                </LinearLayout>
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="2dp"
-                    android:background="@color/divider" />
-
                 <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/recyclerWeaponNames"
+                    android:id="@+id/recyclerClasses"
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_weight="1"
                     android:orientation="vertical"
-                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    tools:listitem="@layout/recycler_class" />
 
                 <View
                     android:layout_width="match_parent"
@@ -120,18 +78,17 @@
                         app:strokeColor="@color/spell_dark" />
 
                     <Button
-                        android:id="@+id/buttonAddWeapon"
+                        android:id="@+id/buttonSelectClass"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginHorizontal="5dp"
                         android:backgroundTint="@color/spell_dark"
-                        android:text="@string/add_weapon"
-                        app:icon="@drawable/plus"
+                        android:text="@string/select_class"
+                        app:icon="@drawable/tick"
                         app:iconPadding="5dp"
                         app:iconSize="20dp" />
                 </LinearLayout>
             </LinearLayout>
-
         </LinearLayout>
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
