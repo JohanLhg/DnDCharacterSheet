@@ -1,4 +1,4 @@
-package com.jlahougue.dndcharactersheet.domainLayer
+package com.jlahougue.dndcharactersheet.domainLayer.apiFetch
 
 import com.jlahougue.dndcharactersheet.extensions.setCollectorIO
 import kotlinx.coroutines.CoroutineScope

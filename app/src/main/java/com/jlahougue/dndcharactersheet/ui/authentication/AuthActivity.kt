@@ -11,11 +11,11 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.jlahougue.dndcharactersheet.R
 import com.jlahougue.dndcharactersheet.databinding.ActivityAuthBinding
-import com.jlahougue.dndcharactersheet.domainLayer.FetchAllFromApiUseCase.Companion.CLASSES
-import com.jlahougue.dndcharactersheet.domainLayer.FetchAllFromApiUseCase.Companion.DAMAGE_TYPES
-import com.jlahougue.dndcharactersheet.domainLayer.FetchAllFromApiUseCase.Companion.PROPERTIES
-import com.jlahougue.dndcharactersheet.domainLayer.FetchAllFromApiUseCase.Companion.SPELLS
-import com.jlahougue.dndcharactersheet.domainLayer.FetchAllFromApiUseCase.Companion.WEAPONS
+import com.jlahougue.dndcharactersheet.domainLayer.apiFetch.FetchAllFromApiUseCase.Companion.CLASSES
+import com.jlahougue.dndcharactersheet.domainLayer.apiFetch.FetchAllFromApiUseCase.Companion.DAMAGE_TYPES
+import com.jlahougue.dndcharactersheet.domainLayer.apiFetch.FetchAllFromApiUseCase.Companion.PROPERTIES
+import com.jlahougue.dndcharactersheet.domainLayer.apiFetch.FetchAllFromApiUseCase.Companion.SPELLS
+import com.jlahougue.dndcharactersheet.domainLayer.apiFetch.FetchAllFromApiUseCase.Companion.WEAPONS
 import com.jlahougue.dndcharactersheet.ui.authentication.AuthViewModel.Companion.LANGUAGE_LOADED
 import com.jlahougue.dndcharactersheet.ui.authentication.AuthViewModel.Companion.LOGIN
 import com.jlahougue.dndcharactersheet.ui.authentication.AuthViewModel.Companion.REGISTER

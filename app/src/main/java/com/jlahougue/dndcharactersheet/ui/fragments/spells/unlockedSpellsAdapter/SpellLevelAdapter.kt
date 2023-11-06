@@ -1,4 +1,4 @@
-package com.jlahougue.dndcharactersheet.ui.fragments.spells.oldAdapter
+package com.jlahougue.dndcharactersheet.ui.fragments.spells.unlockedSpellsAdapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup

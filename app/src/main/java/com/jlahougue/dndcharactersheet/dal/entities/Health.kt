@@ -16,7 +16,9 @@ class Health(
     @ColumnInfo(name = HEALTH_TEMPORARY_HP)
     var temporaryHp: Int = 0,
     @ColumnInfo(name = HEALTH_HIT_DICE)
-    var hitDice: String = ""
+    var hitDice: String = "",
+    @ColumnInfo(name = HEALTH_HIT_DICE_USED)
+    var hitDiceUsed: Int = 0
 ) {
     companion object {
         const val TABLE_HEALTH = "health"
@@ -25,6 +27,7 @@ class Health(
         const val HEALTH_CURRENT_HP = "current_hp"
         const val HEALTH_TEMPORARY_HP = "temporary_hp"
         const val HEALTH_HIT_DICE = "hit_dice"
+        const val HEALTH_HIT_DICE_USED = "hit_dice_used"
     }
 
     override fun toString(): String {

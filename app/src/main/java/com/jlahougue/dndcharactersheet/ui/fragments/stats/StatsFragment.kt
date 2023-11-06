@@ -12,6 +12,8 @@ import com.jlahougue.dndcharactersheet.R
 import com.jlahougue.dndcharactersheet.dal.entities.views.AbilityView
 import com.jlahougue.dndcharactersheet.dal.entities.views.SkillView
 import com.jlahougue.dndcharactersheet.databinding.FragmentStatsBinding
+import com.jlahougue.dndcharactersheet.extensions.addFocusedTextChangedListener
+import com.jlahougue.dndcharactersheet.extensions.observeNonNull
 import com.jlahougue.dndcharactersheet.extensions.observeOnce
 import com.jlahougue.dndcharactersheet.ui.elements.SearchBarListener
 import com.jlahougue.dndcharactersheet.ui.fragments.stats.StatsViewModel.Companion.CURRENT
@@ -71,7 +73,7 @@ class StatsFragment : Fragment(),
                 savingThrowAdapter.abilities = it
             }
 
-            statsViewModel.health.observeOnce(viewLifecycleOwner) {
+            statsViewModel.health.observeNonNull(viewLifecycleOwner) {
                 val spinnerValues = resources.getStringArray(R.array.dice)
                 binding.columnHealth.spinnerHitDice.setSelection(spinnerValues.indexOf(it.hitDice))
             }
@@ -128,90 +130,74 @@ class StatsFragment : Fragment(),
     }
 
     private fun initializeHealthListeners() {
-        binding.columnHealth.labelCurrentHealth.setOnClickListener {
-            statsViewModel.healthMode.value = CURRENT
-        }
-
-        binding.columnHealth.labelTemporaryHealth.setOnClickListener {
-            statsViewModel.healthMode.value = TEMPORARY
-        }
-
-        binding.columnHealth.editCurrent.addTextChangedListener {
-            val health = statsViewModel.health.value!!
-            health.currentHp = getInt(it.toString())
-            statsViewModel.updateHealth(health)
-        }
-
-        binding.columnHealth.buttonCurrentHealthPlus.setOnClickListener {
-            val health = statsViewModel.health.value!!
-            health.currentHp++
-            statsViewModel.health.value = health
-        }
-
-        binding.columnHealth.buttonCurrentHealthMinus.setOnClickListener {
-            val health = statsViewModel.health.value!!
-            health.currentHp--
-            statsViewModel.health.value = health
-        }
-
-        binding.columnHealth.editMax.addTextChangedListener {
-            val health = statsViewModel.health.value!!
-            health.maxHp = getInt(it.toString())
-            statsViewModel.updateHealth(health)
-        }
-
-        binding.columnHealth.buttonMaxHealthPlus.setOnClickListener {
-            val health = statsViewModel.health.value!!
-            health.maxHp++
-            statsViewModel.health.value = health
-        }
-
-        binding.columnHealth.buttonMaxHealthMinus.setOnClickListener {
-            val health = statsViewModel.health.value!!
-            health.maxHp--
-            statsViewModel.health.value = health
-        }
-
-        binding.columnHealth.editTemporaryHealth.addTextChangedListener {
-            val health = statsViewModel.health.value!!
-            health.temporaryHp = getInt(it.toString())
-            statsViewModel.updateHealth(health)
-        }
-
-        binding.columnHealth.buttonTemporaryHealthPlus.setOnClickListener {
-            val health = statsViewModel.health.value!!
-            health.temporaryHp++
-            statsViewModel.health.value = health
-        }
-
-        binding.columnHealth.buttonTemporaryHealthMinus.setOnClickListener {
-            val health = statsViewModel.health.value!!
-            health.temporaryHp--
-            statsViewModel.health.value = health
-        }
-
-        binding.columnHealth.buttonTemporaryHealthClear.setOnClickListener {
-            val health = statsViewModel.health.value!!
-            health.temporaryHp = 0
-            statsViewModel.health.value = health
-            statsViewModel.healthMode.value = CURRENT
-        }
-
-        binding.columnHealth.spinnerHitDice.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(
-                parent: AdapterView<*>?,
-                view: View?,
-                position: Int,
-                id: Long
-            ) {
-                if (parent != null && statsViewModel.health.value != null) {
-                    val health = statsViewModel.health.value!!
-                    health.hitDice = parent.getItemAtPosition(position).toString()
-                    statsViewModel.updateHealth(health)
-                }
+        binding.columnHealth.apply {
+            labelCurrentHealth.setOnClickListener {
+                statsViewModel.healthMode.value = CURRENT
             }
 
-            override fun onNothingSelected(parent: AdapterView<*>?) {}
+            labelTemporaryHealth.setOnClickListener {
+                statsViewModel.healthMode.value = TEMPORARY
+            }
+
+            editCurrent.addTextChangedListener {
+                statsViewModel.updateHealth(currentHp = getInt(it.toString()))
+            }
+
+            buttonCurrentHealthPlus.setOnClickListener {
+                statsViewModel.updateHealth(addToCurrentHp = 1)
+            }
+
+            buttonCurrentHealthMinus.setOnClickListener {
+                statsViewModel.updateHealth(addToCurrentHp = -1)
+            }
+
+            editMax.addFocusedTextChangedListener {
+                statsViewModel.updateHealth(maxHp = getInt(it.toString()))
+            }
+
+            buttonMaxHealthPlus.setOnClickListener {
+                statsViewModel.updateHealth(addToMaxHp = 1)
+            }
+
+            buttonMaxHealthMinus.setOnClickListener {
+                statsViewModel.updateHealth(addToMaxHp = -1)
+            }
+
+            editTemporaryHealth.addFocusedTextChangedListener {
+                statsViewModel.updateHealth(temporaryHp = getInt(it.toString()))
+            }
+
+            buttonTemporaryHealthPlus.setOnClickListener {
+                statsViewModel.updateHealth(addToTemporaryHp = 1)
+            }
+
+            buttonTemporaryHealthMinus.setOnClickListener {
+                statsViewModel.updateHealth(addToTemporaryHp = -1)
+            }
+
+            buttonTemporaryHealthClear.setOnClickListener {
+                statsViewModel.updateHealth(temporaryHp = 0)
+            }
+
+            spinnerHitDice.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+                override fun onItemSelected(
+                    parent: AdapterView<*>?,
+                    view: View?,
+                    position: Int,
+                    id: Long
+                ) {
+                    if (parent != null && statsViewModel.health.value != null) {
+                        val hitDice = parent.getItemAtPosition(position).toString()
+                        statsViewModel.updateHealth(hitDice = hitDice)
+                    }
+                }
+
+                override fun onNothingSelected(parent: AdapterView<*>?) {}
+            }
+
+            buttonLongRest.setOnClickListener {
+                statsViewModel.longRest()
+            }
         }
     }
 

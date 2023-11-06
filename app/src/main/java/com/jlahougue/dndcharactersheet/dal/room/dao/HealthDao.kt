@@ -21,8 +21,14 @@ interface HealthDao {
     fun delete(health: Health)
 
     @Query("SELECT * FROM health WHERE cid = :characterID")
+    fun getLive(characterID: Long): LiveData<Health>
+
+    @Query("SELECT * FROM health WHERE cid = :characterID")
     fun get(characterID: Long): Health
 
     @Query("SELECT level FROM character WHERE id = :characterID")
     fun getHitDiceNbr(characterID: Long): LiveData<Int>
+
+    @Query("SELECT level FROM character WHERE id = :characterID")
+    fun getHitDiceNbrValue(characterID: Long): Int
 }

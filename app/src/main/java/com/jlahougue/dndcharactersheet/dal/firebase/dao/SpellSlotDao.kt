@@ -6,11 +6,11 @@ import com.jlahougue.dndcharactersheet.dal.firebase.FirebaseDatabase
 class SpellSlotDao {
     private val firebaseDatabase = FirebaseDatabase.getInstance()
 
-    fun insert(cid: Long, level: Int, used: Int) {
-        firebaseDatabase.updateCharacterSheet(cid, mapOf("spellSlots.$level" to used))
+    fun insert(spellSlot: SpellSlot) {
+        firebaseDatabase.updateCharacterSheet(spellSlot.cid, mapOf("spellSlots.${spellSlot.level}" to spellSlot.used))
     }
 
-    fun insertAll(spellSlots: MutableList<SpellSlot>) {
+    fun insertAll(spellSlots: List<SpellSlot>) {
         val characterID = spellSlots[0].cid
         val map = mutableMapOf<String, Int>()
         for (spellSlot in spellSlots) {

@@ -1,8 +1,9 @@
-package com.jlahougue.dndcharactersheet.ui.fragments.spells
+package com.jlahougue.dndcharactersheet.ui.fragments.spells.editAdapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.jlahougue.dndcharactersheet.dal.entities.SpellSlot
 import com.jlahougue.dndcharactersheet.dal.entities.views.SpellSlotView
 import com.jlahougue.dndcharactersheet.databinding.RecyclerCantripsFilterBinding
 import com.jlahougue.dndcharactersheet.databinding.RecyclerSpellLevelFilterBinding
@@ -14,18 +15,22 @@ class SpellLevelAdapter(private val listener: SpellLevelListener) : RecyclerView
         const val VIEW_TYPE_SPELL_LEVEL = 1
 
         const val ACTIVE = 0
+        const val SPELL_SLOT = 1
     }
 
     interface SpellLevelListener {
         fun onSpellLevelClick(position: Int)
+        fun updateSpellSlot(spellSlot: SpellSlot)
     }
-
-    var characterLevel = 0
 
     var spellLevels = listOf<SpellSlotView>()
         set(value) {
+            val old = field
             field = value
-            notifyDataSetChanged()
+            if (old.size == value.size) {
+                notifyItemRangeChanged(0, value.size, SPELL_SLOT)
+            }
+            else notifyDataSetChanged()
         }
 
     var activeLevel = 0
@@ -63,10 +68,23 @@ class SpellLevelAdapter(private val listener: SpellLevelListener) : RecyclerView
                 }
             }
             is SpellLevelViewHolder -> {
-                holder.bind.spellSlot = spellLevel
-                holder.bind.active = position == activeLevel
-                holder.bind.root.setOnClickListener {
-                    listener.onSpellLevelClick(holder.adapterPosition)
+                holder.bind.apply {
+                    spellSlot = spellLevel
+                    active = position == activeLevel
+
+                    buttonSlotMinus.setOnClickListener {
+                        spellLevel.left--
+                        listener.updateSpellSlot(spellLevel.getSpellSlot())
+                    }
+
+                    buttonSlotPlus.setOnClickListener {
+                        spellLevel.left++
+                        listener.updateSpellSlot(spellLevel.getSpellSlot())
+                    }
+
+                    root.setOnClickListener {
+                        listener.onSpellLevelClick(holder.adapterPosition)
+                    }
                 }
             }
         }
@@ -85,6 +103,13 @@ class SpellLevelAdapter(private val listener: SpellLevelListener) : RecyclerView
                     }
                     is SpellLevelViewHolder -> {
                         holder.bind.active = position == activeLevel
+                    }
+                }
+            }
+            payloads.contains(SPELL_SLOT) -> {
+                when (holder) {
+                    is SpellLevelViewHolder -> {
+                        holder.bind.spellSlot = spellLevels[position]
                     }
                 }
             }

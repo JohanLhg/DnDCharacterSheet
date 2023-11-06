@@ -6,6 +6,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.jlahougue.dndcharactersheet.dal.entities.CharacterSpell
+import com.jlahougue.dndcharactersheet.dal.entities.SpellSlot
 import com.jlahougue.dndcharactersheet.dal.entities.displayClasses.SpellWithCharacterInfo
 import com.jlahougue.dndcharactersheet.dal.entities.views.CharacterSpellStatsView
 import com.jlahougue.dndcharactersheet.dal.entities.views.SpellSlotView
@@ -75,7 +76,7 @@ class SpellsViewModel(application: Application) : AndroidViewModel(application) 
             field = value
             spellcasting = spellcastingRepository.get(value)
             characterSpellStats = characterSpellRepository.getCharacterSpellStats(value)
-            spellLevels = spellSlotRepository.get(value)
+            spellLevels = spellSlotRepository.getLive(value)
             setEditMode(editMode.value!!)
         }
 
@@ -113,6 +114,12 @@ class SpellsViewModel(application: Application) : AndroidViewModel(application) 
     fun updateCharacterSpell(characterSpell: CharacterSpell) {
         viewModelScope.launch(Dispatchers.IO) {
             characterSpellRepository.update(characterSpell)
+        }
+    }
+
+    fun updateSpellSlot(spellSlot: SpellSlot) {
+        viewModelScope.launch(Dispatchers.IO) {
+            spellSlotRepository.save(spellSlot)
         }
     }
 

@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
+        <import type="android.view.View" />
         <variable
             name="spellSlot"
             type="com.jlahougue.dndcharactersheet.dal.entities.views.SpellSlotView" />
@@ -66,24 +67,54 @@
             android:src="@drawable/spell_background_left"
             app:layout_constraintBottom_toBottomOf="@id/textSpellLevel"
             app:layout_constraintEnd_toStartOf="@id/backgroundEnd"
-            app:layout_constraintStart_toStartOf="@id/textSpellSlotLeft"
+            app:layout_constraintStart_toEndOf="@+id/backgroundMiddle"
             app:layout_constraintTop_toTopOf="@id/textSpellLevel" />
 
-        <TextView
-            android:id="@+id/textSpellSlotLeft"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
+        <LinearLayout
+            android:id="@+id/layoutSpellSlotLeft"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:animateLayoutChanges="true"
             android:gravity="center"
-            android:paddingStart="5dp"
-            android:paddingEnd="15dp"
-            android:text="@{String.valueOf(spellSlot.left)}"
-            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-            android:textColor="@{active ? @color/spell : @color/black}"
-            android:textStyle="bold"
+            android:orientation="horizontal"
+            android:layout_marginEnd="10dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="@id/backgroundEnd"
             app:layout_constraintStart_toEndOf="@+id/backgroundMiddle"
-            app:layout_constraintTop_toTopOf="@+id/textSpellLevel" />
+            app:layout_constraintTop_toTopOf="@+id/textSpellLevel">
+
+            <ImageView
+                android:id="@+id/buttonSlotMinus"
+                android:layout_width="35dp"
+                android:layout_height="wrap_content"
+                android:adjustViewBounds="true"
+                android:padding="10dp"
+                android:scaleType="fitCenter"
+                android:src="@drawable/chevron_left"
+                android:visibility="@{spellSlot.total == 0 ? View.GONE : (spellSlot.left == 0) ? View.INVISIBLE : View.VISIBLE}"
+                app:tint="@color/black" />
+
+            <TextView
+                android:id="@+id/textSpellSlotLeft"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="@{spellSlot.total == 0 || spellSlot.total == spellSlot.left ? String.valueOf(spellSlot.total) : String.valueOf(spellSlot.left) + ` / ` + String.valueOf(spellSlot.total)}"
+                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                android:textColor="@{active ? @color/spell : @color/black}"
+                android:textStyle="bold" />
+
+            <ImageView
+                android:id="@+id/buttonSlotPlus"
+                android:layout_width="35dp"
+                android:layout_height="wrap_content"
+                android:adjustViewBounds="true"
+                android:padding="10dp"
+                android:scaleType="fitCenter"
+                android:src="@drawable/chevron_right"
+                android:visibility="@{spellSlot.total == 0 ? View.GONE : (spellSlot.left >= spellSlot.total) ? View.INVISIBLE : View.VISIBLE}"
+                app:tint="@color/black" />
+        </LinearLayout>
 
         <TextView
             android:id="@+id/labelSpellSlotLeft"

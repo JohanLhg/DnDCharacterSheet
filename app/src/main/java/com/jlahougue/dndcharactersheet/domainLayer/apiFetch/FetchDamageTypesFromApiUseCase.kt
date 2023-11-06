@@ -1,22 +1,22 @@
-package com.jlahougue.dndcharactersheet.domainLayer
+package com.jlahougue.dndcharactersheet.domainLayer.apiFetch
 
 import android.app.Application
-import com.jlahougue.dndcharactersheet.dal.repositories.PropertyRepository
+import com.jlahougue.dndcharactersheet.dal.repositories.DamageTypeRepository
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-class FetchPropertiesFromApiUseCase(application: Application): FetchFromApiUseCase() {
-    private val propertyRepository = PropertyRepository(application)
+class FetchDamageTypesFromApiUseCase(application: Application): FetchFromApiUseCase() {
+    private val damageTypeRepository = DamageTypeRepository(application)
 
     operator fun invoke() {
         CoroutineScope(Dispatchers.IO).launch {
-            propertyRepository.fetchAll(
+            damageTypeRepository.fetchAll(
                 ::cancel,
                 ::setProgressMax,
                 ::skip,
                 ::updateProgress,
-                propertyRepository::save
+                damageTypeRepository::save
             )
             finish()
         }

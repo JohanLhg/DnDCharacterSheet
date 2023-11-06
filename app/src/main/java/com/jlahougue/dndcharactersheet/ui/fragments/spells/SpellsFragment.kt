@@ -10,6 +10,7 @@ import androidx.fragment.app.viewModels
 import com.jlahougue.dndcharactersheet.R
 import com.jlahougue.dndcharactersheet.dal.entities.CharacterSpell
 import com.jlahougue.dndcharactersheet.dal.entities.Class
+import com.jlahougue.dndcharactersheet.dal.entities.SpellSlot
 import com.jlahougue.dndcharactersheet.dal.entities.displayClasses.SpellWithCharacterInfo
 import com.jlahougue.dndcharactersheet.dal.repositories.AbilityRepository
 import com.jlahougue.dndcharactersheet.databinding.FragmentSpellsBinding
@@ -17,6 +18,8 @@ import com.jlahougue.dndcharactersheet.extensions.collectLatestLifecycleFlow
 import com.jlahougue.dndcharactersheet.extensions.observeOnce
 import com.jlahougue.dndcharactersheet.ui.elements.SearchBarListener
 import com.jlahougue.dndcharactersheet.ui.fragments.spells.clazz.DialogClassDetails
+import com.jlahougue.dndcharactersheet.ui.fragments.spells.editAdapter.SpellAdapter
+import com.jlahougue.dndcharactersheet.ui.fragments.spells.editAdapter.SpellLevelAdapter
 import com.jlahougue.dndcharactersheet.ui.fragments.spells.spellDetails.DialogSpellDetails
 import com.jlahougue.dndcharactersheet.ui.main.MainActivity
 
@@ -134,6 +137,10 @@ class SpellsFragment : Fragment(),
 
     override fun onSpellLevelClick(position: Int) {
         spellsViewModel.setSpellLevel(position)
+    }
+
+    override fun updateSpellSlot(spellSlot: SpellSlot) {
+        spellsViewModel.updateSpellSlot(spellSlot)
     }
 
     override fun onClassClicked(clazz: Class) {

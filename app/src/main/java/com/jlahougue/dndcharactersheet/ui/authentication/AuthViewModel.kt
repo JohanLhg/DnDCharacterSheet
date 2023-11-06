@@ -10,7 +10,7 @@ import androidx.lifecycle.viewModelScope
 import com.jlahougue.dndcharactersheet.dal.repositories.AuthRepository
 import com.jlahougue.dndcharactersheet.dal.repositories.CharacterSheetRepository
 import com.jlahougue.dndcharactersheet.dal.repositories.PreferencesRepository
-import com.jlahougue.dndcharactersheet.domainLayer.FetchAllFromApiUseCase
+import com.jlahougue.dndcharactersheet.domainLayer.apiFetch.FetchAllFromApiUseCase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 

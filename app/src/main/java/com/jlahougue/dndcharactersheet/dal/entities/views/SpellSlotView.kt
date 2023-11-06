@@ -2,6 +2,7 @@ package com.jlahougue.dndcharactersheet.dal.entities.views
 
 import androidx.room.ColumnInfo
 import androidx.room.DatabaseView
+import com.jlahougue.dndcharactersheet.dal.entities.SpellSlot
 
 @DatabaseView(
     """
@@ -27,17 +28,21 @@ class SpellSlotView(
     @ColumnInfo(name = SPELL_SLOT_TOTAL)
     val total: Int,
     @ColumnInfo(name = SPELL_SLOT_LEFT)
-    val left: Int
+    var left: Int
 ) {
+    fun getSpellSlot(): SpellSlot {
+        return SpellSlot(cid, level, total - left)
+    }
+
+    override fun toString(): String {
+        return "$cid : ${level}th slot $left/$total"
+    }
+
     companion object {
         const val VIEW_SPELL_SLOT = "spell_slot_view"
         const val SPELL_SLOT_CID = "cid"
         const val SPELL_SLOT_LEVEL = "level"
         const val SPELL_SLOT_TOTAL = "total"
         const val SPELL_SLOT_LEFT = "slots_left"
-    }
-
-    override fun toString(): String {
-        return "$cid : ${level}th slot $left/$total"
     }
 }

@@ -17,13 +17,25 @@ class SpellSlotRepository(application: Application) {
         firebaseDao.insertAll(spellSlots)
     }
 
+    fun save(spellSlot: SpellSlot) {
+        roomDao.insert(spellSlot)
+        firebaseDao.insert(spellSlot)
+    }
+
+    fun save(spellSlots: List<SpellSlot>) {
+        roomDao.insertAll(spellSlots)
+        firebaseDao.insertAll(spellSlots)
+    }
+
     fun saveToLocal(spellSlot: SpellSlot) = roomDao.insert(spellSlot)
 
-    fun get(characterID: Long) = roomDao.get(characterID)
+    fun getLive(characterID: Long) = roomDao.getLive(characterID)
 
     fun getMap(characterID: Long): Map<String, Int> {
         val map = roomDao.getMap(characterID).mapKeys { it.key.toString() }
         println(map)
         return map
     }
+
+    fun restoreSpellSlots(characterID: Long) = create(characterID)
 }
