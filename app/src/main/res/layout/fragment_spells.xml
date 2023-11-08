@@ -361,7 +361,6 @@
                     android:text="@{String.valueOf(viewModel.characterSpellStats.totalHighlighted)}"
                     android:textAppearance="@style/TextAppearance.AppCompat.Medium"
                     android:textStyle="bold" />
-
             </LinearLayout>
 
             <Button
@@ -387,7 +386,6 @@
                 app:icon="@drawable/edit"
                 app:iconPadding="5dp"
                 app:iconSize="20dp" />
-
         </LinearLayout>
 
         <View
@@ -459,6 +457,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
+                android:visibility="@{viewModel.editMode ? View.VISIBLE : View.GONE}"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 tools:itemCount="9"
                 tools:listitem="@layout/recycler_spell_level_filter" />
@@ -469,29 +468,25 @@
                 android:background="?android:attr/listDivider" />
 
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recyclerSpells"
+                android:id="@+id/recyclerEditSpells"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:visibility="@{viewModel.editMode ? View.VISIBLE : View.GONE}"
                 app:layoutManager="GridLayoutManager"
                 app:spanCount="4"
                 tools:itemCount="10"
                 tools:listitem="@layout/recycler_spell" />
 
-            <androidx.core.widget.NestedScrollView
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerSpells"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:visibility="gone">
-
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/recyclerSpellLevels"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:nestedScrollingEnabled="false"
-                    android:orientation="vertical"
-                    app:layoutManager="LinearLayoutManager"
-                    tools:listitem="@layout/recycler_spell_level" />
-            </androidx.core.widget.NestedScrollView>
+                android:orientation="vertical"
+                android:visibility="@{viewModel.editMode ? View.GONE : View.VISIBLE}"
+                app:layoutManager="GridLayoutManager"
+                app:spanCount="2"
+                tools:itemCount="10"
+                tools:listitem="@layout/recycler_spell_level" />
         </LinearLayout>
-
     </LinearLayout>
 </layout>

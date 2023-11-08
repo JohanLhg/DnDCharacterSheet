@@ -1,4 +1,4 @@
-package com.jlahougue.dndcharactersheet.ui.fragments.spells.clazz
+package com.jlahougue.dndcharactersheet.ui.fragments.spells.spellDetails
 
 import android.view.LayoutInflater
 import android.view.View.GONE

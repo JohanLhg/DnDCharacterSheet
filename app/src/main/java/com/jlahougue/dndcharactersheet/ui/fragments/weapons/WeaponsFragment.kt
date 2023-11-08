@@ -11,16 +11,16 @@ import com.jlahougue.dndcharactersheet.dal.entities.displayClasses.WeaponDetail
 import com.jlahougue.dndcharactersheet.databinding.FragmentWeaponsBinding
 import com.jlahougue.dndcharactersheet.extensions.observeNonNull
 import com.jlahougue.dndcharactersheet.extensions.observeOnce
-import com.jlahougue.dndcharactersheet.ui.fragments.weapons.addDialog.DialogAddWeapons
+import com.jlahougue.dndcharactersheet.ui.fragments.weapons.addDialog.AddWeaponsDialog
 import com.jlahougue.dndcharactersheet.ui.fragments.weapons.addDialog.WeaponNameAdapter
-import com.jlahougue.dndcharactersheet.ui.fragments.weapons.details.DialogPropertyDetails
-import com.jlahougue.dndcharactersheet.ui.fragments.weapons.details.DialogWeaponDetails
+import com.jlahougue.dndcharactersheet.ui.fragments.weapons.details.PropertyDetailsDialog
+import com.jlahougue.dndcharactersheet.ui.fragments.weapons.details.WeaponDetailsDialog
 import com.jlahougue.dndcharactersheet.ui.main.MainActivity
 
 class WeaponsFragment : Fragment(),
     WeaponAdapter.WeaponListener,
-    DialogWeaponDetails.DialogWeaponDetailsListener,
-    DialogAddWeapons.DialogAddWeaponListener,
+    WeaponDetailsDialog.DialogWeaponDetailsListener,
+    AddWeaponsDialog.DialogAddWeaponListener,
     WeaponNameAdapter.WeaponNameListener {
 
     private var _binding: FragmentWeaponsBinding? = null
@@ -48,9 +48,9 @@ class WeaponsFragment : Fragment(),
 
         binding.buttonAddWeapon.setOnClickListener {
             weaponsViewModel.getNotOwnedWeapons {
-                val dialog = DialogAddWeapons(it, this, this)
+                val dialog = AddWeaponsDialog(it, this, this)
                 main.runOnUiThread {
-                    dialog.show(parentFragmentManager, DialogAddWeapons.TAG)
+                    dialog.show(parentFragmentManager, AddWeaponsDialog.TAG)
                 }
             }
         }
@@ -85,9 +85,9 @@ class WeaponsFragment : Fragment(),
     }
 
     private fun openWeaponDetails(weapon: WeaponDetail) {
-        val dialog = DialogWeaponDetails(weapon, this)
+        val dialog = WeaponDetailsDialog(weapon, this)
         main.runOnUiThread {
-            dialog.show(parentFragmentManager, DialogWeaponDetails.TAG)
+            dialog.show(parentFragmentManager, WeaponDetailsDialog.TAG)
         }
     }
 
@@ -96,9 +96,9 @@ class WeaponsFragment : Fragment(),
     }
 
     override fun openWeaponPropertyDetails(property: Property) {
-        val dialog = DialogPropertyDetails(property)
+        val dialog = PropertyDetailsDialog(property)
         main.runOnUiThread {
-            dialog.show(parentFragmentManager, DialogPropertyDetails.TAG)
+            dialog.show(parentFragmentManager, PropertyDetailsDialog.TAG)
         }
     }
 

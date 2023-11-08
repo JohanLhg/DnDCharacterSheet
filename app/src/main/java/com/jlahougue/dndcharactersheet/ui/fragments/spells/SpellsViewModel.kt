@@ -16,6 +16,7 @@ import com.jlahougue.dndcharactersheet.dal.repositories.ClassRepository
 import com.jlahougue.dndcharactersheet.dal.repositories.SpellRepository
 import com.jlahougue.dndcharactersheet.dal.repositories.SpellSlotRepository
 import com.jlahougue.dndcharactersheet.dal.repositories.SpellcastingRepository
+import com.jlahougue.dndcharactersheet.extensions.groupBy
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -38,12 +39,23 @@ class SpellsViewModel(application: Application) : AndroidViewModel(application) 
 
     lateinit var spellLevels: LiveData<List<SpellSlotView>>
 
+    // Unlocked spells
     private val _spells = MutableStateFlow<List<SpellWithCharacterInfo>>(listOf())
-    private val spells = _spells.asStateFlow()
+    val spells = _spells.asStateFlow()
 
-    val filteredSpells = MutableLiveData<List<SpellWithCharacterInfo>>(listOf())
+    private val _filteredSpells = MutableStateFlow<List<SpellWithCharacterInfo>>(listOf())
+    val filteredSpells = _filteredSpells.groupBy { spell -> spell.level }
 
-    val editMode = MutableLiveData(false)
+    // Edit mode
+    private val _editSpells = MutableStateFlow<List<SpellWithCharacterInfo>>(listOf())
+    private val editSpells = _editSpells.asStateFlow()
+
+    private val _filteredEditSpells = MutableStateFlow<List<SpellWithCharacterInfo>>(listOf())
+    val filteredEditSpells = _filteredEditSpells.asStateFlow()
+
+    private val _editMode = MutableStateFlow(false)
+    val editMode = _editMode.asStateFlow()
+
     var classFilter = listOf<String>()
         set(value) {
             field = value
@@ -60,12 +72,22 @@ class SpellsViewModel(application: Application) : AndroidViewModel(application) 
             classes.postValue(classRepository.getNames())
         }
         viewModelScope.launch {
+            editSpells.collect {
+                updateSpellFilters()
+            }
+        }
+        viewModelScope.launch {
             spells.collect {
                 updateSpellFilters()
             }
         }
         viewModelScope.launch {
             spellLevel.collect {
+                updateSpellList()
+            }
+        }
+        viewModelScope.launch {
+            editMode.collect {
                 updateSpellList()
             }
         }
@@ -77,12 +99,13 @@ class SpellsViewModel(application: Application) : AndroidViewModel(application) 
             spellcasting = spellcastingRepository.get(value)
             characterSpellStats = characterSpellRepository.getCharacterSpellStats(value)
             spellLevels = spellSlotRepository.getLive(value)
-            setEditMode(editMode.value!!)
+            updateSpellList()
         }
 
     fun setEditMode(editMode: Boolean) {
-        this.editMode.postValue(editMode)
-        updateSpellList()
+        viewModelScope.launch(Dispatchers.IO) {
+            _editMode.emit(editMode)
+        }
     }
 
     fun setSpellLevel(spellLevel: Int) {
@@ -91,20 +114,27 @@ class SpellsViewModel(application: Application) : AndroidViewModel(application) 
 
     private fun updateSpellList() {
         viewModelScope.launch(Dispatchers.IO) {
-            if (editMode.value!!) _spells.emit(spellRepository.get(characterID, spellLevel.value))
-            else _spells.emit(spellRepository.getUnlocked(characterID, spellLevel.value))
+            if (editMode.value) _editSpells.emit(spellRepository.get(characterID, spellLevel.value))
+            else _spells.emit(spellRepository.getUnlocked(characterID))
         }
     }
 
     private fun updateSpellFilters() {
         viewModelScope.launch(Dispatchers.IO) {
             if (classFilter.isEmpty()) {
-                filteredSpells.postValue(spells.value.filter { spell ->
+                _filteredSpells.emit(spells.value.filter { spell ->
+                    spell.name.contains(search, true)
+                })
+                _filteredEditSpells.emit(editSpells.value.filter { spell ->
                     spell.name.contains(search, true)
                 })
                 return@launch
             }
-            filteredSpells.postValue(spells.value.filter { spell ->
+            _filteredSpells.emit(spells.value.filter { spell ->
+                spell.classes.any { clazz -> classFilter.contains(clazz.name) }
+                        && spell.name.contains(search, true)
+            })
+            _filteredEditSpells.emit(editSpells.value.filter { spell ->
                 spell.classes.any { clazz -> classFilter.contains(clazz.name) }
                         && spell.name.contains(search, true)
             })
@@ -123,5 +153,5 @@ class SpellsViewModel(application: Application) : AndroidViewModel(application) 
         }
     }
 
-    fun refresh() = setEditMode(editMode.value!!)
+    fun refresh() = updateSpellList()
 }

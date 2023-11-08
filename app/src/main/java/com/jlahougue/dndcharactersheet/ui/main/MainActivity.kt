@@ -20,8 +20,8 @@ import com.jlahougue.dndcharactersheet.dal.repositories.PreferencesRepository.Co
 import com.jlahougue.dndcharactersheet.dal.repositories.PreferencesRepository.Companion.UNIT_SYSTEM_METRIC
 import com.jlahougue.dndcharactersheet.databinding.ActivityMainBinding
 import com.jlahougue.dndcharactersheet.extensions.observeNonNull
-import com.jlahougue.dndcharactersheet.ui.fragments.spells.clazz.DialogClassDetails
-import com.jlahougue.dndcharactersheet.ui.fragments.spells.spellDetails.DialogSpellDetails
+import com.jlahougue.dndcharactersheet.ui.detailsDialogs.DialogClassDetails
+import com.jlahougue.dndcharactersheet.ui.fragments.spells.spellDetails.SpellDetailsDialog
 import com.jlahougue.dndcharactersheet.ui.main.MainViewModel.Companion.CHARACTER_ID
 import com.jlahougue.dndcharactersheet.ui.main.profile.ClassAdapter
 import com.jlahougue.dndcharactersheet.ui.main.profile.DialogClassSelection
@@ -290,7 +290,7 @@ class MainActivity : AppCompatActivity(),
     }
 
     override fun onClassClicked(clazz: Class) {
-        DialogClassDetails(clazz).show(supportFragmentManager, DialogSpellDetails.TAG)
+        DialogClassDetails(clazz).show(supportFragmentManager, SpellDetailsDialog.TAG)
     }
 
     override fun setClass(clazz: Class) {

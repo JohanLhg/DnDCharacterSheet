@@ -8,7 +8,7 @@ import androidx.fragment.app.DialogFragment
 import com.jlahougue.dndcharactersheet.R
 import com.jlahougue.dndcharactersheet.databinding.DialogAddWeaponsBinding
 
-class DialogAddWeapons(
+class AddWeaponsDialog(
     private val weapons: List<String>,
     private val listener: DialogAddWeaponListener,
     private val adapterListener: WeaponNameAdapter.WeaponNameListener

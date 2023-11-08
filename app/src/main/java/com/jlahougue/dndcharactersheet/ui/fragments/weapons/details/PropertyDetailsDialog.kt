@@ -9,7 +9,7 @@ import com.jlahougue.dndcharactersheet.dal.entities.Property
 import com.jlahougue.dndcharactersheet.databinding.DialogPropertyDetailsBinding
 import io.noties.markwon.Markwon
 
-class DialogPropertyDetails(
+class PropertyDetailsDialog(
     private val property: Property
 ) : DialogFragment() {
 

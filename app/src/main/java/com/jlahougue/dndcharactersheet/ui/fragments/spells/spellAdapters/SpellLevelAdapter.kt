@@ -1,4 +1,4 @@
-package com.jlahougue.dndcharactersheet.ui.fragments.spells.editAdapter
+package com.jlahougue.dndcharactersheet.ui.fragments.spells.spellAdapters
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -71,16 +71,6 @@ class SpellLevelAdapter(private val listener: SpellLevelListener) : RecyclerView
                 holder.bind.apply {
                     spellSlot = spellLevel
                     active = position == activeLevel
-
-                    buttonSlotMinus.setOnClickListener {
-                        spellLevel.left--
-                        listener.updateSpellSlot(spellLevel.getSpellSlot())
-                    }
-
-                    buttonSlotPlus.setOnClickListener {
-                        spellLevel.left++
-                        listener.updateSpellSlot(spellLevel.getSpellSlot())
-                    }
 
                     root.setOnClickListener {
                         listener.onSpellLevelClick(holder.adapterPosition)

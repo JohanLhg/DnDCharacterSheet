@@ -16,16 +16,17 @@ import com.jlahougue.dndcharactersheet.dal.repositories.AbilityRepository
 import com.jlahougue.dndcharactersheet.databinding.FragmentSpellsBinding
 import com.jlahougue.dndcharactersheet.extensions.collectLatestLifecycleFlow
 import com.jlahougue.dndcharactersheet.extensions.observeOnce
+import com.jlahougue.dndcharactersheet.ui.detailsDialogs.DialogClassDetails
 import com.jlahougue.dndcharactersheet.ui.elements.SearchBarListener
-import com.jlahougue.dndcharactersheet.ui.fragments.spells.clazz.DialogClassDetails
-import com.jlahougue.dndcharactersheet.ui.fragments.spells.editAdapter.SpellAdapter
-import com.jlahougue.dndcharactersheet.ui.fragments.spells.editAdapter.SpellLevelAdapter
-import com.jlahougue.dndcharactersheet.ui.fragments.spells.spellDetails.DialogSpellDetails
+import com.jlahougue.dndcharactersheet.ui.fragments.spells.spellAdapters.AllSpellAdapter
+import com.jlahougue.dndcharactersheet.ui.fragments.spells.spellAdapters.SpellAdapter
+import com.jlahougue.dndcharactersheet.ui.fragments.spells.spellAdapters.SpellLevelAdapter
+import com.jlahougue.dndcharactersheet.ui.fragments.spells.spellDetails.SpellDetailsDialog
 import com.jlahougue.dndcharactersheet.ui.main.MainActivity
 
 class SpellsFragment : Fragment(),
-    SpellAdapter.SpellListener,
-    DialogSpellDetails.DialogSpellDetailsListener,
+    SpellAdapter.Companion.SpellListener,
+    SpellDetailsDialog.DialogSpellDetailsListener,
     ClassFilterAdapter.ClassFilterListener,
     SpellLevelAdapter.SpellLevelListener
 {
@@ -43,6 +44,7 @@ class SpellsFragment : Fragment(),
     private val classFilterAdapter by lazy { ClassFilterAdapter(this) }
     private val spellLevelAdapter by lazy { SpellLevelAdapter(this) }
     private val spellAdapter by lazy { SpellAdapter(this) }
+    private val allSpellsAdapter by lazy { AllSpellAdapter(this) }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -58,7 +60,8 @@ class SpellsFragment : Fragment(),
 
         binding.recyclerClassFilter.adapter = classFilterAdapter
         binding.recyclerSpellLevelsFilter.adapter = spellLevelAdapter
-        binding.recyclerSpells.adapter = spellAdapter
+        binding.recyclerEditSpells.adapter = spellAdapter
+        binding.recyclerSpells.adapter = allSpellsAdapter
 
         binding.buttonUncheckAll.setOnClickListener { classFilterAdapter.uncheckAll() }
 
@@ -75,20 +78,20 @@ class SpellsFragment : Fragment(),
             }
         }
 
-        spellsViewModel.editMode.observe(viewLifecycleOwner) { editMode ->
-            spellAdapter.editMode = editMode
-        }
-
         spellsViewModel.classes.observe(viewLifecycleOwner) { classes ->
             classFilterAdapter.classes = classes
         }
 
-        collectLatestLifecycleFlow(spellsViewModel.spellLevel) { spellLevel: Int ->
+        collectLatestLifecycleFlow(spellsViewModel.spellLevel) { spellLevel ->
             spellLevelAdapter.activeLevel = spellLevel
         }
 
-        spellsViewModel.filteredSpells.observe(viewLifecycleOwner) { filteredSpells ->
+        collectLatestLifecycleFlow(spellsViewModel.filteredEditSpells) { filteredSpells ->
             spellAdapter.spells = filteredSpells
+        }
+
+        collectLatestLifecycleFlow(spellsViewModel.filteredSpells) { filteredMapSpells ->
+            allSpellsAdapter.spellLevels = filteredMapSpells
         }
 
         return binding.root
@@ -119,9 +122,9 @@ class SpellsFragment : Fragment(),
     }
 
     override fun onSpellClick(spell: SpellWithCharacterInfo) {
-        DialogSpellDetails(spell, this).show(
+        SpellDetailsDialog(spell, this).show(
             main.supportFragmentManager,
-            DialogSpellDetails.TAG
+            SpellDetailsDialog.TAG
         )
     }
 

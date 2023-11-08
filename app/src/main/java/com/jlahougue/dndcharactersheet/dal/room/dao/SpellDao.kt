@@ -98,6 +98,7 @@ interface SpellDao {
         AND character_spell.unlocked = 1
     """)
     fun getUnlocked(characterID: Long): List<SpellWithCharacterInfo>
+
     @Transaction
     @Query("""
         SELECT

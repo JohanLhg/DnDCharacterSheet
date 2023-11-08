@@ -1,4 +1,4 @@
-package com.jlahougue.dndcharactersheet.ui.fragments.spells.editAdapter
+package com.jlahougue.dndcharactersheet.ui.fragments.spells.spellAdapters
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -7,22 +7,18 @@ import com.jlahougue.dndcharactersheet.dal.entities.CharacterSpell
 import com.jlahougue.dndcharactersheet.dal.entities.displayClasses.SpellWithCharacterInfo
 import com.jlahougue.dndcharactersheet.databinding.RecyclerSpellBinding
 
-class SpellAdapter(private val spellListener: SpellListener) : RecyclerView.Adapter<SpellAdapter.ViewHolder>() {
+class SpellAdapter(
+    private val spellListener: SpellListener,
+    spells: List<SpellWithCharacterInfo> = listOf(),
+    var editMode: Boolean = true
+)
+    : RecyclerView.Adapter<SpellAdapter.Companion.ViewHolder>() {
 
-    interface SpellListener {
-        fun onSpellClick(spell: SpellWithCharacterInfo)
-        fun updateCharacterSpell(characterSpell: CharacterSpell)
-    }
-
-    var spells = listOf<SpellWithCharacterInfo>()
+    var spells = spells
         set(value) {
             field = value
             notifyDataSetChanged()
         }
-
-    var editMode = false
-
-    class ViewHolder(val bind: RecyclerSpellBinding) : RecyclerView.ViewHolder(bind.root)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder(RecyclerSpellBinding.inflate(LayoutInflater.from(parent.context), parent, false))
@@ -37,7 +33,7 @@ class SpellAdapter(private val spellListener: SpellListener) : RecyclerView.Adap
         holder.bind.editMode = editMode
 
         holder.bind.layoutSpell.setOnClickListener {
-            spellListener.onSpellClick(spells[holder.adapterPosition])
+            spellListener.onSpellClick(spell)
         }
 
         holder.bind.checkBoxSpellUnlocked.setOnCheckedChangeListener { _, isChecked ->
@@ -56,5 +52,14 @@ class SpellAdapter(private val spellListener: SpellListener) : RecyclerView.Adap
             holder.bind.spell = spell
             spellListener.updateCharacterSpell(spell.getCharacterSpell())
         }
+    }
+
+    companion object {
+        interface SpellListener {
+            fun onSpellClick(spell: SpellWithCharacterInfo)
+            fun updateCharacterSpell(characterSpell: CharacterSpell)
+        }
+
+        class ViewHolder(val bind: RecyclerSpellBinding) : RecyclerView.ViewHolder(bind.root)
     }
 }

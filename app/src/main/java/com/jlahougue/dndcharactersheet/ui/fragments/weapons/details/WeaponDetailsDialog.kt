@@ -10,7 +10,7 @@ import com.jlahougue.dndcharactersheet.dal.entities.displayClasses.WeaponDetail
 import com.jlahougue.dndcharactersheet.dal.repositories.AbilityRepository
 import com.jlahougue.dndcharactersheet.databinding.DialogWeaponDetailsBinding
 
-class DialogWeaponDetails(
+class WeaponDetailsDialog(
     private val weapon: WeaponDetail,
     private val listener: DialogWeaponDetailsListener
 ) : DialogFragment(), WeaponPropertyAdapter.PropertyListener {

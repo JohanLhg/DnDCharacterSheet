@@ -10,10 +10,9 @@ import com.jlahougue.dndcharactersheet.dal.entities.CharacterSpell
 import com.jlahougue.dndcharactersheet.dal.entities.Class
 import com.jlahougue.dndcharactersheet.dal.entities.displayClasses.SpellWithCharacterInfo
 import com.jlahougue.dndcharactersheet.databinding.DialogSpellDetailsBinding
-import com.jlahougue.dndcharactersheet.ui.fragments.spells.clazz.ClassAdapter
 import io.noties.markwon.Markwon
 
-class DialogSpellDetails(
+class SpellDetailsDialog(
     private val spell: SpellWithCharacterInfo,
     private val listener: DialogSpellDetailsListener
 ) : DialogFragment(), ClassAdapter.ClassListener {
