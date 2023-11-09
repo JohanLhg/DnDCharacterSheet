@@ -4,80 +4,111 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.jlahougue.dndcharactersheet.dal.entities.SpellSlot
-import com.jlahougue.dndcharactersheet.dal.entities.views.SpellSlotView
-import com.jlahougue.dndcharactersheet.databinding.RecyclerCantripsFilterBinding
-import com.jlahougue.dndcharactersheet.databinding.RecyclerSpellLevelFilterBinding
+import com.jlahougue.dndcharactersheet.dal.entities.displayClasses.SpellLevel
+import com.jlahougue.dndcharactersheet.databinding.RecyclerCantripsBinding
+import com.jlahougue.dndcharactersheet.databinding.RecyclerSpellLevelBinding
 
-class SpellLevelAdapter(private val listener: SpellLevelListener) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class SpellLevelAdapter(
+    private val spellLevelListener: SpellLevelListener,
+    private val spellListener: SpellAdapter.Companion.SpellListener
+) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
-    companion object {
-        const val VIEW_TYPE_CANTRIPS = 0
-        const val VIEW_TYPE_SPELL_LEVEL = 1
-
-        const val ACTIVE = 0
-        const val SPELL_SLOT = 1
-    }
-
-    interface SpellLevelListener {
-        fun onSpellLevelClick(position: Int)
-        fun updateSpellSlot(spellSlot: SpellSlot)
-    }
-
-    var spellLevels = listOf<SpellSlotView>()
+    var levels = listOf<SpellLevel>()
         set(value) {
             val old = field
             field = value
-            if (old.size == value.size) {
-                notifyItemRangeChanged(0, value.size, SPELL_SLOT)
+
+            // When the list was empty
+            if (old.isEmpty()) {
+                notifyItemRangeInserted(0, value.size)
+                return
             }
-            else notifyDataSetChanged()
+
+            // When the list is empty
+            if (value.isEmpty()) {
+                notifyItemRangeRemoved(0, old.size)
+                return
+            }
+
+            val oldMapped = mutableMapOf<Int, SpellLevel>()
+            old.forEach { oldMapped[it.spellSlot.level] = it }
+
+            field.forEachIndexed { index, level ->
+                // When this level was already in the previous list
+                if (oldMapped.containsKey(level.spellSlot.level)) {
+                    val oldLevel = oldMapped[level.spellSlot.level]!!
+                    var slotsAreDifferent = false
+                    var spellsAreDifferent = false
+
+                    if (oldLevel.spellSlot.left != level.spellSlot.left)
+                        slotsAreDifferent = true
+
+                    if (oldLevel.spells != level.spells)
+                        spellsAreDifferent = true
+
+                    if (slotsAreDifferent && spellsAreDifferent)
+                        notifyItemChanged(index)
+                    else if (slotsAreDifferent)
+                        notifyItemChanged(index, PAYLOAD_SLOT)
+                    else if (spellsAreDifferent)
+                        notifyItemChanged(index, PAYLOAD_SPELLS)
+                }
+                // When this level was not in the previous list
+                else {
+                    notifyItemInserted(index)
+                }
+            }
+
+            // When a level was removed
+            old.forEachIndexed { index, level ->
+                if (!value.any { it.spellSlot.level == level.spellSlot.level }) {
+                    notifyItemRemoved(index)
+                }
+            }
         }
-
-    var activeLevel = 0
-        set(value) {
-            notifyItemChanged(field, ACTIVE)
-            field = value
-            notifyItemChanged(field, ACTIVE)
-        }
-
-    class SpellLevelViewHolder(val bind: RecyclerSpellLevelFilterBinding) : RecyclerView.ViewHolder(bind.root)
-
-    class CantripsViewHolder(val bind: RecyclerCantripsFilterBinding) : RecyclerView.ViewHolder(bind.root)
 
     override fun getItemViewType(position: Int): Int {
-        return if (position == 0) VIEW_TYPE_CANTRIPS else VIEW_TYPE_SPELL_LEVEL
+        return if (position == 0 && levels[0].spellSlot.level == 0) VIEW_TYPE_CANTRIPS
+        else VIEW_TYPE_SPELL_LEVEL
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when (viewType) {
-            VIEW_TYPE_CANTRIPS -> CantripsViewHolder(RecyclerCantripsFilterBinding.inflate(LayoutInflater.from(parent.context), parent, false))
-            else -> SpellLevelViewHolder(RecyclerSpellLevelFilterBinding.inflate(LayoutInflater.from(parent.context), parent, false))
+            VIEW_TYPE_CANTRIPS -> CantripsViewHolder(RecyclerCantripsBinding.inflate(LayoutInflater.from(parent.context), parent, false))
+            else -> SpellLevelViewHolder(RecyclerSpellLevelBinding.inflate(LayoutInflater.from(parent.context), parent, false))
         }
     }
 
-    override fun getItemCount() = spellLevels.size
+    override fun getItemCount() = levels.size
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        val spellLevel = spellLevels[position]
+        val level = levels[position]
+        val spells = level.spells
 
         when (holder) {
-            is CantripsViewHolder -> {
-                holder.bind.active = position == activeLevel
-                holder.bind.root.setOnClickListener {
-                    listener.onSpellLevelClick(holder.adapterPosition)
-                }
+            is CantripsViewHolder -> holder.bind.apply {
+                textSpellLevel.text = position.toString()
+                recyclerSpells.adapter = SpellAdapter(spellListener, spells, false)
+                divider.visibility = if (position % 2 == 0) ViewGroup.GONE else ViewGroup.VISIBLE
             }
-            is SpellLevelViewHolder -> {
-                holder.bind.apply {
-                    spellSlot = spellLevel
-                    active = position == activeLevel
+            is SpellLevelViewHolder -> holder.bind.apply {
+                spellLevel = level
+                recyclerSpells.adapter = SpellAdapter(spellListener, spells, false)
+                divider.visibility = if (position % 2 == 0) ViewGroup.GONE else ViewGroup.VISIBLE
 
-                    root.setOnClickListener {
-                        listener.onSpellLevelClick(holder.adapterPosition)
-                    }
+                buttonSlotMinus.setOnClickListener {
+                    level.spellSlot.left--
+                    spellLevelListener.updateSpellSlot(level.spellSlot.getSpellSlot())
+                }
+
+                buttonSlotPlus.setOnClickListener {
+                    level.spellSlot.left++
+                    spellLevelListener.updateSpellSlot(level.spellSlot.getSpellSlot())
                 }
             }
         }
+
+
     }
 
     override fun onBindViewHolder(
@@ -86,24 +117,41 @@ class SpellLevelAdapter(private val listener: SpellLevelListener) : RecyclerView
         payloads: MutableList<Any>
     ) {
         when {
-            payloads.contains(ACTIVE) -> {
+            payloads.contains(PAYLOAD_SLOT) -> {
                 when (holder) {
-                    is CantripsViewHolder -> {
-                        holder.bind.active = position == activeLevel
-                    }
                     is SpellLevelViewHolder -> {
-                        holder.bind.active = position == activeLevel
+                        holder.bind.spellLevel = levels[position]
                     }
                 }
             }
-            payloads.contains(SPELL_SLOT) -> {
+            payloads.contains(PAYLOAD_SPELLS) -> {
                 when (holder) {
                     is SpellLevelViewHolder -> {
-                        holder.bind.spellSlot = spellLevels[position]
+                        holder.bind.recyclerSpells.adapter = SpellAdapter(spellListener, levels[position].spells, false)
                     }
                 }
             }
-            else -> onBindViewHolder(holder, position)
+            else -> {
+                super.onBindViewHolder(holder, position, payloads)
+            }
         }
+    }
+
+    companion object {
+        const val VIEW_TYPE_CANTRIPS = 0
+        const val VIEW_TYPE_SPELL_LEVEL = 1
+
+        // PAYLOADS
+        const val PAYLOAD_SLOT = 0
+        const val PAYLOAD_SPELLS = 1
+
+        interface SpellLevelListener {
+            fun updateSpellSlot(spellSlot: SpellSlot)
+        }
+
+        class SpellLevelViewHolder(val bind: RecyclerSpellLevelBinding)
+            : RecyclerView.ViewHolder(bind.root)
+        class CantripsViewHolder(val bind: RecyclerCantripsBinding)
+            : RecyclerView.ViewHolder(bind.root)
     }
 }

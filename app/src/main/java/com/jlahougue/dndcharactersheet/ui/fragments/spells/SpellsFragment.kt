@@ -18,9 +18,9 @@ import com.jlahougue.dndcharactersheet.extensions.collectLatestLifecycleFlow
 import com.jlahougue.dndcharactersheet.extensions.observeOnce
 import com.jlahougue.dndcharactersheet.ui.detailsDialogs.DialogClassDetails
 import com.jlahougue.dndcharactersheet.ui.elements.SearchBarListener
-import com.jlahougue.dndcharactersheet.ui.fragments.spells.spellAdapters.AllSpellAdapter
-import com.jlahougue.dndcharactersheet.ui.fragments.spells.spellAdapters.SpellAdapter
 import com.jlahougue.dndcharactersheet.ui.fragments.spells.spellAdapters.SpellLevelAdapter
+import com.jlahougue.dndcharactersheet.ui.fragments.spells.spellAdapters.SpellAdapter
+import com.jlahougue.dndcharactersheet.ui.fragments.spells.spellAdapters.SpellLevelFilterAdapter
 import com.jlahougue.dndcharactersheet.ui.fragments.spells.spellDetails.SpellDetailsDialog
 import com.jlahougue.dndcharactersheet.ui.main.MainActivity
 
@@ -28,7 +28,8 @@ class SpellsFragment : Fragment(),
     SpellAdapter.Companion.SpellListener,
     SpellDetailsDialog.DialogSpellDetailsListener,
     ClassFilterAdapter.ClassFilterListener,
-    SpellLevelAdapter.SpellLevelListener
+    SpellLevelFilterAdapter.Companion.SpellLevelFilterListener,
+    SpellLevelAdapter.Companion.SpellLevelListener
 {
 
     private var _binding: FragmentSpellsBinding? = null
@@ -42,9 +43,9 @@ class SpellsFragment : Fragment(),
     private val spellsViewModel: SpellsViewModel by viewModels()
 
     private val classFilterAdapter by lazy { ClassFilterAdapter(this) }
-    private val spellLevelAdapter by lazy { SpellLevelAdapter(this) }
+    private val spellLevelFilterAdapter by lazy { SpellLevelFilterAdapter(this) }
     private val spellAdapter by lazy { SpellAdapter(this) }
-    private val allSpellsAdapter by lazy { AllSpellAdapter(this) }
+    private val allSpellsAdapter by lazy { SpellLevelAdapter(this, this) }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -59,7 +60,7 @@ class SpellsFragment : Fragment(),
         initializeSpellSearchBar()
 
         binding.recyclerClassFilter.adapter = classFilterAdapter
-        binding.recyclerSpellLevelsFilter.adapter = spellLevelAdapter
+        binding.recyclerSpellLevelsFilter.adapter = spellLevelFilterAdapter
         binding.recyclerEditSpells.adapter = spellAdapter
         binding.recyclerSpells.adapter = allSpellsAdapter
 
@@ -73,8 +74,12 @@ class SpellsFragment : Fragment(),
 
             binding.viewModel = spellsViewModel
 
-            spellsViewModel.spellLevels.observe(viewLifecycleOwner) { spellLevels ->
-                spellLevelAdapter.spellLevels = spellLevels
+            spellsViewModel.spellSlots.observe(viewLifecycleOwner) { spellLevels ->
+                spellLevelFilterAdapter.spellLevels = spellLevels
+            }
+
+            collectLatestLifecycleFlow(spellsViewModel.spellLevels) { spellLevels ->
+                allSpellsAdapter.levels = spellLevels
             }
         }
 
@@ -83,15 +88,15 @@ class SpellsFragment : Fragment(),
         }
 
         collectLatestLifecycleFlow(spellsViewModel.spellLevel) { spellLevel ->
-            spellLevelAdapter.activeLevel = spellLevel
+            spellLevelFilterAdapter.activeLevel = spellLevel
         }
 
         collectLatestLifecycleFlow(spellsViewModel.filteredEditSpells) { filteredSpells ->
             spellAdapter.spells = filteredSpells
         }
 
-        collectLatestLifecycleFlow(spellsViewModel.filteredSpells) { filteredMapSpells ->
-            allSpellsAdapter.spellLevels = filteredMapSpells
+        collectLatestLifecycleFlow(spellsViewModel.filteredLevels) { filteredMapSpells ->
+            allSpellsAdapter.levels = filteredMapSpells
         }
 
         return binding.root

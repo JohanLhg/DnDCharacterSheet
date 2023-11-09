@@ -9,6 +9,7 @@ import androidx.room.Transaction
 import androidx.room.Update
 import com.jlahougue.dndcharactersheet.dal.entities.Spell
 import com.jlahougue.dndcharactersheet.dal.entities.displayClasses.SpellWithCharacterInfo
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface SpellDao {
@@ -98,6 +99,22 @@ interface SpellDao {
         AND character_spell.unlocked = 1
     """)
     fun getUnlocked(characterID: Long): List<SpellWithCharacterInfo>
+
+    @Transaction
+    @Query("""
+        SELECT
+            :characterID AS cid, 
+            spell.*, 
+            character_spell.unlocked, 
+            character_spell.prepared, 
+            character_spell.always_prepared,
+            character_spell.highlighted
+        FROM spell 
+        INNER JOIN character_spell ON spell.spell_id = character_spell.spell_id
+        WHERE character_spell.cid = :characterID 
+        AND character_spell.unlocked = 1
+    """)
+    fun getUnlockedFlow(characterID: Long): Flow<List<SpellWithCharacterInfo>>
 
     @Transaction
     @Query("""

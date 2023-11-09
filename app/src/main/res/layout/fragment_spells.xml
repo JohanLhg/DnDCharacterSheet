@@ -465,6 +465,7 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="2dp"
+                android:visibility="@{viewModel.editMode ? View.VISIBLE : View.GONE}"
                 android:background="?android:attr/listDivider" />
 
             <androidx.recyclerview.widget.RecyclerView

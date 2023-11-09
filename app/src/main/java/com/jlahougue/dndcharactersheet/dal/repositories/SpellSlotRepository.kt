@@ -31,6 +31,8 @@ class SpellSlotRepository(application: Application) {
 
     fun getLive(characterID: Long) = roomDao.getLive(characterID)
 
+    fun getFlow(characterID: Long) = roomDao.getFlow(characterID)
+
     fun getMap(characterID: Long): Map<String, Int> {
         val map = roomDao.getMap(characterID).mapKeys { it.key.toString() }
         println(map)

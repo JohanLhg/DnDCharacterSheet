@@ -67,4 +67,6 @@ class SpellRepository(application: Application) {
     fun getUnlocked(characterID: Long, spellLevel: Int) = roomDao.getUnlocked(characterID, spellLevel)
 
     fun getUnlocked(characterID: Long) = roomDao.getUnlocked(characterID)
+
+    fun getUnlockedFlow(characterID: Long) = roomDao.getUnlockedFlow(characterID)
 }
