@@ -74,7 +74,6 @@
                             android:layout_marginTop="2dp"
                             android:layout_marginEnd="20dp"
                             android:layout_marginBottom="2dp"
-                            android:text="@{character.gender}"
                             android:background="@drawable/background_rounded_corners"
                             android:ems="3"
                             android:inputType="text|textCapWords"
@@ -83,6 +82,7 @@
                             android:paddingEnd="5dp"
                             android:paddingBottom="3dp"
                             android:selectAllOnFocus="true"
+                            android:text="@{character.gender}"
                             app:layout_columnSpan="1"
                             app:layout_rowSpan="1" />
 
@@ -105,7 +105,6 @@
                             android:layout_marginTop="2dp"
                             android:layout_marginEnd="20dp"
                             android:layout_marginBottom="2dp"
-                            android:text="@{String.valueOf(character.age)}"
                             android:background="@drawable/background_rounded_corners"
                             android:ems="3"
                             android:inputType="number"
@@ -114,6 +113,7 @@
                             android:paddingEnd="5dp"
                             android:paddingBottom="3dp"
                             android:selectAllOnFocus="true"
+                            android:text="@{String.valueOf(character.age)}"
                             app:layout_columnSpan="1"
                             app:layout_rowSpan="1" />
 
@@ -126,193 +126,253 @@
                     app:columnCount="2"
                     app:rowCount="4">
 
-                    <TextView
-                        android:id="@+id/labelName"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginEnd="5dp"
-                        android:labelFor="@+id/editName"
-                        android:text="@string/profile_name"
-                        android:textAppearance="@android:style/TextAppearance.Material.Medium"
-                        app:layout_columnSpan="1"
-                        app:layout_rowSpan="1" />
+                </androidx.gridlayout.widget.GridLayout>
 
-                    <EditText
-                        android:id="@+id/editName"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="2dp"
-                        android:text="@{character.name}"
-                        android:background="@drawable/background_rounded_corners"
-                        android:ems="10"
-                        android:inputType="text|textCapWords"
-                        android:paddingStart="5dp"
-                        android:paddingTop="3dp"
-                        android:paddingEnd="5dp"
-                        android:paddingBottom="3dp"
-                        app:layout_columnSpan="1"
-                        app:layout_rowSpan="1" />
-
-                    <TextView
-                        android:id="@+id/labelRace"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginEnd="5dp"
-                        android:labelFor="@+id/editRace"
-                        android:text="@string/profile_race"
-                        android:textAppearance="@android:style/TextAppearance.Material.Medium"
-                        app:layout_columnSpan="1"
-                        app:layout_rowSpan="1" />
-
-                    <EditText
-                        android:id="@+id/editRace"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="2dp"
-                        android:text="@{character.race}"
-                        android:background="@drawable/background_rounded_corners"
-                        android:ems="10"
-                        android:inputType="text|textCapWords"
-                        android:paddingStart="5dp"
-                        android:paddingTop="3dp"
-                        android:paddingEnd="5dp"
-                        android:paddingBottom="3dp"
-                        app:layout_columnSpan="1"
-                        app:layout_rowSpan="1" />
-
-                    <TextView
-                        android:id="@+id/labelClass"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginEnd="5dp"
-                        android:labelFor="@+id/editClass"
-                        android:text="@string/profile_class"
-                        android:textAppearance="@android:style/TextAppearance.Material.Medium"
-                        app:layout_columnSpan="1"
-                        app:layout_rowSpan="1" />
-
-                    <TextView
-                        android:id="@+id/editClass"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="2dp"
-                        android:textAppearance="@android:style/TextAppearance.Material.Medium"
-                        android:text="@{character.clazz}"
-                        android:paddingStart="5dp"
-                        android:paddingTop="3dp"
-                        android:paddingEnd="5dp"
-                        android:paddingBottom="3dp"
-                        app:layout_columnSpan="1"
-                        app:layout_rowSpan="1" />
-
-                    <TextView
-                        android:id="@+id/labelLevel"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginEnd="5dp"
-                        android:labelFor="@+id/editLevel"
-                        android:text="@string/profile_level"
-                        android:textAppearance="@android:style/TextAppearance.Material.Medium"
-                        app:layout_columnSpan="1"
-                        app:layout_rowSpan="1" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
 
                     <LinearLayout
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="2dp"
-                        android:gravity="center_vertical"
-                        android:orientation="horizontal"
-                        app:layout_columnSpan="1"
-                        app:layout_rowSpan="1">
+                        android:layout_height="match_parent"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/labelName"
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_marginEnd="5dp"
+                            android:layout_weight="1"
+                            android:gravity="center_vertical"
+                            android:labelFor="@+id/editName"
+                            android:text="@string/profile_name"
+                            android:textAppearance="@android:style/TextAppearance.Material.Medium" />
+
+                        <TextView
+                            android:id="@+id/labelRace"
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_marginEnd="5dp"
+                            android:layout_weight="1"
+                            android:gravity="center_vertical"
+                            android:labelFor="@+id/editRace"
+                            android:text="@string/profile_race"
+                            android:textAppearance="@android:style/TextAppearance.Material.Medium" />
+
+                        <TextView
+                            android:id="@+id/labelClass"
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_marginEnd="5dp"
+                            android:layout_weight="1"
+                            android:gravity="center_vertical"
+                            android:labelFor="@+id/editClass"
+                            android:text="@string/profile_class"
+                            android:textAppearance="@android:style/TextAppearance.Material.Medium" />
+
+                        <TextView
+                            android:id="@+id/labelLevel"
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_marginEnd="5dp"
+                            android:layout_weight="1"
+                            android:gravity="center_vertical"
+                            android:labelFor="@+id/editLevel"
+                            android:text="@string/profile_level"
+                            android:textAppearance="@android:style/TextAppearance.Material.Medium" />
+
+                        <TextView
+                            android:id="@+id/labelHeight"
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_marginEnd="5dp"
+                            android:layout_weight="1"
+                            android:gravity="center_vertical"
+                            android:labelFor="@+id/editHeight"
+                            android:text="@string/profile_height"
+                            android:textAppearance="@android:style/TextAppearance.Material.Medium" />
+
+                        <TextView
+                            android:id="@+id/labelWeight"
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_marginEnd="5dp"
+                            android:layout_weight="1"
+                            android:gravity="center_vertical"
+                            android:labelFor="@+id/editWeight"
+                            android:text="@string/profile_weight"
+                            android:textAppearance="@android:style/TextAppearance.Material.Medium" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical">
 
                         <EditText
-                            android:id="@+id/editLevel"
+                            android:id="@+id/editName"
                             android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginEnd="5dp"
-                            android:text="@{String.valueOf(character.level)}"
+                            android:layout_height="0dp"
+                            android:layout_margin="2dp"
+                            android:layout_weight="1"
                             android:background="@drawable/background_rounded_corners"
-                            android:ems="5"
-                            android:inputType="number"
+                            android:ems="10"
+                            android:inputType="text|textCapWords"
                             android:paddingStart="5dp"
                             android:paddingTop="3dp"
                             android:paddingEnd="5dp"
                             android:paddingBottom="3dp"
-                            android:selectAllOnFocus="true" />
+                            android:text="@{character.name}" />
 
-                        <ImageView
-                            android:id="@+id/buttonLevelUp"
-                            android:layout_width="30dp"
-                            android:layout_height="wrap_content"
-                            android:adjustViewBounds="true"
+                        <EditText
+                            android:id="@+id/editRace"
+                            android:layout_width="wrap_content"
+                            android:layout_height="0dp"
+                            android:layout_margin="2dp"
+                            android:layout_weight="1"
                             android:background="@drawable/background_rounded_corners"
-                            android:backgroundTint="@color/black"
-                            android:padding="3dp"
-                            android:scaleType="fitCenter"
-                            android:src="@drawable/level_up"
-                            app:tint="@color/white" />
+                            android:ems="10"
+                            android:inputType="text|textCapWords"
+                            android:paddingStart="5dp"
+                            android:paddingTop="3dp"
+                            android:paddingEnd="5dp"
+                            android:paddingBottom="3dp"
+                            android:text="@{character.race}" />
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="0dp"
+                            android:layout_margin="2dp"
+                            android:layout_weight="1"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:id="@+id/editClass"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginEnd="5dp"
+                                android:ems="5"
+                                android:paddingStart="5dp"
+                                android:paddingTop="3dp"
+                                android:paddingEnd="5dp"
+                                android:paddingBottom="3dp"
+                                android:text="@{character.clazz}"
+                                android:textAppearance="@android:style/TextAppearance.Material.Medium" />
+
+                            <ImageView
+                                android:id="@+id/buttonSelectClass"
+                                android:layout_width="35dp"
+                                android:layout_height="match_parent"
+                                android:adjustViewBounds="true"
+                                android:background="@drawable/background_rounded_corners"
+                                android:backgroundTint="@color/black"
+                                android:padding="3dp"
+                                android:scaleType="fitCenter"
+                                android:src="@drawable/tick"
+                                app:tint="@color/white" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="0dp"
+                            android:layout_margin="2dp"
+                            android:layout_weight="1"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal">
+
+                            <EditText
+                                android:id="@+id/editLevel"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginEnd="5dp"
+                                android:background="@drawable/background_rounded_corners"
+                                android:ems="5"
+                                android:inputType="number"
+                                android:paddingStart="5dp"
+                                android:paddingTop="3dp"
+                                android:paddingEnd="5dp"
+                                android:paddingBottom="3dp"
+                                android:selectAllOnFocus="true"
+                                android:text="@{String.valueOf(character.level)}" />
+
+                            <ImageView
+                                android:id="@+id/buttonLevelUp"
+                                android:layout_width="35dp"
+                                android:layout_height="match_parent"
+                                android:adjustViewBounds="true"
+                                android:background="@drawable/background_rounded_corners"
+                                android:backgroundTint="@color/black"
+                                android:padding="3dp"
+                                android:scaleType="fitCenter"
+                                android:src="@drawable/level_up"
+                                app:tint="@color/white" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="0dp"
+                            android:layout_margin="2dp"
+                            android:layout_weight="1"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal">
+
+                            <EditText
+                                android:id="@+id/editHeight"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:background="@drawable/background_rounded_corners"
+                                android:ems="5"
+                                android:inputType="numberDecimal"
+                                android:paddingStart="5dp"
+                                android:paddingTop="3dp"
+                                android:paddingEnd="5dp"
+                                android:paddingBottom="3dp"
+                                android:selectAllOnFocus="true"
+                                android:text="@{String.valueOf(character.height)}" />
+
+                            <TextView
+                                android:id="@+id/labelHeightUnit"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="5dp"
+                                android:text="@string/profile_height_unit"
+                                android:textAppearance="@android:style/TextAppearance.Material.Medium" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="0dp"
+                            android:layout_margin="2dp"
+                            android:layout_weight="1"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal">
+
+                            <EditText
+                                android:id="@+id/editWeight"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:background="@drawable/background_rounded_corners"
+                                android:ems="5"
+                                android:inputType="number"
+                                android:paddingStart="5dp"
+                                android:paddingTop="3dp"
+                                android:paddingEnd="5dp"
+                                android:paddingBottom="3dp"
+                                android:selectAllOnFocus="true"
+                                android:text="@{String.valueOf(character.weight)}" />
+
+                            <TextView
+                                android:id="@+id/labelWeightUnit"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="5dp"
+                                android:labelFor="@+id/editWeight"
+                                android:text="@string/profile_weight_unit"
+                                android:textAppearance="@android:style/TextAppearance.Material.Medium" />
+                        </LinearLayout>
                     </LinearLayout>
-
-                    <TextView
-                        android:id="@+id/labelHeight"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginEnd="5dp"
-                        android:labelFor="@+id/editHeight"
-                        android:text="@string/profile_height"
-                        android:textAppearance="@android:style/TextAppearance.Material.Medium"
-                        app:layout_columnSpan="1"
-                        app:layout_rowSpan="1" />
-
-                    <EditText
-                        android:id="@+id/editHeight"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="2dp"
-                        android:layout_marginTop="2dp"
-                        android:layout_marginEnd="20dp"
-                        android:layout_marginBottom="2dp"
-                        android:text="@{String.valueOf(character.height)}"
-                        android:background="@drawable/background_rounded_corners"
-                        android:ems="5"
-                        android:inputType="numberDecimal"
-                        android:paddingStart="5dp"
-                        android:paddingTop="3dp"
-                        android:paddingEnd="5dp"
-                        android:paddingBottom="3dp"
-                        android:selectAllOnFocus="true"
-                        app:layout_columnSpan="1"
-                        app:layout_rowSpan="1" />
-
-                    <TextView
-                        android:id="@+id/labelWeight"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginEnd="5dp"
-                        android:labelFor="@+id/editWeight"
-                        android:text="@string/profile_weight"
-                        android:textAppearance="@android:style/TextAppearance.Material.Medium"
-                        app:layout_columnSpan="1"
-                        app:layout_rowSpan="1" />
-
-                    <EditText
-                        android:id="@+id/editWeight"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="2dp"
-                        android:text="@{String.valueOf(character.weight)}"
-                        android:background="@drawable/background_rounded_corners"
-                        android:ems="5"
-                        android:inputType="number"
-                        android:paddingStart="5dp"
-                        android:paddingTop="3dp"
-                        android:paddingEnd="5dp"
-                        android:paddingBottom="3dp"
-                        android:selectAllOnFocus="true"
-                        app:layout_columnSpan="1"
-                        app:layout_rowSpan="1" />
-
-                </androidx.gridlayout.widget.GridLayout>
+                </LinearLayout>
 
             </LinearLayout>
 

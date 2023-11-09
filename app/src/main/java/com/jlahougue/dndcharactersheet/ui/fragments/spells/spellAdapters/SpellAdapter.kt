@@ -10,14 +10,31 @@ import com.jlahougue.dndcharactersheet.databinding.RecyclerSpellBinding
 class SpellAdapter(
     private val spellListener: SpellListener,
     spells: List<SpellWithCharacterInfo> = listOf(),
-    var editMode: Boolean = true
+    private var editMode: Boolean = true
 )
     : RecyclerView.Adapter<SpellAdapter.Companion.ViewHolder>() {
 
     var spells = spells
         set(value) {
+            val old = field
             field = value
-            notifyDataSetChanged()
+
+            when {
+                // When the list was empty
+                old.isEmpty() -> notifyItemRangeInserted(0, value.size)
+                // When the list is empty
+                value.isEmpty() -> notifyItemRangeRemoved(0, old.size)
+                // When the list size changed
+                old.size != value.size -> {
+                    notifyItemRangeRemoved(0, old.size)
+                    notifyItemRangeInserted(0, value.size)
+                }
+                // When the list size didn't change
+                else -> field.forEachIndexed { index, spell ->
+                    if (spell.id == old[index].id) notifyItemChanged(index, PAYLOAD_SPELL)
+                    else notifyItemChanged(index)
+                }
+            }
         }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -54,7 +71,17 @@ class SpellAdapter(
         }
     }
 
+    override fun onBindViewHolder(holder: ViewHolder, position: Int, payloads: MutableList<Any>) {
+        when {
+            payloads.contains(PAYLOAD_SPELL) -> holder.bind.spell = spells[position]
+            else -> super.onBindViewHolder(holder, position, payloads)
+        }
+    }
+
     companion object {
+        // Payloads
+        const val PAYLOAD_SPELL = 0
+
         interface SpellListener {
             fun onSpellClick(spell: SpellWithCharacterInfo)
             fun updateCharacterSpell(characterSpell: CharacterSpell)

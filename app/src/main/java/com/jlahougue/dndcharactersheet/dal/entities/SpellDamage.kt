@@ -21,6 +21,13 @@ class SpellDamage(
     @ColumnInfo(name = SPELL_DAMAGE_DAMAGE)
     var damage: String = ""
 ) {
+    fun copy(
+        sid: String = this.sid,
+        slotLevel: Int = this.slotLevel,
+        characterLevel: Int = this.characterLevel,
+        damage: String = this.damage
+    ) = SpellDamage(sid, slotLevel, characterLevel, damage)
+
     companion object {
         const val TABLE_SPELL_DAMAGE = "spell_damage"
         const val SPELL_DAMAGE_SID = "spell_id"

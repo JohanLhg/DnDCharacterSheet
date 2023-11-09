@@ -89,7 +89,28 @@ class SpellWithCharacterInfo(
         highlighted
     )
 
-    fun copy() = SpellWithCharacterInfo(
+    fun copy(
+        cid: Long = this.cid,
+        id: String = this.id,
+        name: String = this.name,
+        level: Int = this.level,
+        castingTime: String = this.castingTime,
+        range: String = this.range,
+        components: String = this.components,
+        materials: String = this.materials,
+        ritual: Boolean = this.ritual,
+        concentration: Boolean = this.concentration,
+        duration: String = this.duration,
+        description: String = this.description,
+        higherLevels: String = this.higherLevels,
+        damageType: String = this.damageType,
+        unlocked: Boolean = this.unlocked,
+        prepared: Boolean = this.prepared,
+        alwaysPrepared: Boolean = this.alwaysPrepared,
+        highlighted: Boolean = this.highlighted,
+        classes: List<Class> = this.classes.map { it.copy() },
+        damages: List<SpellDamage> = this.damages.map { it.copy() }
+    ) = SpellWithCharacterInfo(
         cid,
         id,
         name,
@@ -107,7 +128,9 @@ class SpellWithCharacterInfo(
         unlocked,
         prepared,
         alwaysPrepared,
-        highlighted
+        highlighted,
+        classes,
+        damages
     )
 
     override fun toString() = "$name ($level)"

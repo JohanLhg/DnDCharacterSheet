@@ -96,8 +96,10 @@
     <string name="profile_age">Age</string>
     <string name="profile_class">Class</string>
     <string name="profile_height">Height</string>
+    <string name="profile_height_unit">m</string>
     <string name="profile_level">Level</string>
     <string name="profile_weight">Weight</string>
+    <string name="profile_weight_unit">kg</string>
 
     <string name="profile_personality_traits">Personality Traits</string>
     <string name="profile_ideals">Ideals</string>

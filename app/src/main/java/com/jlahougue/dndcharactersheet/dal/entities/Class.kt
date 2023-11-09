@@ -40,6 +40,19 @@ class Class(
     }
 
     fun isSpellcaster() = spellcastingAbility.isNotBlank()
+
+    fun copy(
+        name: String = this.name,
+        hitDice: Int = this.hitDice,
+        equipment: String = this.equipment,
+        profSavingThrows: String = this.profSavingThrows,
+        profSkills: String = this.profSkills,
+        profArmor: String = this.profArmor,
+        profWeapons: String = this.profWeapons,
+        profTools: String = this.profTools,
+        spellcastingAbility: String = this.spellcastingAbility
+    ) = Class(name, hitDice, equipment, profSavingThrows, profSkills, profArmor, profWeapons, profTools, spellcastingAbility)
+
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
         if (javaClass != other?.javaClass) return false

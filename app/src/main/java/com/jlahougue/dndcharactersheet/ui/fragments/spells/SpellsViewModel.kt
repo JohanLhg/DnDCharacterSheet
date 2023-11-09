@@ -1,7 +1,6 @@
 package com.jlahougue.dndcharactersheet.ui.fragments.spells
 
 import android.app.Application
-import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -128,37 +127,20 @@ class SpellsViewModel(application: Application) : AndroidViewModel(application) 
 
     private fun updateSpellFilters() {
         viewModelScope.launch(Dispatchers.IO) {
-            if (classFilter.isEmpty()) {
-                if (this@SpellsViewModel::spellLevels.isInitialized) {
-                    var levels = spellLevels.value
-                    levels.forEach { it.filterSpells(search) }
-                    levels = levels.filter { it.spells.isEmpty() }
-                    _filteredLevels.emit(levels)
-                }
-                _filteredEditSpells.emit(editSpells.value.filter { spell ->
-                    spell.name.contains(search, true)
-                })
-                return@launch
-            }
-
+            // Normal mode
             if (this@SpellsViewModel::spellLevels.isInitialized) {
-                var levels = spellLevels.value
-                levels.forEach {
-                    it.spells = it.spells.filter { spell ->
-                        spell.classes.any { clazz ->
-                            classFilter.contains(clazz.name)
-                        }
-                    }
-                    it.filterSpells(search)
-                }
-                levels = levels.filter { it.spells.isEmpty() }
+                var levels = spellLevels.value.map { it.copy() }
+                levels.forEach { it.filterSpells(search, classFilter) }
+                levels = levels.filter { it.spells.isNotEmpty() }
                 _filteredLevels.emit(levels)
             }
 
-            _filteredEditSpells.emit(editSpells.value.filter { spell ->
-                spell.classes.any { clazz -> classFilter.contains(clazz.name) }
-                        && spell.name.contains(search, true)
-            })
+            // Edit mode
+            val spells = editSpells.value.filter { spell ->
+                (search.isEmpty() || spell.name.contains(search, true)) &&
+                        (classFilter.isEmpty() || spell.classes.any { clazz -> classFilter.contains(clazz.name) })
+            }
+            _filteredEditSpells.emit(spells)
         }
     }
 

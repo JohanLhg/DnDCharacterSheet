@@ -18,51 +18,41 @@ class SpellLevelAdapter(
             val old = field
             field = value
 
-            // When the list was empty
-            if (old.isEmpty()) {
-                notifyItemRangeInserted(0, value.size)
-                return
-            }
-
-            // When the list is empty
-            if (value.isEmpty()) {
-                notifyItemRangeRemoved(0, old.size)
-                return
-            }
-
-            val oldMapped = mutableMapOf<Int, SpellLevel>()
-            old.forEach { oldMapped[it.spellSlot.level] = it }
-
-            field.forEachIndexed { index, level ->
-                // When this level was already in the previous list
-                if (oldMapped.containsKey(level.spellSlot.level)) {
-                    val oldLevel = oldMapped[level.spellSlot.level]!!
-                    var slotsAreDifferent = false
-                    var spellsAreDifferent = false
-
-                    if (oldLevel.spellSlot.left != level.spellSlot.left)
-                        slotsAreDifferent = true
-
-                    if (oldLevel.spells != level.spells)
-                        spellsAreDifferent = true
-
-                    if (slotsAreDifferent && spellsAreDifferent)
-                        notifyItemChanged(index)
-                    else if (slotsAreDifferent)
-                        notifyItemChanged(index, PAYLOAD_SLOT)
-                    else if (spellsAreDifferent)
-                        notifyItemChanged(index, PAYLOAD_SPELLS)
+            when {
+                // When the list was empty
+                old.isEmpty() -> notifyItemRangeInserted(0, value.size)
+                // When the list is empty
+                value.isEmpty() -> notifyItemRangeRemoved(0, old.size)
+                // When the list size changed
+                old.size != value.size -> {
+                    notifyItemRangeRemoved(0, old.size)
+                    notifyItemRangeInserted(0, value.size)
                 }
-                // When this level was not in the previous list
-                else {
-                    notifyItemInserted(index)
-                }
-            }
+                // When the list size didn't change
+                else -> {
+                    val oldMapped = mutableMapOf<Int, SpellLevel>()
+                    old.forEach { oldMapped[it.spellSlot.level] = it }
 
-            // When a level was removed
-            old.forEachIndexed { index, level ->
-                if (!value.any { it.spellSlot.level == level.spellSlot.level }) {
-                    notifyItemRemoved(index)
+                    field.forEachIndexed { index, level ->
+                        // When this level was already in the previous list
+                        if (oldMapped.containsKey(level.spellSlot.level)) {
+                            val oldLevel = oldMapped[level.spellSlot.level]!!
+
+                            when {
+                                oldLevel.spellSlot.left != level.spellSlot.left
+                                        && oldLevel.spells != level.spells ->
+                                    notifyItemChanged(index)
+
+                                oldLevel.spellSlot.left != level.spellSlot.left ->
+                                    notifyItemChanged(index, PAYLOAD_SLOT)
+
+                                oldLevel.spells != level.spells ->
+                                    notifyItemChanged(index, PAYLOAD_SPELLS)
+                            }
+                        }
+                        // When this level was not in the previous list
+                        else notifyItemInserted(index)
+                    }
                 }
             }
         }
@@ -92,7 +82,7 @@ class SpellLevelAdapter(
                 divider.visibility = if (position % 2 == 0) ViewGroup.GONE else ViewGroup.VISIBLE
             }
             is SpellLevelViewHolder -> holder.bind.apply {
-                spellLevel = level
+                spellSlot = level.spellSlot
                 recyclerSpells.adapter = SpellAdapter(spellListener, spells, false)
                 divider.visibility = if (position % 2 == 0) ViewGroup.GONE else ViewGroup.VISIBLE
 
@@ -118,22 +108,19 @@ class SpellLevelAdapter(
     ) {
         when {
             payloads.contains(PAYLOAD_SLOT) -> {
-                when (holder) {
-                    is SpellLevelViewHolder -> {
-                        holder.bind.spellLevel = levels[position]
-                    }
-                }
+                if (holder is SpellLevelViewHolder)
+                    holder.bind.spellSlot = levels[position].spellSlot
             }
             payloads.contains(PAYLOAD_SPELLS) -> {
-                when (holder) {
-                    is SpellLevelViewHolder -> {
-                        holder.bind.recyclerSpells.adapter = SpellAdapter(spellListener, levels[position].spells, false)
-                    }
+                if (holder is SpellLevelViewHolder) {
+                    holder.bind.recyclerSpells.adapter = SpellAdapter(
+                        spellListener,
+                        levels[position].spells,
+                        false
+                    )
                 }
             }
-            else -> {
-                super.onBindViewHolder(holder, position, payloads)
-            }
+            else -> super.onBindViewHolder(holder, position, payloads)
         }
     }
 

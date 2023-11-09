@@ -30,9 +30,19 @@ class SpellSlotView(
     @ColumnInfo(name = SPELL_SLOT_LEFT)
     var left: Int
 ) {
-    fun getSpellSlot(): SpellSlot {
-        return SpellSlot(cid, level, total - left)
-    }
+    fun getSpellSlot(
+        cid: Long = this.cid,
+        level: Int = this.level,
+        total: Int = this.total,
+        left: Int = this.left
+    ) = SpellSlot(cid, level, total - left)
+
+    fun copy(
+        cid: Long = this.cid,
+        level: Int = this.level,
+        total: Int = this.total,
+        left: Int = this.left
+    ) = SpellSlotView(cid, level, total, left)
 
     override fun toString(): String {
         return "$cid : ${level}th slot $left/$total"

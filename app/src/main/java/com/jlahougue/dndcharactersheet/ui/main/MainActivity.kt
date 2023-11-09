@@ -142,7 +142,7 @@ class MainActivity : AppCompatActivity(),
                 character.race = it.toString()
                 mainViewModel.updateCharacter(character)
             }
-            editClass.setOnClickListener {
+            buttonSelectClass.setOnClickListener {
                 mainViewModel.getClasses { classes ->
                     CoroutineScope(Dispatchers.Main).launch {
                         DialogClassSelection(
@@ -160,6 +160,10 @@ class MainActivity : AppCompatActivity(),
                 if (!editLevel.hasFocus()) return@addTextChangedListener
                 val character = mainViewModel.character.value!!
                 character.level = it.toString().toIntOrNull() ?: 0
+                if (character.level == 0) {
+                    editLevel.clearFocus()
+                    editLevel.requestFocus()
+                }
                 mainViewModel.updateCharacter(character)
             }
             editGender.addTextChangedListener{
@@ -172,18 +176,30 @@ class MainActivity : AppCompatActivity(),
                 if (!editAge.hasFocus()) return@addTextChangedListener
                 val character = mainViewModel.character.value!!
                 character.age = it.toString().toIntOrNull() ?: 0
+                if (character.age == 0) {
+                    editAge.clearFocus()
+                    editAge.requestFocus()
+                }
                 mainViewModel.updateCharacter(character)
             }
             editHeight.addTextChangedListener {
                 if (!editHeight.hasFocus()) return@addTextChangedListener
                 val character = mainViewModel.character.value!!
                 character.height = it.toString().toDoubleOrNull() ?: 0.0
+                if (character.height == 0.0) {
+                    editHeight.clearFocus()
+                    editHeight.requestFocus()
+                }
                 mainViewModel.updateCharacter(character)
             }
             editWeight.addTextChangedListener {
                 if (!editWeight.hasFocus()) return@addTextChangedListener
                 val character = mainViewModel.character.value!!
                 character.weight = it.toString().toIntOrNull() ?: 0
+                if (character.weight == 0) {
+                    editWeight.clearFocus()
+                    editWeight.requestFocus()
+                }
                 mainViewModel.updateCharacter(character)
             }
 
