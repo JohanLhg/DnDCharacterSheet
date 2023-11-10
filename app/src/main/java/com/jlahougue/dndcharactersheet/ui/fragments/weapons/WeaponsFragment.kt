@@ -1,6 +1,7 @@
 package com.jlahougue.dndcharactersheet.ui.fragments.weapons
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -20,8 +21,8 @@ import com.jlahougue.dndcharactersheet.ui.main.MainActivity
 class WeaponsFragment : Fragment(),
     WeaponAdapter.WeaponListener,
     WeaponDetailsDialog.DialogWeaponDetailsListener,
-    AddWeaponsDialog.DialogAddWeaponListener,
-    WeaponNameAdapter.WeaponNameListener {
+    AddWeaponsDialog.Companion.DialogAddWeaponListener,
+    WeaponNameAdapter.Companion.WeaponNameListener {
 
     private var _binding: FragmentWeaponsBinding? = null
 

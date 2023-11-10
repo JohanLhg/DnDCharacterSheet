@@ -8,15 +8,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.jlahougue.dndcharactersheet.R
 import com.jlahougue.dndcharactersheet.databinding.RecyclerWeaponNameBinding
 
-class WeaponNameAdapter(private val weapons: List<String>, private val listener: WeaponNameListener) : RecyclerView.Adapter<WeaponNameAdapter.ViewHolder>() {
-
-    companion object {
-        const val COUNT = 0
-    }
-
-    interface WeaponNameListener {
-        fun onWeaponClicked(weapon: String)
-    }
+class WeaponNameAdapter(
+    private val weapons: List<String>,
+    private val listener: WeaponNameListener
+) : RecyclerView.Adapter<WeaponNameAdapter.ViewHolder>() {
 
     val weaponCounts = mutableMapOf<String, Int>()
 
@@ -67,5 +62,13 @@ class WeaponNameAdapter(private val weapons: List<String>, private val listener:
         if (count == 0) holder.bind.root.setBackgroundColor(context.getColor(R.color.transparent))
         else holder.bind.root.setBackgroundColor(context.getColor(R.color.spell_transparent))
         holder.bind.buttonCountMinus.visibility = if (count == 0) GONE else VISIBLE
+    }
+
+    companion object {
+        const val COUNT = 0
+
+        interface WeaponNameListener {
+            fun onWeaponClicked(weapon: String)
+        }
     }
 }

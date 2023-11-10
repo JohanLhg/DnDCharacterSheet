@@ -1,6 +1,7 @@
 package com.jlahougue.dndcharactersheet.ui.fragments.weapons.addDialog
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,16 +12,8 @@ import com.jlahougue.dndcharactersheet.databinding.DialogAddWeaponsBinding
 class AddWeaponsDialog(
     private val weapons: List<String>,
     private val listener: DialogAddWeaponListener,
-    private val adapterListener: WeaponNameAdapter.WeaponNameListener
+    private val adapterListener: WeaponNameAdapter.Companion.WeaponNameListener
 ) : DialogFragment() {
-
-    companion object {
-        const val TAG = "DialogAddWeapon"
-    }
-
-    interface DialogAddWeaponListener {
-        fun addWeapons(weaponCounts: Map<String, Int>)
-    }
 
     private lateinit var dialogBinding: DialogAddWeaponsBinding
 
@@ -44,7 +37,9 @@ class AddWeaponsDialog(
 
         dialogBinding.buttonAddWeapon.setOnClickListener {
             val map = adapter.weaponCounts.filter { it.value > 0 }
+            Log.d(TAG, "Weapons to add: $map")
             listener.addWeapons(map)
+            dismiss()
         }
 
         dialogBinding.buttonCancel.setOnClickListener { dismiss() }
@@ -52,5 +47,13 @@ class AddWeaponsDialog(
         dialogBinding.root.setOnClickListener { dismiss() }
 
         return dialogBinding.root
+    }
+
+    companion object {
+        const val TAG = "DialogAddWeapon"
+
+        interface DialogAddWeaponListener {
+            fun addWeapons(weaponCounts: Map<String, Int>)
+        }
     }
 }
