@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
-import androidx.room.MapInfo
+import androidx.room.MapColumn
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Transaction
@@ -27,6 +27,9 @@ interface CharacterWeaponDao {
 
     @Delete
     fun delete(characterWeapon: CharacterWeapon)
+
+    @Query("DELETE FROM character_weapon WHERE cid = :characterID")
+    fun deleteForCharacter(characterID: Long)
 
     @Query("SELECT * FROM weapon_view WHERE cid = :characterID AND count > 0")
     fun get(characterID: Long): LiveData<List<WeaponView>>
@@ -56,9 +59,8 @@ interface CharacterWeaponDao {
     """)
     fun getWeapon(characterID: Long, name: String): WeaponDetail
 
-    @MapInfo(keyColumn = CHARACTER_WEAPON_NAME)
     @Query("SELECT * FROM character_weapon WHERE cid = :characterID")
-    fun getMap(characterID: Long): Map<String, CharacterWeapon>
+    fun getMap(characterID: Long): Map<@MapColumn(columnName = CHARACTER_WEAPON_NAME) String, CharacterWeapon>
 
     @Query("""
         SELECT weapon_name

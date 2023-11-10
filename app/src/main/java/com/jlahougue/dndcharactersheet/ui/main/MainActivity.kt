@@ -277,8 +277,6 @@ class MainActivity : AppCompatActivity(),
 
             buttonSignOut.setOnClickListener { mainViewModel.signOut() }
 
-            buttonSaveToRemote.setOnClickListener { mainViewModel.saveToRemote() }
-
             buttonSwitchCharacter.setOnClickListener { finish() }
         }
     }

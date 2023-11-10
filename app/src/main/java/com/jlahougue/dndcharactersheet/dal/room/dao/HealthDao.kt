@@ -20,6 +20,9 @@ interface HealthDao {
     @Delete
     fun delete(health: Health)
 
+    @Query("DELETE FROM health WHERE cid = :characterID")
+    fun deleteForCharacter(characterID: Long)
+
     @Query("SELECT * FROM health WHERE cid = :characterID")
     fun getLive(characterID: Long): LiveData<Health>
 

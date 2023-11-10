@@ -20,8 +20,8 @@ import com.jlahougue.dndcharactersheet.ui.main.MainActivity
 class WeaponsFragment : Fragment(),
     WeaponAdapter.WeaponListener,
     WeaponDetailsDialog.DialogWeaponDetailsListener,
-    AddWeaponsDialog.DialogAddWeaponListener,
-    WeaponNameAdapter.WeaponNameListener {
+    AddWeaponsDialog.Companion.DialogAddWeaponListener,
+    WeaponNameAdapter.Companion.WeaponNameListener {
 
     private var _binding: FragmentWeaponsBinding? = null
 

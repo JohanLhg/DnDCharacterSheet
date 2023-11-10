@@ -19,6 +19,9 @@ interface QuestsDao {
     @Delete
     fun delete(quests: Quests)
 
+    @Query("DELETE FROM quests WHERE cid = :characterID")
+    fun deleteForCharacter(characterID: Long)
+
     @Query("SELECT content FROM quests WHERE cid = :characterID")
     fun get(characterID: Long): String
 }

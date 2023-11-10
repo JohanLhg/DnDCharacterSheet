@@ -17,9 +17,9 @@ class SpellcastingRepository(application: Application) {
         firebaseDao.save(spellcasting)
     }
 
-    fun saveToLocal(spellcasting: Spellcasting) {
-        roomDao.insert(spellcasting)
-    }
+    fun saveToLocal(spellcasting: Spellcasting) = roomDao.insert(spellcasting)
+
+    fun deleteForCharacter(characterID: Long) = roomDao.deleteForCharacter(characterID)
 
     fun getAbility(characterID: Long) = roomDao.getAbility(characterID)
 

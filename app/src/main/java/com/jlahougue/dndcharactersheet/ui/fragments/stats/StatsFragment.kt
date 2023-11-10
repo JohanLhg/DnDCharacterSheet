@@ -98,7 +98,7 @@ class StatsFragment : Fragment(),
 
     private fun initializeSkillsListeners() {
         binding.includeSkillsSearch.apply {
-            accentColor = main.getColor(R.color.spell)
+            accentColor = main.getColor(R.color.accent)
 
             listener = object : SearchBarListener {
                 override fun focusOnSearch() { editSearch.requestFocus() }

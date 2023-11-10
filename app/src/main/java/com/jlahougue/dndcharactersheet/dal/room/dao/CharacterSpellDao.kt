@@ -23,6 +23,9 @@ interface CharacterSpellDao {
     @Delete
     fun delete(characterSpell: CharacterSpell)
 
+    @Query("DELETE FROM character_spell WHERE cid = :characterID")
+    fun deleteForCharacter(characterID: Long)
+
     @Query("SELECT * FROM character_spell WHERE cid = :characterID")
     fun getMap(characterID: Long): Map<@MapColumn(columnName = CHARACTER_SPELL_SID) String, CharacterSpell>
 

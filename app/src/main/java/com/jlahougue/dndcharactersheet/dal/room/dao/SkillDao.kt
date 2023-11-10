@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
-import androidx.room.MapInfo
+import androidx.room.MapColumn
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Update
@@ -23,10 +23,12 @@ interface SkillDao {
     @Delete
     fun delete(skill: Skill)
 
+    @Query("DELETE FROM skill WHERE cid = :characterID")
+    fun deleteForCharacter(characterID: Long)
+
     @Query("SELECT * FROM skill_view WHERE cid = :characterID")
     fun get(characterID: Long): LiveData<List<SkillView>>
 
-    @MapInfo(keyColumn = SKILL_NAME)
     @Query("SELECT * FROM skill WHERE cid = :characterID")
-    fun getMap(characterID: Long): Map<String, Skill>
+    fun getMap(characterID: Long): Map<@MapColumn(columnName = SKILL_NAME) String, Skill>
 }

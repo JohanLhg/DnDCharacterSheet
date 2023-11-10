@@ -19,6 +19,9 @@ interface DeathSavesDao {
     @Delete
     fun delete(deathSaves: DeathSaves)
 
+    @Query("DELETE FROM death_saves WHERE cid = :characterID")
+    fun deleteForCharacter(characterID: Long)
+
     @Query("SELECT * FROM death_saves WHERE cid = :characterID")
     fun get(characterID: Long): DeathSaves
 }

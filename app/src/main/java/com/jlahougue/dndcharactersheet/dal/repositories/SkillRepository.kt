@@ -45,6 +45,8 @@ class SkillRepository(application: Application) {
 
     fun saveToLocal(skill: Skill) = roomDao.insert(skill)
 
+    fun deleteForCharacter(characterID: Long) = roomDao.deleteForCharacter(characterID)
+
     fun update(skill: SkillView) {
         update(Skill(skill.cid, skill.name, skill.modifierType, skill.proficiency))
     }

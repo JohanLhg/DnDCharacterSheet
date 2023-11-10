@@ -14,6 +14,11 @@ class CharacterSheetDao {
             .set(characterSheet)
     }
 
+    fun delete(characterID: Long) {
+        firebaseDatabase.characterReference(characterID).delete()
+        firebaseDatabase.deleteImage(characterID)
+    }
+
     fun loadCharacterSheets(
         saveToLocal: (Long, CharacterSheet) -> Unit,
         callback: (List<Long>) -> Unit

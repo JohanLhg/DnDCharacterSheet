@@ -23,6 +23,8 @@ class CharacterSpellRepository(application: Application) {
 
     fun saveToLocal(spell: CharacterSpell) = roomDao.insert(spell)
 
+    fun deleteForCharacter(characterID: Long) = roomDao.deleteForCharacter(characterID)
+
     fun getMap(characterID: Long): Map<String, CharacterSpell> = roomDao.getMap(characterID)
 
     fun getCharacterSpellStats(characterID: Long) = roomDao.getCharacterSpellStats(characterID)

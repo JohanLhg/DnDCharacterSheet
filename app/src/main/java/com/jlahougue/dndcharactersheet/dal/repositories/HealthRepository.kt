@@ -21,6 +21,8 @@ class HealthRepository(application: Application) {
 
     fun saveToLocal(health: Health) = roomDao.insert(health)
 
+    fun deleteForCharacter(characterID: Long) = roomDao.deleteForCharacter(characterID)
+
     fun update(health: Health) {
         roomDao.update(health)
         firebaseDao.save(health)

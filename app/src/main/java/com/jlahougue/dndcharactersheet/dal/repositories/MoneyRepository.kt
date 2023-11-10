@@ -20,6 +20,8 @@ class MoneyRepository(application: Application) {
 
     fun saveToLocal(money: Money) = roomDao.insert(money)
 
+    fun deleteForCharacter(characterID: Long) = roomDao.deleteForCharacter(characterID)
+
     fun update(money: Money) {
         roomDao.update(money)
         firebaseDao.save(money)

@@ -30,10 +30,7 @@ class CharacterRepository(application: Application) {
         firebaseDao.save(character)
     }
 
-    fun delete(characterID: Long) {
-        roomDao.delete(characterID)
-        firebaseDao.delete(characterID)
-    }
+    fun delete(characterID: Long) = roomDao.delete(characterID)
 
     fun get() = roomDao.get()
 

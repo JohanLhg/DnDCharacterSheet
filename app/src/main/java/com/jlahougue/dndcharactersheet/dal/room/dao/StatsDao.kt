@@ -19,6 +19,9 @@ interface StatsDao {
     @Delete
     fun delete(stats: Stats)
 
+    @Query("DELETE FROM stats WHERE cid = :characterID")
+    fun deleteForCharacter(characterID: Long)
+
     @Query("SELECT * FROM stats WHERE cid = :characterID")
     fun get(characterID: Long): Stats
 }

@@ -29,6 +29,8 @@ class SpellSlotRepository(application: Application) {
 
     fun saveToLocal(spellSlot: SpellSlot) = roomDao.insert(spellSlot)
 
+    fun deleteForCharacter(characterID: Long) = roomDao.deleteForCharacter(characterID)
+
     fun getLive(characterID: Long) = roomDao.getLive(characterID)
 
     fun getFlow(characterID: Long) = roomDao.getFlow(characterID)

@@ -18,6 +18,9 @@ interface MoneyDao {
 
     @Delete
     fun delete(money: Money)
+    
+    @Query("DELETE FROM money WHERE cid = :characterID")
+    fun deleteForCharacter(characterID: Long)
 
     @Query("SELECT * FROM money WHERE cid = :characterID")
     fun get(characterID: Long): Money

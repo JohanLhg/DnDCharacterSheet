@@ -19,6 +19,9 @@ interface EquipmentDao {
     @Delete
     fun delete(equipment: Equipment)
 
+    @Query("DELETE FROM equipment WHERE cid = :characterID")
+    fun deleteForCharacter(characterID: Long)
+
     @Query("SELECT content FROM equipment WHERE cid = :characterID")
     fun get(characterID: Long): String
 }

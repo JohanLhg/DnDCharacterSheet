@@ -21,6 +21,9 @@ interface SpellcastingDao {
     @Delete
     fun delete(spellcasting: Spellcasting)
 
+    @Query("DELETE FROM spellcasting WHERE cid = :characterID")
+    fun deleteForCharacter(characterID: Long)
+
     @Query("SELECT * FROM spellcasting_view WHERE cid = :characterID")
     fun get(characterID: Long): LiveData<SpellcastingView>
 

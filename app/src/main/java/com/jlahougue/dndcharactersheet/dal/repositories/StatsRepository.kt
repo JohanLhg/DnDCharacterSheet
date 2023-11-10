@@ -20,6 +20,8 @@ class StatsRepository(application: Application) {
 
     fun saveToLocal(stats: Stats) = roomDao.insert(stats)
 
+    fun deleteForCharacter(characterID: Long) = roomDao.deleteForCharacter(characterID)
+
     fun update(stats: Stats) {
         roomDao.update(stats)
         firebaseDao.save(stats)

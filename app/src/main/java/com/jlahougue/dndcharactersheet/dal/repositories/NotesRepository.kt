@@ -20,6 +20,8 @@ class NotesRepository(application: Application) {
 
     fun saveToLocal(notes: Notes) = roomDao.insert(notes)
 
+    fun deleteForCharacter(characterID: Long) = roomDao.deleteForCharacter(characterID)
+
     fun update(notes: Notes) {
         roomDao.update(notes)
         firebaseDao.save(notes)

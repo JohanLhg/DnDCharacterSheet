@@ -16,6 +16,8 @@ class CharacterWeaponRepository(application: Application) {
 
     fun saveToLocal(characterWeapon: CharacterWeapon) = roomDao.insert(characterWeapon)
 
+    fun deleteForCharacter(characterID: Long) = roomDao.deleteForCharacter(characterID)
+
     fun get(characterID: Long) = roomDao.get(characterID)
 
     fun getWeapon(characterID: Long, name: String) = roomDao.getWeapon(characterID, name)

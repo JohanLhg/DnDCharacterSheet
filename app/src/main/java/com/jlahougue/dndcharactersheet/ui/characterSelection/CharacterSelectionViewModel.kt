@@ -33,7 +33,7 @@ class CharacterSelectionViewModel(application: Application) : AndroidViewModel(a
     }
 
     fun deleteCharacter(characterID: Long) {
-        thread { characterRepository.delete(characterID) }
+        thread { characterSheetRepository.delete(characterID) }
     }
 
     fun signOut() {

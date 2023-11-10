@@ -46,6 +46,25 @@ class CharacterSheetRepository(application: Application) {
         return characterID
     }
 
+    fun delete(characterID: Long) {
+        characterRepository.delete(characterID)
+        abilityRepository.deleteForCharacter(characterID)
+        skillRepository.deleteForCharacter(characterID)
+        statsRepository.deleteForCharacter(characterID)
+        healthRepository.deleteForCharacter(characterID)
+        deathSavesRepository.deleteForCharacter(characterID)
+        spellcastingRepository.deleteForCharacter(characterID)
+        spellSlotRepository.deleteForCharacter(characterID)
+        characterSpellRepository.deleteForCharacter(characterID)
+        characterWeaponRepository.deleteForCharacter(characterID)
+        notesRepository.deleteForCharacter(characterID)
+        questsRepository.deleteForCharacter(characterID)
+        moneyRepository.deleteForCharacter(characterID)
+        equipmentRepository.deleteForCharacter(characterID)
+
+        firebaseDao.delete(characterID)
+    }
+
     private fun saveToLocal(characterID: Long, characterSheet: CharacterSheet) {
         characterSheet.character?.let { characterRepository.saveToLocal(it) }
         characterSheet.abilities.forEach { (_, ability) -> abilityRepository.saveToLocal(ability) }
@@ -67,7 +86,7 @@ class CharacterSheetRepository(application: Application) {
         characterSheet.equipment?.let { equipmentRepository.saveToLocal(Equipment(characterID, it)) }
     }
 
-    fun saveToRemote(characterID: Long) {
+    private fun saveToRemote(characterID: Long) {
         val characterSheet = CharacterSheet(
             characterRepository.get(characterID),
             abilityRepository.getMap(characterID),

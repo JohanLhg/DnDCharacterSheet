@@ -28,6 +28,9 @@ interface SpellSlotDao {
     @Delete
     fun delete(spellSlot: SpellSlot)
 
+    @Query("DELETE FROM spell_slot WHERE cid = :characterID")
+    fun deleteForCharacter(characterID: Long)
+
     @Query("SELECT * FROM spell_slot_view WHERE cid = :characterID")
     fun getLive(characterID: Long): LiveData<List<SpellSlotView>>
 

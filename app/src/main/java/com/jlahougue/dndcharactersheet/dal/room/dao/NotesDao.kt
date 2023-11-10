@@ -19,6 +19,9 @@ interface NotesDao {
     @Delete
     fun delete(notes: Notes)
 
+    @Query("DELETE FROM notes WHERE cid = :characterID")
+    fun deleteForCharacter(characterID: Long)
+
     @Query("SELECT content FROM notes WHERE cid = :characterID")
     fun get(characterID: Long): String
 }

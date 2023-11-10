@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
-import androidx.room.MapInfo
+import androidx.room.MapColumn
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Update
@@ -34,11 +34,20 @@ interface AbilityDao {
 
     @Delete
     fun delete(ability: Ability)
-    @Query("SELECT * FROM ability_view WHERE cid = :characterID ORDER BY name = 'STR' DESC, name = 'DEX' DESC, name = 'CON' DESC, name = 'INT' DESC, name = 'WIS' DESC, name = 'CHA' DESC")
+
+    @Query("DELETE FROM ability WHERE cid = :characterID")
+    fun deleteForCharacter(characterID: Long)
+
+    @Query("""
+        SELECT * FROM ability_view 
+        WHERE cid = :characterID 
+        ORDER BY name = 'STR' DESC, name = 'DEX' DESC, name = 'CON' DESC, 
+            name = 'INT' DESC, name = 'WIS' DESC, name = 'CHA' DESC
+    """)
     fun get(characterID: Long): LiveData<List<AbilityView>>
-    @MapInfo(keyColumn = ABILITY_NAME)
+
     @Query("SELECT * FROM ability WHERE cid = :characterID")
-    fun getMap(characterID: Long): Map<String, Ability>
+    fun getMap(characterID: Long): Map<@MapColumn(columnName = ABILITY_NAME) String, Ability>
 
     @Query("""
         WITH modifiers AS (
@@ -48,8 +57,8 @@ interface AbilityDao {
         )
         SELECT 
             bonus AS $PROFICIENCY_BONUS, 
-            (SELECT modifier FROM ability_modifier_view WHERE name = '$STRENGTH') AS $MELEE_MODIFIER, 
-            (SELECT modifier FROM ability_modifier_view WHERE name = '$DEXTERITY') AS $RANGED_MODIFIER 
+            (SELECT modifier FROM modifiers WHERE name = '$STRENGTH') AS $MELEE_MODIFIER, 
+            (SELECT modifier FROM modifiers WHERE name = '$DEXTERITY') AS $RANGED_MODIFIER 
         FROM proficiency_view 
         WHERE cid = :characterID
     """)

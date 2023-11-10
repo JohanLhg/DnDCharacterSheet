@@ -48,6 +48,7 @@
                     android:orientation="horizontal">
 
                     <include
+                        android:id="@+id/includeSearch"
                         layout="@layout/element_searchbar"
                         android:layout_width="250dp"
                         android:layout_height="wrap_content" />

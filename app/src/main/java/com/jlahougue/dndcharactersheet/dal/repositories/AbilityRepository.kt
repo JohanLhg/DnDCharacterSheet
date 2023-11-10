@@ -28,6 +28,8 @@ class AbilityRepository(application: Application) {
 
     fun saveToLocal(ability: Ability) = roomDao.insert(ability)
 
+    fun deleteForCharacter(characterID: Long) = roomDao.deleteForCharacter(characterID)
+
     fun update(ability: Ability) {
         roomDao.update(ability)
         firebaseDao.save(ability)

@@ -80,10 +80,6 @@ class MainViewModel(application: Application): AndroidViewModel(application) {
         authRepository.signOut()
     }
 
-    fun saveToRemote() {
-        viewModelScope.launch(Dispatchers.IO) { characterSheetRepository.saveToRemote(characterID.value!!) }
-    }
-
     companion object {
         const val CHARACTER_ID = "CID"
     }
