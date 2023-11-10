@@ -1,6 +1,7 @@
 package com.jlahougue.dndcharactersheet.ui.main
 
 import android.os.Bundle
+import android.view.View
 import androidx.activity.addCallback
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
@@ -190,7 +191,14 @@ class MainActivity : AppCompatActivity(),
                     editHeight.clearFocus()
                     editHeight.requestFocus()
                 }
-                mainViewModel.updateCharacter(character)
+                //mainViewModel.updateCharacter(character)
+            }
+            editHeight.onFocusChangeListener = View.OnFocusChangeListener { view, isFocused ->
+                if (!isFocused) {
+                    val character = mainViewModel.character.value!!
+                    character.height = editHeight.text.toString().toDoubleOrNull() ?: 0.0
+                    mainViewModel.updateCharacter(character)
+                }
             }
             editWeight.addTextChangedListener {
                 if (!editWeight.hasFocus()) return@addTextChangedListener

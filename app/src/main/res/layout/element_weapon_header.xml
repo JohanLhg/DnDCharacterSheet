@@ -5,9 +5,9 @@
 
     <View
         android:id="@+id/view"
-        android:layout_width="57dp"
+        android:layout_width="62dp"
         android:layout_height="match_parent"
-        android:layout_margin="1dp"/>
+        android:layout_margin="1dp" />
 
     <TextView
         android:id="@+id/labelWeaponName"

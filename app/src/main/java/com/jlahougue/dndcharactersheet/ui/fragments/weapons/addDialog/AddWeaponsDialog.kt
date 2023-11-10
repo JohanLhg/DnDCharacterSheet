@@ -42,6 +42,7 @@ class AddWeaponsDialog(
         dialogBinding.buttonAddWeapon.setOnClickListener {
             val map = adapter.weaponCounts.filter { it.value > 0 }
             listener.addWeapons(map)
+            dismiss()
         }
 
         dialogBinding.buttonCancel.setOnClickListener { dismiss() }

@@ -35,7 +35,7 @@
         <TextView
             android:id="@+id/textWeaponCount"
             style="@android:style/TextAppearance.Material.Medium"
-            android:layout_width="25dp"
+            android:layout_width="30dp"
             android:layout_height="match_parent"
             android:layout_margin="1dp"
             android:background="@color/white"

@@ -1,9 +1,11 @@
 package com.jlahougue.dndcharactersheet.dal.repositories
 
 import android.app.Application
+import android.util.Log
 import com.jlahougue.dndcharactersheet.dal.entities.CharacterWeapon
 import com.jlahougue.dndcharactersheet.dal.firebase.dao.CharacterWeaponDao
 import com.jlahougue.dndcharactersheet.dal.room.DnDDatabase
+import com.jlahougue.dndcharactersheet.ui.fragments.weapons.addDialog.AddWeaponsDialog
 
 class CharacterWeaponRepository(application: Application) {
     private val roomDao = DnDDatabase.getInstance(application).characterWeaponDao()
@@ -27,9 +29,10 @@ class CharacterWeaponRepository(application: Application) {
     fun getMap(characterID: Long) = roomDao.getMap(characterID)
 
     fun addWeapons(characterID: Long, weaponCounts: Map<String, Int>) {
-        val weapons = listOf<CharacterWeapon>()
+        val weapons = mutableListOf<CharacterWeapon>()
         for ((weaponName, count) in weaponCounts) {
-            weapons.plus(CharacterWeapon(characterID, weaponName, count))
+            Log.d(AddWeaponsDialog.TAG, "Adding: $count $weaponName")
+            weapons.add(CharacterWeapon(characterID, weaponName, count))
         }
         roomDao.insert(weapons)
     }

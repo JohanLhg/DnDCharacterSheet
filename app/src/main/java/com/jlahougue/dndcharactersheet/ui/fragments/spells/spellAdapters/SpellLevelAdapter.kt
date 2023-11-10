@@ -112,12 +112,21 @@ class SpellLevelAdapter(
                     holder.bind.spellSlot = levels[position].spellSlot
             }
             payloads.contains(PAYLOAD_SPELLS) -> {
-                if (holder is SpellLevelViewHolder) {
-                    holder.bind.recyclerSpells.adapter = SpellAdapter(
-                        spellListener,
-                        levels[position].spells,
-                        false
-                    )
+                when(holder) {
+                    is CantripsViewHolder -> {
+                        holder.bind.recyclerSpells.adapter = SpellAdapter(
+                            spellListener,
+                            levels[position].spells,
+                            false
+                        )
+                    }
+                    is SpellLevelViewHolder -> {
+                        holder.bind.recyclerSpells.adapter = SpellAdapter(
+                            spellListener,
+                            levels[position].spells,
+                            false
+                        )
+                    }
                 }
             }
             else -> super.onBindViewHolder(holder, position, payloads)
