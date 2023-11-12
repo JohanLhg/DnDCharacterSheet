@@ -169,6 +169,11 @@
     <string name="short_rest">Short Rest</string>
     <string name="long_rest">Long Rest</string>
 
+    <!-- Health -->
+    <string name="label_other_health_bars">Other health bars</string>
+    <string name="add_health_bar">Add health bar</string>
+    <string name="hint_health_bar_name">Enter Name</string>
+
     <!-- Inventory -->
     <string name="notes">NOTES</string>
     <string name="quests">QUESTS</string>
@@ -260,4 +265,5 @@
     <string name="label_tools">Tools :</string>
     <string name="text_spellcaster">%ss are spellcasters.</string>
     <string name="label_class_spellcasting_ability">Spellcasting ability :</string>
+    <string name="title_activity_test">TestActivity</string>
 </resources>

@@ -16,6 +16,11 @@
         android:theme="@style/Theme.DDCharacterSheet"
         tools:targetApi="31">
         <activity
+            android:name=".ui.test.TestActivity"
+            android:exported="false"
+            android:label="@string/title_activity_test"
+            android:theme="@style/Theme.DDCharacterSheet" />
+        <activity
             android:name=".ui.authentication.AuthActivity"
             android:exported="true">
             <intent-filter>
