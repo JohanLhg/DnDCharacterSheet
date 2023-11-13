@@ -3,6 +3,7 @@ package com.jlahougue.dndcharactersheet.ui.elements.stats
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
@@ -12,6 +13,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
@@ -31,9 +33,10 @@ fun Abilities() {
                 bottom = 5.dp
             )
         ) {
-            Row(
-                modifier = Modifier.padding(start = 25.dp)
-            ) {
+            Row {
+                Spacer(modifier = Modifier
+                    .width(0.dp)
+                    .weight(1f))
                 Text(
                     text = "Mod.",
                     modifier = Modifier.width(50.dp),
@@ -59,6 +62,35 @@ fun Abilities() {
 
 @Composable
 fun AbilityRow(name: String, imageId: Int, mod: Int = 0, st: Int = 0) {
+    Row(
+        verticalAlignment = Alignment.CenterVertically,
+    ) {
+        Text(
+            text = name.substring(0, 3).uppercase(),
+            style = TextStyle(fontSize = 14.sp),
+            fontWeight = FontWeight.Bold
+        )
+        Spacer(modifier = Modifier
+            .width(0.dp)
+            .weight(1f)
+        )
+        Text(
+            text = "+$mod",
+            modifier = Modifier.width(50.dp),
+            textAlign = TextAlign.Center,
+            style = TextStyle(fontSize = 14.sp)
+        )
+        Text(
+            text = "+$st",
+            modifier = Modifier.width(50.dp),
+            textAlign = TextAlign.Center,
+            style = TextStyle(fontSize = 14.sp)
+        )
+    }
+}
+
+@Composable
+fun AbilityRowAlt(name: String, imageId: Int, mod: Int = 0, st: Int = 0) {
     Row(
         verticalAlignment = Alignment.CenterVertically,
     ) {

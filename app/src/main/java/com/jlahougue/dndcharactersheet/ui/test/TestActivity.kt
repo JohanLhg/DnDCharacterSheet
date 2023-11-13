@@ -14,7 +14,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
-import com.jlahougue.dndcharactersheet.ui.elements.health.HealthBarBis
+import com.jlahougue.dndcharactersheet.ui.elements.health.DeathSaves
+import com.jlahougue.dndcharactersheet.ui.elements.health.HealthBar
+import com.jlahougue.dndcharactersheet.ui.elements.health.HealthDice
 import com.jlahougue.dndcharactersheet.ui.elements.stats.Abilities
 import com.jlahougue.dndcharactersheet.ui.elements.stats.Skills
 import com.jlahougue.dndcharactersheet.ui.theme.DDCharacterSheetTheme
@@ -57,7 +59,13 @@ fun GreetingPreview() {
                     modifier = Modifier.width(IntrinsicSize.Min)
                 ) {
                     Abilities()
-                    HealthBarBis()
+                }
+                Column(
+                    modifier = Modifier.width(IntrinsicSize.Min)
+                ) {
+                    HealthBar()
+                    HealthDice()
+                    DeathSaves()
                 }
             }
         }
