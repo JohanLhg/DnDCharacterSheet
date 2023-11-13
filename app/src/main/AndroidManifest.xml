@@ -16,7 +16,7 @@
         android:theme="@style/Theme.DDCharacterSheet"
         tools:targetApi="31">
         <activity
-            android:name=".ui.test.TestActivity"
+            android:name=".ui.test.ActionActivity"
             android:exported="false"
             android:label="@string/title_activity_test"
             android:theme="@style/Theme.DDCharacterSheet" />

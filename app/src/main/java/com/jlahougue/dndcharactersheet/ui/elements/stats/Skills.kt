@@ -5,18 +5,17 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import com.jlahougue.dndcharactersheet.ui.elements.FramedBox
-import com.jlahougue.dndcharactersheet.ui.theme.DDCharacterSheetTheme
+import com.jlahougue.dndcharactersheet.ui.theme.DnDCharacterSheetTheme
 
 @Composable
 fun Skills() {
@@ -61,7 +60,7 @@ fun SkillRow(name: String, ability: String, modifier: Int = 0) {
                 .width(30.dp)
                 .padding(5.dp),
             textAlign = TextAlign.Center,
-            style = TextStyle(fontSize = 14.sp)
+            style = MaterialTheme.typography.bodySmall
         )
         Text(
             text = "$name ($ability)",
@@ -69,7 +68,7 @@ fun SkillRow(name: String, ability: String, modifier: Int = 0) {
                 .fillMaxWidth()
                 .padding(horizontal = 15.dp, vertical = 5.dp),
             textAlign = TextAlign.Center,
-            style = TextStyle(fontSize = 14.sp)
+            style = MaterialTheme.typography.bodySmall
         )
     }
 }
@@ -80,7 +79,7 @@ fun SkillRow(name: String, ability: String, modifier: Int = 0) {
 )
 @Composable
 fun SkillsPreview() {
-    DDCharacterSheetTheme {
+    DnDCharacterSheetTheme {
         Skills()
     }
 }

@@ -10,12 +10,13 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.ArrowDropDown
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedCard
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -25,34 +26,42 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import com.jlahougue.dndcharactersheet.ui.elements.FramedBox
-import com.jlahougue.dndcharactersheet.ui.theme.DDCharacterSheetTheme
+import com.jlahougue.dndcharactersheet.ui.theme.DnDCharacterSheetTheme
 
 @Composable
 fun HealthDice() {
     FramedBox(
         title = "Health Dice",
         modifier = Modifier
+            .padding(
+                start = 5.dp,
+                end = 5.dp,
+                bottom = 5.dp
+            )
             .fillMaxWidth()
             .height(IntrinsicSize.Max)
-            .padding(5.dp)
     ) {
-        Column {
+        Column(
+            modifier = Modifier
+                .padding(
+                    start = 5.dp,
+                    end = 5.dp,
+                    bottom = 5.dp
+                )
+        ) {
             Row(
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(5.dp)
             ) {
                 Text(
                     text = "Health dice :",
-                    style = TextStyle(fontSize = 14.sp)
+                    style = MaterialTheme.typography.bodySmall
                 )
                 Spacer(
                     modifier = Modifier
@@ -73,11 +82,10 @@ fun HealthDice() {
                 verticalAlignment = Alignment.CenterVertically,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(5.dp)
             ) {
                 Text(
                     text = "Health dice count :",
-                    style = TextStyle(fontSize = 14.sp)
+                    style = MaterialTheme.typography.bodySmall
                 )
                 Spacer(
                     modifier = Modifier
@@ -86,7 +94,7 @@ fun HealthDice() {
                 )
                 Text(
                     text = "7",
-                    style = TextStyle(fontSize = 14.sp)
+                    style = MaterialTheme.typography.bodySmall
                 )
             }
         }
@@ -99,7 +107,7 @@ fun HealthDice() {
 )
 @Composable
 fun HealthDicePreview() {
-    DDCharacterSheetTheme {
+    DnDCharacterSheetTheme {
         HealthDice()
     }
 }
@@ -130,7 +138,7 @@ fun SpinnerSample(
 
             Text(
                 text = selected.name,
-                style = TextStyle(fontSize = 14.sp),
+                style = MaterialTheme.typography.bodySmall,
                 modifier = Modifier
                     .weight(1f)
                     .padding(horizontal = 16.dp, vertical = 8.dp)
@@ -139,11 +147,9 @@ fun SpinnerSample(
 
             DropdownMenu(
                 expanded = expanded,
-                onDismissRequest = { expanded = false },
-                modifier = Modifier.fillMaxWidth()   // delete this modifier and use .wrapContentWidth() if you would like to wrap the dropdown menu around the content
+                onDismissRequest = { expanded = false }
             ) {
                 list.forEach { listEntry ->
-
                     DropdownMenuItem(
                         onClick = {
                             selected = listEntry
@@ -153,10 +159,9 @@ fun SpinnerSample(
                         text = {
                             Text(
                                 text = listEntry.name,
-                                style = TextStyle(fontSize = 14.sp),
+                                style = MaterialTheme.typography.bodySmall,
                                 modifier = Modifier
-                                    //.wrapContentWidth()  //optional instad of fillMaxWidth
-                                    .fillMaxWidth()
+                                    .wrapContentWidth()
                                     .align(Alignment.Start)
                             )
                         },
@@ -172,7 +177,7 @@ fun SpinnerSample(
 @Preview(showBackground = true)
 @Composable
 fun SpinnerSample_Preview() {
-    DDCharacterSheetTheme {
+    DnDCharacterSheetTheme {
         val myData = listOf(MyData(0, "Apples"), MyData(1, "Bananas"), MyData(2, "Kiwis"))
 
         SpinnerSample(

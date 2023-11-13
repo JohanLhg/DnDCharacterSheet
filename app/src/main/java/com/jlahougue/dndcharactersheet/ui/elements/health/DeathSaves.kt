@@ -9,24 +9,19 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.material.ExperimentalMaterialApi
-import androidx.compose.material.LocalMinimumInteractiveComponentEnforcement
 import androidx.compose.material3.Checkbox
 import androidx.compose.material3.CheckboxDefaults
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
-import com.jlahougue.dndcharactersheet.dal.entities.DeathSaves
 import com.jlahougue.dndcharactersheet.ui.elements.FramedBox
-import com.jlahougue.dndcharactersheet.ui.theme.DDCharacterSheetTheme
+import com.jlahougue.dndcharactersheet.ui.theme.DnDCharacterSheetTheme
 
 @Composable
 fun DeathSaves() {
@@ -54,7 +49,7 @@ fun DeathSavesRow(name: String, color: Color) {
         Text(
             text = name,
             modifier = Modifier.padding(5.dp),
-            style = TextStyle(fontSize = 14.sp)
+            style = MaterialTheme.typography.titleSmall
         )
         Spacer(modifier = Modifier.width(0.dp).weight(1f))
         Checkbox(
@@ -93,12 +88,7 @@ fun DeathSavesRow(name: String, color: Color) {
 )
 @Composable
 fun DeathSavesPreview() {
-    DDCharacterSheetTheme {
-        FramedBox(title = "Death Saves") {
-            Column {
-                DeathSavesRow(name = "Successes", color = Color(0xFF3E9400))
-                DeathSavesRow(name = "Failures", color = Color(0xFFBC0606))
-            }
-        }
+    DnDCharacterSheetTheme {
+        DeathSaves()
     }
 }

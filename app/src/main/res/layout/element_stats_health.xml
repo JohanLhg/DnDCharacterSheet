@@ -334,6 +334,7 @@
                         android:gravity="center"
                         android:padding="5dp"
                         android:text="@string/hit_dice"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Small"
                         app:layout_columnWeight="3"
                         app:layout_rowWeight="1" />
 
@@ -352,6 +353,7 @@
                         android:gravity="center"
                         android:padding="5dp"
                         android:text="@string/hit_dice_nbr"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Small"
                         app:layout_columnWeight="3"
                         app:layout_rowWeight="1" />
 
@@ -424,7 +426,8 @@
                         android:layout_weight="1"
                         android:gravity="center"
                         android:padding="5dp"
-                        android:text="@string/successes" />
+                        android:text="@string/successes"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Small" />
 
                     <TextView
                         android:id="@+id/labelDeathSavesFailure"
@@ -433,7 +436,8 @@
                         android:layout_weight="1"
                         android:gravity="center"
                         android:padding="5dp"
-                        android:text="@string/failures" />
+                        android:text="@string/failures"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Small" />
 
                 </LinearLayout>
 

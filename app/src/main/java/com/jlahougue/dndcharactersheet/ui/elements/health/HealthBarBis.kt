@@ -17,20 +17,19 @@ import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.material.Button
 import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.Divider
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import com.jlahougue.dndcharactersheet.R
 import com.jlahougue.dndcharactersheet.ui.elements.FramedBox
-import com.jlahougue.dndcharactersheet.ui.theme.DDCharacterSheetTheme
+import com.jlahougue.dndcharactersheet.ui.theme.DnDCharacterSheetTheme
 
 @Composable
 fun HealthBarBis() {
@@ -107,8 +106,7 @@ fun HealthBarBis() {
                 BasicTextField(
                     value = "0",
                     onValueChange = {},
-                    textStyle = TextStyle(
-                        fontSize = 22.sp,
+                    textStyle = MaterialTheme.typography.bodyLarge.copy(
                         textAlign = TextAlign.Center
                     ),
                     modifier = Modifier
@@ -127,8 +125,7 @@ fun HealthBarBis() {
                 BasicTextField(
                     value = "0",
                     onValueChange = {},
-                    textStyle = TextStyle(
-                        fontSize = 22.sp,
+                    textStyle = MaterialTheme.typography.bodyLarge.copy(
                         textAlign = TextAlign.Center
                     ),
                     modifier = Modifier
@@ -200,7 +197,7 @@ fun HealthBarBis() {
 )
 @Composable
 fun HealthBisPreview() {
-    DDCharacterSheetTheme {
+    DnDCharacterSheetTheme {
         HealthBarBis()
     }
 }

@@ -7,21 +7,18 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
-import com.jlahougue.dndcharactersheet.R
 import com.jlahougue.dndcharactersheet.ui.elements.FramedBox
-import com.jlahougue.dndcharactersheet.ui.theme.DDCharacterSheetTheme
+import com.jlahougue.dndcharactersheet.ui.theme.DnDCharacterSheetTheme
 
 @Composable
 fun Abilities() {
@@ -41,34 +38,33 @@ fun Abilities() {
                     text = "Mod.",
                     modifier = Modifier.width(50.dp),
                     textAlign = TextAlign.Center,
-                    style = TextStyle(fontSize = 14.sp)
+                    style = MaterialTheme.typography.bodySmall
                 )
                 Text(
                     text = "S.T.",
                     modifier = Modifier.width(50.dp),
                     textAlign = TextAlign.Center,
-                    style = TextStyle(fontSize = 14.sp)
+                    style = MaterialTheme.typography.bodySmall
                 )
             }
-            AbilityRow("Strength", R.drawable.strength, 0, 0)
-            AbilityRow("Dexterity", R.drawable.dexterity, 0, 0)
-            AbilityRow("Constitution", R.drawable.constitution, 0, 0)
-            AbilityRow("Intelligence", R.drawable.intelligence, 0, 0)
-            AbilityRow("Wisdom", R.drawable.wisdom, 0, 0)
-            AbilityRow("Charisma", R.drawable.charisma, 0, 0)
+            AbilityRow("Strength")
+            AbilityRow("Dexterity")
+            AbilityRow("Constitution")
+            AbilityRow("Intelligence")
+            AbilityRow("Wisdom")
+            AbilityRow("Charisma")
         }
     }
 }
 
 @Composable
-fun AbilityRow(name: String, imageId: Int, mod: Int = 0, st: Int = 0) {
+fun AbilityRow(name: String, mod: Int = 0, st: Int = 0) {
     Row(
         verticalAlignment = Alignment.CenterVertically,
     ) {
         Text(
             text = name.substring(0, 3).uppercase(),
-            style = TextStyle(fontSize = 14.sp),
-            fontWeight = FontWeight.Bold
+            style = MaterialTheme.typography.titleSmall
         )
         Spacer(modifier = Modifier
             .width(0.dp)
@@ -78,13 +74,13 @@ fun AbilityRow(name: String, imageId: Int, mod: Int = 0, st: Int = 0) {
             text = "+$mod",
             modifier = Modifier.width(50.dp),
             textAlign = TextAlign.Center,
-            style = TextStyle(fontSize = 14.sp)
+            style = MaterialTheme.typography.bodySmall
         )
         Text(
             text = "+$st",
             modifier = Modifier.width(50.dp),
             textAlign = TextAlign.Center,
-            style = TextStyle(fontSize = 14.sp)
+            style = MaterialTheme.typography.bodySmall
         )
     }
 }
@@ -106,13 +102,13 @@ fun AbilityRowAlt(name: String, imageId: Int, mod: Int = 0, st: Int = 0) {
             modifier = Modifier
                 .width(50.dp),
             textAlign = TextAlign.Center,
-            style = TextStyle(fontSize = 14.sp)
+            style = MaterialTheme.typography.bodySmall
         )
         Text(
             text = "+$st",
             modifier = Modifier.width(50.dp),
             textAlign = TextAlign.Center,
-            style = TextStyle(fontSize = 14.sp)
+            style = MaterialTheme.typography.bodySmall
         )
     }
 }
@@ -123,7 +119,7 @@ fun AbilityRowAlt(name: String, imageId: Int, mod: Int = 0, st: Int = 0) {
 )
 @Composable
 fun AbilitiesPreview() {
-    DDCharacterSheetTheme {
+    DnDCharacterSheetTheme {
         Abilities()
     }
 }
