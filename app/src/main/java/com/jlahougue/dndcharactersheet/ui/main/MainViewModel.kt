@@ -9,6 +9,8 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.jlahougue.dndcharactersheet.dal.entities.Class
 import com.jlahougue.dndcharactersheet.dal.entities.displayClasses.CharacterInfo
+import com.jlahougue.dndcharactersheet.dal.entities.enums.Language
+import com.jlahougue.dndcharactersheet.dal.entities.enums.UnitSystem
 import com.jlahougue.dndcharactersheet.dal.repositories.AuthRepository
 import com.jlahougue.dndcharactersheet.dal.repositories.CharacterRepository
 import com.jlahougue.dndcharactersheet.dal.repositories.CharacterSheetRepository
@@ -59,11 +61,11 @@ class MainViewModel(application: Application): AndroidViewModel(application) {
         viewModelScope.launch(Dispatchers.IO) { characterRepository.uploadImage(characterID.value!!, uri) }
     }
 
-    fun updatePreferences(language: String = "", unitSystem: String = "") {
+    fun updatePreferences(language: Language? = null, unitSystem: UnitSystem? = null) {
         viewModelScope.launch(Dispatchers.IO) {
             val pref = preferences.value!!
-            if (language != "") pref.language = language
-            if (unitSystem != "") pref.unitSystem = unitSystem
+            if (language != null) pref.language = language
+            if (unitSystem != null) pref.unitSystem = unitSystem
             preferencesRepository.update(pref)
         }
     }

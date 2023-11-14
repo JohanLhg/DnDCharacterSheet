@@ -2,7 +2,7 @@ package com.jlahougue.dndcharactersheet.dal.entities.views
 
 import androidx.room.ColumnInfo
 import androidx.room.DatabaseView
-import com.jlahougue.dndcharactersheet.dal.repositories.PreferencesRepository.Companion.UNIT_SYSTEM_IMPERIAL
+import com.jlahougue.dndcharactersheet.dal.entities.enums.UnitSystem
 import com.jlahougue.dndcharactersheet.extensions.feetToMeterString
 
 @DatabaseView(
@@ -46,10 +46,10 @@ class WeaponView(
     @ColumnInfo(name = WEAPON_VIEW_THROW_RANGE_MAX)
     var throwRangeMax: Int = 0
 ) {
-    fun getRangeString(unitSystem: String): String {
+    fun getRangeString(unitSystem: UnitSystem): String {
         var rangeStr = ""
         when (unitSystem) {
-            UNIT_SYSTEM_IMPERIAL -> {
+            UnitSystem.IMPERIAL -> {
                 if (range > 0) rangeStr = "$range ft."
                 if (throwRangeMin > 0) {
                     if (rangeStr.isNotEmpty()) rangeStr += " / "

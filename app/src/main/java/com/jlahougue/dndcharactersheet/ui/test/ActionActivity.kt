@@ -25,7 +25,6 @@ import com.jlahougue.dndcharactersheet.ui.elements.health.Health
 import com.jlahougue.dndcharactersheet.ui.elements.stats.Abilities
 import com.jlahougue.dndcharactersheet.ui.elements.stats.Skills
 import com.jlahougue.dndcharactersheet.ui.elements.stats.Stats
-import com.jlahougue.dndcharactersheet.ui.elements.weapons.Weapon
 import com.jlahougue.dndcharactersheet.ui.theme.DnDCharacterSheetTheme
 
 class ActionActivity : ComponentActivity() {
@@ -85,9 +84,6 @@ fun ActionActivityPreview() {
                         .background(color = Color(0xFF78461F))
                         .padding(1.dp)
                 ) {
-                    Weapon()
-                    Weapon()
-                    Weapon()
                 }
             }
         }

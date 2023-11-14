@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentHeight
+import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.material.Button
 import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.Text
@@ -25,10 +26,31 @@ import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.jlahougue.dndcharactersheet.R
+import com.jlahougue.dndcharactersheet.dal.entities.enums.UnitSystem
+import com.jlahougue.dndcharactersheet.dal.entities.views.WeaponView
 import com.jlahougue.dndcharactersheet.ui.theme.DnDCharacterSheetTheme
 
 @Composable
-fun Weapon() {
+fun WeaponList(
+    weapons: List<WeaponView>,
+    unitSystem: UnitSystem,
+    modifier: Modifier = Modifier
+) {
+    LazyRow(
+        modifier = modifier
+    ) {
+        items(weapons.size) { index ->
+            Weapon(weapons[index], unitSystem)
+        }
+    }
+}
+
+@Composable
+fun Weapon(
+    weapon: WeaponView,
+    unitSystem: UnitSystem,
+    modifier: Modifier = Modifier
+) {
     Row(
         modifier = Modifier
             .height(32.dp)
@@ -50,7 +72,7 @@ fun Weapon() {
             )
         }
         Text(
-            text = "2",
+            text = weapon.count.toString(),
             style = MaterialTheme.typography.bodySmall,
             textAlign = TextAlign.Center,
             modifier = Modifier
@@ -64,7 +86,7 @@ fun Weapon() {
                 .wrapContentHeight(align = Alignment.CenterVertically)
         )
         Text(
-            text = "Weapon Name",
+            text = weapon.name,
             style = MaterialTheme.typography.bodySmall,
             modifier = Modifier
                 .padding(1.dp)
@@ -77,21 +99,20 @@ fun Weapon() {
                 .wrapContentHeight(align = Alignment.CenterVertically)
         )
         Text(
-            text = "+3",
+            text = if(weapon.modifier >= 0) "+ ${weapon.modifier}"
+            else "- ${weapon.modifier}",
             style = MaterialTheme.typography.bodySmall,
             textAlign = TextAlign.Center,
             modifier = Modifier
                 .padding(1.dp)
-                .background(
-                    color = Color.White
-                )
+                .background(color = Color.White)
                 .fillMaxHeight()
                 .width(50.dp)
                 .padding(3.dp)
                 .wrapContentHeight(align = Alignment.CenterVertically)
         )
         Text(
-            text = "2d6 Bludgeoning",
+            text = weapon.damage,
             style = MaterialTheme.typography.bodySmall,
             textAlign = TextAlign.Center,
             modifier = Modifier
@@ -105,7 +126,7 @@ fun Weapon() {
                 .wrapContentHeight(align = Alignment.CenterVertically)
         )
         Text(
-            text = "6-7 ft. (15-30 ft.)",
+            text = weapon.getRangeString(unitSystem),
             style = MaterialTheme.typography.bodySmall,
             textAlign = TextAlign.Center,
             modifier = Modifier
@@ -128,6 +149,5 @@ fun Weapon() {
 @Composable
 fun DeathSavesPreview() {
     DnDCharacterSheetTheme {
-        Weapon()
     }
 }

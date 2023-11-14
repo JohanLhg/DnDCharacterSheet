@@ -2,13 +2,14 @@ package com.jlahougue.dndcharactersheet.dal.entities
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
+import com.jlahougue.dndcharactersheet.dal.entities.enums.AbilityName
 
 @Entity(tableName = Ability.TABLE_ABILITY, primaryKeys = [Ability.ABILITY_CID, Ability.ABILITY_NAME])
 class Ability(
     @ColumnInfo(name = ABILITY_CID)
     var cid: Long = 0,
     @ColumnInfo(name = ABILITY_NAME)
-    var name: String = "",
+    var name: AbilityName,
     @ColumnInfo(name = ABILITY_VALUE)
     var value: Int = 10,
     @ColumnInfo(name = ABILITY_PROFICIENCY)
