@@ -23,4 +23,12 @@ class PreferencesRepository(application: Application) {
         } else
             callback(language)
     }
+
+    companion object {
+        const val LANGUAGE_EN = "en"
+        const val LANGUAGE_FR = "fr"
+
+        const val UNIT_SYSTEM_IMPERIAL = "imperial"
+        const val UNIT_SYSTEM_METRIC = "metric"
+    }
 }

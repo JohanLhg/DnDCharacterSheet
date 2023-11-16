@@ -2,8 +2,6 @@ package com.jlahougue.dndcharactersheet.dal.entities.views
 
 import androidx.room.ColumnInfo
 import androidx.room.DatabaseView
-import com.jlahougue.dndcharactersheet.dal.entities.enums.AbilityName
-import com.jlahougue.dndcharactersheet.dal.entities.enums.SkillName
 
 @DatabaseView(
     """
@@ -26,9 +24,9 @@ class SkillView(
     @ColumnInfo(name = SKILL_CID)
     var cid: Long,
     @ColumnInfo(name = SKILL_NAME)
-    var name: SkillName,
+    var name: String,
     @ColumnInfo(name = SKILL_MODIFIER_TYPE)
-    var modifierType: AbilityName,
+    var modifierType: String,
     @ColumnInfo(name = SKILL_MODIFIER)
     var modifier: Int,
     @ColumnInfo(name = SKILL_PROFICIENCY)

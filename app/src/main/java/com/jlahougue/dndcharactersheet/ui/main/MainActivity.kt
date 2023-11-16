@@ -15,8 +15,10 @@ import com.bumptech.glide.Glide
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.jlahougue.dndcharactersheet.R
 import com.jlahougue.dndcharactersheet.dal.entities.Class
-import com.jlahougue.dndcharactersheet.dal.entities.enums.Language
-import com.jlahougue.dndcharactersheet.dal.entities.enums.UnitSystem
+import com.jlahougue.dndcharactersheet.dal.repositories.PreferencesRepository.Companion.LANGUAGE_EN
+import com.jlahougue.dndcharactersheet.dal.repositories.PreferencesRepository.Companion.LANGUAGE_FR
+import com.jlahougue.dndcharactersheet.dal.repositories.PreferencesRepository.Companion.UNIT_SYSTEM_IMPERIAL
+import com.jlahougue.dndcharactersheet.dal.repositories.PreferencesRepository.Companion.UNIT_SYSTEM_METRIC
 import com.jlahougue.dndcharactersheet.databinding.ActivityMainBinding
 import com.jlahougue.dndcharactersheet.extensions.observeNonNull
 import com.jlahougue.dndcharactersheet.ui.detailsDialogs.DialogClassDetails
@@ -251,16 +253,16 @@ class MainActivity : AppCompatActivity(),
 
     private fun setupSettingsPanel() {
         binding.panelSettings.apply {
-            imageFR.setOnClickListener { setLocale(Language.FR) }
+            imageFR.setOnClickListener { setLocale(LANGUAGE_FR) }
 
-            imageEN.setOnClickListener { setLocale(Language.EN) }
+            imageEN.setOnClickListener { setLocale(LANGUAGE_EN) }
 
             buttonImperial.setOnClickListener {
-                mainViewModel.updatePreferences(unitSystem = UnitSystem.IMPERIAL)
+                mainViewModel.updatePreferences(unitSystem = UNIT_SYSTEM_IMPERIAL)
             }
 
             buttonMetric.setOnClickListener {
-                mainViewModel.updatePreferences(unitSystem = UnitSystem.METRIC)
+                mainViewModel.updatePreferences(unitSystem = UNIT_SYSTEM_METRIC)
             }
 
             buttonChangeEmail.setOnClickListener {
@@ -287,19 +289,19 @@ class MainActivity : AppCompatActivity(),
         }
     }
 
-    private fun setLanguageDisplay(languageCode: Language) {
+    private fun setLanguageDisplay(languageCode: String) {
         binding.panelSettings.apply {
             imageFR.alpha = 0.5f
             imageEN.alpha = 0.5f
             when (languageCode) {
-                Language.FR -> imageFR.alpha = 1f
-                Language.EN -> imageEN.alpha = 1f
+                LANGUAGE_FR -> imageFR.alpha = 1f
+                LANGUAGE_EN -> imageEN.alpha = 1f
             }
         }
     }
 
-    private fun setLocale(languageCode: Language) {
-        val locale = Locale(languageCode.name)
+    private fun setLocale(languageCode: String) {
+        val locale = Locale(languageCode)
         Locale.setDefault(locale)
         val resources = resources
         val config = resources.configuration

@@ -7,7 +7,7 @@ class AbilityDao {
     private val firebaseDatabase = FirebaseDatabase.getInstance()
 
     fun save(ability: Ability) {
-        firebaseDatabase.updateCharacterSheet(ability.cid, mapOf("abilities.${ability.name.name}" to ability))
+        firebaseDatabase.updateCharacterSheet(ability.cid, mapOf("abilities.${ability.name}" to ability))
     }
 
     fun updateValue(cid: Long, name: String, value: Int) {

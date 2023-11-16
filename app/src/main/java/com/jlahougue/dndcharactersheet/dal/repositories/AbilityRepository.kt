@@ -4,7 +4,6 @@ import android.app.Application
 import android.content.Context
 import com.jlahougue.dndcharactersheet.R
 import com.jlahougue.dndcharactersheet.dal.entities.Ability
-import com.jlahougue.dndcharactersheet.dal.entities.enums.AbilityName
 import com.jlahougue.dndcharactersheet.dal.entities.views.AbilityView
 import com.jlahougue.dndcharactersheet.dal.firebase.dao.AbilityDao
 import com.jlahougue.dndcharactersheet.dal.room.DnDDatabase
@@ -14,12 +13,12 @@ class AbilityRepository(application: Application) {
     private val firebaseDao = AbilityDao()
 
     fun create(characterID: Long) {
-        insert(Ability(cid = characterID, name = AbilityName.STRENGTH))
-        insert(Ability(cid = characterID, name = AbilityName.DEXTERITY))
-        insert(Ability(cid = characterID, name = AbilityName.CONSTITUTION))
-        insert(Ability(cid = characterID, name = AbilityName.INTELLIGENCE))
-        insert(Ability(cid = characterID, name = AbilityName.WISDOM))
-        insert(Ability(cid = characterID, name = AbilityName.CHARISMA))
+        insert(Ability(cid = characterID, name = STRENGTH))
+        insert(Ability(cid = characterID, name = DEXTERITY))
+        insert(Ability(cid = characterID, name = CONSTITUTION))
+        insert(Ability(cid = characterID, name = INTELLIGENCE))
+        insert(Ability(cid = characterID, name = WISDOM))
+        insert(Ability(cid = characterID, name = CHARISMA))
     }
 
     fun insert(ability: Ability) {
