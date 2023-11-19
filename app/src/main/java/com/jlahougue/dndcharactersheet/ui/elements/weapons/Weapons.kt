@@ -4,7 +4,6 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -26,14 +25,14 @@ import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.jlahougue.dndcharactersheet.R
-import com.jlahougue.dndcharactersheet.dal.entities.enums.UnitSystem
 import com.jlahougue.dndcharactersheet.dal.entities.views.WeaponView
+import com.jlahougue.dndcharactersheet.dal.repositories.PreferencesRepository.Companion.UNIT_SYSTEM_METRIC
 import com.jlahougue.dndcharactersheet.ui.theme.DnDCharacterSheetTheme
 
 @Composable
-fun WeaponList(
+fun Weapons(
     weapons: List<WeaponView>,
-    unitSystem: UnitSystem,
+    unitSystem: String,
     modifier: Modifier = Modifier
 ) {
     LazyRow(
@@ -48,11 +47,11 @@ fun WeaponList(
 @Composable
 fun Weapon(
     weapon: WeaponView,
-    unitSystem: UnitSystem,
+    unitSystem: String,
     modifier: Modifier = Modifier
 ) {
     Row(
-        modifier = Modifier
+        modifier = modifier
             .height(32.dp)
     ) {
         Button(
@@ -77,10 +76,8 @@ fun Weapon(
             textAlign = TextAlign.Center,
             modifier = Modifier
                 .padding(1.dp)
-                .background(
-                    color = Color.White
-                )
-                .fillMaxHeight()
+                .background(Color.White)
+                .height(30.dp)
                 .width(30.dp)
                 .padding(3.dp)
                 .wrapContentHeight(align = Alignment.CenterVertically)
@@ -90,10 +87,8 @@ fun Weapon(
             style = MaterialTheme.typography.bodySmall,
             modifier = Modifier
                 .padding(1.dp)
-                .background(
-                    color = Color.White
-                )
-                .fillMaxHeight()
+                .background(Color.White)
+                .height(30.dp)
                 .width(160.dp)
                 .padding(3.dp)
                 .wrapContentHeight(align = Alignment.CenterVertically)
@@ -105,8 +100,8 @@ fun Weapon(
             textAlign = TextAlign.Center,
             modifier = Modifier
                 .padding(1.dp)
-                .background(color = Color.White)
-                .fillMaxHeight()
+                .background(Color.White)
+                .height(30.dp)
                 .width(50.dp)
                 .padding(3.dp)
                 .wrapContentHeight(align = Alignment.CenterVertically)
@@ -117,10 +112,8 @@ fun Weapon(
             textAlign = TextAlign.Center,
             modifier = Modifier
                 .padding(1.dp)
-                .background(
-                    color = Color.White
-                )
-                .fillMaxHeight()
+                .background(Color.White)
+                .height(30.dp)
                 .width(200.dp)
                 .padding(3.dp)
                 .wrapContentHeight(align = Alignment.CenterVertically)
@@ -131,10 +124,8 @@ fun Weapon(
             textAlign = TextAlign.Center,
             modifier = Modifier
                 .padding(1.dp)
-                .background(
-                    color = Color.White
-                )
-                .fillMaxHeight()
+                .background(Color.White)
+                .height(30.dp)
                 .width(160.dp)
                 .padding(3.dp)
                 .wrapContentHeight(align = Alignment.CenterVertically)
@@ -147,7 +138,33 @@ fun Weapon(
     device = Devices.TABLET
 )
 @Composable
-fun DeathSavesPreview() {
+fun WeaponsPreview() {
     DnDCharacterSheetTheme {
+        Weapons(
+            weapons = getWeaponsPreviewData(),
+            unitSystem = UNIT_SYSTEM_METRIC,
+            modifier = Modifier
+        )
     }
 }
+
+fun getWeaponsPreviewData() = listOf(
+    WeaponView(
+        "Dagger",
+        1,
+        2,
+        3,
+        "1d4 slashing",
+        20,
+        60,
+        120
+    ),
+    WeaponView(
+        "Quarterstaff",
+        1,
+        1,
+        3,
+        "1d6 bludgeoning",
+        20
+    )
+)

@@ -44,7 +44,7 @@ class AbilityAdapter(private val listener: OnAbilityChangedListener) : RecyclerV
         val ability = abilities[position]
 
         holder.bind.textAbilityName.text = AbilityRepository.getName(context, ability.name)
-        holder.bind.textAbilityModifier.text = context.getString(R.string.plus_value, abilities[position].baseModifier)
+        holder.bind.textAbilityModifier.text = context.getString(R.string.plus_value, abilities[position].modifier)
         holder.bind.editAbilityValue.setText(ability.value.toString())
 
         holder.bind.editAbilityValue.addTextChangedListener { text ->
@@ -67,7 +67,7 @@ class AbilityAdapter(private val listener: OnAbilityChangedListener) : RecyclerV
             payloads.contains(MODIFIER) -> {
                 holder.bind.textAbilityModifier.text = holder.itemView.context.getString(
                     R.string.plus_value,
-                    abilities[position].baseModifier
+                    abilities[position].modifier
                 )
             }
             else -> super.onBindViewHolder(holder, position, payloads)

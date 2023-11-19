@@ -98,5 +98,15 @@ class AbilityRepository(application: Application) {
             CHARISMA -> context.getString(R.string.modifier_charisma)
             else -> ""
         }
+
+        fun getModifierNameId(modifierType: String) = when(modifierType) {
+            STRENGTH -> R.string.modifier_strength
+            DEXTERITY -> R.string.modifier_dexterity
+            CONSTITUTION -> R.string.modifier_constitution
+            INTELLIGENCE -> R.string.modifier_intelligence
+            WISDOM -> R.string.modifier_wisdom
+            CHARISMA -> R.string.modifier_charisma
+            else -> R.string.empty
+        }
     }
 }

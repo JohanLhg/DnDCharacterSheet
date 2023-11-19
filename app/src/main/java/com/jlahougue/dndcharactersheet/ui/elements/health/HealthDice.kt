@@ -33,17 +33,10 @@ import com.jlahougue.dndcharactersheet.ui.elements.FramedBox
 import com.jlahougue.dndcharactersheet.ui.theme.DnDCharacterSheetTheme
 
 @Composable
-fun HealthDice() {
+fun HealthDice(modifier: Modifier = Modifier) {
     FramedBox(
         title = "Health Dice",
-        modifier = Modifier
-            .padding(
-                start = 5.dp,
-                end = 5.dp,
-                bottom = 5.dp
-            )
-            .fillMaxWidth()
-            .height(IntrinsicSize.Max)
+        modifier = modifier
     ) {
         Column(
             modifier = Modifier
@@ -108,7 +101,11 @@ fun HealthDice() {
 @Composable
 fun HealthDicePreview() {
     DnDCharacterSheetTheme {
-        HealthDice()
+        HealthDice(
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(IntrinsicSize.Max)
+        )
     }
 }
 

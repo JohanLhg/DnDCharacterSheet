@@ -34,21 +34,13 @@ import com.jlahougue.dndcharactersheet.ui.elements.FramedBox
 import com.jlahougue.dndcharactersheet.ui.theme.DnDCharacterSheetTheme
 
 @Composable
-fun Health() {
+fun Health(modifier: Modifier = Modifier) {
     FramedBox(
         title = "Health",
-        modifier = Modifier
-            .fillMaxWidth()
-            .height(IntrinsicSize.Max)
-            .padding(5.dp)
+        modifier = modifier
     ) {
         Row(
             modifier = Modifier
-                .padding(
-                    start = 5.dp,
-                    end = 5.dp,
-                    bottom = 5.dp
-                )
                 .width(IntrinsicSize.Max)
                 .height(IntrinsicSize.Max)
         ) {
@@ -218,6 +210,10 @@ fun Health() {
 @Composable
 fun HealthPreview() {
     DnDCharacterSheetTheme {
-        Health()
+        Health(
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(IntrinsicSize.Max)
+        )
     }
 }

@@ -25,22 +25,14 @@ import com.jlahougue.dndcharactersheet.ui.elements.FramedBox
 import com.jlahougue.dndcharactersheet.ui.theme.DnDCharacterSheetTheme
 
 @Composable
-fun Stats() {
+fun Stats(modifier: Modifier = Modifier) {
     FramedBox(
         title = "Stats",
-        modifier = Modifier
-            .fillMaxWidth()
-            .height(IntrinsicSize.Max)
-            .padding(5.dp)
+        modifier = modifier
     ) {
         Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(
-                    start = 5.dp,
-                    end = 5.dp,
-                    bottom = 5.dp
-                )
         ) {
             Row(
                 modifier = Modifier
@@ -48,7 +40,7 @@ fun Stats() {
                     .padding(vertical = 2.dp)
             ) {
                 Text(
-                    text = "Init.",
+                    text = "Initiative",
                     style = MaterialTheme.typography.titleSmall,
                     modifier = Modifier
                         .padding(horizontal = 5.dp)
@@ -70,7 +62,7 @@ fun Stats() {
                     .padding(vertical = 2.dp)
             ) {
                 Text(
-                    text = "A.C.",
+                    text = "Armor",
                     style = MaterialTheme.typography.titleSmall,
                     modifier = Modifier
                         .padding(horizontal = 5.dp)
@@ -134,6 +126,10 @@ fun Stats() {
 @Composable
 fun StatsPreview() {
     DnDCharacterSheetTheme {
-        Stats()
+        Stats(
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(IntrinsicSize.Max)
+        )
     }
 }

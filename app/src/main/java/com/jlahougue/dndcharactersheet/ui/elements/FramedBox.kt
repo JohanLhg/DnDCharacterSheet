@@ -23,14 +23,14 @@ import java.util.Locale
 
 @Composable
 fun FramedBox(
+    modifier: Modifier = Modifier,
     title: String = "",
-    modifier: Modifier = Modifier
-        .width(IntrinsicSize.Max)
-        .height(IntrinsicSize.Max)
-        .padding(5.dp),
     content: @Composable () -> Unit
 ) {
-    Box(modifier = modifier) {
+    Box(
+        modifier = modifier
+            .padding(5.dp)
+    ) {
         Box(
             modifier = Modifier
                 .fillMaxSize()
@@ -46,9 +46,9 @@ fun FramedBox(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(
-                    start = 2.dp,
-                    end = 2.dp,
-                    bottom = 2.dp
+                    start = 7.dp,
+                    end = 7.dp,
+                    bottom = 7.dp
                 )
         ) {
             Text(

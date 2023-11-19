@@ -28,10 +28,10 @@ class AbilityView(
     var name: String,
     @ColumnInfo(name = ABILITY_VALUE)
     var value: Int,
-    @ColumnInfo(name = ABILITY_BASE_MODIFIER)
-    var baseModifier: Int,
     @ColumnInfo(name = ABILITY_MODIFIER)
     var modifier: Int,
+    @ColumnInfo(name = ABILITY_SAVING_THROW)
+    var savingThrow: Int,
     @ColumnInfo(name = ABILITY_PROFICIENCY)
     var proficiency: Boolean
 ) {
@@ -40,8 +40,8 @@ class AbilityView(
         const val ABILITY_CID = "cid"
         const val ABILITY_NAME = "name"
         const val ABILITY_VALUE = "value"
-        const val ABILITY_BASE_MODIFIER = "base_modifier"
-        const val ABILITY_MODIFIER = "modifier"
+        const val ABILITY_MODIFIER = "base_modifier"
+        const val ABILITY_SAVING_THROW = "modifier"
         const val ABILITY_PROFICIENCY = "proficiency"
     }
 }

@@ -7,7 +7,6 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Checkbox
 import androidx.compose.material3.CheckboxDefaults
@@ -17,48 +16,57 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.jlahougue.dndcharactersheet.R
 import com.jlahougue.dndcharactersheet.ui.elements.FramedBox
 import com.jlahougue.dndcharactersheet.ui.theme.DnDCharacterSheetTheme
 
 @Composable
-fun DeathSaves() {
+fun DeathSaves(modifier: Modifier = Modifier) {
     FramedBox(
-        title = "Death Saves",
-        modifier = Modifier
-            .fillMaxWidth()
-            .height(IntrinsicSize.Max)
-            .padding(5.dp)
+        title = stringResource(R.string.death_saves),
+        modifier = modifier
     ) {
-        Column(
-            modifier = Modifier.padding(5.dp)
-        ) {
-            DeathSavesRow(name = "Successes", color = Color(0xFF3E9400))
-            DeathSavesRow(name = "Failures", color = Color(0xFFBC0606))
+        Column {
+            DeathSavesRow(
+                name = stringResource(R.string.successes),
+                color = Color(0xFF3E9400),
+                modifier = Modifier.padding(bottom = 5.dp)
+            )
+            DeathSavesRow(
+                name = stringResource(R.string.failures),
+                color = Color(0xFFBC0606)
+            )
         }
     }
 }
 
 @Composable
-fun DeathSavesRow(name: String, color: Color) {
+fun DeathSavesRow(name: String, color: Color, modifier: Modifier = Modifier) {
     Row(
-        verticalAlignment = Alignment.CenterVertically
+        verticalAlignment = Alignment.CenterVertically,
+        modifier = modifier
     ) {
         Text(
             text = name,
-            modifier = Modifier.padding(5.dp),
             style = MaterialTheme.typography.titleSmall
         )
-        Spacer(modifier = Modifier.width(0.dp).weight(1f))
+        Spacer(modifier = Modifier
+            .width(0.dp)
+            .height(0.dp)
+            .weight(1f))
         Checkbox(
             checked = false,
             colors = CheckboxDefaults.colors(
                 uncheckedColor = color,
                 checkedColor = color
             ),
-            modifier = Modifier.size(40.dp),
+            modifier = Modifier
+                .height(20.dp)
+                .width(25.dp),
             onCheckedChange = {}
         )
         Checkbox(
@@ -67,7 +75,9 @@ fun DeathSavesRow(name: String, color: Color) {
                 uncheckedColor = color,
                 checkedColor = color
             ),
-            modifier = Modifier.size(40.dp),
+            modifier = Modifier
+                .height(20.dp)
+                .width(25.dp),
             onCheckedChange = {}
         )
         Checkbox(
@@ -76,7 +86,9 @@ fun DeathSavesRow(name: String, color: Color) {
                 uncheckedColor = color,
                 checkedColor = color
             ),
-            modifier = Modifier.size(40.dp),
+            modifier = Modifier
+                .height(20.dp)
+                .width(25.dp),
             onCheckedChange = {}
         )
     }
@@ -89,6 +101,10 @@ fun DeathSavesRow(name: String, color: Color) {
 @Composable
 fun DeathSavesPreview() {
     DnDCharacterSheetTheme {
-        DeathSaves()
+        DeathSaves(
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(IntrinsicSize.Min)
+        )
     }
 }

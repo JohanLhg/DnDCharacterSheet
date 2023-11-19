@@ -32,22 +32,12 @@ import com.jlahougue.dndcharactersheet.ui.elements.FramedBox
 import com.jlahougue.dndcharactersheet.ui.theme.DnDCharacterSheetTheme
 
 @Composable
-fun HealthBarBis() {
+fun HealthBarBis(modifier: Modifier = Modifier) {
     FramedBox(
         title = "Health",
-        modifier = Modifier
-            .fillMaxWidth()
-            .height(IntrinsicSize.Max)
-            .padding(5.dp)
+        modifier = modifier
     ) {
-        Column(
-            modifier = Modifier
-                .padding(
-                    start = 5.dp,
-                    end = 5.dp,
-                    bottom = 5.dp
-                )
-        ) {
+        Column {
             Row(
                 horizontalArrangement = Arrangement.Center,
                 modifier = Modifier
@@ -198,6 +188,10 @@ fun HealthBarBis() {
 @Composable
 fun HealthBisPreview() {
     DnDCharacterSheetTheme {
-        HealthBarBis()
+        HealthBarBis(
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(IntrinsicSize.Max)
+        )
     }
 }

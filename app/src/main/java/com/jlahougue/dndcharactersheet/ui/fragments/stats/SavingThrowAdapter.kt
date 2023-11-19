@@ -40,7 +40,7 @@ class SavingThrowAdapter(private val listener: OnAbilityChangedListener) : Recyc
 
         holder.bind.checkProficiency.isChecked = ability.proficiency
         holder.bind.textName.text = AbilityRepository.getName(context, ability.name)
-        holder.bind.textModifier.text = context.getString(R.string.plus_value, ability.modifier)
+        holder.bind.textModifier.text = context.getString(R.string.plus_value, ability.savingThrow)
 
         holder.bind.checkProficiency.setOnCheckedChangeListener { _, isChecked ->
             changeProficiency(holder.adapterPosition, isChecked)
@@ -53,7 +53,7 @@ class SavingThrowAdapter(private val listener: OnAbilityChangedListener) : Recyc
         payloads: MutableList<Any>
     ) {
         when {
-            payloads.contains(MODIFIER) -> holder.bind.textModifier.text = holder.itemView.context.getString(R.string.plus_value, abilities[position].modifier)
+            payloads.contains(MODIFIER) -> holder.bind.textModifier.text = holder.itemView.context.getString(R.string.plus_value, abilities[position].savingThrow)
             else -> super.onBindViewHolder(holder, position, payloads)
         }
     }
