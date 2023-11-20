@@ -43,7 +43,7 @@ class AuthActivity : AppCompatActivity() {
         if (!intent.getBooleanExtra(LANGUAGE_LOADED, false)) {
             authViewModel.getLanguage {
                 runOnUiThread {
-                    if (!setLocale(it))
+                    if (!setLocale(it.code))
                         setupActivity()
                 }
             }
@@ -248,10 +248,10 @@ class AuthActivity : AppCompatActivity() {
         }
     }
 
-    private fun setLocale(languageCode: String): Boolean {
-        if (languageCode == Locale.getDefault().language) return false
+    private fun setLocale(language: String): Boolean {
+        if (language == Locale.getDefault().language) return false
 
-        val locale = Locale(languageCode)
+        val locale = Locale(language)
         Locale.setDefault(locale)
         val resources = resources
         val config = resources.configuration

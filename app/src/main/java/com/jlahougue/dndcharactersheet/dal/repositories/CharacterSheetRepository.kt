@@ -6,7 +6,6 @@ import com.jlahougue.dndcharactersheet.dal.entities.Equipment
 import com.jlahougue.dndcharactersheet.dal.entities.Notes
 import com.jlahougue.dndcharactersheet.dal.entities.Quests
 import com.jlahougue.dndcharactersheet.dal.entities.SpellSlot
-import com.jlahougue.dndcharactersheet.dal.entities.Spellcasting
 import com.jlahougue.dndcharactersheet.dal.firebase.dao.CharacterSheetDao
 import com.jlahougue.dndcharactersheet.dal.firebase.documentLayouts.CharacterSheet
 
@@ -16,7 +15,6 @@ class CharacterSheetRepository(application: Application) {
     private val abilityRepository = AbilityRepository(application)
     private val skillRepository = SkillRepository(application)
     private val statsRepository = StatsRepository(application)
-    private val spellcastingRepository = SpellcastingRepository(application)
     private val spellSlotRepository = SpellSlotRepository(application)
     private val characterSpellRepository = CharacterSpellRepository(application)
     private val characterWeaponRepository = CharacterWeaponRepository(application)
@@ -34,7 +32,6 @@ class CharacterSheetRepository(application: Application) {
         statsRepository.create(characterID)
         healthRepository.create(characterID)
         deathSavesRepository.create(characterID)
-        spellcastingRepository.create(characterID)
         spellSlotRepository.create(characterID)
         notesRepository.create(characterID)
         questsRepository.create(characterID)
@@ -53,7 +50,6 @@ class CharacterSheetRepository(application: Application) {
         statsRepository.deleteForCharacter(characterID)
         healthRepository.deleteForCharacter(characterID)
         deathSavesRepository.deleteForCharacter(characterID)
-        spellcastingRepository.deleteForCharacter(characterID)
         spellSlotRepository.deleteForCharacter(characterID)
         characterSpellRepository.deleteForCharacter(characterID)
         characterWeaponRepository.deleteForCharacter(characterID)
@@ -72,9 +68,6 @@ class CharacterSheetRepository(application: Application) {
         characterSheet.stats?.let { statsRepository.saveToLocal(it) }
         characterSheet.health?.let { healthRepository.saveToLocal(it) }
         characterSheet.deathSaves?.let { deathSavesRepository.saveToLocal(it) }
-        characterSheet.spellcastingAbility?.let {
-            spellcastingRepository.saveToLocal(Spellcasting(characterID, it))
-        }
         characterSheet.spellSlots.forEach { (level, count) ->
             spellSlotRepository.saveToLocal(SpellSlot(characterID, Integer.valueOf(level), count))
         }
@@ -94,7 +87,6 @@ class CharacterSheetRepository(application: Application) {
             statsRepository.get(characterID),
             healthRepository.get(characterID),
             deathSavesRepository.get(characterID),
-            spellcastingRepository.getAbility(characterID),
             spellSlotRepository.getMap(characterID),
             characterSpellRepository.getMap(characterID),
             characterWeaponRepository.getMap(characterID),

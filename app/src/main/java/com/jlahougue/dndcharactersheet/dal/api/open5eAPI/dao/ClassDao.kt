@@ -3,7 +3,7 @@ package com.jlahougue.dndcharactersheet.dal.api.open5eAPI.dao
 import com.jlahougue.dndcharactersheet.dal.api.open5eAPI.Open5eApiRequest
 import com.jlahougue.dndcharactersheet.dal.api.open5eAPI.Open5eApiRequest.Companion.CLASSES_URL
 import com.jlahougue.dndcharactersheet.dal.entities.Class
-import com.jlahougue.dndcharactersheet.dal.repositories.AbilityRepository
+import com.jlahougue.dndcharactersheet.dal.entities.enums.AbilityName
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.joinAll
@@ -53,7 +53,7 @@ class ClassDao {
         val profArmor = clazz.getString("prof_armor")
         val profWeapons = clazz.getString("prof_weapons")
         val profTools = clazz.getString("prof_tools")
-        val spellcastingAbility = AbilityRepository.getDatabaseCode(clazz.getString("spellcasting_ability"))
+        val spellcastingAbility = AbilityName.from(clazz.getString("spellcasting_ability"))
 
         val failed = save(
             Class(

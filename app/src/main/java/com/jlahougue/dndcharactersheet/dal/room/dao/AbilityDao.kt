@@ -14,9 +14,13 @@ import com.jlahougue.dndcharactersheet.dal.entities.displayClasses.AttackStats
 import com.jlahougue.dndcharactersheet.dal.entities.displayClasses.AttackStats.Companion.MELEE_MODIFIER
 import com.jlahougue.dndcharactersheet.dal.entities.displayClasses.AttackStats.Companion.PROFICIENCY_BONUS
 import com.jlahougue.dndcharactersheet.dal.entities.displayClasses.AttackStats.Companion.RANGED_MODIFIER
+import com.jlahougue.dndcharactersheet.dal.entities.enums.AbilityName.Companion.CHA
+import com.jlahougue.dndcharactersheet.dal.entities.enums.AbilityName.Companion.CON
+import com.jlahougue.dndcharactersheet.dal.entities.enums.AbilityName.Companion.DEX
+import com.jlahougue.dndcharactersheet.dal.entities.enums.AbilityName.Companion.INT
+import com.jlahougue.dndcharactersheet.dal.entities.enums.AbilityName.Companion.STR
+import com.jlahougue.dndcharactersheet.dal.entities.enums.AbilityName.Companion.WIS
 import com.jlahougue.dndcharactersheet.dal.entities.views.AbilityView
-import com.jlahougue.dndcharactersheet.dal.repositories.AbilityRepository.Companion.DEXTERITY
-import com.jlahougue.dndcharactersheet.dal.repositories.AbilityRepository.Companion.STRENGTH
 
 @Dao
 interface AbilityDao {
@@ -41,8 +45,8 @@ interface AbilityDao {
     @Query("""
         SELECT * FROM ability_view 
         WHERE cid = :characterID 
-        ORDER BY name = 'STR' DESC, name = 'DEX' DESC, name = 'CON' DESC, 
-            name = 'INT' DESC, name = 'WIS' DESC, name = 'CHA' DESC
+        ORDER BY name = '$STR' DESC, name = '$DEX' DESC, name = '$CON' DESC, 
+            name = '$INT' DESC, name = '$WIS' DESC, name = '$CHA' DESC
     """)
     fun get(characterID: Long): LiveData<List<AbilityView>>
 
@@ -57,8 +61,8 @@ interface AbilityDao {
         )
         SELECT 
             bonus AS $PROFICIENCY_BONUS, 
-            (SELECT modifier FROM modifiers WHERE name = '$STRENGTH') AS $MELEE_MODIFIER, 
-            (SELECT modifier FROM modifiers WHERE name = '$DEXTERITY') AS $RANGED_MODIFIER 
+            (SELECT modifier FROM modifiers WHERE name = '$STR') AS $MELEE_MODIFIER, 
+            (SELECT modifier FROM modifiers WHERE name = '$DEX') AS $RANGED_MODIFIER 
         FROM proficiency_view 
         WHERE cid = :characterID
     """)

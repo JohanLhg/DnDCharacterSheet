@@ -7,6 +7,7 @@ import android.net.NetworkCapabilities
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
+import com.jlahougue.dndcharactersheet.dal.entities.enums.Language
 import com.jlahougue.dndcharactersheet.dal.repositories.AuthRepository
 import com.jlahougue.dndcharactersheet.dal.repositories.CharacterSheetRepository
 import com.jlahougue.dndcharactersheet.dal.repositories.PreferencesRepository
@@ -91,7 +92,7 @@ class AuthViewModel(application: Application) : AndroidViewModel(application) {
         }
     }
 
-    fun getLanguage(callback: (String) -> Unit) {
+    fun getLanguage(callback: (Language) -> Unit) {
         viewModelScope.launch(Dispatchers.IO) {
             preferencesRepository.getLanguage(callback)
         }

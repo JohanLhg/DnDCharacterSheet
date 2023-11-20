@@ -2,6 +2,7 @@ package com.jlahougue.dndcharactersheet.dal.entities.views
 
 import androidx.room.ColumnInfo
 import androidx.room.DatabaseView
+import com.jlahougue.dndcharactersheet.dal.entities.enums.AbilityName
 
 @DatabaseView(
     """
@@ -25,7 +26,7 @@ class AbilityView(
     @ColumnInfo(name = ABILITY_CID)
     var cid: Long,
     @ColumnInfo(name = ABILITY_NAME)
-    var name: String,
+    var name: AbilityName,
     @ColumnInfo(name = ABILITY_VALUE)
     var value: Int,
     @ColumnInfo(name = ABILITY_BASE_MODIFIER)

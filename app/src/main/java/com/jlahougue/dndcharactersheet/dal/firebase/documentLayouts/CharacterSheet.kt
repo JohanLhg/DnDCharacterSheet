@@ -17,7 +17,6 @@ class CharacterSheet(
     var stats: Stats? = null,
     var health: Health? = null,
     var deathSaves: DeathSaves? = null,
-    var spellcastingAbility: String? = null,
     var spellSlots: Map<String, Int> = mapOf(),
     var spells: Map<String, CharacterSpell> = mapOf(),
     var weapons: Map<String, CharacterWeapon> = mapOf(),
@@ -44,8 +43,6 @@ class CharacterSheet(
                 $health
                 Death Saves:
                 $deathSaves
-                Spellcasting Ability:
-                $spellcastingAbility
                 Spell Slots:
                 ${spellSlots.forEach { it.toString() }}
                 Spells:

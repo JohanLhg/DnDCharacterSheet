@@ -8,6 +8,7 @@ import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Update
 import com.jlahougue.dndcharactersheet.dal.entities.Preferences
+import com.jlahougue.dndcharactersheet.dal.entities.enums.Language
 
 @Dao
 interface PreferencesDao {
@@ -24,5 +25,5 @@ interface PreferencesDao {
     fun get(): LiveData<Preferences>
 
     @Query("SELECT language FROM preferences WHERE id = 1")
-    fun getLanguage(): String?
+    fun getLanguage(): Language?
 }
