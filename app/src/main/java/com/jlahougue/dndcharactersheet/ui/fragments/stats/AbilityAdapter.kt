@@ -6,7 +6,6 @@ import androidx.core.widget.addTextChangedListener
 import androidx.recyclerview.widget.RecyclerView
 import com.jlahougue.dndcharactersheet.R
 import com.jlahougue.dndcharactersheet.dal.entities.views.AbilityView
-import com.jlahougue.dndcharactersheet.dal.repositories.AbilityRepository
 import com.jlahougue.dndcharactersheet.databinding.RecyclerAbilityBinding
 
 class AbilityAdapter(private val listener: OnAbilityChangedListener) : RecyclerView.Adapter<AbilityAdapter.ViewHolder>() {
@@ -43,7 +42,7 @@ class AbilityAdapter(private val listener: OnAbilityChangedListener) : RecyclerV
         val context = holder.itemView.context
         val ability = abilities[position]
 
-        holder.bind.textAbilityName.text = AbilityRepository.getName(context, ability.name)
+        holder.bind.textAbilityName.text = ability.name.getName(context)
         holder.bind.textAbilityModifier.text = context.getString(R.string.plus_value, abilities[position].modifier)
         holder.bind.editAbilityValue.setText(ability.value.toString())
 

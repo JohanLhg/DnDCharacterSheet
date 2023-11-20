@@ -3,6 +3,7 @@ package com.jlahougue.dndcharactersheet.dal.entities
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import com.jlahougue.dndcharactersheet.dal.entities.enums.AbilityName
 
 @Entity(tableName = Weapon.TABLE_WEAPON)
 class Weapon(
@@ -10,7 +11,7 @@ class Weapon(
     @ColumnInfo(name = WEAPON_NAME)
     var name: String = "",
     @ColumnInfo(name = WEAPON_TEST)
-    var test: String = "",
+    var test: AbilityName = AbilityName.NONE,
     @ColumnInfo(name = WEAPON_DAMAGE)
     var damage: String = "",
     @ColumnInfo(name = WEAPON_DAMAGE_TYPE)

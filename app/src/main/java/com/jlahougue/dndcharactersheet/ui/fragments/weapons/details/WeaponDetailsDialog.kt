@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import androidx.fragment.app.DialogFragment
 import com.jlahougue.dndcharactersheet.dal.entities.Property
 import com.jlahougue.dndcharactersheet.dal.entities.displayClasses.WeaponDetail
-import com.jlahougue.dndcharactersheet.dal.repositories.AbilityRepository
 import com.jlahougue.dndcharactersheet.databinding.DialogWeaponDetailsBinding
 
 class WeaponDetailsDialog(
@@ -34,7 +33,6 @@ class WeaponDetailsDialog(
         dialogBinding = DialogWeaponDetailsBinding.inflate(inflater, container, false)
 
         dialogBinding.context = context
-        dialogBinding.ability = AbilityRepository.Companion
         dialogBinding.weapon = weapon
 
         dialogBinding.recyclerProperties.adapter = WeaponPropertyAdapter(weapon.properties, this)

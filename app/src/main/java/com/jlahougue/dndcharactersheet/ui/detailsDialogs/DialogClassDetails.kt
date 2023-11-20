@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import androidx.fragment.app.DialogFragment
 import com.jlahougue.dndcharactersheet.R
 import com.jlahougue.dndcharactersheet.dal.entities.Class
-import com.jlahougue.dndcharactersheet.dal.repositories.AbilityRepository
 import com.jlahougue.dndcharactersheet.databinding.DialogClassDetailsBinding
 import io.noties.markwon.Markwon
 
@@ -36,7 +35,6 @@ class DialogClassDetails(
         dialogBinding = DialogClassDetailsBinding.inflate(inflater, container, false)
 
         dialogBinding.context = context
-        dialogBinding.ability = AbilityRepository.Companion
         dialogBinding.markwon = Markwon.create(requireContext())
         dialogBinding.clazz = clazz
 

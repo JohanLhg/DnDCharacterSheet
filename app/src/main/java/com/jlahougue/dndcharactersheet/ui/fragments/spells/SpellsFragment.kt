@@ -12,14 +12,13 @@ import com.jlahougue.dndcharactersheet.dal.entities.CharacterSpell
 import com.jlahougue.dndcharactersheet.dal.entities.Class
 import com.jlahougue.dndcharactersheet.dal.entities.SpellSlot
 import com.jlahougue.dndcharactersheet.dal.entities.displayClasses.SpellWithCharacterInfo
-import com.jlahougue.dndcharactersheet.dal.repositories.AbilityRepository
 import com.jlahougue.dndcharactersheet.databinding.FragmentSpellsBinding
 import com.jlahougue.dndcharactersheet.extensions.collectLatestLifecycleFlow
 import com.jlahougue.dndcharactersheet.extensions.observeOnce
 import com.jlahougue.dndcharactersheet.ui.detailsDialogs.DialogClassDetails
 import com.jlahougue.dndcharactersheet.ui.elements.SearchBarListener
-import com.jlahougue.dndcharactersheet.ui.fragments.spells.spellAdapters.SpellLevelAdapter
 import com.jlahougue.dndcharactersheet.ui.fragments.spells.spellAdapters.SpellAdapter
+import com.jlahougue.dndcharactersheet.ui.fragments.spells.spellAdapters.SpellLevelAdapter
 import com.jlahougue.dndcharactersheet.ui.fragments.spells.spellAdapters.SpellLevelFilterAdapter
 import com.jlahougue.dndcharactersheet.ui.fragments.spells.spellDetails.SpellDetailsDialog
 import com.jlahougue.dndcharactersheet.ui.main.MainActivity
@@ -55,7 +54,6 @@ class SpellsFragment : Fragment(),
         _binding = FragmentSpellsBinding.inflate(inflater, container, false)
 
         binding.lifecycleOwner = viewLifecycleOwner
-        binding.ability = AbilityRepository.Companion
 
         initializeSpellSearchBar()
 

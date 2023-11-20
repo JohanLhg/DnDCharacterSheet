@@ -7,6 +7,7 @@ import com.jlahougue.dndcharactersheet.dal.entities.CharacterWeapon
 import com.jlahougue.dndcharactersheet.dal.entities.Property
 import com.jlahougue.dndcharactersheet.dal.entities.Weapon
 import com.jlahougue.dndcharactersheet.dal.entities.WeaponProperty
+import com.jlahougue.dndcharactersheet.dal.entities.enums.AbilityName
 import com.jlahougue.dndcharactersheet.dal.entities.views.WeaponView
 
 class WeaponDetail(
@@ -19,7 +20,7 @@ class WeaponDetail(
     @ColumnInfo(name = CharacterWeapon.CHARACTER_WEAPON_PROFICIENCY)
     var proficiency: Boolean = false,
     @ColumnInfo(name = Weapon.WEAPON_TEST)
-    var test: String = "",
+    var test: AbilityName = AbilityName.NONE,
     @ColumnInfo(name = WeaponView.WEAPON_VIEW_MODIFIER)
     var modifier: Int = 0,
     @ColumnInfo(name = Weapon.WEAPON_DAMAGE)

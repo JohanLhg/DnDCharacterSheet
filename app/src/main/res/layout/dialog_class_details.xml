@@ -11,9 +11,6 @@
             name="markwon"
             type="io.noties.markwon.Markwon" />
         <variable
-            name="ability"
-            type="com.jlahougue.dndcharactersheet.dal.repositories.AbilityRepository.Companion" />
-        <variable
             name="clazz"
             type="com.jlahougue.dndcharactersheet.dal.entities.Class" />
     </data>
@@ -274,7 +271,7 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_marginStart="5dp"
-                                    android:text="@{ability.getName(context, clazz.spellcastingAbility)}" />
+                                    android:text="@{clazz.spellcastingAbility.getName(context)}" />
                             </LinearLayout>
                         </LinearLayout>
                     </LinearLayout>

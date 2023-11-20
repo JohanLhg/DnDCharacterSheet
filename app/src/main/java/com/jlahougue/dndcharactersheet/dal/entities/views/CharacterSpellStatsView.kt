@@ -12,9 +12,13 @@ import androidx.room.DatabaseView
             MAX(COALESCE(ability.modifier + character.level, 0), 1) as max_prepared,
             SUM(CASE WHEN spell.highlighted THEN 1 ELSE 0 END) as total_highlighted
         FROM character
-        LEFT JOIN character_spell spell ON character.id = spell.cid
-        LEFT JOIN spellcasting ON character.id = spellcasting.cid
-        LEFT JOIN ability_modifier_view AS ability ON character.id = ability.cid AND spellcasting.ability = ability.name
+        LEFT JOIN character_spell spell 
+        ON character.id = spell.cid
+        LEFT JOIN class 
+        ON character.class = class.class_name
+        LEFT JOIN ability_modifier_view AS ability 
+        ON character.id = ability.cid 
+        AND class.spellcasting_ability = ability.name
         GROUP BY character.id
     """,
     viewName = CharacterSpellStatsView.VIEW_CHARACTER_SPELL_STATS

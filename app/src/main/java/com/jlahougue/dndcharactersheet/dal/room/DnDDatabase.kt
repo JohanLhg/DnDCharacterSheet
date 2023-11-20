@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import androidx.room.TypeConverters
 import androidx.sqlite.db.SupportSQLiteDatabase
 import com.jlahougue.dndcharactersheet.dal.entities.Ability
 import com.jlahougue.dndcharactersheet.dal.entities.Character
@@ -27,10 +28,11 @@ import com.jlahougue.dndcharactersheet.dal.entities.Spell
 import com.jlahougue.dndcharactersheet.dal.entities.SpellClass
 import com.jlahougue.dndcharactersheet.dal.entities.SpellDamage
 import com.jlahougue.dndcharactersheet.dal.entities.SpellSlot
-import com.jlahougue.dndcharactersheet.dal.entities.Spellcasting
 import com.jlahougue.dndcharactersheet.dal.entities.Stats
 import com.jlahougue.dndcharactersheet.dal.entities.Weapon
 import com.jlahougue.dndcharactersheet.dal.entities.WeaponProperty
+import com.jlahougue.dndcharactersheet.dal.entities.enums.Language
+import com.jlahougue.dndcharactersheet.dal.entities.enums.UnitSystem
 import com.jlahougue.dndcharactersheet.dal.entities.views.AbilityModifierView
 import com.jlahougue.dndcharactersheet.dal.entities.views.AbilityView
 import com.jlahougue.dndcharactersheet.dal.entities.views.CharacterSpellStatsView
@@ -39,8 +41,10 @@ import com.jlahougue.dndcharactersheet.dal.entities.views.SkillView
 import com.jlahougue.dndcharactersheet.dal.entities.views.SpellSlotView
 import com.jlahougue.dndcharactersheet.dal.entities.views.SpellcastingView
 import com.jlahougue.dndcharactersheet.dal.entities.views.WeaponView
-import com.jlahougue.dndcharactersheet.dal.repositories.PreferencesRepository.Companion.LANGUAGE_EN
-import com.jlahougue.dndcharactersheet.dal.repositories.PreferencesRepository.Companion.UNIT_SYSTEM_METRIC
+import com.jlahougue.dndcharactersheet.dal.room.converters.AbilityNameTypeConverter
+import com.jlahougue.dndcharactersheet.dal.room.converters.LanguageTypeConverter
+import com.jlahougue.dndcharactersheet.dal.room.converters.SkillNameTypeConverter
+import com.jlahougue.dndcharactersheet.dal.room.converters.UnitSystemTypeConverter
 import com.jlahougue.dndcharactersheet.dal.room.dao.AbilityDao
 import com.jlahougue.dndcharactersheet.dal.room.dao.CharacterDao
 import com.jlahougue.dndcharactersheet.dal.room.dao.CharacterSpellDao
@@ -72,12 +76,16 @@ import com.jlahougue.dndcharactersheet.dal.room.dao.WeaponPropertyDao
         Class::class, ClassLevel::class, ClassSpellSlot::class, DamageType::class,
         DeathSaves::class, Equipment::class, Health::class, Money::class, Notes::class,
         Preferences::class, Property::class, Quests::class, Skill::class, Spell::class,
-        Spellcasting::class, SpellClass::class, SpellDamage::class, SpellSlot::class, Stats::class,
-        Weapon::class, WeaponProperty::class],
+        SpellClass::class, SpellDamage::class, SpellSlot::class, Stats::class, Weapon::class,
+        WeaponProperty::class],
     views = [AbilityView::class, AbilityModifierView::class, CharacterSpellStatsView::class,
         ProficiencyView::class, SkillView::class, SpellcastingView::class, SpellSlotView::class,
         WeaponView::class],
-    version = 61
+    version = 62
+)
+@TypeConverters(
+    value = [AbilityNameTypeConverter::class, SkillNameTypeConverter::class,
+        LanguageTypeConverter::class, UnitSystemTypeConverter::class]
 )
 abstract class DnDDatabase : RoomDatabase() {
     companion object {
@@ -89,7 +97,7 @@ abstract class DnDDatabase : RoomDatabase() {
         private val callback = object : Callback() {
             override fun onCreate(db: SupportSQLiteDatabase) {
                 super.onCreate(db)
-                db.execSQL("INSERT INTO $TABLE_PREFERENCES VALUES (1, '$LANGUAGE_EN', '$UNIT_SYSTEM_METRIC')")
+                db.execSQL("INSERT INTO $TABLE_PREFERENCES VALUES (1, '${Language.EN.code}', '${UnitSystem.METRIC}')")
             }
         }
 

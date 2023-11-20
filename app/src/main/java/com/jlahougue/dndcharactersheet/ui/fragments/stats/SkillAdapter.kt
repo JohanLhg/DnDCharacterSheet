@@ -57,6 +57,6 @@ class SkillAdapter(private val listener: OnSkillChangedListener) : RecyclerView.
     }
 
     fun filter(search: String) {
-        filteredSkills = skills.filter { it.name.contains(search, true) }
+        filteredSkills = skills.filter { it.name.name.contains(search, true) }
     }
 }

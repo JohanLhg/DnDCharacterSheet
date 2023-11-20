@@ -3,10 +3,8 @@ package com.jlahougue.dndcharactersheet.dal.entities
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.jlahougue.dndcharactersheet.dal.repositories.PreferencesRepository.Companion.LANGUAGE_EN
-import com.jlahougue.dndcharactersheet.dal.repositories.PreferencesRepository.Companion.LANGUAGE_FR
-import com.jlahougue.dndcharactersheet.dal.repositories.PreferencesRepository.Companion.UNIT_SYSTEM_IMPERIAL
-import com.jlahougue.dndcharactersheet.dal.repositories.PreferencesRepository.Companion.UNIT_SYSTEM_METRIC
+import com.jlahougue.dndcharactersheet.dal.entities.enums.Language
+import com.jlahougue.dndcharactersheet.dal.entities.enums.UnitSystem
 
 @Entity(tableName = Preferences.TABLE_PREFERENCES)
 class Preferences(
@@ -14,17 +12,17 @@ class Preferences(
     @ColumnInfo(name = PREFERENCES_ID)
     var id: Long = 1L,
     @ColumnInfo(name = PREFERENCES_LANGUAGE)
-    var language: String = LANGUAGE_EN,
+    var language: Language = Language.EN,
     @ColumnInfo(name = PREFERENCES_UNIT_SYSTEM)
-    var unitSystem: String = UNIT_SYSTEM_METRIC
+    var unitSystem: UnitSystem = UnitSystem.METRIC
 ) {
-    fun isEnglish() = language == LANGUAGE_EN
+    fun isEnglish() = language == Language.EN
 
-    fun isFrench() = language == LANGUAGE_FR
+    fun isFrench() = language == Language.FR
 
-    fun isMetric() = unitSystem == UNIT_SYSTEM_METRIC
+    fun isMetric() = unitSystem == UnitSystem.METRIC
 
-    fun isImperial() = unitSystem == UNIT_SYSTEM_IMPERIAL
+    fun isImperial() = unitSystem == UnitSystem.IMPERIAL
 
     companion object {
         const val TABLE_PREFERENCES = "preferences"

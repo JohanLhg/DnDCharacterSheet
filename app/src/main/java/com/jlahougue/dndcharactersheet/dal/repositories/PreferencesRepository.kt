@@ -2,6 +2,7 @@ package com.jlahougue.dndcharactersheet.dal.repositories
 
 import android.app.Application
 import com.jlahougue.dndcharactersheet.dal.entities.Preferences
+import com.jlahougue.dndcharactersheet.dal.entities.enums.Language
 import com.jlahougue.dndcharactersheet.dal.room.DnDDatabase
 
 class PreferencesRepository(application: Application) {
@@ -15,20 +16,12 @@ class PreferencesRepository(application: Application) {
 
     fun get() = roomDao.get()
 
-    fun getLanguage(callback: (String) -> Unit) {
+    fun getLanguage(callback: (Language) -> Unit) {
         val language = roomDao.getLanguage()
         if (language == null) {
             create()
-            callback(roomDao.getLanguage()!!)
+            getLanguage(callback)
         } else
             callback(language)
-    }
-
-    companion object {
-        const val LANGUAGE_EN = "en"
-        const val LANGUAGE_FR = "fr"
-
-        const val UNIT_SYSTEM_IMPERIAL = "imperial"
-        const val UNIT_SYSTEM_METRIC = "metric"
     }
 }

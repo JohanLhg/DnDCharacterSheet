@@ -5,7 +5,6 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.jlahougue.dndcharactersheet.R
 import com.jlahougue.dndcharactersheet.dal.entities.views.AbilityView
-import com.jlahougue.dndcharactersheet.dal.repositories.AbilityRepository
 import com.jlahougue.dndcharactersheet.databinding.RecyclerSkillSavingThrowBinding
 
 class SavingThrowAdapter(private val listener: OnAbilityChangedListener) : RecyclerView.Adapter<SkillSavingThrowViewHolder>() {
@@ -39,8 +38,8 @@ class SavingThrowAdapter(private val listener: OnAbilityChangedListener) : Recyc
         holder.bind.checkProficiency.setOnCheckedChangeListener { _, _ ->  }
 
         holder.bind.checkProficiency.isChecked = ability.proficiency
-        holder.bind.textName.text = AbilityRepository.getName(context, ability.name)
-        holder.bind.textModifier.text = context.getString(R.string.plus_value, ability.savingThrow)
+        holder.bind.textName.text = ability.name.getName(context)
+        holder.bind.textModifier.text = context.getString(R.string.plus_value, ability.modifier)
 
         holder.bind.checkProficiency.setOnCheckedChangeListener { _, isChecked ->
             changeProficiency(holder.adapterPosition, isChecked)
@@ -53,7 +52,7 @@ class SavingThrowAdapter(private val listener: OnAbilityChangedListener) : Recyc
         payloads: MutableList<Any>
     ) {
         when {
-            payloads.contains(MODIFIER) -> holder.bind.textModifier.text = holder.itemView.context.getString(R.string.plus_value, abilities[position].savingThrow)
+            payloads.contains(MODIFIER) -> holder.bind.textModifier.text = holder.itemView.context.getString(R.string.plus_value, abilities[position].modifier)
             else -> super.onBindViewHolder(holder, position, payloads)
         }
     }

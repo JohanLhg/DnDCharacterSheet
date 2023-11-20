@@ -3,6 +3,7 @@ package com.jlahougue.dndcharactersheet.ui.fragments.weapons
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.jlahougue.dndcharactersheet.dal.entities.enums.UnitSystem
 import com.jlahougue.dndcharactersheet.dal.entities.views.WeaponView
 import com.jlahougue.dndcharactersheet.databinding.RecyclerWeaponBinding
 
@@ -20,7 +21,7 @@ class WeaponAdapter(private val listener: WeaponListener) : RecyclerView.Adapter
             notifyDataSetChanged()
         }
 
-    var unitSystem = ""
+    var unitSystem = UnitSystem.METRIC
         set(value) {
             field = value
             notifyItemRangeChanged(0, weapons.size, UNIT_SYSTEM_CHANGED)

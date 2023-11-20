@@ -9,9 +9,6 @@
             name="context"
             type="android.content.Context" />
         <variable
-            name="ability"
-            type="com.jlahougue.dndcharactersheet.dal.repositories.AbilityRepository.Companion" />
-        <variable
             name="weapon"
             type="com.jlahougue.dndcharactersheet.dal.entities.displayClasses.WeaponDetail" />
     </data>
@@ -210,7 +207,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="5dp"
-                        android:text="@{@string/text_attack_test(ability.getName(context, weapon.test), weapon.modifier)}" />
+                        android:text="@{@string/text_attack_test(weapon.test.getName(context), weapon.modifier)}" />
 
                     <ImageView
                         android:id="@+id/buttonRollAttack"

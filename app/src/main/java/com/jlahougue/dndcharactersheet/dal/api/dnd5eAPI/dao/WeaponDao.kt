@@ -4,8 +4,7 @@ import android.util.Log
 import com.jlahougue.dndcharactersheet.dal.api.dnd5eAPI.DnD5eApiRequest
 import com.jlahougue.dndcharactersheet.dal.entities.Weapon
 import com.jlahougue.dndcharactersheet.dal.entities.WeaponProperty
-import com.jlahougue.dndcharactersheet.dal.repositories.AbilityRepository.Companion.DEXTERITY
-import com.jlahougue.dndcharactersheet.dal.repositories.AbilityRepository.Companion.STRENGTH
+import com.jlahougue.dndcharactersheet.dal.entities.enums.AbilityName
 import com.jlahougue.dndcharactersheet.extensions.getIntIfExists
 import com.jlahougue.dndcharactersheet.extensions.getJSONArrayIfExists
 import com.jlahougue.dndcharactersheet.extensions.getStringIfExists
@@ -66,9 +65,9 @@ class WeaponDao {
         val name = json.getString("name")
 
         val test = when (json.getStringIfExists("weapon_range")) {
-            "Melee" -> STRENGTH
-            "Ranged" -> DEXTERITY
-            else -> ""
+            "Melee" -> AbilityName.STRENGTH
+            "Ranged" -> AbilityName.DEXTERITY
+            else -> AbilityName.NONE
         }
 
         var costStr = ""
@@ -112,7 +111,7 @@ class WeaponDao {
             throwRangeMax = throwRange.getIntIfExists("long")
         }
 
-        if (test == DEXTERITY) {
+        if (test == AbilityName.DEXTERITY) {
             if (throwRangeMin == 0) throwRangeMin = rangeMin
             if (throwRangeMax == 0) throwRangeMax = rangeMax
         }

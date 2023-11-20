@@ -2,15 +2,17 @@ package com.jlahougue.dndcharactersheet.dal.entities
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
+import com.jlahougue.dndcharactersheet.dal.entities.enums.AbilityName
+import com.jlahougue.dndcharactersheet.dal.entities.enums.SkillName
 
 @Entity(tableName = Skill.TABLE_SKILL, primaryKeys = [Skill.SKILL_CID, Skill.SKILL_NAME])
 class Skill(
     @ColumnInfo(name = SKILL_CID)
     var cid: Long = 0,
     @ColumnInfo(name = SKILL_NAME)
-    var name: String = "",
+    var name: SkillName = SkillName.NONE,
     @ColumnInfo(name = SKILL_MODIFIER_TYPE)
-    var modifierType: String = "",
+    var modifierType: AbilityName = AbilityName.NONE,
     @ColumnInfo(name = SKILL_PROFICIENCY)
     var proficiency: Boolean = false
 ) {

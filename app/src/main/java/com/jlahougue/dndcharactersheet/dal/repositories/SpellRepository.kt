@@ -38,8 +38,6 @@ class SpellRepository(application: Application) {
 
     fun save(spell: Spell) = roomDao.insert(spell)
 
-    fun getIds() = roomDao.getIds()
-
     fun get(characterID: Long): Map<Int, List<SpellWithCharacterInfo>> {
         val spells = roomDao.get(characterID)
         val map = mutableMapOf<Int, MutableList<SpellWithCharacterInfo>>()
@@ -52,21 +50,6 @@ class SpellRepository(application: Application) {
     }
 
     fun get(characterID: Long, spellLevel: Int) = roomDao.get(characterID, spellLevel)
-
-    fun getUnlockedOld(characterID: Long): Map<Int, List<SpellWithCharacterInfo>> {
-        val spells = roomDao.getUnlocked(characterID)
-        val map = mutableMapOf<Int, MutableList<SpellWithCharacterInfo>>()
-        spells.forEach {
-            val level = it.level
-            if (map[level] == null) map[level] = mutableListOf()
-            map[level]!!.add(it)
-        }
-        return map
-    }
-
-    fun getUnlocked(characterID: Long, spellLevel: Int) = roomDao.getUnlocked(characterID, spellLevel)
-
-    fun getUnlocked(characterID: Long) = roomDao.getUnlocked(characterID)
 
     fun getUnlockedFlow(characterID: Long) = roomDao.getUnlockedFlow(characterID)
 }
